@@ -1,196 +1,454 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2869
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
-{\colortbl;\red255\green255\blue255;\red34\green32\blue31;\red251\green249\blue246;}
-{\*\expandedcolortbl;;\cssrgb\c18039\c16863\c16078;\cssrgb\c98824\c98039\c97255;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\deftab720
-\pard\pardeftab720\partightenfactor0
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>楊雪琪 · 時光小集 | Yang Xueqi · Studio of Quiet Things</title>
 
-\f0\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 <!DOCTYPE html>\
-<html lang="zh-Hans">\
-<head>\
-    <meta charset="UTF-8">\
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
-    <title>\uc0\u26472 \u38634 \u29738  \'b7 \u26102 \u20809 \u23567 \u38598  | Yang Xueqi \'b7 Studio of Quiet Things</title>\
-    \
-    <!-- \uc0\u24341 \u20837 \u23383 \u20307  -->\
-    <link rel="preconnect" href="https://fonts.googleapis.com">\
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Italiana&family=Noto+Serif+SC:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">\
-    \
-    <!-- \uc0\u24341 \u20837 \u20013 \u25991 \u20070 \u27861 \u20307  (\u28436 \u31034 \u26149 \u39118 \u26999  - \u36890 \u36807 \u26412 \u22320 \u25110 CDN\u65292 \u36825 \u37324 \u29992 \u31867 \u20284 \u39118 \u26684 \u30340 Google\u23383 \u20307 \u26367 \u20195 \u20197 \u20445 \u35777 \u22312 \u32447 \u26174 \u31034 \u65292 \u23454 \u38469 \u21487 \u26367 \u25442 ) -->\
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">\
-\
-    <link rel="stylesheet" href="style.css">\
-</head>\
-<body class="season-spring">\
-\
-    <!-- \uc0\u20837 \u21475 \u36974 \u32617 \u23618  -->\
-    <div id="entrance-overlay">\
-        <div class="entrance-content">\
-            <h1 class="calligraphy-title">\uc0\u39118 \u29289 \u26377 \u20449 <br>\u22235 \u26102 \u30342 \u20070 </h1>\
-            <p class="lunar-date">\uc0\u26102 \u32500  <span id="current-lunar-month"></span>\u65292 \u24207 \u23646  <span id="current-season-text"></span></p>\
-            <p class="invitation-poem">\
-                \uc0\u19968 \u31546 \u20026 \u24341 \u65292 \u19968 \u21367 \u20026 \u24515 \u65307 <br>\
-                \uc0\u21516 \u22768 \u30456 \u24212 \u65292 \u24895 \u21531 \u20849 \u23547 \u12290 \
-            </p>\
-            <button id="unfold-btn" class="unfolding-btn">\uc0\u21551 \u23553  / Unfold</button>\
-        </div>\
-    </div>\
-\
-    <!-- \uc0\u20027 \u39029 \u38754  -->\
-    <main id="main-content" class="fade-out">\
-        \
-        <!-- \uc0\u23548 \u33322 \u26639  -->\
-        <nav>\
-            <div class="logo">\uc0\u26954 \u38634 \u29738  \'b7 \u26178 \u20809 \u23567 \u38598 </div>\
-            <ul class="nav-links">\
-                <li><a href="#words">\uc0\u25991 </a></li>\
-                <li><a href="#images">\uc0\u24433 </a></li>\
-                <li><a href="#things">\uc0\u29289 </a></li>\
-                <li><a href="#time">\uc0\u26102 </a></li>\
-            </ul>\
-            <div class="sundial-wrapper">\
-                <div class="sundial" id="sundial-icon">\uc0\u9728 \u65039 </div>\
-                <div class="date-display">\
-                    <span id="solar-date" class="solar-date">2026.03.22</span>\
-                    <span id="solar-term" class="solar-term">Spring Equinox</span>\
-                </div>\
-            </div>\
-        </nav>\
-\
-        <!-- Hero Section -->\
-        <section class="hero-section">\
-            <div class="hero-background">\
-                <!-- \uc0\u21160 \u24577 \u32972 \u26223 \u22270  (\u21344 \u20301 \u31526 \u65292 \u21518 \u26399 \u26367 \u25442 ) -->\
-                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop" alt="Spring Background" class="bg-img">\
-            </div>\
-            <div class="hero-text">\
-                <h2 id="season-poem-cn">\uc0\u39118 \u20256 \u33457 \u20449 \u65292 \u38632 \u28655 \u26149 \u23576 \u12290 </h2>\
-                <p id="season-poem-en">The wind carries word of blossoms; spring rain washes the world anew.</p>\
-            </div>\
-        </section>\
-\
-        <!-- About Section -->\
-        <section class="about-section" id="about">\
-            <div class="about-container">\
-                <div class="about-image">\
-                    <!-- \uc0\u20320 \u30340 \u29031 \u29255 \u21344 \u20301 \u31526  -->\
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Yang Xueqi">\
-                </div>\
-                <div class="about-text">\
-                    <h3>About</h3>\
-                    <p class="cn">\uc0\u25105 \u26159 \u26954 \u38634 \u29738 \u65292 22 \u23681 \u65292 \u29616 \u23601 \u35835 \u20110 \u39321 \u28207 \u20013 \u25991 \u22823 \u23398 \u33521 \u25991 \u25991 \u23398 \u30740 \u31350 \u30805 \u22763 \u12290 <br>\u21916 \u27426 \u25991 \u23383 \u37324 \u30340 \u24494 \u20809 \u65292 \u20063 \u21916 \u27426 \u29983 \u27963 \u37324 \u23567 \u23567 \u30340 \u26126 \u20142 \u65306 <br>\u35835 \u35799 \u65292 \u20889 \u25925 \u20107 \u65292 \u20570 \u25163 \u20316 \u65292 \u25972 \u29702 \u20070 \u39029 \u37324 \u30340 \u32454 \u33410 \u65307 <br>\u36208 \u36827 \u21338 \u29289 \u39302 \u65292 \u21548 \u32769 \u29289 \u20214 \u20302 \u22768 \u35828 \u35805 \u65307 <br>\u22312 \u26379 \u21451 \u38388 \u23433 \u38745 \u32780 \u28201 \u26262 \u65292 \u22312 \u21019 \u20316 \u26102 \u35748 \u30495 \u32780 \u25191 \u25303 \u12290 <br>\u24895 \u27492 \u22788 \u26159 \u19968 \u38388 \u23567 \u23567 \u30340 \u24237 \u38498 \u65292 \u19982 \u20320 \u20849 \u24230 \u20960 \u27573 \u22909 \u26102 \u20809 \u12290 </p>\
-                    <p class="en">I am Yang Xueqi, twenty-two, currently studying English Literature at CUHK.<br>I love the small light hidden in words, and the quiet brightness of daily life:<br>I read poems, write stories, make things by hand, and listen for the gentle voices in old pages;<br>I wander into museums to hear what objects whisper across time.<br>Quiet and warm among friends, attentive and stubborn in creation.<br>May this be a small garden where we share a few good moments.</p>\
-                </div>\
-            </div>\
-        </section>\
-\
-        <!-- Works Sections -->\
-        <section id="words" class="work-section">\
-            <div class="section-header">\
-                <h3 class="cn-title">\uc0\u25991 \u20197 \u36733 \u24515 </h3>\
-                <p class="en-subtitle">Words are the window through which I see the world.</p>\
-            </div>\
-            <div class="grid-gallery">\
-                <!-- \uc0\u31034 \u20363 \u21345 \u29255  -->\
-                <div class="card">\
-                    <div class="card-content">\
-                        <h4>The Unanswered Call</h4>\
-                        <p>Short Story</p>\
-                    </div>\
-                </div>\
-                <div class="card">\
-                    <div class="card-content">\
-                        <h4>Ulysses Distant Reading</h4>\
-                        <p>Academic Research</p>\
-                    </div>\
-                </div>\
-                <div class="card">\
-                    <div class="card-content">\
-                        <h4>Poems in Chinese</h4>\
-                        <p>Creative Writing</p>\
-                    </div>\
-                </div>\
-            </div>\
-        </section>\
-\
-        <section id="images" class="work-section">\
-            <div class="section-header">\
-                <h3 class="cn-title">\uc0\u30446 \u20043 \u25152 \u21450 </h3>\
-                <p class="en-subtitle">A layout, a slide, a moving frame \'97 each is a quiet conversation.</p>\
-            </div>\
-            <div class="grid-gallery">\
-                <div class="card">\
-                    <div class="card-content"><h4>Editorial Layout</h4><p>Design</p></div>\
-                </div>\
-                <div class="card">\
-                    <div class="card-content"><h4>Video Editing</h4><p>Production</p></div>\
-                </div>\
-            </div>\
-        </section>\
-\
-        <section id="things" class="work-section">\
-            <div class="section-header">\
-                <h3 class="cn-title">\uc0\u25163 \u20316 \u26377 \u28201 </h3>\
-                <p class="en-subtitle">Small things, quietly made, are gentle footnotes to time.</p>\
-            </div>\
-            <div class="grid-gallery">\
-                <div class="card">\
-                    <div class="card-content"><h4>Calligraphy</h4><p>Ink & Paper</p></div>\
-                </div>\
-                <div class="card">\
-                    <div class="card-content"><h4>Dyed Cards</h4><p>Craft</p></div>\
-                </div>\
-            </div>\
-        </section>\
-\
-        <section id="time" class="work-section">\
-            <div class="section-header">\
-                <h3 class="cn-title">\uc0\u25968 \u37324 \u35266 \u35799 </h3>\
-                <p class="en-subtitle">When data enters literature, even within words, one may find mountains.</p>\
-            </div>\
-            <div class="grid-gallery">\
-                <div class="card">\
-                    <div class="card-content"><h4>Digital Humanities</h4><p>Data Visualization</p></div>\
-                </div>\
-            </div>\
-        </section>\
-\
-        <!-- Contact -->\
-        <section class="contact-section">\
-            <h3 class="cn-title">\uc0\u32493 \u38899 </h3>\
-            <p class="contact-poem-cn">\uc0\u23665 \u39640 \u27700 \u38271 \u65292 \u24895 \u26377 \u22238 \u21709 \u12290 </p>\
-            <p class="contact-poem-en">Across mountains and rivers, may words still answer.</p>\
-            <div class="contact-info">\
-                <a href="mailto:your-email@example.com">your-email@example.com</a>\
-                <p>WeChat: Coriolanus1623</p>\
-            </div>\
-        </section>\
-\
-        <footer>\
-            <p class="footer-cn">\uc0\u19968 \u21367 \u22235 \u26102 \u65292 \u26410 \u23613 \u20043 \u35328 \u12290 </p>\
-            <p class="footer-en">A scroll of seasons, with words still to come.</p>\
-            <p class="copyright">\'a9 \uc0\u26954 \u38634 \u29738  \'b7 2026</p>\
-        </footer>\
-\
-        <!-- \uc0\u23395 \u33410 \u20999 \u25442 \u27169 \u24577 \u26694  (\u28857 \u20987 \u26085 \u26231 \u24377 \u20986 ) -->\
-        <div id="season-selector" class="modal hidden">\
-            <div class="modal-content">\
-                <h4>Select Season</h4>\
-                <div class="season-buttons">\
-                    <button onclick="setSeason('spring')">Spring \uc0\u55356 \u57144 </button>\
-                    <button onclick="setSeason('summer')">Summer \uc0\u55356 \u57098 </button>\
-                    <button onclick="setSeason('autumn')">Autumn \uc0\u55356 \u57154 </button>\
-                    <button onclick="setSeason('winter')">Winter \uc0\u10052 \u65039 </button>\
-                </div>\
-                <button class="close-modal" onclick="toggleModal()">Close</button>\
-            </div>\
-        </div>\
-\
-    </main>\
-\
-    <script src="script.js"></script>\
-</body>\
-</html>}
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Italiana&family=Noto+Serif+SC:wght@300;400;600&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- 全局变量 ---------- */
+:root{
+  --bg:#F8F4EC;
+  --text:#574033;
+  --soft:#B6AFA4;
+  --accent:#E9D6A5;
+  --serif:'Noto Serif SC', serif;
+  --english:'Cormorant Garamond', serif;
+  --display:'Italiana', serif;
+  --cn-calli:'Ma Shan Zheng', cursive;
+  --transition:1.2s ease;
+}
+
+/* ---------- 四季主题 ---------- */
+body.spring{ --bg:#F8F4EC; --accent:#E9C8C0; --text:#574033;}
+body.summer{ --bg:#EAF1F4; --accent:#A9C5CD; --text:#3C4A52;}
+body.autumn{ --bg:#F0E7D5; --accent:#D8B27A; --text:#5A3E2A;}
+body.winter{ --bg:#F1EEE9; --accent:#A6B3C2; --text:#3A3A3A;}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{overflow-x:hidden;}
+body{
+  font-family:var(--serif);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.9;
+  transition:background var(--transition), color var(--transition);
+}
+
+/* ---------- 入口动画 ---------- */
+#overlay{
+  position:fixed;inset:0;
+  background:rgba(255,253,247,0.97);
+  display:flex;align-items:center;justify-content:center;
+  z-index:1000;
+  transition:opacity 1.5s ease;
+  text-align:center;
+}
+#overlay .box{padding:2rem;max-width:700px;}
+#overlay h1{
+  font-family:var(--cn-calli);
+  font-size:3rem;
+  letter-spacing:.1em;
+  line-height:1.4;
+  margin-bottom:1.4rem;
+}
+#overlay .lunar{
+  font-family:var(--serif);
+  color:var(--soft);
+  font-size:1rem;
+  margin-bottom:2rem;
+}
+#overlay .poem{
+  font-family:var(--english);
+  font-style:italic;
+  font-size:1.2rem;
+  margin-bottom:2.5rem;
+  line-height:2;
+}
+#overlay .poem-cn{
+  font-family:var(--serif);
+  font-size:1.1rem;
+  margin-bottom:.6rem;
+}
+#overlay button{
+  font-family:var(--serif);
+  border:1px solid var(--text);
+  background:transparent;
+  color:var(--text);
+  padding:.7rem 2rem;
+  cursor:pointer;
+  letter-spacing:.2em;
+  transition:.3s;
+}
+#overlay button:hover{background:var(--text);color:#fff;}
+
+/* ---------- 导航 ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 3rem;
+  background:rgba(248,244,236,.65);
+  backdrop-filter:blur(12px);
+  z-index:50;
+}
+.logo{font-family:var(--display);letter-spacing:.15em;font-size:1.1rem;}
+.nav-links{display:flex;list-style:none;gap:2rem;}
+.nav-links a{text-decoration:none;color:var(--text);font-family:var(--cn-calli);font-size:1.2rem;}
+.sundial-wrap{display:flex;align-items:center;gap:.6rem;cursor:pointer;}
+.sundial{
+  width:34px;height:34px;border-radius:50%;
+  background:radial-gradient(circle,#fff8e6 0%,var(--accent) 80%);
+  box-shadow:0 0 12px rgba(0,0,0,.05);
+  transition:transform .5s;
+}
+.sundial:hover{transform:scale(1.15);}
+.time-box{font-size:.75rem;line-height:1.3;color:var(--soft);text-align:right;}
+
+/* ---------- 主体 ---------- */
+main{opacity:0;visibility:hidden;transition:opacity 1s;}
+main.visible{opacity:1;visibility:visible;}
+
+section{padding:6rem 8%;}
+
+/* Hero */
+.hero{
+  height:100vh;display:flex;align-items:center;justify-content:center;
+  position:relative;text-align:center;overflow:hidden;
+}
+.hero h2{
+  font-family:var(--cn-calli);
+  font-size:4rem;letter-spacing:.1em;
+  margin-bottom:1rem;
+}
+.hero p{
+  font-family:var(--english);
+  font-style:italic;color:var(--soft);
+  font-size:1.2rem;
+}
+.season-effect{position:absolute;inset:0;pointer-events:none;}
+
+/* About */
+.about{display:flex;gap:4rem;align-items:center;flex-wrap:wrap;}
+.about img{
+  width:280px;height:360px;object-fit:cover;
+  border-radius:140px;
+  box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+.about-text h3{font-family:var(--cn-calli);font-size:2rem;margin-bottom:1rem;}
+.about-text p{margin-bottom:1rem;}
+.about-text .en{font-family:var(--english);color:var(--soft);font-style:italic;}
+
+/* Section header */
+.section-header{text-align:center;margin-bottom:3rem;}
+.section-header h3{font-family:var(--cn-calli);font-size:2.4rem;margin-bottom:.4rem;}
+.section-header p{font-family:var(--english);color:var(--soft);font-style:italic;}
+
+/* Grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1.5rem;
+}
+.card{
+  background:rgba(255,255,255,.6);
+  border:1px solid rgba(0,0,0,.05);
+  padding:1.6rem;
+  border-radius:14px;
+  transition:.3s;
+  text-align:center;
+}
+.card:hover{transform:translateY(-4px);background:#fff;}
+.card h4{font-family:var(--cn-calli);font-size:1.3rem;margin-bottom:.4rem;}
+.card p{color:var(--soft);font-size:.9rem;}
+
+/* Contact */
+.contact{text-align:center;}
+.contact h3{font-family:var(--cn-calli);font-size:2rem;margin-bottom:.6rem;}
+.contact .cn{font-size:1.2rem;}
+.contact .en{font-family:var(--english);font-style:italic;color:var(--soft);}
+.contact a{color:var(--text);text-decoration:none;display:block;margin-top:1rem;}
+
+/* Footer */
+footer{
+  text-align:center;padding:3rem;color:var(--soft);
+  font-family:var(--english);font-style:italic;
+}
+
+/* Modal */
+.modal{
+  position:fixed;inset:0;display:none;
+  background:rgba(0,0,0,.5);
+  align-items:center;justify-content:center;z-index:300;
+}
+.modal.show{display:flex;}
+.modal-box{
+  background:#fff;padding:2rem;border-radius:14px;text-align:center;
+}
+.modal-box button{margin:.4rem;padding:.5rem 1rem;cursor:pointer;}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:none;}}
+.fadeUp{animation:fadeUp 1.2s ease;}
+
+/* 春花瓣、秋落叶、雪花 */
+.petal,.leaf,.snow{position:absolute;top:-20px;opacity:.8;animation:fall linear infinite;}
+.petal{width:14px;height:14px;background:#F4C7C0;border-radius:50% 0;}
+.leaf{width:16px;height:10px;background:#D8A36A;border-radius:50%;}
+.snow{width:8px;height:8px;background:#fff;border-radius:50%;box-shadow:0 0 6px #fff;}
+@keyframes fall{
+  0%{transform:translateY(0) rotate(0);}
+  100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* 夏季水波 */
+.wave{
+  position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 80%, rgba(169,197,205,.4), transparent 70%);
+  animation:wave 6s ease-in-out infinite;
+}
+@keyframes wave{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+}
+
+@media (max-width:768px){
+  .nav-links{display:none;}
+  .hero h2{font-size:2.5rem;}
+  .about{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+
+<body class="spring">
+
+<!-- 入口启封 -->
+<div id="overlay">
+  <div class="box">
+    <h1>风物有信<br>四时皆书</h1>
+    <p class="lunar">时维 <span id="lunarMonth">桃月</span>，序属 <span id="seasonText">仲春</span></p>
+    <p class="poem-cn">一笺为引，一卷为心；<br>同声相应，愿君共寻。</p>
+    <p class="poem">
+      A small scroll of light, offered as an invitation —<br>
+      when kindred voices answer, we walk this way together.
+    </p>
+    <button id="unfold">啟封 · Unfold</button>
+  </div>
+</div>
+
+<!-- 主体 -->
+<main id="main">
+
+<nav>
+  <div class="logo">YANG XUEQI · STUDIO</div>
+  <ul class="nav-links">
+    <li><a href="#words">文</a></li>
+    <li><a href="#images">影</a></li>
+    <li><a href="#things">物</a></li>
+    <li><a href="#time">时</a></li>
+    <li><a href="#contact">续音</a></li>
+  </ul>
+  <div class="sundial-wrap" id="sundialBtn">
+    <div class="sundial"></div>
+    <div class="time-box">
+      <div id="solarDate">2026.03.22</div>
+      <div id="solarTerm">Spring Equinox</div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="season-effect" id="effectLayer"></div>
+  <div>
+    <h2 id="heroCN">风传花信，雨濯春尘。</h2>
+    <p id="heroEN">The wind carries word of blossoms; spring rain washes the world anew.</p>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="about">
+    <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800&auto=format&fit=crop" alt="Yang Xueqi"/>
+    <div class="about-text">
+      <h3>关于我</h3>
+      <p>楊雪琪，22 岁，现就读于香港中文大学英文文学研究硕士。喜欢文字里的微光，也喜欢生活里小小的明亮：读诗、写故事、做手作、整理书页里的细节；走进博物馆，听老物件低声说话；在朋友间安静而温暖，在创作时认真而执拗。愿此处是一间小小的庭院，与你共度几段好时光。</p>
+      <p class="en">I am Yang Xueqi, twenty-two, currently studying English Literature at CUHK. I love the small light hidden in words, and the quiet brightness of daily life: I read poems, write stories, make things by hand, and listen for the gentle voices in old pages. May this be a small garden where we share a few good moments.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 文 -->
+<section id="words">
+  <div class="section-header">
+    <h3>文以载心</h3>
+    <p>Words are the window through which I see the world.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h4>The Unanswered Call</h4><p>Short Story</p></div>
+    <div class="card"><h4>Ulysses 远读研究</h4><p>Academic Research</p></div>
+    <div class="card"><h4>中文诗歌</h4><p>Creative Writing</p></div>
+    <div class="card"><h4>翻译作品</h4><p>Translations</p></div>
+  </div>
+</section>
+
+<!-- 影 -->
+<section id="images">
+  <div class="section-header">
+    <h3>目之所及</h3>
+    <p>A layout, a slide, a moving frame — a quiet conversation.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h4>课程展示 Pre</h4><p>Layout / Design</p></div>
+    <div class="card"><h4>公众号推送</h4><p>Editorial</p></div>
+    <div class="card"><h4>视频剪辑</h4><p>Video Works</p></div>
+  </div>
+</section>
+
+<!-- 物 -->
+<section id="things">
+  <div class="section-header">
+    <h3>手作有温</h3>
+    <p>Small things, quietly made, are gentle footnotes to time.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h4>书法 Calligraphy</h4><p>Ink & Paper</p></div>
+    <div class="card"><h4>染卡 Dye Card</h4><p>Handmade</p></div>
+    <div class="card"><h4>文创书签</h4><p>Bookmark Design</p></div>
+    <div class="card"><h4>折扇 / 明信片</h4><p>Paper Crafts</p></div>
+  </div>
+</section>
+
+<!-- 时 -->
+<section id="time">
+  <div class="section-header">
+    <h3>数里观诗</h3>
+    <p>When data enters literature, even within words, one may find mountains.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h4>远读《尤利西斯》</h4><p>Distant Reading</p></div>
+    <div class="card"><h4>文本可视化</h4><p>Visualization</p></div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="contact">
+  <h3>续音</h3>
+  <p class="cn">山高水长，愿有回响。</p>
+  <p class="en">Across mountains and rivers, may words still answer.</p>
+  <a href="mailto:1155246399@link.cuhk.edu.hk">1155246399@link.cuhk.edu.hk</a>
+</section>
+
+<footer>
+  <p>一卷四时，未尽之言。</p>
+  <p>A scroll of seasons, with words still to come.</p>
+  <p>© 楊雪琪 · 2026</p>
+</footer>
+
+</main>
+
+<!-- 季节切换弹窗 -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h4>Select Season</h4>
+    <div>
+      <button onclick="setSeason('spring')">春 Spring</button>
+      <button onclick="setSeason('summer')">夏 Summer</button>
+      <button onclick="setSeason('autumn')">秋 Autumn</button>
+      <button onclick="setSeason('winter')">冬 Winter</button>
+    </div>
+    <p style="margin-top:1rem;cursor:pointer;color:#999;" onclick="toggleModal()">Close</p>
+  </div>
+</div>
+
+<script>
+/* ---------- 数据 ---------- */
+const lunarMonths=["端月","杏月","桃月","槐月","榴月","荷月","兰月","桂月","菊月","阳月","葭月","腊月"];
+const seasonMap={
+  spring:{cn:"风传花信，雨濯春尘。",en:"The wind carries word of blossoms; spring rain washes the world anew.",text:"仲春"},
+  summer:{cn:"碧海生光，长风度夏。",en:"Light glimmers on the sea; the long wind carries the summer through.",text:"仲夏"},
+  autumn:{cn:"暮色含金，木叶将辞。",en:"Dusk gilds the world in gold; the leaves prepare to leave.",text:"仲秋"},
+  winter:{cn:"一夜雪深，万物归藏。",en:"The night deepens with snow; all things return to stillness.",text:"仲冬"}
+};
+
+/* ---------- 时间 ---------- */
+function initTime(){
+  const now=new Date();
+  const m=now.getMonth()+1;
+  const d=now.getDate();
+  const y=now.getFullYear();
+  document.getElementById('solarDate').textContent=`${y}.${String(m).padStart(2,'0')}.${String(d).padStart(2,'0')}`;
+  document.getElementById('lunarMonth').textContent=lunarMonths[m-1];
+
+  let season='spring';
+  if(m>=3&&m<=5) season='spring';
+  else if(m>=6&&m<=8) season='summer';
+  else if(m>=9&&m<=11) season='autumn';
+  else season='winter';
+  setSeason(season,true);
+
+  document.getElementById('solarTerm').textContent=getApproxTerm(m,d);
+}
+function getApproxTerm(m,d){
+  const list=["Lichun","Yushui","Jingzhe","Chunfen","Qingming","Guyu",
+              "Lixia","Xiaoman","Mangzhong","Xiazhi","Xiaoshu","Dashu",
+              "Liqiu","Chushu","Bailu","Qiufen","Hanlu","Shuangjiang",
+              "Lidong","Xiaoxue","Daxue","Dongzhi","Xiaohan","Dahan"];
+  return list[(m-1)*2];
+}
+
+/* ---------- 季节切换 ---------- */
+function setSeason(s,first){
+  document.body.className=s;
+  document.getElementById('heroCN').textContent=seasonMap[s].cn;
+  document.getElementById('heroEN').textContent=seasonMap[s].en;
+  document.getElementById('seasonText').textContent=seasonMap[s].text;
+  generateEffect(s);
+  if(!first) toggleModal();
+}
+
+/* ---------- 季节动效 ---------- */
+function generateEffect(s){
+  const layer=document.getElementById('effectLayer');
+  layer.innerHTML='';
+  if(s==='spring'||s==='autumn'||s==='winter'){
+    const cls=s==='spring'?'petal':s==='autumn'?'leaf':'snow';
+    for(let i=0;i<25;i++){
+      const el=document.createElement('div');
+      el.className=cls;
+      el.style.left=Math.random()*100+'%';
+      el.style.animationDuration=(6+Math.random()*8)+'s';
+      el.style.animationDelay=Math.random()*5+'s';
+      layer.appendChild(el);
+    }
+  } else if(s==='summer'){
+    const wave=document.createElement('div');
+    wave.className='wave';
+    layer.appendChild(wave);
+  }
+}
+
+/* ---------- 入口 ---------- */
+document.getElementById('unfold').addEventListener('click',()=>{
+  document.getElementById('overlay').style.opacity=0;
+  setTimeout(()=>{
+    document.getElementById('overlay').style.display='none';
+    document.getElementById('main').classList.add('visible');
+  },1200);
+});
+
+/* ---------- 日晷弹窗 ---------- */
+function toggleModal(){
+  document.getElementById('modal').classList.toggle('show');
+}
+document.getElementById('sundialBtn').addEventListener('click',toggleModal);
+
+/* ---------- 启动 ---------- */
+initTime();
+</script>
+</body>
+</html>
