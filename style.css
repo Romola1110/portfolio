@@ -1,0 +1,154 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2869
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;\red34\green32\blue31;\red251\green249\blue246;}
+{\*\expandedcolortbl;;\cssrgb\c18039\c16863\c16078;\cssrgb\c98824\c98039\c97255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 /* \uc0\u20840 \u23616 \u21464 \u37327 \u65306 \u22235 \u23395 \u37197 \u33394  */\
+:root \{\
+    --bg-color: #F8F4EC; /* \uc0\u31859 \u30333  */\
+    --text-main: #574033; /* \uc0\u26286 \u33394 \u26837  */\
+    --text-light: #B6AFA4; /* \uc0\u38654 \u28784  */\
+    --accent-color: #E9D6A5; /* \uc0\u26216 \u20809 \u40644  */\
+    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', serif;\
+    --font-sans: 'Noto Sans TC', sans-serif;\
+    --font-calligraphy: 'Ma Shan Zheng', cursive; /* \uc0\u28436 \u31034 \u20070 \u27861  */\
+\}\
+\
+body.season-spring \{ --bg-color: #F8F4EC; --accent-color: #E9C8C0; \}\
+body.season-summer \{ --bg-color: #F4ECDA; --accent-color: #A9C5CD; \} /* \uc0\u34013 \u33394 \u35843  */\
+body.season-autumn \{ --bg-color: #F0E7D5; --accent-color: #D8B27A; \}\
+body.season-winter \{ --bg-color: #F3F0EA; --accent-color: #A6B3C2; \}\
+\
+* \{ margin: 0; padding: 0; box-sizing: border-box; \}\
+\
+body \{\
+    font-family: var(--font-serif);\
+    background-color: var(--bg-color);\
+    color: var(--text-main);\
+    transition: background-color 1.5s ease, color 1.5s ease;\
+    overflow-x: hidden;\
+    line-height: 1.8;\
+\}\
+\
+/* \uc0\u20837 \u21475 \u36974 \u32617  */\
+#entrance-overlay \{\
+    position: fixed;\
+    top: 0; left: 0; width: 100%; height: 100%;\
+    background: rgba(255,255,255,0.95);\
+    display: flex;\
+    justify-content: center;\
+    align-items: center;\
+    z-index: 1000;\
+    transition: opacity 1.5s ease;\
+\}\
+.entrance-content \{ text-align: center; padding: 2rem; \}\
+.calligraphy-title \{\
+    font-family: var(--font-calligraphy);\
+    font-size: 3rem;\
+    margin-bottom: 1rem;\
+    color: var(--text-main);\
+    opacity: 0; animation: fadeIn 2s forwards 0.5s;\
+\}\
+.lunar-date \{ font-size: 1.2rem; color: var(--text-light); margin-bottom: 2rem; opacity: 0; animation: fadeIn 2s forwards 1s; \}\
+.invitation-poem \{\
+    font-family: var(--font-serif);\
+    font-style: italic;\
+    font-size: 1.1rem;\
+    margin-bottom: 3rem;\
+    opacity: 0; animation: fadeIn 2s forwards 1.5s;\
+\}\
+.unfolding-btn \{\
+    padding: 12px 30px;\
+    font-size: 1rem;\
+    background: transparent;\
+    border: 1px solid var(--text-main);\
+    cursor: pointer;\
+    font-family: var(--font-serif);\
+    transition: all 0.3s ease;\
+    opacity: 0; animation: fadeIn 2s forwards 2s;\
+\}\
+.unfolding-btn:hover \{ background: var(--text-main); color: #fff; \}\
+\
+.fade-out \{ opacity: 0; visibility: hidden; transition: opacity 1s ease; \}\
+.main-visible \{ opacity: 1 !important; visibility: visible !important; \}\
+\
+/* \uc0\u23548 \u33322 \u26639  */\
+nav \{\
+    display: flex;\
+    justify-content: space-between;\
+    align-items: center;\
+    padding: 1.5rem 3rem;\
+    position: fixed;\
+    top: 0; width: 100%;\
+    background: rgba(248, 244, 236, 0.8);\
+    backdrop-filter: blur(10px);\
+    z-index: 100;\
+\}\
+.logo \{ font-weight: bold; font-size: 1.2rem; \}\
+.nav-links \{ list-style: none; display: flex; gap: 2rem; \}\
+.nav-links a \{ text-decoration: none; color: var(--text-main); font-size: 1.1rem; letter-spacing: 2px; \}\
+.sundial-wrapper \{ position: relative; cursor: pointer; display: flex; flex-direction: column; align-items: center; \}\
+.sundial \{ font-size: 1.5rem; transition: transform 0.5s ease; \}\
+.date-display \{ font-size: 0.8rem; text-align: center; color: var(--text-light); margin-top: 4px; \}\
+.solar-date \{ display: block; font-weight: bold; \}\
+\
+/* Hero */\
+.hero-section \{\
+    height: 100vh;\
+    display: flex;\
+    justify-content: center;\
+    align-items: center;\
+    position: relative;\
+    overflow: hidden;\
+\}\
+.hero-background \{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; filter: grayscale(20%) sepia(10%); transition: all 1s ease; \}\
+.bg-img \{ width: 100%; height: 100%; object-fit: cover; opacity: 0.6; \}\
+.hero-text \{ text-align: center; z-index: 1; \}\
+.hero-text h2 \{ font-family: var(--font-calligraphy); font-size: 4rem; margin-bottom: 1rem; opacity: 0; animation: fadeInUp 1.5s forwards 0.5s; \}\
+.hero-text p \{ font-family: var(--font-serif); font-size: 1.2rem; font-style: italic; opacity: 0; animation: fadeInUp 1.5s forwards 1s; \}\
+\
+/* Sections */\
+section \{ padding: 5rem 10%; min-height: 60vh; \}\
+.section-header \{ text-align: center; margin-bottom: 3rem; \}\
+.cn-title \{ font-family: var(--font-calligraphy); font-size: 2.5rem; color: var(--text-main); margin-bottom: 0.5rem; \}\
+.en-subtitle \{ font-family: var(--font-serif); font-size: 1.1rem; color: var(--text-light); \}\
+\
+.about-section .about-container \{ display: flex; align-items: center; gap: 3rem; \}\
+.about-image img \{ width: 300px; border-radius: 100px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); \}\
+.about-text p \{ margin-bottom: 1rem; text-align: justify; \}\
+\
+.grid-gallery \{ display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2rem; \}\
+.card \{ background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s; text-align: center; \}\
+.card:hover \{ transform: translateY(-5px); \}\
+.card h4 \{ margin-bottom: 0.5rem; color: var(--text-main); \}\
+.card p \{ color: var(--text-light); font-size: 0.9rem; \}\
+\
+.contact-section \{ text-align: center; \}\
+.contact-poem-cn \{ font-size: 1.5rem; margin: 1rem 0; \}\
+.contact-info \{ margin-top: 2rem; \}\
+.contact-info a \{ color: var(--text-main); text-decoration: none; font-size: 1.2rem; \}\
+\
+footer \{ text-align: center; padding: 3rem; font-size: 0.9rem; color: var(--text-light); \}\
+\
+/* Modal */\
+.modal \{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 200; display: flex; justify-content: center; align-items: center; \}\
+.hidden \{ display: none; \}\
+.modal-content \{ background: #fff; padding: 2rem; border-radius: 10px; text-align: center; \}\
+.season-buttons button \{ margin: 0.5rem; padding: 0.5rem 1rem; cursor: pointer; \}\
+.close-modal \{ margin-top: 1rem; border: none; background: none; text-decoration: underline; cursor: pointer; \}\
+\
+/* Animations */\
+@keyframes fadeIn \{ from \{ opacity: 0; \} to \{ opacity: 1; \} \}\
+@keyframes fadeInUp \{ from \{ opacity: 0; transform: translateY(20px); \} to \{ opacity: 1; transform: translateY(0); \} \}\
+\
+/* Mobile */\
+@media (max-width: 768px) \{\
+    .about-container \{ flex-direction: column; text-align: center; \}\
+    .nav-links \{ display: none; \}\
+    .hero-text h2 \{ font-size: 2.5rem; \}\
+    nav \{ padding: 1rem; \}\
+\}}
