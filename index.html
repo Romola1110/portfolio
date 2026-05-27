@@ -8,7 +8,7 @@
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Italiana&family=Noto+Serif+SC:wght@300;400;600&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Italiana&family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Serif+TC:wght@600;900&family=Ma+Shan+Zheng&family=Long+Cang&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 
 <style>
 /* ---------- 全局变量 ---------- */
@@ -21,6 +21,8 @@
   --english:'Cormorant Garamond', serif;
   --display:'Italiana', serif;
   --cn-calli:'Ma Shan Zheng', cursive;
+  /* 标题统一用 ZCOOL XiaoWei，Google Fonts 已加载，无缺字问题 */
+  --cn-title:'ZCOOL XiaoWei', 'Noto Serif SC', serif;
   --transition:1.2s ease;
 }
 
@@ -40,54 +42,372 @@ body{
   transition:background var(--transition), color var(--transition);
 }
 
-/* ---------- 入口动画 ---------- */
+/* ========== 启封页 ========== */
 #overlay{
   position:fixed;inset:0;
-  background:rgba(255,253,247,0.97);
   display:flex;align-items:center;justify-content:center;
   z-index:1000;
-  transition:opacity 1.5s ease;
-  text-align:center;
+  transition:opacity 1.8s ease;
+  overflow:hidden;
 }
-#overlay .box{padding:2rem;max-width:700px;}
-#overlay h1{
-  font-family:var(--cn-calli);
-  font-size:3rem;
-  letter-spacing:.1em;
-  line-height:1.4;
-  margin-bottom:1.4rem;
-}
-#overlay .lunar{
-  font-family:var(--serif);
-  color:var(--soft);
-  font-size:1rem;
-  margin-bottom:2rem;
-}
-#overlay .poem{
-  font-family:var(--english);
-  font-style:italic;
-  font-size:1.2rem;
-  margin-bottom:2.5rem;
-  line-height:2;
-}
-#overlay .poem-cn{
-  font-family:var(--serif);
-  font-size:1.1rem;
-  margin-bottom:.6rem;
-}
-#overlay button{
-  font-family:var(--serif);
-  border:1px solid var(--text);
-  background:transparent;
-  color:var(--text);
-  padding:.7rem 2rem;
-  cursor:pointer;
-  letter-spacing:.2em;
-  transition:.3s;
-}
-#overlay button:hover{background:var(--text);color:#fff;}
 
-/* ---------- 导航 ---------- */
+/* === 多层渐变背景（四季） === */
+#overlay.spring-bg{
+  background:
+    radial-gradient(ellipse 60% 80% at 15% 20%, #FFD4D4 0%, transparent 50%),
+    radial-gradient(ellipse 70% 60% at 85% 30%, #FFE8C7 0%, transparent 50%),
+    radial-gradient(ellipse 80% 70% at 50% 85%, #F5D5E0 0%, transparent 60%),
+    linear-gradient(135deg, #FFF5E8 0%, #FAE8D9 50%, #F5DCC8 100%);
+}
+#overlay.summer-bg{
+  background:
+    radial-gradient(ellipse 60% 80% at 15% 20%, #C8E0E8 0%, transparent 50%),
+    radial-gradient(ellipse 70% 60% at 85% 30%, #E0EBC8 0%, transparent 50%),
+    radial-gradient(ellipse 80% 70% at 50% 85%, #B8D4DC 0%, transparent 60%),
+    linear-gradient(135deg, #EDF5F3 0%, #DCE8E5 50%, #C8DCD8 100%);
+}
+#overlay.autumn-bg{
+  background:
+    radial-gradient(ellipse 60% 80% at 15% 20%, #F5C99B 0%, transparent 50%),
+    radial-gradient(ellipse 70% 60% at 85% 30%, #E8A07A 0%, transparent 50%),
+    radial-gradient(ellipse 80% 70% at 50% 85%, #DCC299 0%, transparent 60%),
+    linear-gradient(135deg, #FBF0DC 0%, #F2DCB8 50%, #E8C599 100%);
+}
+#overlay.winter-bg{
+  background:
+    radial-gradient(ellipse 60% 80% at 15% 20%, #D8E0EC 0%, transparent 50%),
+    radial-gradient(ellipse 70% 60% at 85% 30%, #E8E5F0 0%, transparent 50%),
+    radial-gradient(ellipse 80% 70% at 50% 85%, #C8D2DC 0%, transparent 60%),
+    linear-gradient(135deg, #F4F5F7 0%, #E5E8EC 50%, #D2D8E0 100%);
+}
+
+/* === 背景几何意象（柔和有机） === */
+.deco-shape{
+  position:absolute;
+  pointer-events:none;
+  opacity:0.5;
+  z-index:0;
+}
+.deco-shape.s1{top:8%;left:5%;width:180px;height:180px;}
+.deco-shape.s2{top:60%;right:8%;width:220px;height:220px;}
+.deco-shape.s3{bottom:10%;left:15%;width:140px;height:140px;}
+.deco-shape.s4{top:30%;right:25%;width:100px;height:100px;}
+
+/* === 背景诗词碎片 === */
+#poemBg{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:1;
+}
+.poem-fragment{
+  position:absolute;
+  white-space:nowrap;
+  user-select:none;
+  /* 统一使用 ZCOOL XiaoWei，所有汉字都能正确显示 */
+  font-family:'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+  font-weight:400;
+  transition:transform 1.5s cubic-bezier(0.2,0.8,0.2,1);
+  text-shadow:0 1px 3px rgba(255,255,255,0.4);
+}
+.poem-fragment.en{
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic;
+}
+
+/* 空间感：大/近/清晰 vs 小/远/模糊，随机分配 */
+.poem-fragment.depth-near{
+  opacity:0.45;
+  filter:blur(0);
+}
+.poem-fragment.depth-mid{
+  opacity:0.35;
+  filter:blur(1.5px);
+}
+.poem-fragment.depth-far{
+  opacity:0.22;
+  filter:blur(3px);
+}
+
+/* === 信笺纸（增强纸纹） === */
+.letter-paper{
+  position:relative;
+  z-index:5;
+  max-width:640px;
+  width:85%;
+  padding:5rem 4rem;
+  /* 多层纸纹叠加 */
+  background:
+    /* 纤维纹理 - 细横线 */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 23px,
+      rgba(160,130,90,0.06) 23px,
+      rgba(160,130,90,0.06) 24px
+    ),
+    /* 纤维纹理 - 随机竖向 */
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 47px,
+      rgba(140,110,70,0.03) 47px,
+      rgba(140,110,70,0.03) 48px
+    ),
+    /* 底色渐变 */
+    linear-gradient(
+      170deg,
+      rgba(255,252,242,0.82) 0%,
+      rgba(250,244,230,0.78) 30%,
+      rgba(245,238,218,0.75) 60%,
+      rgba(252,247,235,0.80) 100%
+    );
+  border-radius:4px;
+  box-shadow:
+    0 30px 80px rgba(120,90,60,0.18),
+    0 10px 30px rgba(120,90,60,0.1),
+    inset 0 0 0 1px rgba(255,255,255,0.6),
+    /* 内侧淡淡泛黄边 */
+    inset 0 0 60px rgba(200,170,120,0.08);
+  text-align:center;
+  backdrop-filter:blur(10px);
+}
+
+/* 纸纹噪点覆盖层 */
+.letter-paper::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:4px;
+  /* 用多个极小渐变模拟噪点纹理 */
+  background-image:
+    radial-gradient(ellipse 1px 1px at 20% 30%, rgba(150,120,80,0.08), transparent),
+    radial-gradient(ellipse 1px 1px at 60% 70%, rgba(130,100,60,0.06), transparent),
+    radial-gradient(ellipse 2px 1px at 80% 20%, rgba(160,130,90,0.05), transparent),
+    radial-gradient(ellipse 1px 2px at 40% 80%, rgba(140,110,70,0.07), transparent),
+    radial-gradient(ellipse 1px 1px at 10% 60%, rgba(170,140,100,0.04), transparent),
+    radial-gradient(ellipse 2px 2px at 90% 50%, rgba(120,90,50,0.06), transparent);
+  background-size:
+    7px 11px,
+    13px 9px,
+    11px 14px,
+    9px 7px,
+    15px 13px,
+    8px 10px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* 信笺角饰 */
+.letter-corner{
+  position:absolute;
+  width:32px;height:32px;
+  border:1.5px solid rgba(150,100,70,0.25);
+  pointer-events:none;
+  z-index:1;
+}
+.letter-corner.tl{top:18px;left:18px;border-right:none;border-bottom:none;}
+.letter-corner.br{bottom:18px;right:18px;border-left:none;border-top:none;}
+
+/* 信笺内容层 */
+.letter-content{
+  position:relative;
+  z-index:2;
+}
+
+/* === 标题：横排两行，左右错开 === */
+.main-title{
+  font-family:var(--cn-title);
+  font-size:3.5rem;
+  color:#2D1810;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.4rem;
+  margin-bottom:2.5rem;
+  position:relative;
+  cursor:pointer;
+  line-height:1.2;
+  transition:color 1s ease;
+}
+.main-title:hover{color:#9C7A4A;}
+
+.title-row{
+  display:flex;
+  letter-spacing:0.25em;
+}
+.title-row.top{
+  align-self:flex-start;
+  margin-left:8%;
+}
+.title-row.bottom{
+  align-self:flex-end;
+  margin-right:8%;
+  margin-top:-0.2rem;
+}
+
+.title-char{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(-25px);
+  filter:blur(8px);
+  animation:writeIn 0.7s ease forwards;
+}
+
+/* === 时维 / 诗 / 按钮 === */
+.lunar-line{
+  font-family:'Noto Serif SC', serif;
+  font-weight:600;
+  color:#6B4A30;
+  font-size:1rem;
+  margin-bottom:2.2rem;
+  letter-spacing:0.15em;
+  opacity:0;
+  animation:slideUp 1.2s ease forwards 3s;
+}
+.poem-cn{
+  font-family:'Noto Serif SC', serif;
+  font-weight:600;
+  font-size:1.2rem;
+  line-height:2.2;
+  color:#3A2818;
+  margin-bottom:1.5rem;
+  opacity:0;
+  animation:slideUp 1.2s ease forwards 3.3s;
+  letter-spacing:0.1em;
+}
+.poem-en{
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic;
+  font-size:1.05rem;
+  line-height:1.9;
+  color:#7A5C44;
+  margin-bottom:2.5rem;
+  opacity:0;
+  animation:slideUp 1.2s ease forwards 3.6s;
+}
+.unfold-btn{
+  font-family:'Noto Serif SC', serif;
+  font-weight:600;
+  font-size:1rem;
+  border:1.5px solid #3A2818;
+  background:transparent;
+  color:#2D1810;
+  padding:0.85rem 2.5rem;
+  cursor:pointer;
+  letter-spacing:0.35em;
+  transition:all 0.5s ease;
+  opacity:0;
+  animation:fadeIn 1.5s ease forwards 4s;
+}
+.unfold-btn:hover{
+  background:#2D1810;
+  color:#FFF5E8;
+  letter-spacing:0.45em;
+}
+
+/* === 季节切换迷你按钮 === */
+.season-mini-switcher{
+  position:absolute;
+  top:30px;right:30px;
+  display:flex;gap:0.5rem;
+  z-index:10;
+  opacity:0;
+  animation:fadeIn 1s ease forwards 1s;
+}
+.season-mini-btn{
+  width:32px;height:32px;
+  border-radius:50%;
+  border:1.5px solid rgba(90,60,40,0.4);
+  background:rgba(255,255,255,0.5);
+  cursor:pointer;
+  font-family:'Noto Serif SC', serif;
+  font-weight:600;
+  font-size:0.9rem;
+  color:#5A3C28;
+  transition:all 0.3s ease;
+  display:flex;align-items:center;justify-content:center;
+}
+.season-mini-btn:hover{
+  background:#5A3C28;color:#FFF5E8;transform:scale(1.1);
+}
+.season-mini-btn.active{
+  background:#5A3C28;color:#FFF5E8;
+}
+
+/* === 鼠标墨痕 === */
+.ink-trail{
+  position:fixed;
+  width:10px;height:10px;
+  background:radial-gradient(circle, rgba(90,60,40,0.5) 0%, transparent 70%);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  animation:inkFade 1.8s ease forwards;
+}
+
+/* === 点击元素 === */
+.click-effect{
+  position:fixed;
+  pointer-events:none;
+  z-index:9998;
+}
+.click-petal{
+  width:16px;height:16px;
+  background:linear-gradient(135deg, #FFB8C0 0%, #F595A5 100%);
+  border-radius:50% 0;
+  box-shadow:0 2px 6px rgba(245,150,165,0.4);
+  animation:petalDrift 3s ease-in forwards;
+}
+.click-ripple{
+  width:30px;height:30px;
+  border:2px solid rgba(120,180,200,0.6);
+  border-radius:50%;
+  animation:rippleOut 1.8s ease-out forwards;
+}
+.click-leaf{
+  width:20px;height:20px;
+  animation:leafTwirl 3s ease-in forwards;
+}
+.click-snow{
+  width:20px;height:20px;
+  animation:snowFall 3s ease-in forwards;
+}
+
+/* ---------- 动画 ---------- */
+@keyframes writeIn{
+  0%{opacity:0;transform:translateY(-25px);filter:blur(8px);}
+  60%{opacity:0.7;filter:blur(2px);}
+  100%{opacity:1;transform:translateY(0);filter:blur(0);}
+}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(15px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+@keyframes inkFade{
+  0%{opacity:0.7;transform:scale(1);}
+  100%{opacity:0;transform:scale(2.5);}
+}
+@keyframes petalDrift{
+  0%{opacity:1;transform:translate(0,0) rotate(0);}
+  100%{opacity:0;transform:translate(-30px,150px) rotate(180deg);}
+}
+@keyframes rippleOut{
+  0%{opacity:1;transform:scale(0.3);}
+  100%{opacity:0;transform:scale(3);}
+}
+@keyframes leafTwirl{
+  0%{opacity:1;transform:translate(0,0) rotate(0);}
+  100%{opacity:0;transform:translate(20px,180px) rotate(540deg);}
+}
+@keyframes snowFall{
+  0%{opacity:1;transform:translate(0,0) rotate(0);}
+  100%{opacity:0;transform:translate(-15px,160px) rotate(180deg);}
+}
+
+/* ---------- 以下完全保留原代码 ---------- */
 nav{
   position:fixed;top:0;left:0;right:0;
   display:flex;justify-content:space-between;align-items:center;
@@ -109,13 +429,11 @@ nav{
 .sundial:hover{transform:scale(1.15);}
 .time-box{font-size:.75rem;line-height:1.3;color:var(--soft);text-align:right;}
 
-/* ---------- 主体 ---------- */
 main{opacity:0;visibility:hidden;transition:opacity 1s;}
 main.visible{opacity:1;visibility:visible;}
 
 section{padding:6rem 8%;}
 
-/* Hero */
 .hero{
   height:100vh;display:flex;align-items:center;justify-content:center;
   position:relative;text-align:center;overflow:hidden;
@@ -132,7 +450,6 @@ section{padding:6rem 8%;}
 }
 .season-effect{position:absolute;inset:0;pointer-events:none;}
 
-/* About */
 .about{display:flex;gap:4rem;align-items:center;flex-wrap:wrap;}
 .about img{
   width:280px;height:360px;object-fit:cover;
@@ -143,12 +460,10 @@ section{padding:6rem 8%;}
 .about-text p{margin-bottom:1rem;}
 .about-text .en{font-family:var(--english);color:var(--soft);font-style:italic;}
 
-/* Section header */
 .section-header{text-align:center;margin-bottom:3rem;}
 .section-header h3{font-family:var(--cn-calli);font-size:2.4rem;margin-bottom:.4rem;}
 .section-header p{font-family:var(--english);color:var(--soft);font-style:italic;}
 
-/* Grid */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -166,20 +481,17 @@ section{padding:6rem 8%;}
 .card h4{font-family:var(--cn-calli);font-size:1.3rem;margin-bottom:.4rem;}
 .card p{color:var(--soft);font-size:.9rem;}
 
-/* Contact */
 .contact{text-align:center;}
 .contact h3{font-family:var(--cn-calli);font-size:2rem;margin-bottom:.6rem;}
 .contact .cn{font-size:1.2rem;}
 .contact .en{font-family:var(--english);font-style:italic;color:var(--soft);}
 .contact a{color:var(--text);text-decoration:none;display:block;margin-top:1rem;}
 
-/* Footer */
 footer{
   text-align:center;padding:3rem;color:var(--soft);
   font-family:var(--english);font-style:italic;
 }
 
-/* Modal */
 .modal{
   position:fixed;inset:0;display:none;
   background:rgba(0,0,0,.5);
@@ -191,11 +503,6 @@ footer{
 }
 .modal-box button{margin:.4rem;padding:.5rem 1rem;cursor:pointer;}
 
-/* Animations */
-@keyframes fadeUp{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:none;}}
-.fadeUp{animation:fadeUp 1.2s ease;}
-
-/* 春花瓣、秋落叶、雪花 */
 .petal,.leaf,.snow{position:absolute;top:-20px;opacity:.8;animation:fall linear infinite;}
 .petal{width:14px;height:14px;background:#F4C7C0;border-radius:50% 0;}
 .leaf{width:16px;height:10px;background:#D8A36A;border-radius:50%;}
@@ -205,13 +512,12 @@ footer{
   100%{transform:translateY(110vh) rotate(360deg);}
 }
 
-/* 夏季水波 */
 .wave{
   position:absolute;inset:0;
   background:radial-gradient(circle at 50% 80%, rgba(169,197,205,.4), transparent 70%);
-  animation:wave 6s ease-in-out infinite;
+  animation:waveAnim 6s ease-in-out infinite;
 }
-@keyframes wave{
+@keyframes waveAnim{
   0%,100%{transform:scale(1);}
   50%{transform:scale(1.05);}
 }
@@ -220,27 +526,60 @@ footer{
   .nav-links{display:none;}
   .hero h2{font-size:2.5rem;}
   .about{flex-direction:column;text-align:center;}
+  .main-title{font-size:2.5rem;}
+  .letter-paper{padding:3rem 2rem;}
+  .season-mini-switcher{top:15px;right:15px;}
 }
 </style>
 </head>
 
 <body class="spring">
 
-<!-- 入口启封 -->
+<!-- ========== 启封页 ========== -->
 <div id="overlay">
-  <div class="box">
-    <h1>风物有信<br>四时皆书</h1>
-    <p class="lunar">时维 <span id="lunarMonth">桃月</span>，序属 <span id="seasonText">仲春</span></p>
-    <p class="poem-cn">一笺为引，一卷为心；<br>同声相应，愿君共寻。</p>
-    <p class="poem">
-      A small scroll of light, offered as an invitation —<br>
-      when kindred voices answer, we walk this way together.
-    </p>
-    <button id="unfold">啟封 · Unfold</button>
+  
+  <!-- 季节切换按钮 -->
+  <div class="season-mini-switcher">
+    <div class="season-mini-btn" data-season="spring" title="春">春</div>
+    <div class="season-mini-btn" data-season="summer" title="夏">夏</div>
+    <div class="season-mini-btn" data-season="autumn" title="秋">秋</div>
+    <div class="season-mini-btn" data-season="winter" title="冬">冬</div>
+  </div>
+  
+  <!-- 背景几何装饰 -->
+  <svg class="deco-shape s1" viewBox="0 0 100 100" id="deco1"></svg>
+  <svg class="deco-shape s2" viewBox="0 0 100 100" id="deco2"></svg>
+  <svg class="deco-shape s3" viewBox="0 0 100 100" id="deco3"></svg>
+  <svg class="deco-shape s4" viewBox="0 0 100 100" id="deco4"></svg>
+  
+  <!-- 背景诗词碎片 -->
+  <div id="poemBg"></div>
+  
+  <!-- 信笺 -->
+  <div class="letter-paper">
+    <div class="letter-corner tl"></div>
+    <div class="letter-corner br"></div>
+    <div class="letter-content">
+      <h1 class="main-title" id="mainTitle">
+        <span class="title-row top" id="rowTop"></span>
+        <span class="title-row bottom" id="rowBottom"></span>
+      </h1>
+      
+      <p class="lunar-line">時維 <span id="lunarMonth">桃月</span>，序屬 <span id="seasonText">仲春</span></p>
+      
+      <p class="poem-cn">一箋為引，一卷為心；<br>同聲相應，與君共尋。</p>
+      
+      <p class="poem-en">
+        A small scroll of light, offered as an invitation —<br>
+        when kindred voices answer, we walk this way together.
+      </p>
+      
+      <button class="unfold-btn" id="unfold">啟封 · Unfold</button>
+    </div>
   </div>
 </div>
 
-<!-- 主体 -->
+<!-- ========== 主体（完全保留） ========== -->
 <main id="main">
 
 <nav>
@@ -261,7 +600,6 @@ footer{
   </div>
 </nav>
 
-<!-- Hero -->
 <section class="hero">
   <div class="season-effect" id="effectLayer"></div>
   <div>
@@ -270,7 +608,6 @@ footer{
   </div>
 </section>
 
-<!-- About -->
 <section id="about">
   <div class="about">
     <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800&auto=format&fit=crop" alt="Yang Xueqi"/>
@@ -282,7 +619,6 @@ footer{
   </div>
 </section>
 
-<!-- 文 -->
 <section id="words">
   <div class="section-header">
     <h3>文以载心</h3>
@@ -296,7 +632,6 @@ footer{
   </div>
 </section>
 
-<!-- 影 -->
 <section id="images">
   <div class="section-header">
     <h3>目之所及</h3>
@@ -309,7 +644,6 @@ footer{
   </div>
 </section>
 
-<!-- 物 -->
 <section id="things">
   <div class="section-header">
     <h3>手作有温</h3>
@@ -323,7 +657,6 @@ footer{
   </div>
 </section>
 
-<!-- 时 -->
 <section id="time">
   <div class="section-header">
     <h3>数里观诗</h3>
@@ -335,7 +668,6 @@ footer{
   </div>
 </section>
 
-<!-- Contact -->
 <section id="contact" class="contact">
   <h3>续音</h3>
   <p class="cn">山高水长，愿有回响。</p>
@@ -351,7 +683,6 @@ footer{
 
 </main>
 
-<!-- 季节切换弹窗 -->
 <div class="modal" id="modal">
   <div class="modal-box">
     <h4>Select Season</h4>
@@ -367,51 +698,260 @@ footer{
 
 <script>
 /* ---------- 数据 ---------- */
-const lunarMonths=["端月","杏月","桃月","槐月","榴月","荷月","兰月","桂月","菊月","阳月","葭月","腊月"];
-const seasonMap={
-  spring:{cn:"风传花信，雨濯春尘。",en:"The wind carries word of blossoms; spring rain washes the world anew.",text:"仲春"},
-  summer:{cn:"碧海生光，长风度夏。",en:"Light glimmers on the sea; the long wind carries the summer through.",text:"仲夏"},
-  autumn:{cn:"暮色含金，木叶将辞。",en:"Dusk gilds the world in gold; the leaves prepare to leave.",text:"仲秋"},
-  winter:{cn:"一夜雪深，万物归藏。",en:"The night deepens with snow; all things return to stillness.",text:"仲冬"}
+const lunarMonths=["端月","杏月","桃月","槐月","榴月","荷月","蘭月","桂月","菊月","陽月","葭月","臘月"];
+
+/* 完整十二月季节对应 */
+const seasonByMonth = {
+  1: {season:'spring', text:'孟春'},
+  2: {season:'spring', text:'仲春'},
+  3: {season:'spring', text:'暮春'},
+  4: {season:'summer', text:'孟夏'},
+  5: {season:'summer', text:'仲夏'},
+  6: {season:'summer', text:'季夏'},
+  7: {season:'autumn', text:'孟秋'},
+  8: {season:'autumn', text:'仲秋'},
+  9: {season:'autumn', text:'暮秋'},
+  10:{season:'winter', text:'孟冬'},
+  11:{season:'winter', text:'仲冬'},
+  12:{season:'winter', text:'季冬'}
 };
 
-/* ---------- 时间 ---------- */
+const seasonMap={
+  spring:{cn:"風傳花信，雨濯春塵。",en:"The wind carries word of blossoms; spring rain washes the world anew."},
+  summer:{cn:"碧海生光，長風度夏。",en:"Light glimmers on the sea; the long wind carries the summer through."},
+  autumn:{cn:"暮色含金，木葉將辭。",en:"Dusk gilds the world in gold; the leaves prepare to leave."},
+  winter:{cn:"一夜雪深，萬物歸藏。",en:"The night deepens with snow; all things return to stillness."}
+};
+
+// 季节诗词碎片库（全部使用常用汉字，ZCOOL XiaoWei 均可渲染）
+const poemFragments = {
+  spring:[
+    '桃之夭夭','灼灼其華','春眠不覺曉','人面桃花','惠風和暢',
+    '雜花生樹','草長鶯飛','春江水暖','花落知多少','燕燕于飛',
+    {en:'April is the cruellest month'},
+    {en:'A host of golden daffodils'},
+    {en:'The world is charged with grandeur'},
+    {en:'Spring, the sweet spring'}
+  ],
+  summer:[
+    '綠樹陰濃','水面清圓','風荷舉','江南可採蓮','清風徐來',
+    '蟬鳴空山','接天蓮葉','映日荷花','長夏江村','梅子黃時',
+    {en:'Shall I compare thee to a summer\'s day'},
+    {en:'Summer afternoon'},
+    {en:'The lightning bug'},
+    {en:'Rough winds do shake'}
+  ],
+  autumn:[
+    '落木蕭蕭','楓林晚照','碧雲黃葉','空山新雨','秋水長天',
+    '明月松間','寒山轉蒼翠','秋風蕭瑟','白露為霜','一葉知秋',
+    {en:'Season of mists'},
+    {en:'Mellow fruitfulness'},
+    {en:'Listen! the wind is rising'},
+    {en:'And all the trees stand bare'}
+  ],
+  winter:[
+    '千秋雪','孤舟蓑笠','瑞雪紛飛','寒梅著花','千樹萬樹',
+    '獨釣寒江','風雪夜歸','歲寒三友','梅花香自苦寒來','窗含西嶺',
+    {en:'Whose woods these are'},
+    {en:'Winter is the time for comfort'},
+    {en:'Miles to go before I sleep'},
+    {en:'Frost on the window'}
+  ]
+};
+
+// 几何装饰 SVG（冬天改为柔和晕染，去掉硬边线条）
+const decorations = {
+  spring: [
+    '<ellipse cx="50" cy="50" rx="40" ry="32" fill="#FFB8C0" opacity="0.35" transform="rotate(-15 50 50)"/>',
+    '<path d="M50,15 C70,25 75,55 60,75 C45,85 25,70 25,50 C25,30 35,15 50,15 Z" fill="#F5A0B0" opacity="0.4"/>',
+    '<ellipse cx="50" cy="50" rx="38" ry="28" fill="#FFD4DC" opacity="0.45" transform="rotate(20 50 50)"/>',
+    '<path d="M50,20 Q75,35 70,55 Q60,80 40,70 Q20,55 30,35 Q40,20 50,20 Z" fill="#F8C5D0" opacity="0.4"/>'
+  ],
+  summer: [
+    '<path d="M5,55 Q25,40 45,55 T85,55 T125,55" stroke="#8BBED0" stroke-width="4" fill="none" opacity="0.5"/>',
+    '<ellipse cx="50" cy="55" rx="42" ry="30" fill="#A8D0DC" opacity="0.35" transform="rotate(-8 50 55)"/>',
+    '<path d="M50,25 Q65,40 60,60 Q55,80 40,70 Q30,55 35,40 Q42,25 50,25 Z" fill="#8BBED0" opacity="0.45"/>',
+    '<path d="M10,60 Q30,45 50,60 Q70,75 90,60" stroke="#6FAFC2" stroke-width="3" fill="none" opacity="0.5"/>'
+  ],
+  autumn: [
+    '<path d="M50,12 Q60,30 75,32 Q70,45 80,55 Q65,55 60,75 Q50,60 40,75 Q35,55 20,55 Q30,45 25,32 Q40,30 50,12 Z" fill="#C49060" opacity="0.5"/>',
+    '<ellipse cx="50" cy="50" rx="40" ry="32" fill="#D8A36A" opacity="0.35" transform="rotate(15 50 50)"/>',
+    '<path d="M50,18 Q72,28 70,50 Q65,72 45,68 Q25,60 28,40 Q32,22 50,18 Z" fill="#E8C28A" opacity="0.4"/>',
+    '<path d="M50,15 Q58,30 70,28 Q65,42 75,52 Q60,52 55,68 Q50,55 45,68 Q40,52 25,52 Q35,42 30,28 Q42,30 50,15 Z" fill="#B07840" opacity="0.45"/>'
+  ],
+  winter: [
+    /* 冬天：全部改为晕染模糊的有机形态，无硬线条 */
+    '<defs><filter id="wblur1"><feGaussianBlur stdDeviation="6"/></filter></defs><ellipse cx="50" cy="50" rx="38" ry="32" fill="#B8C8DC" opacity="0.4" filter="url(#wblur1)" transform="rotate(-12 50 50)"/>',
+    '<defs><filter id="wblur2"><feGaussianBlur stdDeviation="8"/></filter></defs><path d="M50,18 Q72,28 68,52 Q62,75 42,68 Q22,58 28,38 Q35,20 50,18 Z" fill="#A0B5CC" opacity="0.45" filter="url(#wblur2)"/>',
+    '<defs><filter id="wblur3"><feGaussianBlur stdDeviation="5"/></filter></defs><ellipse cx="50" cy="55" rx="35" ry="28" fill="#C5D0DD" opacity="0.35" filter="url(#wblur3)" transform="rotate(18 50 55)"/>',
+    '<defs><filter id="wblur4"><feGaussianBlur stdDeviation="7"/></filter></defs><path d="M50,22 Q68,32 62,55 Q55,72 38,65 Q25,52 32,35 Q40,22 50,22 Z" fill="#95AAC0" opacity="0.4" filter="url(#wblur4)"/>'
+  ]
+};
+
+/* ---------- 时间初始化 ---------- */
 function initTime(){
   const now=new Date();
   const m=now.getMonth()+1;
   const d=now.getDate();
   const y=now.getFullYear();
+  
   document.getElementById('solarDate').textContent=`${y}.${String(m).padStart(2,'0')}.${String(d).padStart(2,'0')}`;
   document.getElementById('lunarMonth').textContent=lunarMonths[m-1];
-
-  let season='spring';
-  if(m>=3&&m<=5) season='spring';
-  else if(m>=6&&m<=8) season='summer';
-  else if(m>=9&&m<=11) season='autumn';
-  else season='winter';
-  setSeason(season,true);
-
-  document.getElementById('solarTerm').textContent=getApproxTerm(m,d);
+  
+  const info = seasonByMonth[m];
+  document.getElementById('seasonText').textContent = info.text;
+  
+  applySeason(info.season);
+  
+  document.getElementById('heroCN').textContent = seasonMap[info.season].cn;
+  document.getElementById('heroEN').textContent = seasonMap[info.season].en;
+  
+  document.getElementById('solarTerm').textContent = getApproxTerm(m);
+  
+  generateEffect(info.season);
+  initTitle();
 }
-function getApproxTerm(m,d){
-  const list=["Lichun","Yushui","Jingzhe","Chunfen","Qingming","Guyu",
-              "Lixia","Xiaoman","Mangzhong","Xiazhi","Xiaoshu","Dashu",
-              "Liqiu","Chushu","Bailu","Qiufen","Hanlu","Shuangjiang",
-              "Lidong","Xiaoxue","Daxue","Dongzhi","Xiaohan","Dahan"];
-  return list[(m-1)*2];
+
+function getApproxTerm(m){
+  const list=["小寒","立春","驚蟄","清明","立夏","芒種","小暑","立秋","白露","寒露","立冬","大雪"];
+  return list[m-1];
+}
+
+/* ---------- 应用季节 ---------- */
+function applySeason(s){
+  document.body.className = s;
+  
+  const overlay = document.getElementById('overlay');
+  overlay.classList.remove('spring-bg','summer-bg','autumn-bg','winter-bg');
+  overlay.classList.add(s + '-bg');
+  
+  const decos = decorations[s];
+  document.getElementById('deco1').innerHTML = decos[0];
+  document.getElementById('deco2').innerHTML = decos[1];
+  document.getElementById('deco3').innerHTML = decos[2];
+  document.getElementById('deco4').innerHTML = decos[3];
+  
+  generatePoemBg(s);
+  
+  document.querySelectorAll('.season-mini-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.season === s);
+  });
+}
+
+/* ---------- 标题：一字一字书写 ---------- */
+function initTitle(){
+  const topText = '風物有信';
+  const bottomText = '四時皆書';
+  const rowTop = document.getElementById('rowTop');
+  const rowBottom = document.getElementById('rowBottom');
+  
+  rowTop.innerHTML = '';
+  rowBottom.innerHTML = '';
+  
+  topText.split('').forEach((char, i) => {
+    const span = document.createElement('span');
+    span.className = 'title-char';
+    span.textContent = char;
+    span.style.animationDelay = (i * 0.3) + 's';
+    rowTop.appendChild(span);
+  });
+  
+  bottomText.split('').forEach((char, i) => {
+    const span = document.createElement('span');
+    span.className = 'title-char';
+    span.textContent = char;
+    span.style.animationDelay = ((i + topText.length) * 0.3) + 's';
+    rowBottom.appendChild(span);
+  });
+}
+
+/* ---------- 背景诗词碎片（空间感分层） ---------- */
+function generatePoemBg(season){
+  const bg = document.getElementById('poemBg');
+  bg.innerHTML = '';
+  const poems = poemFragments[season];
+  
+  const safeZones = [
+    {top:[2,12], left:[3,18]},
+    {top:[2,12], left:[60,78]},
+    {top:[14,24], left:[2,15]},
+    {top:[14,24], left:[78,92]},
+    {top:[26,38], left:[2,14]},
+    {top:[26,38], left:[82,94]},
+    {top:[55,68], left:[2,15]},
+    {top:[55,68], left:[80,93]},
+    {top:[70,82], left:[2,18]},
+    {top:[70,82], left:[60,80]},
+    {top:[84,94], left:[8,28]},
+    {top:[84,94], left:[55,82]},
+    {top:[40,52], left:[2,12]},
+    {top:[40,52], left:[85,95]}
+  ];
+  
+  /* 空间感分层：near（大/清晰）、mid（中/微糊）、far（小/模糊）*/
+  const depthLevels = ['depth-near','depth-mid','depth-far','depth-near','depth-far',
+                       'depth-mid','depth-near','depth-far','depth-mid','depth-near',
+                       'depth-far','depth-mid','depth-near','depth-far'];
+  const sizeLevels = {
+    'depth-near': [1.6, 2.2],
+    'depth-mid':  [1.2, 1.6],
+    'depth-far':  [0.85, 1.2]
+  };
+  
+  /* 颜色随季节微调 */
+  const colorMap = {
+    spring: {cn:'rgba(100,50,30,0.42)', en:'rgba(100,50,30,0.32)'},
+    summer: {cn:'rgba(40,70,80,0.40)', en:'rgba(40,70,80,0.30)'},
+    autumn: {cn:'rgba(90,55,20,0.42)', en:'rgba(90,55,20,0.32)'},
+    winter: {cn:'rgba(50,60,80,0.38)', en:'rgba(50,60,80,0.28)'}
+  };
+  
+  poems.forEach((p, i) => {
+    if(i >= safeZones.length) return;
+    
+    const el = document.createElement('div');
+    const isEn = typeof p === 'object';
+    el.className = 'poem-fragment' + (isEn ? ' en' : '');
+    
+    const depth = depthLevels[i];
+    el.classList.add(depth);
+    
+    el.textContent = isEn ? p.en : p;
+    el.style.color = isEn ? colorMap[season].en : colorMap[season].cn;
+    
+    const zone = safeZones[i];
+    const top = zone.top[0] + Math.random() * (zone.top[1] - zone.top[0]);
+    const left = zone.left[0] + Math.random() * (zone.left[1] - zone.left[0]);
+    const sizeRange = sizeLevels[depth];
+    const size = sizeRange[0] + Math.random() * (sizeRange[1] - sizeRange[0]);
+    const rotate = (Math.random() - 0.5) * 18;
+    
+    el.style.fontSize = size + 'rem';
+    el.style.top = top + '%';
+    el.style.left = left + '%';
+    el.style.transform = `rotate(${rotate}deg)`;
+    el.dataset.baseRotate = rotate;
+    
+    bg.appendChild(el);
+  });
 }
 
 /* ---------- 季节切换 ---------- */
-function setSeason(s,first){
-  document.body.className=s;
-  document.getElementById('heroCN').textContent=seasonMap[s].cn;
-  document.getElementById('heroEN').textContent=seasonMap[s].en;
-  document.getElementById('seasonText').textContent=seasonMap[s].text;
+function setSeason(s){
+  applySeason(s);
+  document.getElementById('heroCN').textContent = seasonMap[s].cn;
+  document.getElementById('heroEN').textContent = seasonMap[s].en;
   generateEffect(s);
-  if(!first) toggleModal();
+  if(document.getElementById('modal').classList.contains('show')) toggleModal();
 }
 
-/* ---------- 季节动效 ---------- */
+document.querySelectorAll('.season-mini-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setSeason(btn.dataset.season);
+  });
+});
+
 function generateEffect(s){
   const layer=document.getElementById('effectLayer');
   layer.innerHTML='';
@@ -432,13 +972,67 @@ function generateEffect(s){
   }
 }
 
-/* ---------- 入口 ---------- */
+/* ---------- 鼠标交互 ---------- */
+let lastInkTime = 0;
+const overlay = document.getElementById('overlay');
+
+overlay.addEventListener('mousemove', (e) => {
+  const fragments = document.querySelectorAll('.poem-fragment');
+  const x = (e.clientX / window.innerWidth - 0.5) * 30;
+  const y = (e.clientY / window.innerHeight - 0.5) * 30;
+  fragments.forEach((f, i) => {
+    const factor = (i % 3 + 1) * 0.4;
+    const baseRotate = f.dataset.baseRotate || 0;
+    f.style.transform = `rotate(${baseRotate}deg) translate(${x * factor}px, ${y * factor}px)`;
+  });
+  
+  const now = Date.now();
+  if(now - lastInkTime > 100){
+    lastInkTime = now;
+    const ink = document.createElement('div');
+    ink.className = 'ink-trail';
+    ink.style.left = (e.clientX - 5) + 'px';
+    ink.style.top = (e.clientY - 5) + 'px';
+    document.body.appendChild(ink);
+    setTimeout(() => ink.remove(), 1800);
+  }
+});
+
+/* ---------- 点击效果（每季不同） ---------- */
+overlay.addEventListener('click', (e) => {
+  if(e.target.closest('.unfold-btn') || e.target.closest('.main-title') || e.target.closest('.season-mini-btn')) return;
+  
+  const season = document.body.className;
+  const el = document.createElement('div');
+  el.className = 'click-effect';
+  el.style.left = (e.clientX - 8) + 'px';
+  el.style.top = (e.clientY - 8) + 'px';
+  
+  if(season === 'spring'){
+    el.classList.add('click-petal');
+  } else if(season === 'summer'){
+    el.classList.add('click-ripple');
+    el.style.left = (e.clientX - 15) + 'px';
+    el.style.top = (e.clientY - 15) + 'px';
+  } else if(season === 'autumn'){
+    el.classList.add('click-leaf');
+    el.innerHTML = '<svg viewBox="0 0 20 20" width="20" height="20"><path d="M10,2 L13,8 L18,10 L13,12 L10,18 L7,12 L2,10 L7,8 Z" fill="#D8A36A"/></svg>';
+  } else if(season === 'winter'){
+    el.classList.add('click-snow');
+    el.innerHTML = '<svg viewBox="0 0 20 20" width="20" height="20"><g stroke="#5B7A99" stroke-width="2" fill="none" opacity="0.95"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/><circle cx="10" cy="10" r="2" fill="#7AA0C2"/></g></svg>';
+  }
+  
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+});
+
+/* ---------- 启封 ---------- */
 document.getElementById('unfold').addEventListener('click',()=>{
   document.getElementById('overlay').style.opacity=0;
   setTimeout(()=>{
     document.getElementById('overlay').style.display='none';
     document.getElementById('main').classList.add('visible');
-  },1200);
+  },1800);
 });
 
 /* ---------- 日晷弹窗 ---------- */
