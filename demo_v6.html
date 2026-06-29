@@ -208,7 +208,7 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .pdf-btn{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;padding:8px 22px;background:rgba(229,169,192,0.10);border:1px solid var(--accent);border-radius:999px;color:var(--accent);font-family:var(--english);font-size:0.88rem;letter-spacing:0.06em;text-decoration:none;transition:all 0.25s;}
 .pdf-btn:hover{background:var(--accent);color:#fff;}
 #layoutDescEN,#motionDescEN,#scriptDescEN{font-family:'Cormorant Garamond','Georgia',serif!important;font-size:1.08rem;font-style:italic;color:#5A5070;line-height:2.15;}
-@media (max-width: 900px){.album-row,.album-row:nth-child(even){flex-direction:column}.album-row:nth-child(even) .album-text,.album-text{text-align:center}.theater-content{flex-direction:column;height:90vh;gap:1rem}.theater-right{max-height:38vh;overflow:auto}.phone-mockup{width:300px;height:590px}.layout-gallery .photo-card{width:210px;height:285px}}
+@media (max-width: 900px){.album-row,.album-row:nth-child(even){flex-direction:column}.album-row:nth-child(even) .album-text,.album-text,.album-row.motion-row .album-text{text-align:center}.theater-content{flex-direction:column;height:90vh;gap:1rem}.theater-right{max-height:38vh;overflow:auto}.phone-mockup{width:300px;height:590px}.layout-gallery .photo-card{width:230px;height:300px}.layout-gallery .photo-card:nth-child(n+3){width:300px;height:180px}.photo-card.film.film-wide{width:280px;height:180px}}
 
 </style>
 </head>
@@ -266,11 +266,7 @@ your glance completes, your thoughts renew.</p>
         <h3 class="a-title">帧频之中</h3>
         <p class="a-desc motion-desc-block" id="motionDescCN"><b>创意先行，万物归宗。</b>画面的流动，并非影像在动，而是思绪在延伸。素材皆在，只待一缕气息贯之，便自成形。删减之难，甚于增添——一段不舍，一段难留，去后回看，反觉圆满。凡踌躇处，即用心处。<br><br>字、画、声、律，四者相揉，不过求一恰如其分之距。近则逼仄，远则疏离，若即若离，乃得从容。设若它们各安其位、各尽其责、彼此成全，便自有风骨；动静之间，不过一念。</p>
 <span class="lang-toggle" onclick="toggleLang('motion')">🌐 点击查看英文版 (EN)</span>
-<p class="a-desc" id="motionDescEN" style="display:none;"><b>Where the idea leads, all things find their way home.</b><br>
-Images do not move—thoughts do. The raw material waits; a single breath runs through, and it awakens into form.<br>
-To subtract is harder than to add. A shot you cannot bear to lose, yet cannot bear to keep—you let it fall. In its absence, the whole feels fuller. Every pause is a place you cared.<br>
-Words, images, sound, rhythm—their harmony lies in distance. Too close, they crowd; too far, they drift. Near yet not, apart yet not—there ease is found.<br>
-Let each hold its place, serve its end, and give way to the other—grace follows. Between stillness and motion, just a thought, and everything turns.</p>
+<p class="a-desc" id="motionDescEN" style="display:none;"><b>Where the idea leads, all things find their way home.</b> Images do not move—thoughts do. The raw material waits; a single breath runs through, and it awakens into form. To subtract is harder than to add—a shot you cannot bear to lose, yet cannot bear to keep; in its absence, the whole feels fuller.<br><br>Words, images, sound, rhythm—their harmony lies in distance. Too close, they crowd; too far, they drift. Let each hold its place and give way to the other; between stillness and motion, just a thought, and everything turns.</p>
         <span class="a-hint">Hover to expand the films, click to play.</span>
       </div>
       <div class="album-photos" onclick="openTheater('motion')">
