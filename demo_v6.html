@@ -83,8 +83,18 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .photo-card.film span { color: #555; bottom: 12px; }
 .photo-card.film .photo-inner { background: #111; display:block; padding:0; }
 .photo-card.film .photo-inner.film-cover img { width:100%; height:100%; object-fit:cover; display:block; }
-.photo-card.film.film-wide { width: 360px; height: 230px; padding: 18px 16px 42px; }
-.photo-card.film.film-wide .photo-inner { height: 100%; }
+.photo-card.film.film-wide { width: 380px; height: 228px; padding: 16px 14px 40px; }
+
+/* 帧频横屏：扇形展开，占满左侧画面区 */
+.motion-gallery { flex: 1.75; height: 340px; margin-right: auto; }
+.motion-gallery .photo-card.film-wide.p1 { transform: translate(-50%, -50%) rotate(-5deg) translateX(-175px) translateY(6px); z-index: 1; }
+.motion-gallery .photo-card.film-wide.p2 { transform: translate(-50%, -50%) rotate(0deg) translateX(20px) translateY(-8px); z-index: 3; box-shadow: 0 18px 38px rgba(0,0,0,0.14); }
+.motion-gallery .photo-card.film-wide.p3 { transform: translate(-50%, -50%) rotate(5deg) translateX(195px) translateY(6px); z-index: 2; }
+.motion-gallery:hover .photo-card.film-wide.p1 { transform: translate(-50%, -50%) rotate(-9deg) translateX(-250px) translateY(12px) scale(1.02); z-index: 2; }
+.motion-gallery:hover .photo-card.film-wide.p2 { transform: translate(-50%, -50%) rotate(0deg) translateX(20px) translateY(-16px) scale(1.05); z-index: 10; box-shadow: 0 26px 50px rgba(0,0,0,0.18); }
+.motion-gallery:hover .photo-card.film-wide.p3 { transform: translate(-50%, -50%) rotate(9deg) translateX(270px) translateY(12px) scale(1.02); z-index: 2; }
+
+.stamp-gallery .photo-card { width: 300px; height: 390px; }
 
 /* 剧本邮票皮肤 - 完美边缘打孔不透心 */
 .photo-card.stamp { 
@@ -165,8 +175,10 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .layout-gallery:hover .photo-card:nth-child(3) { transform: translate(-50%, -50%) rotate(0deg) scale(1.03) translateY(-10px); z-index: 10; }
 .layout-gallery:hover .photo-card:nth-child(4) { transform: translate(-50%, -50%) rotate(15deg) translateX(205px) translateY(48px); }
 .layout-gallery:hover .photo-card:nth-child(5) { transform: translate(-50%, -50%) rotate(-17deg) translateX(-205px) translateY(52px); }
-.stamp-gallery .photo-card { width: 300px; height: 390px; }
-.stamp-gallery .script-card-preview { font-size:10.5px; line-height:1.68; }
+.script-shot-preview { padding:0 !important; border:none !important; background:#fff !important; overflow:hidden; }
+.script-shot-preview img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+.a-desc .lead-line { display:block; font-weight:700; color:var(--text-dark); margin-bottom:1rem; }
+.photo-card.film.film-wide .photo-inner { height: 100%; }
 .season-effects { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:1; }
 .season-fx { position:absolute; right:9%; top:52%; opacity:0; transform:translate(24px,-8px) scale(.8) rotate(0deg); animation: driftIn 1.45s ease-out forwards; font-size:22px; filter: drop-shadow(0 6px 10px rgba(216,140,168,.16)); }
 @keyframes driftIn { 0%{opacity:0; transform:translate(70px,20px) scale(.65) rotate(-12deg);} 18%{opacity:.95;} 100%{opacity:0; transform:translate(-55px,-105px) scale(1.15) rotate(32deg);} }
@@ -208,7 +220,7 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .pdf-btn{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;padding:8px 22px;background:rgba(229,169,192,0.10);border:1px solid var(--accent);border-radius:999px;color:var(--accent);font-family:var(--english);font-size:0.88rem;letter-spacing:0.06em;text-decoration:none;transition:all 0.25s;}
 .pdf-btn:hover{background:var(--accent);color:#fff;}
 #layoutDescEN,#motionDescEN,#scriptDescEN{font-family:'Cormorant Garamond','Georgia',serif!important;font-size:1.08rem;font-style:italic;color:#5A5070;line-height:2.15;}
-@media (max-width: 900px){.album-row,.album-row:nth-child(even){flex-direction:column}.album-row:nth-child(even) .album-text,.album-text,.album-row.motion-row .album-text{text-align:center}.theater-content{flex-direction:column;height:90vh;gap:1rem}.theater-right{max-height:38vh;overflow:auto}.phone-mockup{width:300px;height:590px}.layout-gallery .photo-card{width:230px;height:300px}.layout-gallery .photo-card:nth-child(n+3){width:300px;height:180px}.photo-card.film.film-wide{width:280px;height:180px}}
+@media (max-width: 900px){.album-row,.album-row:nth-child(even){flex-direction:column}.album-row:nth-child(even) .album-text,.album-text,.album-row.motion-row .album-text{text-align:center}.theater-content{flex-direction:column;height:90vh;gap:1rem}.theater-right{max-height:38vh;overflow:auto}.phone-mockup{width:300px;height:590px}.layout-gallery .photo-card{width:230px;height:300px}.layout-gallery .photo-card:nth-child(n+3){width:300px;height:180px}.photo-card.film.film-wide{width:280px;height:180px}.motion-gallery{height:300px}.motion-gallery .photo-card.film-wide.p1{transform:translate(-50%,-50%) rotate(-6deg) translateX(-90px)}.motion-gallery .photo-card.film-wide.p3{transform:translate(-50%,-50%) rotate(6deg) translateX(90px)}}
 
 </style>
 </head>
@@ -228,7 +240,7 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
       <div class="album-text">
         <span class="a-tag">LAYOUTS</span>
         <h3 class="a-title">尺幅之间</h3>
-        <p class="a-desc" id="layoutDescCN">尺幅之间，自有天地。<br>
+        <p class="a-desc" id="layoutDescCN"><span class="lead-line">尺幅之间，自有天地。</span>
 我始终相信，每一次编排都是一次克制的取舍。在有限的边界里，如何安放每一个字符、每一块色彩，让它既成为视觉的一部分，又不抢夺阅读的呼吸感——这是设计最本质的功课。<br>
 文字与图像之间，语言承载意义，设计承载理解。二者如溪行山间，各行其道，遇之则相映成趣。字有骨，图有韵，不必争谁是主角，只需在相逢的那一刻，彼此让出半步，便有了余韵。<br>
 飞鸟衔句，诗落成行。古雅有致，草木含香。设计之道，不在繁饰，而于细微处见心意——一色之冷暖，一字之远近，皆是我与观者之间，无声的对谈。<br>
@@ -264,12 +276,12 @@ your glance completes, your thoughts renew.</p>
       <div class="album-text">
         <span class="a-tag">MOTION & VOICE</span>
         <h3 class="a-title">帧频之中</h3>
-        <p class="a-desc motion-desc-block" id="motionDescCN"><b>创意先行，万物归宗。</b>画面的流动，并非影像在动，而是思绪在延伸。素材皆在，只待一缕气息贯之，便自成形。删减之难，甚于增添——一段不舍，一段难留，去后回看，反觉圆满。凡踌躇处，即用心处。<br><br>字、画、声、律，四者相揉，不过求一恰如其分之距。近则逼仄，远则疏离，若即若离，乃得从容。设若它们各安其位、各尽其责、彼此成全，便自有风骨；动静之间，不过一念。</p>
+        <p class="a-desc motion-desc-block" id="motionDescCN"><span class="lead-line">创意先行，万物归宗。</span>画面的流动，并非影像在动，而是思绪在延伸。素材皆在，只待一缕气息贯之，便自成形。删减之难，甚于增添——一段不舍，一段难留，去后回看，反觉圆满。凡踌躇处，即用心处。<br><br>字、画、声、律，四者相揉，不过求一恰如其分之距。近则逼仄，远则疏离，若即若离，乃得从容。设若它们各安其位、各尽其责、彼此成全，便自有风骨；动静之间，不过一念。</p>
 <span class="lang-toggle" onclick="toggleLang('motion')">🌐 点击查看英文版 (EN)</span>
-<p class="a-desc" id="motionDescEN" style="display:none;"><b>Where the idea leads, all things find their way home.</b> Images do not move—thoughts do. The raw material waits; a single breath runs through, and it awakens into form. To subtract is harder than to add—a shot you cannot bear to lose, yet cannot bear to keep; in its absence, the whole feels fuller.<br><br>Words, images, sound, rhythm—their harmony lies in distance. Too close, they crowd; too far, they drift. Let each hold its place and give way to the other; between stillness and motion, just a thought, and everything turns.</p>
+<p class="a-desc" id="motionDescEN" style="display:none;"><span class="lead-line">Where the idea leads, all things find their way home.</span> Images do not move—thoughts do. The raw material waits; a single breath runs through, and it awakens into form. To subtract is harder than to add—a shot you cannot bear to lose, yet cannot bear to keep; in its absence, the whole feels fuller.<br><br>Words, images, sound, rhythm—their harmony lies in distance. Too close, they crowd; too far, they drift. Let each hold its place and give way to the other; between stillness and motion, just a thought, and everything turns.</p>
         <span class="a-hint">Hover to expand the films, click to play.</span>
       </div>
-      <div class="album-photos" onclick="openTheater('motion')">
+      <div class="album-photos motion-gallery" onclick="openTheater('motion')">
         <div class="photo-card film film-wide p1"><div class="photo-inner film-cover"><img src="assets/previews/spring-summer.png" alt="春夏之交"></div><span>Spring/Summer</span></div>
         <div class="photo-card film film-wide p2"><div class="photo-inner film-cover"><img src="assets/previews/dubliners.jpg" alt="都柏林人"></div><span>Dubliners</span></div>
         <div class="photo-card film film-wide p3"><div class="photo-inner film-cover"><img src="assets/previews/mall.jpg" alt="商场周年庆"></div><span>Commercial Works</span></div>
@@ -281,7 +293,7 @@ your glance completes, your thoughts renew.</p>
       <div class="album-text">
         <span class="a-tag">SCRIPTS</span>
         <h3 class="a-title">幕布之后</h3>
-        <p class="a-desc" id="scriptDescCN">光影未至，文字先行。<br>
+        <p class="a-desc" id="scriptDescCN"><span class="lead-line">光影未至，文字先行。</span>
 舞台的走位、情绪的起伏、对白的起落、镜头的流转，都在这时被一支笔定下雏形。落笔之时，光尚未抵达，一切却已在想象中铺展。你替镜头试走每一段路，替声音试念每一句词，反复调整，直到它们在纸上找到属于自己的节奏。<br>
 好的脚本从不说尽。它留有余地——让演员的呼吸有处安放，让摄影机的目光有处停驻。你明知永远无法抵达那个想象中的画面，却仍要递出方向，交付信任。<br>
 页面上那些安静的句子，终将穿越时间与光影，成为某个画面里，最动人的那一帧。</p>
@@ -293,9 +305,9 @@ Those quiet sentences on the page will, in time, pass through light and shadow�
         <span class="a-hint">Hover to view scripts, click to read.</span>
       </div>
       <div class="album-photos stamp-gallery" onclick="openTheater('script')">
-        <div class="photo-card stamp p1"><div class="stamp-wrap"><div class="photo-inner script-card-preview"><b>【开篇·夜晚的商场】</b><br>镜1 华信Mall外立面仰拍，天空叠化旋转时钟。<br>镜2 临近关门，橱窗假人模特，保安手电经过。<br>镜3 领口上移，商场熄灯，模特一动不动。<br><em>旁白：传说九月九日，灯光暗下，愿望将化为现实。</em><br>镜6 <b>模特看着镜头，突然眨了眨眼。</b></div><span>周年庆广告脚本</span></div></div>
-        <div class="photo-card stamp p3"><div class="stamp-wrap"><div class="photo-inner script-card-preview"><b>献礼二十大 · 砥砺奋进，再创辉煌</b><br>二十年外院，一封封校友来信连结两代外语人。<br><b>大一·选择</b> 孙可学长：学好专业，学会取舍。<br><b>大二·挫败</b> 王宇学长：竞赛是成长与反馈。<br><b>大三·焦虑</b> 温雯学姐：两手准备，减少彷徨。<br><b>大四·求职</b> 付丽娜学姐：增强能力，阴霾终将过去。</div><span>表彰大会脚本</span></div></div>
-        <div class="photo-card stamp p2"><div class="stamp-wrap"><div class="photo-inner script-card-preview"><b>反诈最强音 · MV分镜脚本</b><br><em>浑浑噩噩 心中迷茫 / 得不偿失 为这诱惑流连</em><br>【说唱】情景再现：刷单返利、冒充公检法、网贷陷阱……<br><em>面对着诱惑和犯罪我们要勇敢闯，就像是黑夜中指引方向的太阳。</em><br>【宣讲】民警进社区宣讲，把理想种子播撒在这美好的晨曦。</div><span>反诈宣传片脚本</span></div></div>
+        <div class="photo-card stamp p1"><div class="stamp-wrap"><div class="photo-inner script-shot-preview"><img src="assets/previews/scripts/huaxin.jpg" alt="华信广告分镜头脚本预览"></div><span>周年庆广告脚本</span></div></div>
+        <div class="photo-card stamp p3"><div class="stamp-wrap"><div class="photo-inner script-shot-preview"><img src="assets/previews/scripts/commendation.jpg" alt="表彰大会脚本预览"></div><span>表彰大会脚本</span></div></div>
+        <div class="photo-card stamp p2"><div class="stamp-wrap"><div class="photo-inner script-shot-preview"><img src="assets/previews/scripts/anti-fraud.jpg" alt="反诈最强音脚本预览"></div><span>反诈宣传片脚本</span></div></div>
       </div>
     </div>
   
@@ -374,9 +386,68 @@ const visualData = {
   'script': {
     tag: 'SCRIPTS', title: '幕布之后', desc: '光影未至，文字先行。', effect:'autumn',
     items: [
-      { name: '华信广告分镜头脚本', type: 'script', html: `<div class="script-paper"><h2>华信 Mall 周年庆广告脚本</h2><p class="quote"><b>创作概念：</b>闭店后的商场如同夜间博物馆。假人模特在灯光亮起时苏醒，带领观众穿行品牌场景，品牌背景墙模特走过即点亮——创意从脚本延伸至线下交互装置。</p><p><b>【开篇·夜晚的商场】</b></p><p><b>镜1</b> 全景/仰拍 — 夜晚华信Mall外立面，天空变换风景，叠化快速旋转的时钟</p><p><b>镜2</b> 全景/正面/推进 — 商场临近关门，玻璃橱窗后站着假人模特，保安拿手电筒经过 <em>· 同期声</em></p><p><b>镜3</b> 近景/斜侧/上移 — 镜头从模特领口上移至脸部，商场熄灯，模特始终一动不动<br><em>旁白：传说每年的九月九日，在华信Mall的夜晚，当灯光暗下的那一刻，所有最美好的愿望将化为现实</em></p><p><b>镜6</b> 特写/正面/固定 — <b>模特看着镜头，突然眨了眨眼</b></p><p><b>【发展·苏醒与自我探索】</b></p><p><b>镜12</b> 近景/过肩/固定 — 镜子反射里，模特举着一只口红<br><em>「你是奇妙夜晚的尊贵来客，也是绚丽生活的领衔主演」</em></p><p><b>镜17</b> 特写/侧面 — 模特好奇俯身凑近观察假人模特<br><em>「不一样的美丽，也渴望着遇到懂Ta的人」</em></p><p><b>【结尾·回归与余韵】</b></p><p><b>镜23</b> 特写/俯视 — 保安的手打开商场大门的U型锁<br><em>「九月九日华信Mall奇妙夜，心无止境，自成一派」</em></p><p><b>镜30</b> 特写/正面/固定 — <b>模特看着镜头，突然快速眨了下眼睛</b></p><a class="pdf-btn" href="${ASSETS.pdfHuaxin}" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'autumn' },
-      { name: '表彰大会舞台剧脚本', type: 'script', html: `<div class="script-paper"><h2>外院表彰大会 · 20周年院庆暨校友篇</h2><p class="quote"><b>献礼二十大 奋进新征程</b><br><b>小标题：砥砺奋进，再创辉煌</b></p><p><b>引言</b><br>今年是外国语学院成立二十周年。一代代外院人秉持使命与担当，在学习竞赛、志愿服务、各行各业中都取得了丰硕成果。二十年来，学院秉持<b>「崇德尚能、经世济民」</b>的校训，培养了一批又一批<b>「有大世界观的外语人」</b>。</p><p><b>【第一封信】大一·选择</b></p><p class="quote"><b>2008级 孙可学长：</b>大一刚入学的焦虑和迷茫都很正常。<b>一定好好学习本专业知识。</b>在此基础上也要注重综合能力的培养——<b>多选择质量较高的、对自己发展更有裨益的活动。</b><b>不必焦虑，学会选择，好好享受这四年的时光吧。</b></p><p><b>【第二封信】大二·挫败</b></p><p class="quote"><b>2010级 王宇学长：</b>参加竞赛本来就是尝试、成长与得到反馈的过程。<b>选择也是一种智慧——要通过尝试摸索，找到适合自己的赛道。</b></p><p><b>【第三封信】大三·焦虑</b></p><p class="quote"><b>2009级 温雯学姐：</b><b>与其犹豫不决，不如先做好两手准备，制定计划并执行起来。</b><b>都要有坚持和接受失败的勇气。先找到自己，才能找到自己的路。</b></p><p><b>【第四封信】大四·求职</b></p><p class="quote"><b>2011级 付丽娜学姐：</b><b>毕业后求职失败，是一条必经之路。</b>增强个人能力，提升情商，学习面试技巧。<b>所有的阴霾都将过去。</b></p><p><b>结尾</b><br>这一封封真切的来信，将本属于两个世界的外语人连结在一起。<b>外院人从来都不是孤立的个体，而是由千丝万缕联系起来的一家人。</b></p><a class="pdf-btn" href="${ASSETS.pdfCommendation}" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'spring' },
-      { name: '反诈宣传片脚本', type: 'script', html: `<div class="script-paper"><h2>反诈最强音 · MV分镜脚本</h2><p class="quote"><b>创作概念：</b>以情景再现 + 说唱宣讲，将反诈知识编入歌词与镜头，面向社区与校园传播防骗意识。</p><p><b>【前奏】</b></p><p><em>浑浑噩噩 心中迷茫 / 得不偿失 为这诱惑流连 / 不自量力 为这假象 / 110 守护你的理想</em></p><p><b>【说唱 · 情景一】</b> 主角沉迷网络刷单，小额返利后追加投入。<br><em>警方提示：刷单违法，返利是诱饵，本金难以提现。</em></p><p><b>【说唱 · 情景二】</b> 冒充公检法来电，要求转账至“安全账户”。<br><em>警方提示：公检法不会电话要求转账，请挂断并拨打 96110 核实。</em></p><p><b>【说唱 · 情景三】</b> 网贷低息诱惑，点击不明链接后个人信息泄露。<br><em>警方提示：不轻信陌生来电，不点击不明链接，不向陌生账户转账。</em></p><p><b>【副歌】</b></p><p class="quote"><em>面对着诱惑和犯罪我们要勇敢闯，就像是黑夜中指引方向的太阳。<br>我们不断推陈出新只为你安全，向反诈步调迈进守护你我人身安全。</em></p><p><b>【宣讲】</b> 民警进社区宣讲，群众齐声呼应。</p><p class="quote"><em>让这份阳光照亮为了城市的安宁，我们一起齐心协力为反诈立功勋。<br>这理想是光 勇敢去闯，去传递希望；在理想中播种通过奉献创造辉煌。<br>把理想种子播撒在这美好的晨曦。</em></p><p><b>【尾声】</b></p><p><em>是真理想 / 110 守护你的理想</em></p><a class="pdf-btn" href="${ASSETS.pdfAntiFraud}" target="_blank">📄 查看完整分镜脚本</a></div>`, effect:'winter' }
+      { name: '华信广告分镜头脚本', type: 'script', html: `<div class="script-paper"><h2>华信 Mall 周年庆广告脚本</h2><p class="quote"><b>创作概念：</b>闭店后的商场如同夜间博物馆。假人模特在灯光亮起时苏醒，带领观众穿行品牌场景，品牌背景墙模特走过即点亮——创意从脚本延伸至线下交互装置。</p><p><b>镜1</b> 全景/仰拍/固定 — 夜晚，华信Mall外立面仰拍，背景的天空变换风景，画面叠化一个快速旋转的时钟</p><p><b>镜2</b> 全景/正面/推进 — 商场内，临近关门时间，玻璃橱窗后面站着一个穿着漂亮的假人模特，保安拿着手电筒从橱窗前经过，镜头推进<br><em>同期声</em></p><p><b>镜3</b> 近景/斜侧/上移-固定 — 镜头从模特的领口位置上移，到脸部入画，商场熄灯，模特始终看着前方一动不动<br><em>脚步声渐远 / 商场关灯音效</em></p><p><b>镜4</b> 特写/正面/固定 — 墙上的时钟特写23:59分，秒针从59指向0点<br><em>钟表声</em></p><p><b>镜5</b> 特写/正面/固定 — 日历滑向2023年9月9日星期六</p><p><b>镜6</b> 特写/正面/固定 — 模特看着镜头，突然眨了眨眼<br><em>传说每年的九月九日，在华信Mall的夜晚，当灯光暗下的那一刻，所有最美好的愿望将化为现实</em></p><p><b>镜7</b> 近景/水平/固定 — 模特下垂的左手像机器人一样缓缓抬起</p><p><b>镜8</b> 中近景/背面/推进 — 模特微微歪头，身体也随之活过来，动作幅度越来越大</p><p><b>镜9</b> 全景/正面/固定 — 橱窗外拍摄，模特转身从台上走下来，出画</p><p><b>镜10</b> 特写/水平/固定 — 模特的手打开电闸特写</p><p><b>镜11</b> 全景/仰拍/上摇 — 商场大全景，灯一层层亮起，镜头逐渐上摇</p><p><b>镜12</b> 中景/侧面/固定 — 模特在丝芙兰的口红柜前驻足<br><em>你是奇妙夜晚的尊贵来客，也是绚丽生活的领衔主演 / 那些古怪而神秘、热烈而温暖的梦想，在这一天，都将奔你而来</em></p><p><b>镜13</b> 近景/过肩/固定 — 过肩，镜子的反射里，模特举着一只口红照</p><p><b>镜14</b> 中景/背面/推进 — 模特坐在海马体的镜子前，椅子旋转，模特转至正面</p><p><b>镜15</b> 中景/正面/分屏 — 画面分三屏，模特在女装店里试不同款式的服装</p><p><b>镜16</b> 中景/侧面/固定 — 双人镜头，服装店里的假人模特站在左边</p><p><b>镜17</b> 特写/侧面/推进-固定 — 模特好奇地俯身凑近观察假人模特<br><em>不一样的美丽，也渴望着遇到懂Ta的人</em></p><p><b>镜18</b> 特写-近景/侧面/推进-固定 — 模特侧面特写，镜头后拉，模特在星际传奇操作摩托游戏<br><em>你是奇妙夜晚的尊贵来客，也是绚丽生活的领衔主演</em></p><p><b>镜19</b> 全景-中景/水平/推进-固定 — 模特坐在餐厅圆桌前打个响指，圆桌上顿时出现一桌美食</p><p><b>镜20</b> 近景/正面/固定 — 模特独自坐在商场内的电影院里，抱着一桶爆米花，露出大笑、流泪的夸张表情</p><p><b>镜21</b> 全景/水平/固定 — 模特从品牌背景墙面前走过，墙上logo一个个点亮</p><p><b>镜22</b> 全景/仰视/上移 — 商场外立面，天空由夜晚星空转变为清晨日光初升<br><em>享受当下的每分每秒，更憧憬明天的无限可能</em></p><p><b>镜23</b> 特写/俯视/固定 — 保安的手在打开商场大门的U型锁</p><p><b>镜24</b> 中景-近景/水平/拉进 — 模特穿华丽衣服，手提购物袋和奶茶，听到开门声猛然回头</p><p><b>镜25</b> 全景/水平/固定 — 保安推开玻璃门，探进半个身子往里看</p><p><b>镜26</b> 近景/水平/固定 — 多角度，保安往商场里看</p><p><b>镜27</b> 全景/水平/推进 — 反打，商场全景，一切归于安静并恢复原样，渐隐</p><p><b>镜28</b> / — 一周年主KV浮现，几秒后黑场</p><p><b>镜29</b> 全景/正面/推进 — 画面再亮起，白天的商场内部，模特橱窗前人来人往<br><em>九月九日华信Mall奇妙夜，心无止境，自成一派</em></p><p><b>镜30</b> 近景/正面/固定 — 模特看着镜头，突然快速眨了下眼睛</p><p><b>配合拍摄事项</b><br>1. 镜2-镜3 假人模特与真人模特切换，需提供假人模特及服装<br>2. 闭店配合拍摄：女装店<br>3. 夜晚配合拍摄：女装店、丝芙兰、海马体、电影院、星际传奇、餐厅<br>4. 白天配合拍摄：女装店<br>5. 闭店拍摄需商场工作人员配合控灯</p><a class="pdf-btn" href="${ASSETS.pdfHuaxin}" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'autumn' },
+      { name: '表彰大会舞台剧脚本', type: 'script', html: `<div class="script-paper"><h2>外院表彰大会 · 20周年院庆暨校友篇</h2>
+<p class="quote"><b>献礼二十大 奋进新征程</b><br><b>小标题："砥砺奋进，再创辉煌"</b></p>
+<p><b>引言</b><br>时光流转，岁月代序。今年是外国语学院成立二十周年，在这继往开来的二十年里，一代代外院人秉持着使命与担当，在学习竞赛、志愿服务、各行各业的发展中都取得了丰硕成果。</p>
+<p>一代人有一代人的长征，我们无法比较哪一代人的长征更艰辛或者更有意义。但可以确定的是，缺少哪一代人的长征都无法成就现在，铸就如今之辉煌。蓝图已绘就，奋进正当时。</p>
+<p>二十年来，学院在历届校友的关怀和支持下，不断完善教学方式和理念，秉持"崇德尚能、经世济民"的校训，培养了一批又一批"有大世界观的外语人"。</p>
+<p>他们在取得成功后，从未忘却母校和学弟学妹们，而是不断地在关心学院、助力学院发展，参加校友访谈、分享会，给同学们提供丰富的学习经验，帮助同学们明确未来规划。在同学们成长的道路中，他们又成为了下一代外语人的明灯和引路人……万语千言，都凝结在了这一封封来信……</p>
+<p><b>【第一封信】大一·选择</b><br>我叫xxx，是外国语学院2023级商务英语专业的一名新生。高中三年我只要按部就班地完成学习任务，可是到了大学，各种活动纷至沓来，我不知道怎么取舍……</p>
+<p class="quote"><b>2008级 孙可学长：</b>"展信安。学弟你好，大一刚入学的焦虑和迷茫都很正常。作为学长，我能和你们说的是，一定好好学习本专业知识，从我们班毕业情况看，也是专业能力好的同学发展的比较好。专业学习是第一位的，不管是考研、保研还是留学、就业都很看重绩点。在此基础上也要注重综合能力的培养，多参加校内及校外组织的各种活动，但是不要被这些所困扰，要多选择质量较高的、对自己发展更有裨益的活动，就比如我，我本科就是做了很多志愿活动和社会实践（实地考察的那种），我觉得经历、经验和见识对我之后的发展都有很大帮助。所以不必焦虑，学会选择，好好享受这四年的时光吧！"</p>
+<p><b>【第二封信】大二·挫败</b><br>大二学生小王：哎，还不是之前的英语演讲比赛，我都大二了竞赛还是一无所获，我是不是太差劲了啊……</p>
+<p class="quote"><b>2010级 王宇学长：</b>"你好啊，小王。曾经我也跟你一样，在各种竞赛中摸爬滚打，走了很多弯路。当年我与我的队友参加"挑战杯"，第一年石沉大海，我们几个都觉得熬夜赶稿的心血白费了。第二年我们改良了方向和选题，经过了很多次的复盘、修改，最后才取得了不错的成绩。参加竞赛本来就是一个尝试、成长与得到反馈的过程，而且备赛的过程中你的能力也得到了锻炼，不是吗？再者，选择也是一种智慧，要通过尝试摸索找到适合自己的赛道。你才大二，不必过于着急，除了竞赛，实习、社会实践、社团活动也很重要。要相信自己的能力，加油！"</p>
+<p><b>【第三封信】大三·焦虑</b><br>我叫xxx，已经大三了，想跨考新传，可是又怕考研失败，要不还是毕业先找工作积累经验吧，哎，感觉压力好大……</p>
+<p class="quote"><b>2009级 温雯学姐：</b>"学妹，你好呀。我想对你说，与其犹豫不决，彷徨不定，不如先做好两手准备，制定计划并执行起来，这样会在很大程度上减少焦虑。以我自己来说，当时我是毅然决然地选择了先考研后考公的道路。你完全可以先准备考研，大四的时候也投投简历，多一个选择总归不是坏的。但无论如何都要有坚持和接受失败的勇气。何况你们都还年轻，不必困于一时。成功还是不成功路上都是迷茫，先找到自己才能找到自己的路。相信你定有所成！"</p>
+<p><b>【第四封信】大四·求职</b><br>我叫xxx，大四了，已经投了好几十份简历了，刚刚双选会也面试了十几家不同行业的企业，却好像没有一个对我感兴趣，找工作真的太难了……</p>
+<p class="quote"><b>2011级 付丽娜学姐：</b>"你好呀，看到你的经历就仿佛看到了当年的我自己。当年我也是连连被拒，最后也是在家人和一位学姐的鼓励之下才重新找到了自己的方向。毕业后求职失败是一条必经之路，只有这样我们才能知道自己的弱势在哪。想要在求职过程中在一众求职者中脱颖而出，我的建议是增强个人的能力和素质，其次是提升个人的情商，学习更多的面试技巧。面对高负荷的工作和复杂的人际关系，要锤炼自己交际技能，才能得到别人的理解和支持。同时，人际关系也是人生重要资源，良好的人际关系往往能获得更多的成功机会。所有的阴霾都将过去，祝你今年成功斩获offer，加油！"</p>
+<p><b>结尾</b><br>这一封封真切的来信将本属于两个世界的外语人以同样的身份连结在了一起。外院人从来都不是一个个孤立的个体，而是由千丝万缕联系起来的一家人。而这种互助、传承与延续，生生不息。</p>
+<p><b>胡继禹校友：</b>"每当我在工作上遇到困难时，我都会想到我的母校，现在我们在做的白塔寺景区项目主要工作方向是对外接待外国的友人。而现在我们需要大量的外语人才来到我们白塔寺景区工作，我希望给我的学弟学妹们一个发展的平台、一个实习的方向……"</p>
+<p><b>学生：</b>"通过胡学长提供的机会，让我见识到了更宽广的世界，与此同时在与外国旅客进行交流的同时我的外语技能也得到了巨大的提升……"</p>
+<p><b>老师：</b>"为了连结在校同学和校友，搭建资源共享，交流互助的桥梁，我们成立了校友工作坊……外院从不只是一个简单的名称，而是温暖、团结、互助、传承的代名词。"</p>
+<p><b>同学（齐声）：</b>"作为一门外语学子，我感受到了互助与友爱的外院氛围……在未来的道路上，让我们怀着对外语人精神传承的敬意和珍视，砥砺奋进，坚定前行！"</p>
+<a class="pdf-btn" href="${ASSETS.pdfCommendation}" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'spring' },
+      { name: '反诈宣传片脚本', type: 'script', html: `<div class="script-paper"><h2>反诈最强音 · MV分镜脚本</h2>
+<p class="quote"><b>主题：</b>淮安公安全民反诈主题MV（字幕摘自分镜脚本原文）</p>
+<p><b>【前奏】</b></p>
+<p><em>清澈的爱 心中洋溢</em></p>
+<p><em>竭尽全力 为这身藏蓝戎装</em></p>
+<p><em>日出东方 为我点亮</em></p>
+<p><em>96110 守护幸福理想</em></p>
+<p><em>是我理想</em></p>
+<p><b>【城市篇】</b></p>
+<p><em>我穿梭在清运总督府</em></p>
+<p><em>我生活在清江清</em></p>
+<p><em>全民反诈 警民携手齐努力</em></p>
+<p><em>走要下载国家反诈中心APP</em></p>
+<p><b>【说唱 · 情景】</b></p>
+<p><em>请你投资再给你高额回报的收益</em></p>
+<p><em>找上门的投资骗子怎会让你发财</em></p>
+<p><em>贷款诈骗 / 婚恋交友诈骗</em></p>
+<p><em>勾起你的贪念骗子们再老练</em></p>
+<p><em>拙劣的演技</em></p>
+<p><em>光不灭 正义光芒的宝剑</em></p>
+<p><b>【副歌】</b></p>
+<p><em>清澈的爱 心中洋溢</em></p>
+<p><em>竭尽全力 为这身藏蓝戎装</em></p>
+<p><em>日出东方 为我点亮</em></p>
+<p><em>96110 守护幸福理想</em></p>
+<p><b>【宣讲】</b></p>
+<p><em>面对着违法和犯罪我们勇于亮剑</em></p>
+<p><em>警察蓝是我们心中燃起的火焰</em></p>
+<p><em>我们不畏惧艰险 砥柱难关攻坚</em></p>
+<p><em>同筑牢反诈防线守卫身边人安全</em></p>
+<p><em>从大街到小巷再从傍晚奋斗直到天明</em></p>
+<p><em>我们一起坚守努力发出反诈最强音</em></p>
+<p><em>看我们乘风又破浪为这世间美好的愿望</em></p>
+<p><em>铲除诈骗犯是我们坚持的理想</em></p>
+<p><em>做好榜样 即便受伤 也要祖国人民山河无恙</em></p>
+<p><em>祝愿每次擦肩而过都能上扬嘴角</em></p>
+<p><em>把犯罪分子诈骗团伙统统围歼</em></p>
+<p><em>全民反诈</em></p>
+<p><b>【尾声】</b></p>
+<p><em>清澈的爱 心中洋溢 / 竭尽全力 为这身藏蓝戎装 / 日出东方 为我点亮 / 96110 守护幸福理想 / 是我理想</em></p>
+<a class="pdf-btn" href="${ASSETS.pdfAntiFraud}" target="_blank">📄 查看完整分镜脚本</a></div>`, effect:'winter' }
     ]
   }
 };
