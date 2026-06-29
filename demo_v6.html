@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>流影拾微 - Demo v6</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+SC:wght@200;300;400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <style>
 :root { 
@@ -12,10 +12,10 @@
   --text-soft: #8A92B0; 
   --accent: #E5A9C0; 
   --line-color: #DCD4E0; 
-  --serif: 'FZZJ-BYSKJW', 'STZhongsong', 'SimSun', 'Noto Serif SC', serif; 
+  --serif: 'Noto Serif SC', 'STSong', 'SimSun', 'Songti SC', serif; 
   --english: 'Cormorant Garamond', 'Georgia', serif; 
-  --cn-light: 'LXGW WenKai', 'Noto Serif SC', serif; 
-  --cn-art: 'Zhi Mang Xing', cursive;
+  --cn-light: 'LXGW WenKai', 'Noto Serif SC', 'STSong', serif; 
+  --cn-art: 'Ma Shan Zheng', 'Zhi Mang Xing', cursive;
   --g1:#DCE8F5; --g2:#F5DDEB; --g3:#E2DDF2; --theater-ink:#3C3448;
 }
 body { font-family: var(--serif); color: var(--text-dark); background: var(--bg); margin: 0; padding: 5rem 2rem 10rem; overflow-x: hidden; min-height: 100vh; }
@@ -44,9 +44,9 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .a-desc b { color: var(--text-dark); font-weight: 700; }
 .a-hint { font-family: var(--english); font-style: italic; font-size: 0.95rem; color: var(--text-soft); opacity: 0.8; }
 
-.album-photos { flex: 1.4; position: relative; height: 500px; perspective: 1200px; cursor: pointer; }
+.album-photos { flex: 1.5; position: relative; height: 580px; perspective: 1200px; cursor: pointer; }
 .photo-card {
-  position: absolute; top: 50%; left: 50%; width: 290px; height: 380px;
+  position: absolute; top: 50%; left: 50%; width: 320px; height: 420px;
   background: #FFF; padding: 15px 15px 45px 15px; border-radius: 4px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -54,6 +54,8 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 }
 .photo-inner { width: 100%; height: 100%; background: #F0EDE6; overflow: hidden; position: relative; border: 1px solid rgba(0,0,0,0.05); display:flex; align-items:center; justify-content:center; }
 .photo-inner img { width:100%; height:100%; object-fit:contain; display:block; background:#fff; }
+.photo-inner img.cover-fill { object-fit:cover; background:transparent; transform:scale(1.06); }
+.photo-inner.cover-mode { background:#ece6dc; }
 .photo-inner .thumb-title { position:absolute; left:10px; right:10px; bottom:10px; padding:6px 8px; border-radius:999px; background:rgba(255,255,255,.78); color:#5F5870; font-size:.72rem; font-family:var(--cn-light); letter-spacing:.04em; backdrop-filter:blur(4px); }
 .photo-card span { position: absolute; bottom: 12px; left: 0; width: 100%; text-align: center; font-family: var(--cn-light); font-size: 0.9rem; color: #888; font-weight: 600; }
 
@@ -79,9 +81,10 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .photo-card.film::before { left: -12px; }
 .photo-card.film::after { right: -12px; }
 .photo-card.film span { color: #555; bottom: 12px; }
-.photo-card.film .photo-inner { background: linear-gradient(135deg,#fffaf4 0%,#f7eaf0 48%,#eef5ff 100%); display:flex; align-items:center; justify-content:center; color:var(--text-dark); }
-.photo-card.film .film-icon { width:54px; height:54px; border-radius:50%; background:rgba(255,255,255,.72); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(45,37,54,.10); }
-.photo-card.film .film-sub { position:absolute; bottom:54px; left:18px; right:18px; font-family:var(--cn-light); font-size:.72rem; color:#766D84; line-height:1.6; }
+.photo-card.film .photo-inner { background: #111; display:block; padding:0; }
+.photo-card.film .photo-inner.film-cover img { width:100%; height:100%; object-fit:cover; display:block; }
+.photo-card.film.film-wide { width: 360px; height: 230px; padding: 18px 16px 42px; }
+.photo-card.film.film-wide .photo-inner { height: 100%; }
 
 /* 剧本邮票皮肤 - 完美边缘打孔不透心 */
 .photo-card.stamp { 
@@ -149,17 +152,21 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .script-paper { background: #F8F4EC; color: #2D2536; padding: 4rem 3rem; width:100%; height:100%; overflow-y:auto; font-family: var(--cn-light); line-height: 2.2; text-align: left; }
 
 /* 主页高清封面与轻量动效补丁 */
-.layout-gallery .photo-card { width: 245px; height: 325px; }
-.layout-gallery .photo-inner { background:#fff; }
+.layout-gallery .photo-card { width: 278px; height: 368px; }
+.layout-gallery .photo-inner { background:#ece6dc; }
 .layout-gallery .thumb-title { display:none; }
-/* 仅针对飞鸟集 / 诗经 / 语言学：横屏 PPT 使用横向卡片，避免 16:9 封面被压成竖图 */
-.layout-gallery .photo-card:nth-child(n+3) { width: 340px; height: 205px; padding: 14px 14px 42px; }
-.layout-gallery .photo-card:nth-child(n+3) .photo-inner img { object-fit: contain; }
-.layout-gallery .photo-card:nth-child(4) { transform: translate(-50%, -50%) rotate(7deg) translateX(92px) translateY(40px); }
-.layout-gallery .photo-card:nth-child(5) { transform: translate(-50%, -50%) rotate(-10deg) translateX(-92px) translateY(45px); }
+.layout-gallery .photo-card:nth-child(1),
+.layout-gallery .photo-card:nth-child(2) { width: 278px; height: 368px; }
+.layout-gallery .photo-card:nth-child(n+3) { width: 380px; height: 228px; padding: 14px 14px 42px; }
+.layout-gallery .photo-card:nth-child(n+3) .photo-inner img,
+.layout-gallery .photo-card:nth-child(n+3) .pdf-thumb-canvas { object-fit: cover; width:100%; height:100%; }
+.layout-gallery .photo-card:nth-child(4) { transform: translate(-50%, -50%) rotate(7deg) translateX(102px) translateY(44px); }
+.layout-gallery .photo-card:nth-child(5) { transform: translate(-50%, -50%) rotate(-10deg) translateX(-102px) translateY(48px); }
 .layout-gallery:hover .photo-card:nth-child(3) { transform: translate(-50%, -50%) rotate(0deg) scale(1.03) translateY(-10px); z-index: 10; }
-.layout-gallery:hover .photo-card:nth-child(4) { transform: translate(-50%, -50%) rotate(15deg) translateX(190px) translateY(44px); }
-.layout-gallery:hover .photo-card:nth-child(5) { transform: translate(-50%, -50%) rotate(-17deg) translateX(-190px) translateY(48px); }
+.layout-gallery:hover .photo-card:nth-child(4) { transform: translate(-50%, -50%) rotate(15deg) translateX(205px) translateY(48px); }
+.layout-gallery:hover .photo-card:nth-child(5) { transform: translate(-50%, -50%) rotate(-17deg) translateX(-205px) translateY(52px); }
+.stamp-gallery .photo-card { width: 300px; height: 390px; }
+.stamp-gallery .script-card-preview { font-size:10.5px; line-height:1.68; }
 .season-effects { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:1; }
 .season-fx { position:absolute; right:9%; top:52%; opacity:0; transform:translate(24px,-8px) scale(.8) rotate(0deg); animation: driftIn 1.45s ease-out forwards; font-size:22px; filter: drop-shadow(0 6px 10px rgba(216,140,168,.16)); }
 @keyframes driftIn { 0%{opacity:0; transform:translate(70px,20px) scale(.65) rotate(-12deg);} 18%{opacity:.95;} 100%{opacity:0; transform:translate(-55px,-105px) scale(1.15) rotate(32deg);} }
@@ -169,7 +176,11 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .video-placeholder { text-align:center; padding:2rem; color:#4C4358; font-family:var(--cn-light); line-height:1.9; }
 .video-placeholder .play { width:72px; height:72px; margin:0 auto 1rem; border-radius:50%; background:rgba(255,255,255,.72); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 28px rgba(45,37,54,.13); color:var(--accent); }
 .video-caption { position:static; margin-top:1rem; padding:0.7rem 1.1rem; background:rgba(255,255,255,0.7); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; font-family:var(--cn-light); font-size:0.9rem; color:#5A5070; line-height:1.8; max-width:820px; }
-.script-card-preview { padding:17px 14px; text-align:left; color:#6A5F7A; font-family:var(--cn-light); font-size:12px; line-height:1.8; }
+.script-card-preview { padding:14px 12px; text-align:left; color:#6A5F7A; font-family:var(--cn-light); font-size:11px; line-height:1.72; overflow:hidden; }
+.script-card-preview b { color:var(--text-dark); }
+.album-row.motion-row .album-text { text-align:right; margin-left:auto; }
+.album-row.motion-row .a-desc { margin-left:auto; max-width:560px; }
+.motion-desc-block { margin-bottom:1.35rem; }
 .script-paper h2{font-family:var(--serif);text-align:center;margin:0 0 2rem;border-bottom:1px dashed #cfc5d5;padding-bottom:1rem;}
 .script-paper p{margin:0 0 1.25rem;}
 .script-paper .quote{background:rgba(255,255,255,.7);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 12px 12px 0;}
@@ -191,7 +202,9 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .wechat-play-card,.canva-open-card{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;color:#4C4358;padding:2rem;text-align:center;font-family:var(--cn-light);line-height:1.9;box-sizing:border-box;}
 .wechat-play-card .play,.canva-open-card .play{width:72px;height:72px;margin:0 auto 1rem;border-radius:50%;background:rgba(255,255,255,.72);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(45,37,54,.13);color:var(--accent);}
 .wechat-play-card b,.canva-open-card b{font-family:var(--serif);font-size:1.05rem;color:var(--text-dark);}
-.canva-preview-card{background:linear-gradient(160deg,#fff8fb 0%,#f3efff 55%,#eef6ff 100%);color:#6A5F7A;font-family:var(--cn-light);font-size:.82rem;line-height:1.75;padding:1rem;text-align:center;}
+.canva-preview-card{display:none;}
+.phone-canva-footer{padding:1.2rem 1rem 2rem;text-align:center;background:#fff;}
+.phone-canva-footer p{font-family:var(--cn-light);font-size:.88rem;color:#6A5F7A;line-height:1.8;margin:0 0 .8rem;}
 .pdf-btn{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;padding:8px 22px;background:rgba(229,169,192,0.10);border:1px solid var(--accent);border-radius:999px;color:var(--accent);font-family:var(--english);font-size:0.88rem;letter-spacing:0.06em;text-decoration:none;transition:all 0.25s;}
 .pdf-btn:hover{background:var(--accent);color:#fff;}
 #layoutDescEN,#motionDescEN,#scriptDescEN{font-family:'Cormorant Garamond','Georgia',serif!important;font-size:1.08rem;font-style:italic;color:#5A5070;line-height:2.15;}
@@ -238,24 +251,20 @@ your glance completes, your thoughts renew.</p>
         <span class="a-hint">Hover to expand the covers, click to view details.</span>
       </div>
       <div class="album-photos layout-gallery" onclick="openTheater('layout')">
-        <div class="photo-card layout p1"><div class="photo-inner canva-preview-card">躲进山的怀抱，海的臂弯<br>CUHK留学日记·生活篇</div><span>公众号排版·CU留学</span></div>
-        <div class="photo-card layout p2"><div class="photo-inner"><img src="1.png" alt="尤利西斯首页"></div><span>公众号排版·尤利西斯</span></div>
-        <div class="photo-card layout p3"><div class="photo-inner pdf-thumb" data-pdf="layout%201.pdf"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·飞鸟集</span></div>
-        <div class="photo-card layout p4"><div class="photo-inner pdf-thumb" data-pdf="layout%202.pdf"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·诗经</span></div>
-        <div class="photo-card layout p5"><div class="photo-inner pdf-thumb" data-pdf="layout%204.pdf"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·语言学</span></div>
+        <div class="photo-card layout p1"><div class="photo-inner cover-mode"><img class="cover-fill" src="assets/previews/cuhk.jpg" alt="CUHK留学日记首页"></div><span>公众号排版·CU留学</span></div>
+        <div class="photo-card layout p2"><div class="photo-inner cover-mode"><img class="cover-fill" src="assets/previews/ulysses.png" alt="尤利西斯首页"></div><span>公众号排版·尤利西斯</span></div>
+        <div class="photo-card layout p3"><div class="photo-inner pdf-thumb cover-mode" data-pdf="layout%201.pdf" data-cover="1"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·飞鸟集</span></div>
+        <div class="photo-card layout p4"><div class="photo-inner pdf-thumb cover-mode" data-pdf="layout%202.pdf" data-cover="1"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·诗经</span></div>
+        <div class="photo-card layout p5"><div class="photo-inner pdf-thumb cover-mode" data-pdf="layout%204.pdf" data-cover="1"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·语言学</span></div>
       </div>
     </div>
 
     <!-- 2. 帧频之中 -->
-    <div class="album-row">
+    <div class="album-row motion-row">
       <div class="album-text">
         <span class="a-tag">MOTION & VOICE</span>
         <h3 class="a-title">帧频之中</h3>
-        <p class="a-desc" id="motionDescCN"><b>创意先行，万物归宗。</b><br>
-画面的流动，并非影像在动，而是思绪在延伸。素材皆在，只待一缕气息贯之，便自成形。<br>
-删减之难，甚于增添。一段不舍，一段难留。去后回看，反觉圆满。凡踌躇处，即用心处。<br>
-字、画、声、律，四者相揉，不过求一恰如其分之距。近则逼仄，远则疏离。若即若离，乃得从容。<br>
-设若它们各安其位，各尽其责，彼此成全，便自有风骨。动静之间，不过一念。</p>
+        <p class="a-desc motion-desc-block" id="motionDescCN"><b>创意先行，万物归宗。</b>画面的流动，并非影像在动，而是思绪在延伸。素材皆在，只待一缕气息贯之，便自成形。删减之难，甚于增添——一段不舍，一段难留，去后回看，反觉圆满。凡踌躇处，即用心处。<br><br>字、画、声、律，四者相揉，不过求一恰如其分之距。近则逼仄，远则疏离，若即若离，乃得从容。设若它们各安其位、各尽其责、彼此成全，便自有风骨；动静之间，不过一念。</p>
 <span class="lang-toggle" onclick="toggleLang('motion')">🌐 点击查看英文版 (EN)</span>
 <p class="a-desc" id="motionDescEN" style="display:none;"><b>Where the idea leads, all things find their way home.</b><br>
 Images do not move—thoughts do. The raw material waits; a single breath runs through, and it awakens into form.<br>
@@ -265,9 +274,9 @@ Let each hold its place, serve its end, and give way to the other—grace follow
         <span class="a-hint">Hover to expand the films, click to play.</span>
       </div>
       <div class="album-photos" onclick="openTheater('motion')">
-        <div class="photo-card film p1"><div class="photo-inner"><div class="film-icon"><svg width="30" height="30" fill="var(--accent)"><path d="M8 5v14l11-7z"/></svg></div><div class="film-sub">创意视频·春夏之交<br>个人拍摄剪辑</div></div><span>Spring/Summer</span></div>
-        <div class="photo-card film p2"><div class="photo-inner"><div class="film-icon"><svg width="30" height="30" fill="var(--accent)"><path d="M8 5v14l11-7z"/></svg></div><div class="film-sub">电影配音<br>僵尸新娘 / 鬼妈妈 / 小妇人</div></div><span>Voice Dubbing</span></div>
-        <div class="photo-card film p3"><div class="photo-inner"><div class="film-icon"><svg width="30" height="30" fill="var(--accent)"><path d="M8 5v14l11-7z"/></svg></div><div class="film-sub">创意视频<br>商场周年庆 / 反诈最强音</div></div><span>Commercial Works</span></div>
+        <div class="photo-card film film-wide p1"><div class="photo-inner film-cover"><img src="assets/previews/spring-summer.png" alt="春夏之交"></div><span>Spring/Summer</span></div>
+        <div class="photo-card film film-wide p2"><div class="photo-inner film-cover"><img src="assets/previews/dubliners.jpg" alt="都柏林人"></div><span>Dubliners</span></div>
+        <div class="photo-card film film-wide p3"><div class="photo-inner film-cover"><img src="assets/previews/mall.jpg" alt="商场周年庆"></div><span>Commercial Works</span></div>
       </div>
     </div>
 
@@ -287,10 +296,10 @@ A good script never says all it knows. It leaves room—for the actor's breath t
 Those quiet sentences on the page will, in time, pass through light and shadow—and become the most moving frame of all.</p>
         <span class="a-hint">Hover to view scripts, click to read.</span>
       </div>
-      <div class="album-photos" onclick="openTheater('script')">
-        <div class="photo-card stamp p1"><div class="stamp-wrap"><div class="photo-inner script-card-preview">【镜头】闭店后的华信Mall。<br>假人模特苏醒，走过品牌背景墙，灯光逐格点亮。<br>你是奇妙夜晚的尊贵来客。</div><span>周年庆广告脚本</span></div></div>
-        <div class="photo-card stamp p3"><div class="stamp-wrap"><div class="photo-inner script-card-preview">“砥砺奋进，再创辉煌”<br>一封封来信，连接校友与下一代外语人。<br>蓝图已绘就，奋进正当时。</div><span>表彰大会脚本</span></div></div>
-        <div class="photo-card stamp p2"><div class="stamp-wrap"><div class="photo-inner script-card-preview">守护安全，从我做起。<br>反诈宣传片脚本，以真实案例为线索，<br>唤起公众警觉与防范意识。</div><span>反诈宣传片脚本</span></div></div>
+      <div class="album-photos stamp-gallery" onclick="openTheater('script')">
+        <div class="photo-card stamp p1"><div class="stamp-wrap"><div class="photo-inner script-card-preview"><b>【开篇·夜晚的商场】</b><br>镜1 华信Mall外立面仰拍，天空叠化旋转时钟。<br>镜2 临近关门，橱窗假人模特，保安手电经过。<br>镜3 领口上移，商场熄灯，模特一动不动。<br><em>旁白：传说九月九日，灯光暗下，愿望将化为现实。</em><br>镜6 <b>模特看着镜头，突然眨了眨眼。</b></div><span>周年庆广告脚本</span></div></div>
+        <div class="photo-card stamp p3"><div class="stamp-wrap"><div class="photo-inner script-card-preview"><b>献礼二十大 · 砥砺奋进，再创辉煌</b><br>二十年外院，一封封校友来信连结两代外语人。<br><b>大一·选择</b> 孙可学长：学好专业，学会取舍。<br><b>大二·挫败</b> 王宇学长：竞赛是成长与反馈。<br><b>大三·焦虑</b> 温雯学姐：两手准备，减少彷徨。<br><b>大四·求职</b> 付丽娜学姐：增强能力，阴霾终将过去。</div><span>表彰大会脚本</span></div></div>
+        <div class="photo-card stamp p2"><div class="stamp-wrap"><div class="photo-inner script-card-preview"><b>反诈最强音 · MV分镜脚本</b><br><em>浑浑噩噩 心中迷茫 / 得不偿失 为这诱惑流连</em><br>【说唱】情景再现：刷单返利、冒充公检法、网贷陷阱……<br><em>面对着诱惑和犯罪我们要勇敢闯，就像是黑夜中指引方向的太阳。</em><br>【宣讲】民警进社区宣讲，把理想种子播撒在这美好的晨曦。</div><span>反诈宣传片脚本</span></div></div>
       </div>
     </div>
   
@@ -316,7 +325,10 @@ const ASSETS = {
   layout1: 'layout%201.pdf',
   layout2: 'layout%202.pdf',
   layout4: 'layout%204.pdf',
-  canvaCuhk: 'https://canva.link/m0fzi57vte1zkjh'
+  canvaCuhk: 'https://canva.link/663t5zvt4gjrm63',
+  pdfHuaxin: encodeURI('华信mall广告宣传.pdf'),
+  pdfCommendation: encodeURI('外院表彰大会  20周年及校友篇.pdf'),
+  pdfAntiFraud: encodeURI('反诈最强音.png')
 };
 
 function makePdfPptHtml(pdfUrl, title) {
@@ -338,7 +350,7 @@ const ppt1Html = makePdfPptHtml(ASSETS.layout1, '课堂展示排版·飞鸟集')
 const ppt2Html = makePdfPptHtml(ASSETS.layout2, '课堂展示排版·诗经');
 const ppt4Html = makePdfPptHtml(ASSETS.layout4, '课堂展示排版·语言学');
 const ulyssesHtml = `<img src="1.png" alt="尤利西斯 第1页"><img src="2.png" alt="尤利西斯 第2页"><img src="3.png" alt="尤利西斯 第3页">`;
-const cuhkHtml = `<div class="canva-open-card"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6V3H5a2 2 0 00-2 2v14c0 1.1.9 2 2 2h14a2 2 0 002-2v-6h-2v6H5V5z"/></svg></div><b>CUHK留学日记·生活篇</b><p>完整排版较长，已在 Canva 发布<br>点击下方按钮查看完整设计</p><a class="pdf-btn" href="${ASSETS.canvaCuhk}" target="_blank" rel="noopener noreferrer">在 Canva 中打开 ↗</a></div>`;
+const cuhkHtml = `<img src="1.jpg" alt="CUHK留学日记封面"><div class="phone-canva-footer"><p>完整排版较长，已在 Canva 发布<br>点击下方按钮查看完整设计</p><a class="pdf-btn" href="${ASSETS.canvaCuhk}" target="_blank" rel="noopener noreferrer">在 Canva 中打开 ↗</a></div>`;
 
 const visualData = {
   'layout': {
@@ -366,9 +378,9 @@ const visualData = {
   'script': {
     tag: 'SCRIPTS', title: '幕布之后', desc: '光影未至，文字先行。', effect:'autumn',
     items: [
-      { name: '华信广告分镜头脚本', type: 'script', html: `<div class="script-paper"><h2>华信 Mall 周年庆广告脚本</h2><p class="quote"><b>创作概念：</b>闭店后的商场如同夜间博物馆。假人模特在灯光亮起时苏醒，带领观众穿行品牌场景，品牌背景墙模特走过即点亮——创意从脚本延伸至线下交互装置。</p><p><b>【开篇·夜晚的商场】</b></p><p><b>镜1</b> 全景/仰拍 — 夜晚华信Mall外立面，天空变换风景，叠化快速旋转的时钟</p><p><b>镜2</b> 全景/正面/推进 — 商场临近关门，玻璃橱窗后站着假人模特，保安拿手电筒经过 <em>· 同期声</em></p><p><b>镜3</b> 近景/斜侧/上移 — 镜头从模特领口上移至脸部，商场熄灯，模特始终一动不动<br><em>旁白：传说每年的九月九日，在华信Mall的夜晚，当灯光暗下的那一刻，所有最美好的愿望将化为现实 · 脚步声渐远 · 商场关灯音效</em></p><p><b>镜4</b> 特写/正面/固定 — 墙上时钟特写，23:59，秒针指向0 <em>· 钟表声</em></p><p><b>镜5</b> 特写/正面/固定 — 日历滑向2023年9月9日，星期六</p><p><b>镜6</b> 特写/正面/固定 — <b>模特看着镜头，突然眨了眨眼</b></p><p><b>【发展·苏醒与自我探索】</b></p><p><b>镜7–8</b> 近景/水平 — 模特下垂的左手缓缓抬起 · 模特走向橱窗</p><p><b>镜9–12</b> 模特在咖啡店 · 健身房 · 泡泡玛特 · 背对镜头走向前方</p><p><b>镜13</b> 近景/过肩/固定 — 镜子反射里，模特举着一只口红<br><em>「你是奇妙夜晚的尊贵来客，也是绚丽生活的领衔主演」</em></p><p><b>镜14</b> 中景/背面/推进 — 模特坐在海马体镜子前，椅子旋转，转至正面</p><p><b>镜15</b> 中景/正面/分屏 — 三屏画面，模特在女装店试不同款式的服装</p><p><b>镜16</b> 中景/侧面/固定 — 双人镜头，服装店里的假人模特站在左边</p><p><b>镜17</b> 特写/侧面 — 模特好奇俯身凑近观察假人模特<br><em>「不一样的美丽，也渴望着遇到懂Ta的人」</em></p><p><b>镜18</b> 特写到近景 — 相似镜头转场，模特侧面特写，镜头后拉，在星际传奇操作摩托游戏</p><p><b>【高潮·魔法降临】</b></p><p><b>镜19</b> 全景到中景 — 模特坐在餐厅圆桌前，打个响指，桌上顿时出现一桌美食</p><p><b>镜20–22</b> 模特吃甜品 · 喝饮料 · 在酒吧</p><p><b>【结尾·回归与余韵】</b></p><p><b>镜23</b> 特写/俯视 — 保安的手打开商场大门的U型锁<br><em>「九月九日华信Mall奇妙夜，心无止境，自成一派」</em></p><p><b>镜24</b> 中景到近景 — 模特穿华丽衣服，手提购物袋和奶茶，听到开门声猛然回头</p><p><b>镜25–26</b> 保安推开玻璃门探身查看 · 多角度往商场里看</p><p><b>镜27</b> 全景/水平/推进 — 反打，商场全景，一切归于安静恢复原样，渐隐</p><p><b>镜28</b> 一周年主KV浮现，几秒后黑场</p><p><b>镜29</b> 全景/正面/推进 — 画面再亮起，白天的商场内部，模特橱窗前人来人往</p><p><b>镜30</b> 特写/正面/固定 — <b>模特看着镜头，突然快速眨了下眼睛</b></p><a class="pdf-btn" href="assets/scripts/huaxin-storyboard.pdf" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'autumn' },
-      { name: '表彰大会舞台剧脚本', type: 'script', html: `<div class="script-paper"><h2>外院表彰大会 · 20周年院庆暨校友篇</h2><p class="quote"><b>献礼二十大 奋进新征程</b><br><b>小标题：砥砺奋进，再创辉煌</b></p><p><b>引言</b><br>时光流转，岁月代序。今年是外国语学院成立二十周年。一代代外院人秉持着使命与担当，在学习竞赛、志愿服务、各行各业中都取得了丰硕成果。</p><p><b>一代人有一代人的长征。</b>缺少哪一代人的长征，都无法成就现在，铸就如今之辉煌。蓝图已绘就，奋进正当时。二十年来，学院秉持<b>「崇德尚能、经世济民」</b>的校训，培养了一批又一批<b>「有大世界观的外语人」</b>。他们取得成功后，从未忘却母校——参加校友访谈、分享会，成为下一代外语人的明灯与引路人。万语千言，凝结在这一封封来信里。</p><p><b>【第一封信】大一·选择</b><br>高中三年，我只要按部就班地完成学习任务。可是到了大学，各种活动纷至沓来——<b>我不知道怎么取舍。</b></p><p class="quote"><b>2008级 孙可学长：</b>展信安。大一刚入学的焦虑和迷茫都很正常。<b>一定好好学习本专业知识。</b>从我们班毕业情况看，专业能力好的同学发展得更好。专业学习是第一位的，不管是考研、保研、留学还是就业，都很看重绩点。在此基础上也要注重综合能力的培养——<b>多选择质量较高的、对自己发展更有裨益的活动。</b>我本科做了很多志愿活动和社会实践，那些经历和见识对我之后的发展都有很大帮助。所以，<b>不必焦虑，学会选择，好好享受这四年的时光吧。</b></p><p><b>【第二封信】大二·挫败</b><br>大二学生小王：哎，还不是之前的英语演讲比赛——<b>我都大二了，竞赛还是一无所获，我是不是太差劲了……</b></p><p class="quote"><b>2010级 王宇学长：</b>你好啊，小王。曾经我也跟你一样，在各种竞赛中摸爬滚打，走了很多弯路。当年参加「挑战杯」，第一年石沉大海，第二年改良方向，经过无数次复盘、修改，才取得了不错的成绩。<b>参加竞赛，本来就是一个尝试、成长与得到反馈的过程。</b>再者，<b>选择也是一种智慧——要通过尝试摸索，找到适合自己的赛道。</b>你才大二，不必过于着急。相信自己的能力，加油！</p><p><b>【第三封信】大三·焦虑</b><br>我叫xxx，已经大三了，想跨考新传，可是又怕考研失败……<b>哎，感觉压力好大……</b></p><p class="quote"><b>2009级 温雯学姐：</b>学妹你好呀。<b>与其犹豫不决、彷徨不定，不如先做好两手准备，制定计划并执行起来</b>——这样会在很大程度上减少焦虑。以我自己来说，我毅然决然地选择了先考研、后考公的道路。你完全可以先准备考研，大四时也投投简历，多一个选择总归不是坏事。但无论如何，<b>都要有坚持和接受失败的勇气。</b>成功或不成功，路上都是迷茫。<b>先找到自己，才能找到自己的路。</b>相信你定有所成！</p><p><b>【第四封信】大四·求职</b><br>我叫xxx，大四了，已经投了好几十份简历，<b>却好像没有一个对我感兴趣。找工作，真的太难了……</b></p><p class="quote"><b>2011级 付丽娜学姐：</b>你好呀，看到你的经历，就仿佛看到了当年的我自己。<b>毕业后求职失败，是一条必经之路。</b>只有这样，我们才能知道自己的弱势在哪。想要在一众求职者中脱颖而出：<b>增强个人能力和素质，其次是提升情商，学习更多面试技巧。</b>良好的人际关系往往能带来更多的机会。<b>所有的阴霾都将过去。</b>祝你今年成功斩获offer，加油！</p><p><b>结尾</b><br>这一封封真切的来信，将本属于两个世界的外语人连结在一起。<b>外院人从来都不是孤立的个体，而是由千丝万缕联系起来的一家人。这种互助、传承与延续，生生不息。</b></p><p><b>同学（齐声）：</b>在未来的道路上，让我们怀着对外语人精神传承的敬意——<b>砥砺奋进，坚定前行！</b></p><a class="pdf-btn" href="assets/scripts/commendation-script.pdf" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'spring' },
-      { name: '反诈宣传片脚本', type: 'script', html: `<div class="script-paper"><h2>反诈宣传片脚本</h2><p class="quote"><b>创作概念：</b>以真实诈骗案例为蓝本，通过情景再现与旁白解析，唤起公众防范意识，传递反诈知识。</p><p><b>【开场】</b>画面黑屏，字幕渐显：每一个受害者，都曾以为这不会发生在自己身上。</p><p><b>【场景一·电话诈骗】</b>主角接到陌生电话，对方声称公安机关要求配合调查……<br><em>旁白：公安机关不会通过电话要求转账，请挂断并拨打96110核实。</em></p><p><b>【场景二·网络刷单】</b>主角看到高薪兼职广告，进行试单，初期小额返利……<br><em>旁白：刷单本身即属违法，且几乎所有刷单均以本金无法提现告终。</em></p><p><b>【场景三·冒充熟人】</b>主角收到好友微信，对方声称急需借款……<br><em>旁白：借款前务必电话或视频确认真实身份，切勿轻信文字信息。</em></p><p><b>【结尾】</b>天上不会掉馅饼，陌生转账要谨慎。守护钱包，从拒绝第一步开始。</p><a class="pdf-btn" href="assets/scripts/anti-fraud-script.pdf" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'winter' }
+      { name: '华信广告分镜头脚本', type: 'script', html: `<div class="script-paper"><h2>华信 Mall 周年庆广告脚本</h2><p class="quote"><b>创作概念：</b>闭店后的商场如同夜间博物馆。假人模特在灯光亮起时苏醒，带领观众穿行品牌场景，品牌背景墙模特走过即点亮——创意从脚本延伸至线下交互装置。</p><p><b>【开篇·夜晚的商场】</b></p><p><b>镜1</b> 全景/仰拍 — 夜晚华信Mall外立面，天空变换风景，叠化快速旋转的时钟</p><p><b>镜2</b> 全景/正面/推进 — 商场临近关门，玻璃橱窗后站着假人模特，保安拿手电筒经过 <em>· 同期声</em></p><p><b>镜3</b> 近景/斜侧/上移 — 镜头从模特领口上移至脸部，商场熄灯，模特始终一动不动<br><em>旁白：传说每年的九月九日，在华信Mall的夜晚，当灯光暗下的那一刻，所有最美好的愿望将化为现实</em></p><p><b>镜6</b> 特写/正面/固定 — <b>模特看着镜头，突然眨了眨眼</b></p><p><b>【发展·苏醒与自我探索】</b></p><p><b>镜12</b> 近景/过肩/固定 — 镜子反射里，模特举着一只口红<br><em>「你是奇妙夜晚的尊贵来客，也是绚丽生活的领衔主演」</em></p><p><b>镜17</b> 特写/侧面 — 模特好奇俯身凑近观察假人模特<br><em>「不一样的美丽，也渴望着遇到懂Ta的人」</em></p><p><b>【结尾·回归与余韵】</b></p><p><b>镜23</b> 特写/俯视 — 保安的手打开商场大门的U型锁<br><em>「九月九日华信Mall奇妙夜，心无止境，自成一派」</em></p><p><b>镜30</b> 特写/正面/固定 — <b>模特看着镜头，突然快速眨了下眼睛</b></p><a class="pdf-btn" href="${ASSETS.pdfHuaxin}" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'autumn' },
+      { name: '表彰大会舞台剧脚本', type: 'script', html: `<div class="script-paper"><h2>外院表彰大会 · 20周年院庆暨校友篇</h2><p class="quote"><b>献礼二十大 奋进新征程</b><br><b>小标题：砥砺奋进，再创辉煌</b></p><p><b>引言</b><br>今年是外国语学院成立二十周年。一代代外院人秉持使命与担当，在学习竞赛、志愿服务、各行各业中都取得了丰硕成果。二十年来，学院秉持<b>「崇德尚能、经世济民」</b>的校训，培养了一批又一批<b>「有大世界观的外语人」</b>。</p><p><b>【第一封信】大一·选择</b></p><p class="quote"><b>2008级 孙可学长：</b>大一刚入学的焦虑和迷茫都很正常。<b>一定好好学习本专业知识。</b>在此基础上也要注重综合能力的培养——<b>多选择质量较高的、对自己发展更有裨益的活动。</b><b>不必焦虑，学会选择，好好享受这四年的时光吧。</b></p><p><b>【第二封信】大二·挫败</b></p><p class="quote"><b>2010级 王宇学长：</b>参加竞赛本来就是尝试、成长与得到反馈的过程。<b>选择也是一种智慧——要通过尝试摸索，找到适合自己的赛道。</b></p><p><b>【第三封信】大三·焦虑</b></p><p class="quote"><b>2009级 温雯学姐：</b><b>与其犹豫不决，不如先做好两手准备，制定计划并执行起来。</b><b>都要有坚持和接受失败的勇气。先找到自己，才能找到自己的路。</b></p><p><b>【第四封信】大四·求职</b></p><p class="quote"><b>2011级 付丽娜学姐：</b><b>毕业后求职失败，是一条必经之路。</b>增强个人能力，提升情商，学习面试技巧。<b>所有的阴霾都将过去。</b></p><p><b>结尾</b><br>这一封封真切的来信，将本属于两个世界的外语人连结在一起。<b>外院人从来都不是孤立的个体，而是由千丝万缕联系起来的一家人。</b></p><a class="pdf-btn" href="${ASSETS.pdfCommendation}" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'spring' },
+      { name: '反诈宣传片脚本', type: 'script', html: `<div class="script-paper"><h2>反诈最强音 · MV分镜脚本</h2><p class="quote"><b>创作概念：</b>以情景再现 + 说唱宣讲，将反诈知识编入歌词与镜头，面向社区与校园传播防骗意识。</p><p><b>【前奏】</b></p><p><em>浑浑噩噩 心中迷茫 / 得不偿失 为这诱惑流连 / 不自量力 为这假象 / 110 守护你的理想</em></p><p><b>【说唱 · 情景一】</b> 主角沉迷网络刷单，小额返利后追加投入。<br><em>警方提示：刷单违法，返利是诱饵，本金难以提现。</em></p><p><b>【说唱 · 情景二】</b> 冒充公检法来电，要求转账至“安全账户”。<br><em>警方提示：公检法不会电话要求转账，请挂断并拨打 96110 核实。</em></p><p><b>【说唱 · 情景三】</b> 网贷低息诱惑，点击不明链接后个人信息泄露。<br><em>警方提示：不轻信陌生来电，不点击不明链接，不向陌生账户转账。</em></p><p><b>【副歌】</b></p><p class="quote"><em>面对着诱惑和犯罪我们要勇敢闯，就像是黑夜中指引方向的太阳。<br>我们不断推陈出新只为你安全，向反诈步调迈进守护你我人身安全。</em></p><p><b>【宣讲】</b> 民警进社区宣讲，群众齐声呼应。</p><p class="quote"><em>让这份阳光照亮为了城市的安宁，我们一起齐心协力为反诈立功勋。<br>这理想是光 勇敢去闯，去传递希望；在理想中播种通过奉献创造辉煌。<br>把理想种子播撒在这美好的晨曦。</em></p><p><b>【尾声】</b></p><p><em>是真理想 / 110 守护你的理想</em></p><a class="pdf-btn" href="${ASSETS.pdfAntiFraud}" target="_blank">📄 查看完整分镜脚本</a></div>`, effect:'winter' }
     ]
   }
 };
@@ -414,13 +426,19 @@ async function loadPdfThumb(el) {
   const url = el.dataset.pdf;
   if (!url || el.dataset.loaded === '1') return;
   el.dataset.loaded = '1';
+  const cover = el.dataset.cover === '1';
   try {
     const pdf = await pdfjsLib.getDocument(url).promise;
     const page = await pdf.getPage(1);
     const canvas = document.createElement('canvas');
     canvas.className = 'pdf-thumb-canvas';
     const viewport = page.getViewport({ scale: 1 });
-    const scale = Math.min(el.clientWidth / viewport.width, el.clientHeight / viewport.height, 1.6);
+    let scale;
+    if (cover) {
+      scale = Math.max(el.clientWidth / viewport.width, el.clientHeight / viewport.height, 0.15) * 1.12;
+    } else {
+      scale = Math.min(el.clientWidth / viewport.width, el.clientHeight / viewport.height, 1.6);
+    }
     const scaled = page.getViewport({ scale: Math.max(scale, 0.15) });
     canvas.width = scaled.width;
     canvas.height = scaled.height;
@@ -479,7 +497,7 @@ function renderSubItem(index, btnEl) {
   }
 
   if (item.type === 'phone') {
-    visualBox.innerHTML = `<div class="phone-mockup"><div class="phone-notch"></div><div class="phone-screen">${item.html}${item.html.includes('canva-open-card') ? '' : '<div class="scroll-hint">↓ 向下滑动查看</div>'}</div></div>`;
+    visualBox.innerHTML = `<div class="phone-mockup"><div class="phone-notch"></div><div class="phone-screen">${item.html}${item.html.includes('phone-canva-footer') ? '' : '<div class="scroll-hint">↓ 向下滑动查看</div>'}</div></div>`;
     visualBox.style.background = 'transparent'; visualBox.style.boxShadow = 'none';
   } else if (item.type === 'script') {
     visualBox.innerHTML = item.html;
