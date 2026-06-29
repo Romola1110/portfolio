@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<title>流影拾微 - 散落相册与深度沉浸 Demo v4</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+<style>
+:root { 
+  --bg: #F8F4EC; 
+  --text-dark: #2D2536; 
+  --text-soft: #8A92B0; 
+  --accent: #E5A9C0; 
+  --line-color: #DCD4E0; 
+  --serif: 'FZZJ-BYSKJW', 'STZhongsong', 'SimSun', 'Noto Serif SC', serif; 
+  --english: 'Cormorant Garamond', 'Georgia', serif; 
+  --cn-light: 'LXGW WenKai', 'Noto Serif SC', serif; 
+  --cn-art: 'Zhi Mang Xing', cursive;
+  --g1:#DCE8F5; --g2:#F5DDEB; --g3:#E2DDF2; --theater-ink:#3C3448;
+}
+body { font-family: var(--serif); color: var(--text-dark); background: var(--bg); margin: 0; padding: 5rem 2rem 10rem; overflow-x: hidden; min-height: 100vh; }
+
+.bg-vine { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -2; pointer-events: none; opacity: 0.5; }
+.container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; text-align: center; }
+
+.section-title {
+  font-family: var(--cn-art); font-size: 3.5rem; font-weight: 400;
+  color: var(--text-dark); letter-spacing: 0.1em; margin-bottom: 0.2rem;
+}
+.section-en {
+  font-family: var(--english); font-style: italic; font-size: 1.15rem; color: var(--text-soft); font-weight:600; margin-bottom: 4rem;
+}
+
+/* ===== 相册堆叠组 ===== */
+.album-wrapper { display: flex; flex-direction: column; gap: 8rem; margin-top: 2rem; }
+.album-row { display: flex; align-items: center; justify-content: space-between; gap: 4rem; }
+.album-row:nth-child(even) { flex-direction: row-reverse; }
+
+.album-text { flex: 1; text-align: left; }
+.album-row:nth-child(even) .album-text { text-align: right; }
+.a-tag { font-family: var(--english); font-size: 0.95rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; display: block; font-weight: 600; }
+.a-title { font-family: var(--serif); font-size: 2.8rem; font-weight: 600; margin: 0 0 1.5rem; line-height: 1.3; letter-spacing: 0.05em; }
+.a-desc { font-family: var(--cn-light); font-size: 1.05rem; color: #6A5F7A; line-height: 2; margin-bottom: 2rem; max-width: 540px; }
+.a-desc b { color: var(--text-dark); font-weight: 700; }
+.a-hint { font-family: var(--english); font-style: italic; font-size: 0.95rem; color: var(--text-soft); opacity: 0.8; }
+
+.album-photos { flex: 1.4; position: relative; height: 500px; perspective: 1200px; cursor: pointer; }
+.photo-card {
+  position: absolute; top: 50%; left: 50%; width: 290px; height: 380px;
+  background: #FFF; padding: 15px 15px 45px 15px; border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-origin: bottom center;
+}
+.photo-inner { width: 100%; height: 100%; background: #F0EDE6; overflow: hidden; position: relative; border: 1px solid rgba(0,0,0,0.05); display:flex; align-items:center; justify-content:center; }
+.photo-inner img { width:100%; height:100%; object-fit:contain; display:block; background:#fff; }
+.photo-inner .thumb-title { position:absolute; left:10px; right:10px; bottom:10px; padding:6px 8px; border-radius:999px; background:rgba(255,255,255,.78); color:#5F5870; font-size:.72rem; font-family:var(--cn-light); letter-spacing:.04em; backdrop-filter:blur(4px); }
+.photo-card span { position: absolute; bottom: 12px; left: 0; width: 100%; text-align: center; font-family: var(--cn-light); font-size: 0.9rem; color: #888; font-weight: 600; }
+
+.p1 { transform: translate(-50%, -50%) rotate(-8deg) translateX(-40px); z-index: 1; }
+.p2 { transform: translate(-50%, -50%) rotate(4deg) translateX(40px); z-index: 2; }
+.p3 { transform: translate(-50%, -50%) rotate(-2deg); z-index: 3; box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
+.p4 { transform: translate(-50%, -50%) rotate(8deg) translateX(85px) translateY(18px); z-index: 2; }
+.p5 { transform: translate(-50%, -50%) rotate(-12deg) translateX(-88px) translateY(20px); z-index: 1; }
+
+.album-photos:hover .p1 { transform: translate(-50%, -50%) rotate(-18deg) translateX(-110px) translateY(10px); }
+.album-photos:hover .p2 { transform: translate(-50%, -50%) rotate(16deg) translateX(110px) translateY(10px); }
+.album-photos:hover .p3 { transform: translate(-50%, -50%) rotate(0deg) scale(1.04); z-index: 10; box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
+.album-photos:hover .p4 { transform: translate(-50%, -50%) rotate(23deg) translateX(165px) translateY(22px); }
+.album-photos:hover .p5 { transform: translate(-50%, -50%) rotate(-24deg) translateX(-165px) translateY(24px); }
+
+/* 视频类型的皮肤 */
+.photo-card.film { background: #fffaf4; padding: 25px 20px 45px 20px; border-left: 12px solid var(--text-dark); border-right: 12px solid var(--text-dark); }
+.photo-card.film::before, .photo-card.film::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 12px;
+  background-image: radial-gradient(circle 3px at 6px 10px, #fff 100%, transparent 0);
+  background-size: 12px 20px; z-index: 5; pointer-events: none;
+}
+.photo-card.film::before { left: -12px; }
+.photo-card.film::after { right: -12px; }
+.photo-card.film span { color: #555; bottom: 12px; }
+.photo-card.film .photo-inner { background: linear-gradient(135deg,#fffaf4 0%,#f7eaf0 48%,#eef5ff 100%); display:flex; align-items:center; justify-content:center; color:var(--text-dark); }
+.photo-card.film .film-icon { width:54px; height:54px; border-radius:50%; background:rgba(255,255,255,.72); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(45,37,54,.10); }
+.photo-card.film .film-sub { position:absolute; bottom:54px; left:18px; right:18px; font-family:var(--cn-light); font-size:.72rem; color:#766D84; line-height:1.6; }
+
+/* 剧本邮票皮肤 - 完美边缘打孔不透心 */
+.photo-card.stamp { 
+  background: radial-gradient(circle, transparent 4px, #fff 4.5px) -6px -6px / 16px 16px;
+  padding: 10px; border-radius: 0; box-shadow: none; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.08));
+}
+.stamp-wrap {
+  background: #fff; width: 100%; height: 100%; padding: 15px 10px 35px 10px; position: relative;
+}
+.stamp-wrap span { position: absolute; bottom: 8px; left: 0; width: 100%; text-align: center; font-family: var(--cn-light); font-size: 0.9rem; color: #888; font-weight: 600; }
+.photo-card.stamp .photo-inner { background: transparent; border: 1px dashed #CCC; }
+
+/* ===== 暗场放映室 (Theater Modal) ===== */
+.theater-modal {
+  position: fixed; inset: 0; background: radial-gradient(circle at 30% 45%, rgba(255,255,255,.82) 0%, rgba(248,244,236,.96) 56%, rgba(232,222,234,.98) 100%); backdrop-filter: blur(15px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000;
+  opacity: 0; visibility: hidden; transition: all 0.4s ease;
+}
+.theater-modal.active { opacity: 1; visibility: visible; }
+.close-theater {
+  position: absolute; top: 2rem; right: 2rem; width: 52px; height: 52px;
+  border-radius: 50%; background: rgba(45,37,54,0.88); border: 2px solid rgba(255,255,255,0.82);
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  font-family: var(--english); font-size: 2.25rem; color: #fff; z-index: 1010; transition: all 0.3s;
+  box-shadow: 0 10px 28px rgba(45,37,54,.28);
+}
+.close-theater:hover { background: #fff; color: #2D2536; border-color: var(--accent); transform: rotate(90deg) scale(1.04); }
+
+.theater-content { width: 92vw; max-width: 1360px; height: 85vh; display: flex; gap: 3.5rem; position:relative; z-index:2; }
+.theater-left { flex: 2; display: flex; align-items: center; justify-content: center; border-radius: 18px; overflow: hidden; box-shadow: 0 22px 50px rgba(92,74,105,0.18); position: relative; background:rgba(255,255,255,.42); }
+.theater-right { flex: 1; display: flex; flex-direction: column; justify-content: center; color: var(--text-dark); text-align: left; position:relative; }
+
+.t-tag { font-family: var(--english); font-size: 0.95rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 1rem; text-transform: uppercase; font-weight: 600; }
+.t-title { font-family: var(--serif); font-size: 2.2rem; font-weight: 600; margin: 0 0 1.5rem 0; line-height: 1.4; color: var(--text-dark); }
+.t-desc { font-family: var(--cn-light); font-size: 1.05rem; color: rgba(45,37,54,0.72); line-height: 2; margin-bottom: 2rem; }
+.t-extra-desc { background: rgba(255,255,255,0.60); border-left: 3px solid var(--accent); padding: 1.35rem; border-radius: 0 12px 12px 0; margin-bottom: 1.4rem; box-shadow:0 8px 24px rgba(92,74,105,.08); }
+.t-extra-desc p { font-family: var(--cn-light); font-size: 0.95rem; color: rgba(45,37,54,.82); line-height: 1.8; margin: 0; }
+.t-extra-desc b { color: var(--text-dark); font-weight: 700; }
+
+.sub-items { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+.sub-item-btn {
+  background: rgba(255,255,255,0.56); border: 1px solid rgba(216,140,168,0.16); border-radius: 12px;
+  padding: 1.05rem 1.15rem; color: var(--text-dark); font-family: var(--cn-light); font-size: 1.05rem; text-align: left; cursor: pointer; transition: all 0.3s; font-weight: 600;
+}
+.sub-item-btn:hover, .sub-item-btn.active { background: rgba(255,255,255,0.90); border-color: var(--accent); transform:translateX(-6px); box-shadow:0 10px 26px rgba(216,140,168,.18); }
+
+/* PPT 播放器模拟 */
+.ppt-viewer { width: 100%; height: 100%; position: relative; background: #f6f1eb; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.theater-left.ppt-stage { aspect-ratio: 16 / 9; height: auto; max-height: 78vh; align-self: center; flex: 2.35; }
+.theater-left.ppt-stage .ppt-viewer { aspect-ratio: 16 / 9; height: auto; max-height: 100%; border-radius: 14px; }
+.ppt-page { position: absolute; max-width: 100%; max-height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.3s ease; }
+.ppt-page.active { opacity: 1; z-index: 10; }
+.ppt-hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: #fff; padding: 6px 15px; border-radius: 20px; font-family: var(--cn-light); font-size: 0.85rem; z-index: 20; pointer-events: none; backdrop-filter: blur(4px); }
+
+/* 手机模型与剧本纸 */
+.phone-mockup { width: 360px; height: 700px; border: 18px solid #211A2A; border-top-width:34px; border-bottom-width:30px; border-radius: 48px; position: relative; background: #211A2A; overflow: hidden; box-shadow: 0 24px 60px rgba(33,26,42,0.36), 0 0 0 3px rgba(255,255,255,.72), inset 0 0 0 2px rgba(255,255,255,.22); }
+.phone-notch { position: absolute; top: -24px; left: 50%; transform: translateX(-50%); width: 104px; height: 7px; background: rgba(255,255,255,.36); border-radius: 999px; z-index: 10; box-shadow:0 0 0 1px rgba(255,255,255,.12); }
+.phone-screen { width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden; position: relative; background: #fff; border-radius: 18px; }
+.phone-screen img { width: 100%; display: block; margin: 0; padding: 0; }
+.phone-screen::-webkit-scrollbar { display: none; }
+.scroll-hint { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: #fff; padding: 8px 20px; border-radius: 20px; font-family: var(--cn-light); font-size: 0.9rem; z-index: 20; pointer-events: none; backdrop-filter: blur(4px); animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(5px); } }
+
+.svg-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: rgba(255,255,255,0.5); font-family: var(--english); padding: 2rem; line-height: 1.8; }
+.script-paper { background: #F8F4EC; color: #2D2536; padding: 4rem 3rem; width:100%; height:100%; overflow-y:auto; font-family: var(--cn-light); line-height: 2.2; text-align: left; }
+
+/* 主页高清封面与轻量动效补丁 */
+.layout-gallery .photo-card { width: 245px; height: 325px; }
+.layout-gallery .photo-inner { background:#fff; }
+.layout-gallery .thumb-title { display:none; }
+/* 仅针对飞鸟集 / 诗经 / 语言学：横屏 PPT 使用横向卡片，避免 16:9 封面被压成竖图 */
+.layout-gallery .photo-card:nth-child(n+3) { width: 340px; height: 205px; padding: 14px 14px 42px; }
+.layout-gallery .photo-card:nth-child(n+3) .photo-inner img { object-fit: contain; }
+.layout-gallery .photo-card:nth-child(4) { transform: translate(-50%, -50%) rotate(7deg) translateX(92px) translateY(40px); }
+.layout-gallery .photo-card:nth-child(5) { transform: translate(-50%, -50%) rotate(-10deg) translateX(-92px) translateY(45px); }
+.layout-gallery:hover .photo-card:nth-child(3) { transform: translate(-50%, -50%) rotate(0deg) scale(1.03) translateY(-10px); z-index: 10; }
+.layout-gallery:hover .photo-card:nth-child(4) { transform: translate(-50%, -50%) rotate(15deg) translateX(190px) translateY(44px); }
+.layout-gallery:hover .photo-card:nth-child(5) { transform: translate(-50%, -50%) rotate(-17deg) translateX(-190px) translateY(48px); }
+.season-effects { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:1; }
+.season-fx { position:absolute; right:9%; top:52%; opacity:0; transform:translate(24px,-8px) scale(.8) rotate(0deg); animation: driftIn 1.45s ease-out forwards; font-size:22px; filter: drop-shadow(0 6px 10px rgba(216,140,168,.16)); }
+@keyframes driftIn { 0%{opacity:0; transform:translate(70px,20px) scale(.65) rotate(-12deg);} 18%{opacity:.95;} 100%{opacity:0; transform:translate(-55px,-105px) scale(1.15) rotate(32deg);} }
+.video-shell { width:min(100%, 860px); aspect-ratio:16/9; border-left:22px solid #2D2536; border-right:22px solid #2D2536; border-radius:18px; position:relative; background:linear-gradient(135deg,#fffaf3 0%,#f9edf2 48%,#edf5ff 100%); box-shadow:0 20px 45px rgba(45,37,54,.14); overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.video-shell::before,.video-shell::after{content:'';position:absolute;top:0;bottom:0;width:22px;background-image:radial-gradient(circle 4px at 11px 12px,#fff 99%,transparent 100%);background-size:22px 30px;opacity:.9;}
+.video-shell::before{left:-22px}.video-shell::after{right:-22px}
+.video-placeholder { text-align:center; padding:2rem; color:#4C4358; font-family:var(--cn-light); line-height:1.9; }
+.video-placeholder .play { width:72px; height:72px; margin:0 auto 1rem; border-radius:50%; background:rgba(255,255,255,.72); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 28px rgba(45,37,54,.13); color:var(--accent); }
+.video-caption { position:static; margin-top:1rem; padding:0.7rem 1.1rem; background:rgba(255,255,255,0.7); border-left:3px solid var(--accent); border-radius:0 10px 10px 0; font-family:var(--cn-light); font-size:0.9rem; color:#5A5070; line-height:1.8; max-width:820px; }
+.script-card-preview { padding:17px 14px; text-align:left; color:#6A5F7A; font-family:var(--cn-light); font-size:12px; line-height:1.8; }
+.script-paper h2{font-family:var(--serif);text-align:center;margin:0 0 2rem;border-bottom:1px dashed #cfc5d5;padding-bottom:1rem;}
+.script-paper p{margin:0 0 1.25rem;}
+.script-paper .quote{background:rgba(255,255,255,.7);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 12px 12px 0;}
+
+/* ===== 语言切换标签 ===== */
+.lang-toggle {
+  display: inline-block; font-family: var(--english); font-size: 0.82rem;
+  color: var(--accent); border: 1px solid var(--accent); border-radius: 999px;
+  padding: 3px 12px; cursor: pointer; margin: 0.5rem 0 0.8rem;
+  opacity: 0.75; transition: opacity 0.2s, background 0.2s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle:hover { opacity: 1; background: rgba(229,169,192,0.10); }
+.video-wrapper{display:flex;flex-direction:column;align-items:center;width:100%;}
+.pdf-btn{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;padding:8px 22px;background:rgba(229,169,192,0.10);border:1px solid var(--accent);border-radius:999px;color:var(--accent);font-family:var(--english);font-size:0.88rem;letter-spacing:0.06em;text-decoration:none;transition:all 0.25s;}
+.pdf-btn:hover{background:var(--accent);color:#fff;}
+#layoutDescEN,#motionDescEN,#scriptDescEN{font-family:'Cormorant Garamond','Georgia',serif!important;font-size:1.08rem;font-style:italic;color:#5A5070;line-height:2.15;}
+@media (max-width: 900px){.album-row,.album-row:nth-child(even){flex-direction:column}.album-row:nth-child(even) .album-text,.album-text{text-align:center}.theater-content{flex-direction:column;height:90vh;gap:1rem}.theater-right{max-height:38vh;overflow:auto}.phone-mockup{width:300px;height:590px}.layout-gallery .photo-card{width:210px;height:285px}}
+
+</style>
+</head>
+<body>
+
+<svg class="bg-vine" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+  <path d="M 600,0 Q 400,400 700,800 T 500,1500" stroke="var(--line-color)" stroke-width="1.5" fill="none" />
+</svg>
+
+<div class="container">
+  <h2 class="section-title" style="font-family:var(--serif);">流影拾微</h2>
+  <p class="section-en">Visuals & Motion — a quiet conversation</p>
+
+  <div class="album-wrapper">
+    <!-- 1. 尺幅之间 -->
+    <div class="album-row">
+      <div class="album-text">
+        <span class="a-tag">LAYOUTS</span>
+        <h3 class="a-title">尺幅之间</h3>
+        <p class="a-desc" id="layoutDescCN">尺幅之间，自有天地。<br>
+我始终相信，每一次编排都是一次克制的取舍。在有限的边界里，如何安放每一个字符、每一块色彩，让它既成为视觉的一部分，又不抢夺阅读的呼吸感——这是设计最本质的功课。<br>
+文字与图像之间，语言承载意义，设计承载理解。二者如溪行山间，各行其道，遇之则相映成趣。字有骨，图有韵，不必争谁是主角，只需在相逢的那一刻，彼此让出半步，便有了余韵。<br>
+飞鸟衔句，诗落成行。古雅有致，草木含香。设计之道，不在繁饰，而于细微处见心意——一色之冷暖，一字之远近，皆是我与观者之间，无声的对谈。<br>
+未尽之意，静候诸君一阅，指教二三。</p>
+<span class="lang-toggle" onclick="toggleLang('layout')">🌐 点击查看英文版 (EN)</span>
+<p class="a-desc" id="layoutDescEN" style="display:none;"><b>Within the frame, a world finds its name.</b><br>
+Design is not to fill, but to refrain—<br>
+to place each word and hue with care,<br>
+and let the reading breathe its own air.<br>
+Text and image, streams apart,<br>
+yet when they meet, they share a heart.<br>
+Words bear bone, pictures rhyme—<br>
+each gives way, and in that giving, chime.<br>
+In warmth of color, nearness of type,<br>
+a silent dialogue is ripe—<br>
+between the maker and the eye,<br>
+a conversation soft and sly.<br>
+What remains unsaid, I leave to you—<br>
+your glance completes, your thoughts renew.</p>
+        <span class="a-hint">Hover to expand the covers, click to view details.</span>
+      </div>
+      <div class="album-photos layout-gallery" onclick="openTheater('layout')">
+        <div class="photo-card layout p1"><div class="photo-inner"><img src="assets/imgs/i001.jpg" alt="CUHK留学日记首页"><div class="thumb-title">公众号排版·CU留学日记</div></div><span>公众号排版·CU留学</span></div>
+        <div class="photo-card layout p2"><div class="photo-inner"><img src="assets/imgs/i002.jpg" alt="尤利西斯首页"><div class="thumb-title">公众号排版·尤利西斯</div></div><span>公众号排版·尤利西斯</span></div>
+        <div class="photo-card layout p3"><div class="photo-inner"><img src="assets/imgs/i003.jpg" alt="飞鸟集第一页"><div class="thumb-title">课堂展示排版·飞鸟集</div></div><span>课堂展示·飞鸟集</span></div>
+        <div class="photo-card layout p4"><div class="photo-inner"><img src="assets/imgs/i004.jpg" alt="诗经第一页"><div class="thumb-title">课堂展示排版·诗经</div></div><span>课堂展示·诗经</span></div>
+        <div class="photo-card layout p5"><div class="photo-inner"><img src="assets/imgs/i005.jpg" alt="语言学第一页"><div class="thumb-title">课堂展示排版·语言学</div></div><span>课堂展示·语言学</span></div>
+      </div>
+    </div>
+
+    <!-- 2. 帧频之中 -->
+    <div class="album-row">
+      <div class="album-text">
+        <span class="a-tag">MOTION & VOICE</span>
+        <h3 class="a-title">帧频之中</h3>
+        <p class="a-desc" id="motionDescCN"><b>创意先行，万物归宗。</b><br>
+画面的流动，并非影像在动，而是思绪在延伸。素材皆在，只待一缕气息贯之，便自成形。<br>
+删减之难，甚于增添。一段不舍，一段难留。去后回看，反觉圆满。凡踌躇处，即用心处。<br>
+字、画、声、律，四者相揉，不过求一恰如其分之距。近则逼仄，远则疏离。若即若离，乃得从容。<br>
+设若它们各安其位，各尽其责，彼此成全，便自有风骨。动静之间，不过一念。</p>
+<span class="lang-toggle" onclick="toggleLang('motion')">🌐 点击查看英文版 (EN)</span>
+<p class="a-desc" id="motionDescEN" style="display:none;"><b>Where the idea leads, all things find their way home.</b><br>
+Images do not move—thoughts do. The raw material waits; a single breath runs through, and it awakens into form.<br>
+To subtract is harder than to add. A shot you cannot bear to lose, yet cannot bear to keep—you let it fall. In its absence, the whole feels fuller. Every pause is a place you cared.<br>
+Words, images, sound, rhythm—their harmony lies in distance. Too close, they crowd; too far, they drift. Near yet not, apart yet not—there ease is found.<br>
+Let each hold its place, serve its end, and give way to the other—grace follows. Between stillness and motion, just a thought, and everything turns.</p>
+        <span class="a-hint">Hover to expand the films, click to play.</span>
+      </div>
+      <div class="album-photos" onclick="openTheater('motion')">
+        <div class="photo-card film p1"><div class="photo-inner"><div class="film-icon"><svg width="30" height="30" fill="var(--accent)"><path d="M8 5v14l11-7z"/></svg></div><div class="film-sub">创意视频·春夏之交<br>个人拍摄剪辑</div></div><span>Spring/Summer</span></div>
+        <div class="photo-card film p2"><div class="photo-inner"><div class="film-icon"><svg width="30" height="30" fill="var(--accent)"><path d="M8 5v14l11-7z"/></svg></div><div class="film-sub">电影剪辑配音<br>僵尸新娘 / 鬼妈妈</div></div><span>Voice Dubbing</span></div>
+        <div class="photo-card film p3"><div class="photo-inner"><div class="film-icon"><svg width="30" height="30" fill="var(--accent)"><path d="M8 5v14l11-7z"/></svg></div><div class="film-sub">创意视频<br>商场周年庆广告</div></div><span>Commercial Ad</span></div>
+      </div>
+    </div>
+
+    <!-- 3. 幕布之后 -->
+    <div class="album-row">
+      <div class="album-text">
+        <span class="a-tag">SCRIPTS</span>
+        <h3 class="a-title">幕布之后</h3>
+        <p class="a-desc" id="scriptDescCN">光影未至，文字先行。<br>
+舞台的走位、情绪的起伏、对白的起落、镜头的流转，都在这时被一支笔定下雏形。落笔之时，光尚未抵达，一切却已在想象中铺展。你替镜头试走每一段路，替声音试念每一句词，反复调整，直到它们在纸上找到属于自己的节奏。<br>
+好的脚本从不说尽。它留有余地——让演员的呼吸有处安放，让摄影机的目光有处停驻。你明知永远无法抵达那个想象中的画面，却仍要递出方向，交付信任。<br>
+页面上那些安静的句子，终将穿越时间与光影，成为某个画面里，最动人的那一帧。</p>
+<span class="lang-toggle" onclick="toggleLang('script')">🌐 点击查看英文版 (EN)</span>
+<p class="a-desc" id="scriptDescEN" style="display:none;">Before light arrives, the word steps in.<br>
+The staging, the rise and fall of emotion, the cadence of dialogue, the turning of the lens—all are first traced by a pen. In the moment of writing, light has not yet come, yet everything already unfolds in the mind. You walk every path for the camera, speak every line for the voice, revising again and again, until they find their own rhythm on the page.<br>
+A good script never says all it knows. It leaves room—for the actor's breath to settle, for the lens to find its place. You know you will never fully reach that image in your mind, yet you still offer direction, still offer trust.<br>
+Those quiet sentences on the page will, in time, pass through light and shadow—and become the most moving frame of all.</p>
+        <span class="a-hint">Hover to view scripts, click to read.</span>
+      </div>
+      <div class="album-photos" onclick="openTheater('script')">
+        <div class="photo-card stamp p1"><div class="stamp-wrap"><div class="photo-inner script-card-preview">【镜头】闭店后的华信Mall。<br>假人模特苏醒，走过品牌背景墙，灯光逐格点亮。<br>你是奇妙夜晚的尊贵来客。</div><span>周年庆广告脚本</span></div></div>
+        <div class="photo-card stamp p3"><div class="stamp-wrap"><div class="photo-inner script-card-preview">“砥砺奋进，再创辉煌”<br>一封封来信，连接校友与下一代外语人。<br>蓝图已绘就，奋进正当时。</div><span>表彰大会脚本</span></div></div>
+        <div class="photo-card stamp p2"><div class="stamp-wrap"><div class="photo-inner script-card-preview">守护安全，从我做起。<br>反诈宣传片脚本，以真实案例为线索，<br>唤起公众警觉与防范意识。</div><span>反诈宣传片脚本</span></div></div>
+      </div>
+    </div>
+  
+</div>
+
+<div class="theater-modal" id="theaterModal">
+  <div class="season-effects" id="seasonEffects"></div>
+  <div class="close-theater" onclick="closeTheater()">×</div>
+  <div class="theater-content">
+    <div class="theater-left" id="theaterVisual"></div>
+    <div class="theater-right">
+      <div id="theaterText"></div>
+      <div class="sub-items" id="subItemsList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ppt1Pages = ["assets/imgs/i003.jpg", "assets/imgs/i006.jpg", "assets/imgs/i007.jpg", "assets/imgs/i008.jpg", "assets/imgs/i009.jpg", "assets/imgs/i010.jpg"];
+const ppt2Pages = ["assets/imgs/i004.jpg", "assets/imgs/i011.jpg", "assets/imgs/i012.jpg", "assets/imgs/i013.jpg", "assets/imgs/i014.jpg", "assets/imgs/i015.jpg", "assets/imgs/i016.jpg", "assets/imgs/i017.jpg", "assets/imgs/i018.jpg", "assets/imgs/i019.jpg", "assets/imgs/i020.jpg", "assets/imgs/i021.jpg", "assets/imgs/i022.jpg", "assets/imgs/i023.jpg", "assets/imgs/i024.jpg", "assets/imgs/i025.jpg", "assets/imgs/i026.jpg", "assets/imgs/i027.jpg", "assets/imgs/i028.jpg", "assets/imgs/i029.jpg", "assets/imgs/i030.jpg", "assets/imgs/i031.jpg", "assets/imgs/i032.jpg", "assets/imgs/i033.jpg", "assets/imgs/i034.jpg", "assets/imgs/i035.jpg", "assets/imgs/i036.jpg"];
+const ppt4Pages = ["assets/imgs/i005.jpg", "assets/imgs/i037.jpg", "assets/imgs/i038.jpg", "assets/imgs/i039.jpg", "assets/imgs/i040.jpg", "assets/imgs/i041.jpg", "assets/imgs/i042.jpg", "assets/imgs/i043.jpg", "assets/imgs/i044.jpg", "assets/imgs/i045.jpg", "assets/imgs/i046.jpg", "assets/imgs/i047.jpg", "assets/imgs/i048.jpg", "assets/imgs/i049.jpg", "assets/imgs/i050.jpg", "assets/imgs/i051.jpg", "assets/imgs/i052.jpg", "assets/imgs/i053.jpg", "assets/imgs/i054.jpg", "assets/imgs/i055.jpg", "assets/imgs/i056.jpg"];
+
+function makePptHtml(pages, title) {
+  return `<div class="ppt-viewer" onclick="nextPptPage(this)" aria-label="${title}">` +
+    pages.map((src, i) => `<img class="ppt-page ${i===0?'active':''}" src="${src}" alt="${title} 第${i+1}页" loading="eager">`).join('') +
+    `<div class="ppt-hint">点击画面切换下一页 · ${pages.length} pages</div></div>`;
+}
+const ppt1Html = makePptHtml(ppt1Pages, '课堂展示排版·飞鸟集');
+const ppt2Html = makePptHtml(ppt2Pages, '课堂展示排版·诗经');
+const ppt4Html = makePptHtml(ppt4Pages, '课堂展示排版·语言学');
+const ulyssesHtml = `<img src="assets/imgs/i057.jpg" style="width:100%; display:block;"><img src="assets/imgs/i058.jpg" style="width:100%; display:block;"><img src="assets/imgs/i059.jpg" style="width:100%; display:block;">`;
+const cuhkHtml = `<img src="assets/imgs/i060.jpg" style="width:100%; display:block;"><img src="assets/imgs/i061.jpg" style="width:100%; display:block;"><img src="assets/imgs/i062.jpg" style="width:100%; display:block;"><img src="assets/imgs/i063.jpg" style="width:100%; display:block;"><img src="assets/imgs/i064.jpg" style="width:100%; display:block;">`;
+
+const visualData = {
+  'layout': {
+    tag: 'LAYOUTS', title: '尺幅之间', desc: '尺幅之间，自有天地。', effect:'spring',
+    items: [
+      { name: '课堂展示排版·飞鸟集', type: 'ppt', html: ppt1Html, effect:'spring', extraDesc:'' },
+      { name: '课堂展示排版·诗经', type: 'ppt', html: ppt2Html, effect:'summer', extraDesc:'' },
+      { name: '课堂展示排版·语言学', type: 'ppt', html: ppt4Html, effect:'autumn', extraDesc:'' },
+      { name: '公众号排版·尤利西斯', type: 'phone', html: ulyssesHtml, effect:'winter', extraDesc:'' },
+      { name: '公众号排版·CU留学日记', type: 'phone', html: cuhkHtml, effect:'spring', extraDesc:'' }
+    ]
+  },
+  'motion': {
+    tag: 'MOTION & VOICE', title: '帧频之中', desc: '创意先行，万物归宗。', effect:'spring',
+    items: [
+      { name: '创意视频·商场周年庆广告', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Commercial Ad Player</b><p>已预留真实视频嵌入口：<br><code>assets/videos/mall-anniversary.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">华信mall周年庆短视频项目，负责创意策划、脚本分镜、logo设计及部分剪辑工作。以"博物馆奇妙夜"为灵感，让假人模特活化体验多元场景，品牌背景墙模特走过即点亮——创意从脚本延伸至线下交互装置，成为当地社交平台热门打卡点</div></div>`, effect:'autumn', extraDesc:'' },
+      { name: '创意视频·春夏之交', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Spring & Summer Video</b><p>已预留真实视频嵌入口：<br><code>assets/videos/spring-summer.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">个人作品，独立进行手机拍摄与剪辑</div></div>`, effect:'summer', extraDesc:'' },
+      { name: '学术展示视频·都柏林人', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Academic Presentation Video</b><p>已预留真实视频嵌入口：<br><code>assets/videos/dubliners.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">独立策划完成数字人文项目，借助R语言实现数据可视化，获评A，并进行全专业展示，广受教授好评。</div></div>`, effect:'winter', extraDesc:'' },
+      { name: '电影配音·僵尸新娘', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Voice Dubbing</b><p>已预留真实视频嵌入口：<br><code>assets/videos/corpse-bride-dubbing.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">《僵尸新娘》为女主角艾米丽配音</div></div>`, effect:'halloween', extraDesc:'' },
+      { name: '电影配音·鬼妈妈', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Voice Dubbing</b><p>已预留真实视频嵌入口：<br><code>assets/videos/coraline-dubbing.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">《鬼妈妈》为小女孩卡洛琳配音</div></div>`, effect:'halloween', extraDesc:'' },
+      { name: '电影配音·小妇人', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Voice Dubbing</b><p>已预留真实视频嵌入口：<br><code>assets/videos/little-women-dubbing.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">《小妇人》为女主角乔配音</div></div>`, effect:'winter', extraDesc:'' }
+    ]
+  },
+  'script': {
+    tag: 'SCRIPTS', title: '幕布之后', desc: '光影未至，文字先行。', effect:'autumn',
+    items: [
+      { name: '华信广告分镜头脚本', type: 'script', html: `<div class="script-paper"><h2>华信 Mall 周年庆广告脚本</h2><p class="quote"><b>创作概念：</b>闭店后的商场如同夜间博物馆。假人模特在灯光亮起时苏醒，带领观众穿行品牌场景，品牌背景墙模特走过即点亮——创意从脚本延伸至线下交互装置。</p><p><b>【开篇·夜晚的商场】</b></p><p><b>镜1</b> 全景/仰拍 — 夜晚华信Mall外立面，天空变换风景，叠化快速旋转的时钟</p><p><b>镜2</b> 全景/正面/推进 — 商场临近关门，玻璃橱窗后站着假人模特，保安拿手电筒经过 <em>· 同期声</em></p><p><b>镜3</b> 近景/斜侧/上移 — 镜头从模特领口上移至脸部，商场熄灯，模特始终一动不动<br><em>旁白：传说每年的九月九日，在华信Mall的夜晚，当灯光暗下的那一刻，所有最美好的愿望将化为现实 · 脚步声渐远 · 商场关灯音效</em></p><p><b>镜4</b> 特写/正面/固定 — 墙上时钟特写，23:59，秒针指向0 <em>· 钟表声</em></p><p><b>镜5</b> 特写/正面/固定 — 日历滑向2023年9月9日，星期六</p><p><b>镜6</b> 特写/正面/固定 — <b>模特看着镜头，突然眨了眨眼</b></p><p><b>【发展·苏醒与自我探索】</b></p><p><b>镜7–8</b> 近景/水平 — 模特下垂的左手缓缓抬起 · 模特走向橱窗</p><p><b>镜9–12</b> 模特在咖啡店 · 健身房 · 泡泡玛特 · 背对镜头走向前方</p><p><b>镜13</b> 近景/过肩/固定 — 镜子反射里，模特举着一只口红<br><em>「你是奇妙夜晚的尊贵来客，也是绚丽生活的领衔主演」</em></p><p><b>镜14</b> 中景/背面/推进 — 模特坐在海马体镜子前，椅子旋转，转至正面</p><p><b>镜15</b> 中景/正面/分屏 — 三屏画面，模特在女装店试不同款式的服装</p><p><b>镜16</b> 中景/侧面/固定 — 双人镜头，服装店里的假人模特站在左边</p><p><b>镜17</b> 特写/侧面 — 模特好奇俯身凑近观察假人模特<br><em>「不一样的美丽，也渴望着遇到懂Ta的人」</em></p><p><b>镜18</b> 特写到近景 — 相似镜头转场，模特侧面特写，镜头后拉，在星际传奇操作摩托游戏</p><p><b>【高潮·魔法降临】</b></p><p><b>镜19</b> 全景到中景 — 模特坐在餐厅圆桌前，打个响指，桌上顿时出现一桌美食</p><p><b>镜20–22</b> 模特吃甜品 · 喝饮料 · 在酒吧</p><p><b>【结尾·回归与余韵】</b></p><p><b>镜23</b> 特写/俯视 — 保安的手打开商场大门的U型锁<br><em>「九月九日华信Mall奇妙夜，心无止境，自成一派」</em></p><p><b>镜24</b> 中景到近景 — 模特穿华丽衣服，手提购物袋和奶茶，听到开门声猛然回头</p><p><b>镜25–26</b> 保安推开玻璃门探身查看 · 多角度往商场里看</p><p><b>镜27</b> 全景/水平/推进 — 反打，商场全景，一切归于安静恢复原样，渐隐</p><p><b>镜28</b> 一周年主KV浮现，几秒后黑场</p><p><b>镜29</b> 全景/正面/推进 — 画面再亮起，白天的商场内部，模特橱窗前人来人往</p><p><b>镜30</b> 特写/正面/固定 — <b>模特看着镜头，突然快速眨了下眼睛</b></p><a class="pdf-btn" href="assets/scripts/huaxin-storyboard.pdf" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'autumn' },
+      { name: '表彰大会舞台剧脚本', type: 'script', html: `<div class="script-paper"><h2>外院表彰大会 · 20周年院庆暨校友篇</h2><p class="quote"><b>献礼二十大 奋进新征程</b><br><b>小标题：砥砺奋进，再创辉煌</b></p><p><b>引言</b><br>时光流转，岁月代序。今年是外国语学院成立二十周年。一代代外院人秉持着使命与担当，在学习竞赛、志愿服务、各行各业中都取得了丰硕成果。</p><p><b>一代人有一代人的长征。</b>缺少哪一代人的长征，都无法成就现在，铸就如今之辉煌。蓝图已绘就，奋进正当时。二十年来，学院秉持<b>「崇德尚能、经世济民」</b>的校训，培养了一批又一批<b>「有大世界观的外语人」</b>。他们取得成功后，从未忘却母校——参加校友访谈、分享会，成为下一代外语人的明灯与引路人。万语千言，凝结在这一封封来信里。</p><p><b>【第一封信】大一·选择</b><br>高中三年，我只要按部就班地完成学习任务。可是到了大学，各种活动纷至沓来——<b>我不知道怎么取舍。</b></p><p class="quote"><b>2008级 孙可学长：</b>展信安。大一刚入学的焦虑和迷茫都很正常。<b>一定好好学习本专业知识。</b>从我们班毕业情况看，专业能力好的同学发展得更好。专业学习是第一位的，不管是考研、保研、留学还是就业，都很看重绩点。在此基础上也要注重综合能力的培养——<b>多选择质量较高的、对自己发展更有裨益的活动。</b>我本科做了很多志愿活动和社会实践，那些经历和见识对我之后的发展都有很大帮助。所以，<b>不必焦虑，学会选择，好好享受这四年的时光吧。</b></p><p><b>【第二封信】大二·挫败</b><br>大二学生小王：哎，还不是之前的英语演讲比赛——<b>我都大二了，竞赛还是一无所获，我是不是太差劲了……</b></p><p class="quote"><b>2010级 王宇学长：</b>你好啊，小王。曾经我也跟你一样，在各种竞赛中摸爬滚打，走了很多弯路。当年参加「挑战杯」，第一年石沉大海，第二年改良方向，经过无数次复盘、修改，才取得了不错的成绩。<b>参加竞赛，本来就是一个尝试、成长与得到反馈的过程。</b>再者，<b>选择也是一种智慧——要通过尝试摸索，找到适合自己的赛道。</b>你才大二，不必过于着急。相信自己的能力，加油！</p><p><b>【第三封信】大三·焦虑</b><br>我叫xxx，已经大三了，想跨考新传，可是又怕考研失败……<b>哎，感觉压力好大……</b></p><p class="quote"><b>2009级 温雯学姐：</b>学妹你好呀。<b>与其犹豫不决、彷徨不定，不如先做好两手准备，制定计划并执行起来</b>——这样会在很大程度上减少焦虑。以我自己来说，我毅然决然地选择了先考研、后考公的道路。你完全可以先准备考研，大四时也投投简历，多一个选择总归不是坏事。但无论如何，<b>都要有坚持和接受失败的勇气。</b>成功或不成功，路上都是迷茫。<b>先找到自己，才能找到自己的路。</b>相信你定有所成！</p><p><b>【第四封信】大四·求职</b><br>我叫xxx，大四了，已经投了好几十份简历，<b>却好像没有一个对我感兴趣。找工作，真的太难了……</b></p><p class="quote"><b>2011级 付丽娜学姐：</b>你好呀，看到你的经历，就仿佛看到了当年的我自己。<b>毕业后求职失败，是一条必经之路。</b>只有这样，我们才能知道自己的弱势在哪。想要在一众求职者中脱颖而出：<b>增强个人能力和素质，其次是提升情商，学习更多面试技巧。</b>良好的人际关系往往能带来更多的机会。<b>所有的阴霾都将过去。</b>祝你今年成功斩获offer，加油！</p><p><b>结尾</b><br>这一封封真切的来信，将本属于两个世界的外语人连结在一起。<b>外院人从来都不是孤立的个体，而是由千丝万缕联系起来的一家人。这种互助、传承与延续，生生不息。</b></p><p><b>同学（齐声）：</b>在未来的道路上，让我们怀着对外语人精神传承的敬意——<b>砥砺奋进，坚定前行！</b></p><a class="pdf-btn" href="assets/scripts/commendation-script.pdf" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'spring' },
+      { name: '反诈宣传片脚本', type: 'script', html: `<div class="script-paper"><h2>反诈宣传片脚本</h2><p class="quote"><b>创作概念：</b>以真实诈骗案例为蓝本，通过情景再现与旁白解析，唤起公众防范意识，传递反诈知识。</p><p><b>【开场】</b>画面黑屏，字幕渐显：每一个受害者，都曾以为这不会发生在自己身上。</p><p><b>【场景一·电话诈骗】</b>主角接到陌生电话，对方声称公安机关要求配合调查……<br><em>旁白：公安机关不会通过电话要求转账，请挂断并拨打96110核实。</em></p><p><b>【场景二·网络刷单】</b>主角看到高薪兼职广告，进行试单，初期小额返利……<br><em>旁白：刷单本身即属违法，且几乎所有刷单均以本金无法提现告终。</em></p><p><b>【场景三·冒充熟人】</b>主角收到好友微信，对方声称急需借款……<br><em>旁白：借款前务必电话或视频确认真实身份，切勿轻信文字信息。</em></p><p><b>【结尾】</b>天上不会掉馅饼，陌生转账要谨慎。守护钱包，从拒绝第一步开始。</p><a class="pdf-btn" href="assets/scripts/anti-fraud-script.pdf" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'winter' }
+    ]
+  }
+};
+
+let currentVisCat = null;
+
+function openTheater(catId) {
+  const cat = visualData[catId];
+  if(!cat) return;
+  currentVisCat = cat;
+
+  const textBox = document.getElementById('theaterText');
+  const subList = document.getElementById('subItemsList');
+
+  // 获取页面的 --accent 颜色
+  const style = getComputedStyle(document.body);
+  const themeColor = style.getPropertyValue('--accent').trim() || '#D88CA8';
+  // 设置动态极美渐变暗场
+  document.getElementById('theaterModal').style.background = `radial-gradient(circle at 28% 45%, rgba(255,255,255,.86) 0%, ${themeColor}22 46%, rgba(248,244,236,.98) 100%)`;
+
+  textBox.innerHTML = `<div class="t-tag">${cat.tag}</div><h2 class="t-title" style="font-family:var(--serif);">${cat.title}</h2><div class="t-desc">${cat.desc}</div><div id="extraDescArea"></div>`;
+
+  subList.innerHTML = '';
+  cat.items.forEach((item, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'sub-item-btn';
+    btn.textContent = item.name;
+    btn.onclick = () => renderSubItem(index, btn);
+    subList.appendChild(btn);
+  });
+
+  document.getElementById('theaterModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  if(cat.items.length > 0) renderSubItem(0, subList.firstChild);
+}
+
+function renderSubItem(index, btnEl) {
+  document.querySelectorAll('.sub-item-btn').forEach(b => b.classList.remove('active'));
+  btnEl.classList.add('active');
+
+  const item = currentVisCat.items[index];
+  playSeasonEffect(item.effect || currentVisCat.effect || 'spring');
+  const visualBox = document.getElementById('theaterVisual');
+  visualBox.classList.remove('ppt-stage');
+  const extraArea = document.getElementById('extraDescArea');
+
+  if (item.extraDesc) {
+    extraArea.innerHTML = `<div class="t-extra-desc"><p>${item.extraDesc}</p></div>`;
+  } else {
+    extraArea.innerHTML = '';
+  }
+
+  if (item.type === 'phone') {
+    visualBox.innerHTML = `<div class="phone-mockup"><div class="phone-notch"></div><div class="phone-screen">${item.html}<div class="scroll-hint">↓ 向下滑动查看</div></div></div>`;
+    visualBox.style.background = 'transparent'; visualBox.style.boxShadow = 'none';
+  } else if (item.type === 'script') {
+    visualBox.innerHTML = item.html;
+    visualBox.style.background = 'rgba(255,255,255,.45)'; visualBox.style.boxShadow = '0 22px 50px rgba(92,74,105,0.18)';
+  } else if (item.type === 'ppt') {
+    visualBox.classList.add('ppt-stage');
+    visualBox.innerHTML = item.html;
+    visualBox.style.background = 'rgba(255,255,255,.45)'; visualBox.style.boxShadow = '0 22px 50px rgba(92,74,105,0.18)';
+  } else if (item.type === 'video') {
+    const _t=document.createElement('div');_t.innerHTML=item.html;
+    const _cp=_t.querySelector('.video-caption');const _ct=_cp?_cp.innerHTML:'';
+    if(_cp)_cp.remove();
+    visualBox.innerHTML='<div class="video-wrapper">'+_t.innerHTML+(_ct?'<div class="video-caption">'+_ct+'</div>':'')+'</div>';
+    visualBox.style.background='transparent';visualBox.style.boxShadow='none';
+  } else {
+    visualBox.innerHTML = item.html;
+    visualBox.style.background = 'rgba(255,255,255,.45)'; visualBox.style.boxShadow = '0 22px 50px rgba(92,74,105,0.18)';
+  }
+}
+
+
+function playSeasonEffect(kind) {
+  const box = document.getElementById('seasonEffects');
+  if(!box) return;
+  const palettes = {
+    spring: ['🌸','✿','❀','🌸','✦'],
+    summer: ['🍃','✧','🌿','𖤓','🍃'],
+    autumn: ['🍂','✦','✧','🍁','✦'],
+    winter: ['❄','✧','⋆','❅','❄'],
+    halloween: ['✦','🦋','⋆','✧','🕯']
+  };
+  const symbols = palettes[kind] || palettes.spring;
+  for(let i=0;i<16;i++){
+    const el = document.createElement('span');
+    el.className = 'season-fx';
+    el.textContent = symbols[i % symbols.length];
+    el.style.top = (28 + Math.random()*48) + '%';
+    el.style.right = (4 + Math.random()*22) + '%';
+    el.style.animationDelay = (Math.random()*0.28) + 's';
+    el.style.animationDuration = (1.05 + Math.random()*1.1) + 's';
+    el.style.fontSize = (14 + Math.random()*20) + 'px';
+    box.appendChild(el);
+    setTimeout(()=>el.remove(), 2400);
+  }
+}
+
+function closeTheater() {
+  document.getElementById('theaterModal').classList.remove('active');
+  document.body.style.overflow = 'auto';
+  setTimeout(() => { document.getElementById('theaterVisual').innerHTML = ''; }, 400);
+}
+function toggleLang(section) {
+  const cn = document.getElementById(section + 'DescCN');
+  const en = document.getElementById(section + 'DescEN');
+  const btn = event.target;
+  if (!cn || !en) return;
+  if (en.style.display === 'none') {
+    en.style.display = 'block';
+    cn.style.display = 'none';
+    btn.textContent = '🌐 点击查看中文版 (CN)';
+  } else {
+    en.style.display = 'none';
+    cn.style.display = 'block';
+    btn.textContent = '🌐 点击查看英文版 (EN)';
+  }
+}
+
+
+function nextPptPage(container) {
+  const pages = container.querySelectorAll('.ppt-page');
+  if(pages.length === 0) return;
+  let activeIdx = -1;
+  pages.forEach((p, i) => { if(p.classList.contains('active')) activeIdx = i; });
+  if(activeIdx !== -1) pages[activeIdx].classList.remove('active');
+  
+  const nextIdx = (activeIdx + 1) % pages.length;
+  pages[nextIdx].classList.add('active');
+}
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a12d636ccc28b31b',t:'MTc4MjY1NzAxNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a132ed0adae47558',t:'MTc4MjcxNTA4MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1350cbae96ef325',t:'MTc4MjczNzM1MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
