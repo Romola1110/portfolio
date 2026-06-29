@@ -2,7 +2,7 @@
 <html lang="zh-Hans">
 <head>
 <meta charset="UTF-8">
-<title>流影拾微 - 散落相册与深度沉浸 Demo v4</title>
+<title>流影拾微 - Demo v6</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <style>
@@ -184,6 +184,14 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 }
 .lang-toggle:hover { opacity: 1; background: rgba(229,169,192,0.10); }
 .video-wrapper{display:flex;flex-direction:column;align-items:center;width:100%;}
+.video-shell iframe{width:100%;height:100%;border:0;border-radius:12px;}
+.pdf-ppt-canvas{max-width:100%;max-height:100%;display:block;margin:0 auto;}
+.pdf-thumb-canvas{width:100%;height:100%;object-fit:contain;display:block;background:#fff;}
+.pdf-thumb-loading{font-family:var(--cn-light);font-size:.75rem;color:#8A92B0;}
+.wechat-play-card,.canva-open-card{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;color:#4C4358;padding:2rem;text-align:center;font-family:var(--cn-light);line-height:1.9;box-sizing:border-box;}
+.wechat-play-card .play,.canva-open-card .play{width:72px;height:72px;margin:0 auto 1rem;border-radius:50%;background:rgba(255,255,255,.72);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px rgba(45,37,54,.13);color:var(--accent);}
+.wechat-play-card b,.canva-open-card b{font-family:var(--serif);font-size:1.05rem;color:var(--text-dark);}
+.canva-preview-card{background:linear-gradient(160deg,#fff8fb 0%,#f3efff 55%,#eef6ff 100%);color:#6A5F7A;font-family:var(--cn-light);font-size:.82rem;line-height:1.75;padding:1rem;text-align:center;}
 .pdf-btn{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;padding:8px 22px;background:rgba(229,169,192,0.10);border:1px solid var(--accent);border-radius:999px;color:var(--accent);font-family:var(--english);font-size:0.88rem;letter-spacing:0.06em;text-decoration:none;transition:all 0.25s;}
 .pdf-btn:hover{background:var(--accent);color:#fff;}
 #layoutDescEN,#motionDescEN,#scriptDescEN{font-family:'Cormorant Garamond','Georgia',serif!important;font-size:1.08rem;font-style:italic;color:#5A5070;line-height:2.15;}
@@ -230,11 +238,11 @@ your glance completes, your thoughts renew.</p>
         <span class="a-hint">Hover to expand the covers, click to view details.</span>
       </div>
       <div class="album-photos layout-gallery" onclick="openTheater('layout')">
-        <div class="photo-card layout p1"><div class="photo-inner"><img src="assets/imgs/i001.jpg" alt="CUHK留学日记首页"><div class="thumb-title">公众号排版·CU留学日记</div></div><span>公众号排版·CU留学</span></div>
-        <div class="photo-card layout p2"><div class="photo-inner"><img src="assets/imgs/i002.jpg" alt="尤利西斯首页"><div class="thumb-title">公众号排版·尤利西斯</div></div><span>公众号排版·尤利西斯</span></div>
-        <div class="photo-card layout p3"><div class="photo-inner"><img src="assets/imgs/i003.jpg" alt="飞鸟集第一页"><div class="thumb-title">课堂展示排版·飞鸟集</div></div><span>课堂展示·飞鸟集</span></div>
-        <div class="photo-card layout p4"><div class="photo-inner"><img src="assets/imgs/i004.jpg" alt="诗经第一页"><div class="thumb-title">课堂展示排版·诗经</div></div><span>课堂展示·诗经</span></div>
-        <div class="photo-card layout p5"><div class="photo-inner"><img src="assets/imgs/i005.jpg" alt="语言学第一页"><div class="thumb-title">课堂展示排版·语言学</div></div><span>课堂展示·语言学</span></div>
+        <div class="photo-card layout p1"><div class="photo-inner canva-preview-card">躲进山的怀抱，海的臂弯<br>CUHK留学日记·生活篇</div><span>公众号排版·CU留学</span></div>
+        <div class="photo-card layout p2"><div class="photo-inner"><img src="1.png" alt="尤利西斯首页"></div><span>公众号排版·尤利西斯</span></div>
+        <div class="photo-card layout p3"><div class="photo-inner pdf-thumb" data-pdf="layout%201.pdf"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·飞鸟集</span></div>
+        <div class="photo-card layout p4"><div class="photo-inner pdf-thumb" data-pdf="layout%202.pdf"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·诗经</span></div>
+        <div class="photo-card layout p5"><div class="photo-inner pdf-thumb" data-pdf="layout%204.pdf"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·语言学</span></div>
       </div>
     </div>
 
@@ -258,8 +266,8 @@ Let each hold its place, serve its end, and give way to the other—grace follow
       </div>
       <div class="album-photos" onclick="openTheater('motion')">
         <div class="photo-card film p1"><div class="photo-inner"><div class="film-icon"><svg width="30" height="30" fill="var(--accent)"><path d="M8 5v14l11-7z"/></svg></div><div class="film-sub">创意视频·春夏之交<br>个人拍摄剪辑</div></div><span>Spring/Summer</span></div>
-        <div class="photo-card film p2"><div class="photo-inner"><div class="film-icon"><svg width="30" height="30" fill="var(--accent)"><path d="M8 5v14l11-7z"/></svg></div><div class="film-sub">电影剪辑配音<br>僵尸新娘 / 鬼妈妈</div></div><span>Voice Dubbing</span></div>
-        <div class="photo-card film p3"><div class="photo-inner"><div class="film-icon"><svg width="30" height="30" fill="var(--accent)"><path d="M8 5v14l11-7z"/></svg></div><div class="film-sub">创意视频<br>商场周年庆广告</div></div><span>Commercial Ad</span></div>
+        <div class="photo-card film p2"><div class="photo-inner"><div class="film-icon"><svg width="30" height="30" fill="var(--accent)"><path d="M8 5v14l11-7z"/></svg></div><div class="film-sub">电影配音<br>僵尸新娘 / 鬼妈妈 / 小妇人</div></div><span>Voice Dubbing</span></div>
+        <div class="photo-card film p3"><div class="photo-inner"><div class="film-icon"><svg width="30" height="30" fill="var(--accent)"><path d="M8 5v14l11-7z"/></svg></div><div class="film-sub">创意视频<br>商场周年庆 / 反诈最强音</div></div><span>Commercial Works</span></div>
       </div>
     </div>
 
@@ -300,21 +308,37 @@ Those quiet sentences on the page will, in time, pass through light and shadow�
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-const ppt1Pages = ["assets/imgs/i003.jpg", "assets/imgs/i006.jpg", "assets/imgs/i007.jpg", "assets/imgs/i008.jpg", "assets/imgs/i009.jpg", "assets/imgs/i010.jpg"];
-const ppt2Pages = ["assets/imgs/i004.jpg", "assets/imgs/i011.jpg", "assets/imgs/i012.jpg", "assets/imgs/i013.jpg", "assets/imgs/i014.jpg", "assets/imgs/i015.jpg", "assets/imgs/i016.jpg", "assets/imgs/i017.jpg", "assets/imgs/i018.jpg", "assets/imgs/i019.jpg", "assets/imgs/i020.jpg", "assets/imgs/i021.jpg", "assets/imgs/i022.jpg", "assets/imgs/i023.jpg", "assets/imgs/i024.jpg", "assets/imgs/i025.jpg", "assets/imgs/i026.jpg", "assets/imgs/i027.jpg", "assets/imgs/i028.jpg", "assets/imgs/i029.jpg", "assets/imgs/i030.jpg", "assets/imgs/i031.jpg", "assets/imgs/i032.jpg", "assets/imgs/i033.jpg", "assets/imgs/i034.jpg", "assets/imgs/i035.jpg", "assets/imgs/i036.jpg"];
-const ppt4Pages = ["assets/imgs/i005.jpg", "assets/imgs/i037.jpg", "assets/imgs/i038.jpg", "assets/imgs/i039.jpg", "assets/imgs/i040.jpg", "assets/imgs/i041.jpg", "assets/imgs/i042.jpg", "assets/imgs/i043.jpg", "assets/imgs/i044.jpg", "assets/imgs/i045.jpg", "assets/imgs/i046.jpg", "assets/imgs/i047.jpg", "assets/imgs/i048.jpg", "assets/imgs/i049.jpg", "assets/imgs/i050.jpg", "assets/imgs/i051.jpg", "assets/imgs/i052.jpg", "assets/imgs/i053.jpg", "assets/imgs/i054.jpg", "assets/imgs/i055.jpg", "assets/imgs/i056.jpg"];
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-function makePptHtml(pages, title) {
-  return `<div class="ppt-viewer" onclick="nextPptPage(this)" aria-label="${title}">` +
-    pages.map((src, i) => `<img class="ppt-page ${i===0?'active':''}" src="${src}" alt="${title} 第${i+1}页" loading="eager">`).join('') +
-    `<div class="ppt-hint">点击画面切换下一页 · ${pages.length} pages</div></div>`;
+const ASSETS = {
+  layout1: 'layout%201.pdf',
+  layout2: 'layout%202.pdf',
+  layout4: 'layout%204.pdf',
+  canvaCuhk: 'https://canva.link/m0fzi57vte1zkjh'
+};
+
+function makePdfPptHtml(pdfUrl, title) {
+  return `<div class="ppt-viewer pdf-ppt-viewer" data-pdf="${pdfUrl}" data-title="${title}" onclick="nextPdfPptPage(this)" aria-label="${title}">
+    <canvas class="pdf-ppt-canvas"></canvas>
+    <div class="ppt-hint">点击画面切换下一页 · 加载中…</div>
+  </div>`;
 }
-const ppt1Html = makePptHtml(ppt1Pages, '课堂展示排版·飞鸟集');
-const ppt2Html = makePptHtml(ppt2Pages, '课堂展示排版·诗经');
-const ppt4Html = makePptHtml(ppt4Pages, '课堂展示排版·语言学');
-const ulyssesHtml = `<img src="assets/imgs/i057.jpg" style="width:100%; display:block;"><img src="assets/imgs/i058.jpg" style="width:100%; display:block;"><img src="assets/imgs/i059.jpg" style="width:100%; display:block;">`;
-const cuhkHtml = `<img src="assets/imgs/i060.jpg" style="width:100%; display:block;"><img src="assets/imgs/i061.jpg" style="width:100%; display:block;"><img src="assets/imgs/i062.jpg" style="width:100%; display:block;"><img src="assets/imgs/i063.jpg" style="width:100%; display:block;"><img src="assets/imgs/i064.jpg" style="width:100%; display:block;">`;
+
+function makeBiliVideoHtml(bvid, caption) {
+  return `<div class="video-shell"><iframe src="//player.bilibili.com/player.html?bvid=${bvid}&high_quality=1&danmaku=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div><div class="video-caption">${caption}</div>`;
+}
+
+function makeWechatVideoHtml(url, title, caption) {
+  return `<div class="video-shell"><a class="wechat-play-card" href="${url}" target="_blank" rel="noopener noreferrer"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>${title}</b><p>该视频发布于微信视频号<br>点击后在微信中观看</p></a></div><div class="video-caption">${caption}</div>`;
+}
+
+const ppt1Html = makePdfPptHtml(ASSETS.layout1, '课堂展示排版·飞鸟集');
+const ppt2Html = makePdfPptHtml(ASSETS.layout2, '课堂展示排版·诗经');
+const ppt4Html = makePdfPptHtml(ASSETS.layout4, '课堂展示排版·语言学');
+const ulyssesHtml = `<img src="1.png" alt="尤利西斯 第1页"><img src="2.png" alt="尤利西斯 第2页"><img src="3.png" alt="尤利西斯 第3页">`;
+const cuhkHtml = `<div class="canva-open-card"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6V3H5a2 2 0 00-2 2v14c0 1.1.9 2 2 2h14a2 2 0 002-2v-6h-2v6H5V5z"/></svg></div><b>CUHK留学日记·生活篇</b><p>完整排版较长，已在 Canva 发布<br>点击下方按钮查看完整设计</p><a class="pdf-btn" href="${ASSETS.canvaCuhk}" target="_blank" rel="noopener noreferrer">在 Canva 中打开 ↗</a></div>`;
 
 const visualData = {
   'layout': {
@@ -330,12 +354,13 @@ const visualData = {
   'motion': {
     tag: 'MOTION & VOICE', title: '帧频之中', desc: '创意先行，万物归宗。', effect:'spring',
     items: [
-      { name: '创意视频·商场周年庆广告', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Commercial Ad Player</b><p>已预留真实视频嵌入口：<br><code>assets/videos/mall-anniversary.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">华信mall周年庆短视频项目，负责创意策划、脚本分镜、logo设计及部分剪辑工作。以"博物馆奇妙夜"为灵感，让假人模特活化体验多元场景，品牌背景墙模特走过即点亮——创意从脚本延伸至线下交互装置，成为当地社交平台热门打卡点</div></div>`, effect:'autumn', extraDesc:'' },
-      { name: '创意视频·春夏之交', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Spring & Summer Video</b><p>已预留真实视频嵌入口：<br><code>assets/videos/spring-summer.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">个人作品，独立进行手机拍摄与剪辑</div></div>`, effect:'summer', extraDesc:'' },
-      { name: '学术展示视频·都柏林人', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Academic Presentation Video</b><p>已预留真实视频嵌入口：<br><code>assets/videos/dubliners.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">独立策划完成数字人文项目，借助R语言实现数据可视化，获评A，并进行全专业展示，广受教授好评。</div></div>`, effect:'winter', extraDesc:'' },
-      { name: '电影配音·僵尸新娘', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Voice Dubbing</b><p>已预留真实视频嵌入口：<br><code>assets/videos/corpse-bride-dubbing.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">《僵尸新娘》为女主角艾米丽配音</div></div>`, effect:'halloween', extraDesc:'' },
-      { name: '电影配音·鬼妈妈', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Voice Dubbing</b><p>已预留真实视频嵌入口：<br><code>assets/videos/coraline-dubbing.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">《鬼妈妈》为小女孩卡洛琳配音</div></div>`, effect:'halloween', extraDesc:'' },
-      { name: '电影配音·小妇人', type: 'video', html: `<div class="video-shell"><div class="video-placeholder"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>Voice Dubbing</b><p>已预留真实视频嵌入口：<br><code>assets/videos/little-women-dubbing.mp4</code><br>把对应 mp4 放入同一路径即可播放。</p></div><div class="video-caption">《小妇人》为女主角乔配音</div></div>`, effect:'winter', extraDesc:'' }
+      { name: '创意视频·商场周年庆广告', type: 'video', html: makeWechatVideoHtml('https://weixin.qq.com/sph/AQc1S3Ln5U', '商场周年庆广告', '华信mall周年庆短视频项目，负责创意策划、脚本分镜、logo设计及部分剪辑工作。以"博物馆奇妙夜"为灵感，让假人模特活化体验多元场景，品牌背景墙模特走过即点亮——创意从脚本延伸至线下交互装置，成为当地社交平台热门打卡点'), effect:'autumn', extraDesc:'' },
+      { name: '创意视频·反诈最强音', type: 'video', html: makeWechatVideoHtml('https://weixin.qq.com/sph/AXJb7I4fMv', '反诈最强音', '参与歌词与脚本撰写，部分拍摄剪辑'), effect:'winter', extraDesc:'' },
+      { name: '创意视频·春夏之交', type: 'video', html: makeBiliVideoHtml('BV13LK96WEEs', '个人作品，独立进行手机拍摄与剪辑'), effect:'summer', extraDesc:'' },
+      { name: '学术展示视频·都柏林人', type: 'video', html: makeBiliVideoHtml('BV1hjK96XEKS', '独立策划完成数字人文项目，借助R语言实现数据可视化，获评A，并进行全专业展示，广受教授好评。'), effect:'winter', extraDesc:'' },
+      { name: '电影配音·僵尸新娘', type: 'video', html: makeBiliVideoHtml('BV1gjK96XE6q', '《僵尸新娘》为女主角艾米丽配音'), effect:'halloween', extraDesc:'' },
+      { name: '电影配音·鬼妈妈', type: 'video', html: makeBiliVideoHtml('BV13jK96XE3u', '《鬼妈妈》为小女孩卡洛琳配音'), effect:'halloween', extraDesc:'' },
+      { name: '电影配音·小妇人', type: 'video', html: makeBiliVideoHtml('BV1MpK96SEV2', '《小妇人》为女主角乔配音'), effect:'winter', extraDesc:'' }
     ]
   },
   'script': {
@@ -350,6 +375,64 @@ const visualData = {
 
 let currentVisCat = null;
 
+async function renderPdfPage(container) {
+  const pdf = container._pdfDoc;
+  const pageNum = container._pageNum || 1;
+  const canvas = container.querySelector('.pdf-ppt-canvas');
+  const hint = container.querySelector('.ppt-hint');
+  if (!pdf || !canvas) return;
+  const page = await pdf.getPage(pageNum);
+  const box = container.getBoundingClientRect();
+  const base = page.getViewport({ scale: 1 });
+  const scale = Math.min((box.width - 24) / base.width, (box.height - 56) / base.height, 2.2);
+  const viewport = page.getViewport({ scale: Math.max(scale, 0.2) });
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+  await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+  if (hint) hint.textContent = `点击画面切换下一页 · ${pageNum} / ${container._totalPages}`;
+}
+
+async function initPdfPptViewer(container) {
+  if (container._pdfDoc || container.dataset.loading === '1') return;
+  container.dataset.loading = '1';
+  try {
+    const pdf = await pdfjsLib.getDocument(container.dataset.pdf).promise;
+    container._pdfDoc = pdf;
+    container._pageNum = 1;
+    container._totalPages = pdf.numPages;
+    await renderPdfPage(container);
+  } catch (err) {
+    const hint = container.querySelector('.ppt-hint');
+    if (hint) hint.textContent = 'PDF 加载失败，请确认文件已上传至 GitHub';
+    console.error(err);
+  } finally {
+    container.dataset.loading = '0';
+  }
+}
+
+async function loadPdfThumb(el) {
+  const url = el.dataset.pdf;
+  if (!url || el.dataset.loaded === '1') return;
+  el.dataset.loaded = '1';
+  try {
+    const pdf = await pdfjsLib.getDocument(url).promise;
+    const page = await pdf.getPage(1);
+    const canvas = document.createElement('canvas');
+    canvas.className = 'pdf-thumb-canvas';
+    const viewport = page.getViewport({ scale: 1 });
+    const scale = Math.min(el.clientWidth / viewport.width, el.clientHeight / viewport.height, 1.6);
+    const scaled = page.getViewport({ scale: Math.max(scale, 0.15) });
+    canvas.width = scaled.width;
+    canvas.height = scaled.height;
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport: scaled }).promise;
+    el.innerHTML = '';
+    el.appendChild(canvas);
+  } catch (err) {
+    el.innerHTML = '<span class="pdf-thumb-loading">预览加载失败</span>';
+    console.error(err);
+  }
+}
+
 function openTheater(catId) {
   const cat = visualData[catId];
   if(!cat) return;
@@ -358,10 +441,8 @@ function openTheater(catId) {
   const textBox = document.getElementById('theaterText');
   const subList = document.getElementById('subItemsList');
 
-  // 获取页面的 --accent 颜色
   const style = getComputedStyle(document.body);
   const themeColor = style.getPropertyValue('--accent').trim() || '#D88CA8';
-  // 设置动态极美渐变暗场
   document.getElementById('theaterModal').style.background = `radial-gradient(circle at 28% 45%, rgba(255,255,255,.86) 0%, ${themeColor}22 46%, rgba(248,244,236,.98) 100%)`;
 
   textBox.innerHTML = `<div class="t-tag">${cat.tag}</div><h2 class="t-title" style="font-family:var(--serif);">${cat.title}</h2><div class="t-desc">${cat.desc}</div><div id="extraDescArea"></div>`;
@@ -398,7 +479,7 @@ function renderSubItem(index, btnEl) {
   }
 
   if (item.type === 'phone') {
-    visualBox.innerHTML = `<div class="phone-mockup"><div class="phone-notch"></div><div class="phone-screen">${item.html}<div class="scroll-hint">↓ 向下滑动查看</div></div></div>`;
+    visualBox.innerHTML = `<div class="phone-mockup"><div class="phone-notch"></div><div class="phone-screen">${item.html}${item.html.includes('canva-open-card') ? '' : '<div class="scroll-hint">↓ 向下滑动查看</div>'}</div></div>`;
     visualBox.style.background = 'transparent'; visualBox.style.boxShadow = 'none';
   } else if (item.type === 'script') {
     visualBox.innerHTML = item.html;
@@ -407,6 +488,7 @@ function renderSubItem(index, btnEl) {
     visualBox.classList.add('ppt-stage');
     visualBox.innerHTML = item.html;
     visualBox.style.background = 'rgba(255,255,255,.45)'; visualBox.style.boxShadow = '0 22px 50px rgba(92,74,105,0.18)';
+    visualBox.querySelectorAll('.pdf-ppt-viewer').forEach(initPdfPptViewer);
   } else if (item.type === 'video') {
     const _t=document.createElement('div');_t.innerHTML=item.html;
     const _cp=_t.querySelector('.video-caption');const _ct=_cp?_cp.innerHTML:'';
@@ -418,7 +500,6 @@ function renderSubItem(index, btnEl) {
     visualBox.style.background = 'rgba(255,255,255,.45)'; visualBox.style.boxShadow = '0 22px 50px rgba(92,74,105,0.18)';
   }
 }
-
 
 function playSeasonEffect(kind) {
   const box = document.getElementById('seasonEffects');
@@ -450,6 +531,7 @@ function closeTheater() {
   document.body.style.overflow = 'auto';
   setTimeout(() => { document.getElementById('theaterVisual').innerHTML = ''; }, 400);
 }
+
 function toggleLang(section) {
   const cn = document.getElementById(section + 'DescCN');
   const en = document.getElementById(section + 'DescEN');
@@ -466,17 +548,28 @@ function toggleLang(section) {
   }
 }
 
-
 function nextPptPage(container) {
   const pages = container.querySelectorAll('.ppt-page');
   if(pages.length === 0) return;
   let activeIdx = -1;
   pages.forEach((p, i) => { if(p.classList.contains('active')) activeIdx = i; });
   if(activeIdx !== -1) pages[activeIdx].classList.remove('active');
-  
   const nextIdx = (activeIdx + 1) % pages.length;
   pages[nextIdx].classList.add('active');
 }
+
+async function nextPdfPptPage(container) {
+  if (!container._pdfDoc) {
+    await initPdfPptViewer(container);
+    return;
+  }
+  container._pageNum = (container._pageNum % container._totalPages) + 1;
+  await renderPdfPage(container);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.pdf-thumb').forEach(loadPdfThumb);
+});
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a12d636ccc28b31b',t:'MTc4MjY1NzAxNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
