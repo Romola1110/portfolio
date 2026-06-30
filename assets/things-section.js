@@ -136,6 +136,7 @@ function initThingsSection(rootId) {
   const vessel = root.querySelector('.lot-vessel');
   const drawBtn = root.querySelector('.draw-btn');
   const drawPanel = root.querySelector('.draw-panel');
+  const drawZone = root.querySelector('.draw-zone');
   const envelopeStage = root.querySelector('.envelope-stage');
   const envelopeWrap = root.querySelector('.envelope-wrap');
   const letterSheet = root.querySelector('.letter-sheet');
@@ -204,6 +205,7 @@ function initThingsSection(rootId) {
     envelopeWrap?.classList.remove('open', 'pull');
     envelopeStage?.classList.remove('active');
     envelopeStage?.setAttribute('aria-hidden', 'true');
+    drawZone?.classList.remove('has-letter');
     vessel?.classList.remove('hidden', 'shaking');
     if (drawPanel) drawPanel.style.opacity = '';
     if (drawPanel) drawPanel.style.pointerEvents = '';
@@ -236,6 +238,7 @@ function initThingsSection(rootId) {
 
       envelopeStage?.classList.add('active');
       envelopeStage?.setAttribute('aria-hidden', 'false');
+      drawZone?.classList.add('has-letter');
 
       setTimeout(() => envelopeWrap?.classList.add('open'), 350);
       setTimeout(() => {
