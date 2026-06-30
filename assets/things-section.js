@@ -477,18 +477,35 @@ function runTypewriter(root) {
   setTimeout(typeChar, 600);
 }
 
-/* ---------- v6 主站（窗台晾签绳）---------- */
+/* ---------- v6 主站（窗台晾签绳 · 错落晾晒）---------- */
 
-const ROPE_SIGN_W = 58;
-const ROPE_GAP = 30;
+const ROPE_BOTTOM_MARKS = ['·', '○', '△', '•'];
 
-function buildRopeSlots(count) {
-  const total = count * ROPE_SIGN_W + (count - 1) * ROPE_GAP;
-  return Array.from({ length: count }, (_, i) => ({
-    x: i * (ROPE_SIGN_W + ROPE_GAP) + ROPE_SIGN_W / 2,
-    rot: -2 + (i % 5) * 1,
-    delay: `${(i * 0.28) % 2.2}s`
-  }));
+function buildRopeLayout(count) {
+  const slots = [];
+  let cursor = 28;
+  for (let i = 0; i < count; i++) {
+    const progress = count > 1 ? i / (count - 1) : 0.5;
+    const waveY = Math.sin(progress * Math.PI * 1.6) * 14;
+    const randomTop = 38 + waveY + (Math.random() * 50 - 25);
+    const randomRotate = Math.random() * 12 - 6;
+    const randomWidth = 60 + Math.random() * 40;
+    const randomHeight = 120 + Math.random() * 60;
+    const randomZIndex = Math.floor(progress * 6 + Math.random() * 4) + 1;
+    const left = cursor;
+    cursor += randomWidth * (0.84 + Math.random() * 0.06);
+    slots.push({
+      x: left,
+      top: randomTop,
+      rotate: randomRotate,
+      width: randomWidth,
+      height: randomHeight,
+      zIndex: randomZIndex,
+      mark: ROPE_BOTTOM_MARKS[Math.floor(Math.random() * ROPE_BOTTOM_MARKS.length)],
+      delay: `${(i * 0.31) % 2.4}s`
+    });
+  }
+  return { slots, totalWidth: cursor + 48 };
 }
 
 function initThingsV6(root) {
@@ -515,7 +532,7 @@ function initThingsV6(root) {
   let ropeOpen = false;
   let drawing = false;
   let drawnIds = new Set();
-  const ropeSlots = buildRopeSlots(THINGS_DATA.length);
+  let ropeLayout = buildRopeLayout(THINGS_DATA.length);
 
   function renderThumb(item) {
     if (item.image) return `<img src="${item.image}" alt="${item.name}" loading="lazy">`;
@@ -523,21 +540,26 @@ function initThingsV6(root) {
   }
 
   function renderRopeSign(item, slot, i) {
+    const cx = slot.x + slot.width / 2;
     return `
       <div class="rope-sign" data-id="${item.id}" data-slot="${i}"
-        style="left:${slot.x}px;--rot:${slot.rot}deg;--delay:${slot.delay}">
-        <div class="wood-clip" aria-hidden="true"><i></i><i></i></div>
-        <div class="rope-tag-body">
+        style="left:${cx}px;top:${slot.top}px;width:${slot.width}px;--h:${slot.height}px;--rot:${slot.rotate}deg;--delay:${slot.delay};z-index:${slot.zIndex}">
+        <div class="rope-tag-body" style="min-height:var(--h)">
           <div class="tag-visual">${renderThumb(item)}</div>
           <div class="tag-name">${item.name}</div>
+          <span class="tag-mark">${slot.mark}</span>
         </div>
       </div>`;
   }
 
   function renderRopeGallery() {
     if (!ropeSigns) return;
+    ropeLayout = buildRopeLayout(THINGS_DATA.length);
+    ropeSigns.style.minWidth = `${ropeLayout.totalWidth}px`;
+    ropeSigns.style.height = `${Math.max(200, ...ropeLayout.slots.map(s => s.top + s.height + 24))}px`;
+    if (emptyClips) emptyClips.innerHTML = '';
     ropeSigns.innerHTML = THINGS_DATA.map((item, i) =>
-      renderRopeSign(item, ropeSlots[i], i)
+      renderRopeSign(item, ropeLayout.slots[i], i)
     ).join('');
     drawnIds.forEach(id => markRopeDrawn(id, false));
   }
@@ -545,8 +567,8 @@ function initThingsV6(root) {
   function markRopeDrawn(id, animate = true) {
     const sign = ropeSigns?.querySelector(`[data-id="${id}"]`);
     if (!sign || sign.classList.contains('drawn-away')) return;
-    const slot = sign.dataset.slot;
     const left = sign.style.left;
+    const top = sign.style.top;
     if (animate) {
       sign.classList.add('unclipping');
       setTimeout(() => sign.classList.add('drawn-away'), 480);
@@ -558,7 +580,8 @@ function initThingsV6(root) {
       clip.className = 'rope-clip-empty';
       clip.dataset.id = id;
       clip.style.left = left;
-      clip.innerHTML = '<div class="wood-clip empty" aria-hidden="true"><i></i><i></i></div>';
+      clip.style.top = top;
+      clip.innerHTML = '<span class="clip-rope-remnant" aria-hidden="true"></span>';
       emptyClips.appendChild(clip);
     }
   }
@@ -691,7 +714,7 @@ function initThingsV6(root) {
     ropeOpen = !ropeOpen;
     ropeWrap?.classList.toggle('is-open', ropeOpen);
     galleryToggle.textContent = ropeOpen ? '收起展匣' : '展开展匣，慢慢翻阅';
-    if (ropeOpen && !ropeSigns?.children.length) renderRopeGallery();
+    if (ropeOpen) renderRopeGallery();
   });
 
   ropeSigns?.addEventListener('click', e => {
