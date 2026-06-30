@@ -3,129 +3,726 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>匣中签 · 物有灵犀 — Demo v5 — 楊雪琪</title>
+  <title>匣中签 · 物有灵犀 — Demo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
-  <link rel="stylesheet" href="assets/things-section.css?v=6">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #F2EDF8; --text: #2D2536; --soft: #8A92B0; --accent: #D88CA8;
-      --g1: #E2DDF2; --g2: #F5DDEB; --branch: #4a6a52;
-      --cn-classic: 'LXGW WenKai', 'ZCOOL XiaoWei', serif;
+      --ink: #2b4a5f;
+      --paper: #e8dccc;
+      --wood: #4a3728;
+      --ink-soft: #5a7a8f;
+      --gold: #c9a45c;
+      --serif: 'Noto Serif SC', serif;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: var(--cn-classic);
-      color: var(--text);
+      font-family: var(--serif);
+      color: var(--ink);
       min-height: 100vh;
-      background: radial-gradient(circle at 12% 18%, var(--g1) 0%, transparent 55%),
-        radial-gradient(circle at 82% 28%, var(--g2) 0%, transparent 50%), var(--bg);
+      background: var(--paper);
+      letter-spacing: 0.08em;
+      line-height: 1.9;
     }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(ellipse 80% 50% at 15% 20%, rgba(43, 74, 95, 0.08) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 85% 75%, rgba(43, 74, 95, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(74, 55, 40, 0.04) 0%, transparent 60%),
+        var(--paper);
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.35;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    }
+
     .demo-banner {
       text-align: center;
-      padding: 0.85rem;
-      font-size: 0.8rem;
-      color: var(--soft);
-      background: rgba(255,255,255,0.35);
-      border-bottom: 1px dashed color-mix(in srgb, var(--accent) 25%, transparent);
+      padding: 0.75rem;
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      border-bottom: 1px dashed rgba(43, 74, 95, 0.2);
+      background: rgba(232, 220, 204, 0.6);
     }
-    .demo-banner a { color: var(--accent); }
-    .content-wrapper { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+    .demo-banner a { color: var(--ink); }
+
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+    .main-title {
+      text-align: center;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      color: var(--ink);
+      margin-bottom: 2rem;
+    }
+
+    .hero-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro-col { flex: 1; min-width: 0; text-align: left; }
+    .intro-line { min-height: 2em; font-size: 0.95rem; color: color-mix(in srgb, var(--ink) 88%, var(--ink-soft)); }
+    .intro-line.gap { margin-top: 1em; font-size: 1.05rem; letter-spacing: 0.14em; }
+    .intro-cursor {
+      display: inline-block;
+      width: 2px; height: 1em;
+      background: var(--ink);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 0.8s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .cat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.2rem;
+      margin: 1rem 0 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(43, 74, 95, 0.12);
+    }
+    .cat-row span {
+      font-size: 0.82rem;
+      letter-spacing: 0.22em;
+      color: var(--ink-soft);
+      position: relative;
+    }
+    .cat-row span::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.5;
+    }
+
+    /* ===== 签筒 ===== */
+    .lot-col {
+      flex: 0 0 min(340px, 42vw);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lot-scene {
+      position: relative;
+      width: 100%;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lot-vessel {
+      position: relative;
+      width: 200px;
+      height: 300px;
+      margin-top: 10px;
+    }
+
+    .lot-vessel.shaking {
+      animation: lotShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    }
+    @keyframes lotShake {
+      0%, 100% { transform: rotate(0); }
+      15% { transform: rotate(-8deg); }
+      30% { transform: rotate(7deg); }
+      45% { transform: rotate(-6deg); }
+      60% { transform: rotate(5deg); }
+      75% { transform: rotate(-4deg); }
+      90% { transform: rotate(2deg); }
+    }
+
+    .lot-body {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 168px;
+      height: 248px;
+      background: linear-gradient(95deg, #3d2e22 0%, var(--wood) 22%, #5c4535 48%, var(--wood) 72%, #3a2a1e 100%);
+      border-radius: 6px 6px 14px 14px;
+      box-shadow: inset 4px 0 12px rgba(255,255,255,0.06), inset -6px 0 16px rgba(0,0,0,0.15), 0 16px 40px rgba(43, 74, 95, 0.15);
+    }
+    .lot-body::before {
+      content: '';
+      position: absolute;
+      top: 18%; left: 12%;
+      width: 22px; height: 28px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.12);
+      box-shadow: 120px 45px 0 rgba(0,0,0,0.08), 40px 90px 0 rgba(0,0,0,0.06);
+    }
+    .lot-rim {
+      position: absolute;
+      top: 42px; left: 50%;
+      transform: translateX(-50%);
+      width: 188px; height: 22px;
+      background: linear-gradient(180deg, #6a5544, #4a3728);
+      border-radius: 50%;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+    }
+    .lot-rim-inner {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px; height: 12px;
+      background: #2a1f18;
+      border-radius: 50%;
+      opacity: 0.7;
+    }
+
+    .sticks-fan {
+      position: absolute;
+      top: 8px; left: 50%;
+      width: 0; height: 0;
+      z-index: 5;
+    }
+
+    .lot-stick {
+      position: absolute;
+      bottom: 0; left: 50%;
+      width: 28px;
+      height: 118px;
+      margin-left: -14px;
+      transform-origin: 50% 100%;
+      cursor: default;
+      transition: transform 0.5s ease-in-out, opacity 0.4s ease-in-out, top 0.8s ease-in-out, left 0.5s ease-in-out;
+    }
+
+    .lot-stick-inner {
+      width: 100%; height: 100%;
+      background: linear-gradient(180deg, #f5efe4 0%, #e8dccc 40%, #dcc8b0 100%);
+      clip-path: polygon(8% 0%, 92% 2%, 96% 98%, 4% 100%);
+      border: 1px solid rgba(74, 55, 40, 0.2);
+      box-shadow: 0 2px 6px rgba(43, 74, 95, 0.1);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 10px;
+      writing-mode: vertical-rl;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--ink);
+    }
+
+    .lot-stick.pulled-out {
+      z-index: 20;
+      pointer-events: auto;
+      cursor: pointer;
+      transition: top 0.8s ease-out, transform 0.8s ease-out, opacity 0.4s ease-in-out;
+    }
+    .lot-stick.pulled-out:hover .lot-stick-inner {
+      box-shadow: 0 8px 24px rgba(43, 74, 95, 0.2);
+    }
+
+    .lot-stick.pulling {
+      z-index: 30;
+      pointer-events: none;
+      transition: top 0.8s ease-out, left 0.8s ease-out, transform 0.8s ease-out !important;
+    }
+
+    .stick-hint {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      margin-top: 0.5rem;
+      min-height: 1.4em;
+      letter-spacing: 0.1em;
+    }
+
+    .action-btn {
+      margin-top: 1rem;
+      font-family: var(--serif);
+      font-size: 0.88rem;
+      letter-spacing: 0.2em;
+      padding: 0.6rem 1.6rem;
+      border: 1px solid rgba(43, 74, 95, 0.35);
+      background: rgba(232, 220, 204, 0.8);
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.35s ease-in-out;
+    }
+    .action-btn:hover:not(:disabled) {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .action-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      letter-spacing: 0.12em;
+    }
+
+    /* ===== 作品卡片 ===== */
+    .card-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(43, 74, 95, 0);
+      pointer-events: none;
+      transition: background 0.5s ease-in-out;
+    }
+    .card-overlay.active {
+      background: rgba(43, 74, 95, 0.35);
+      pointer-events: auto;
+    }
+
+    .work-card-stage {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      z-index: 101;
+      width: 400px;
+      max-width: 92vw;
+      height: 550px;
+      max-height: 85vh;
+      transform: translate(-50%, -50%) perspective(1000px) rotateX(-88deg) scale(0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.65s ease-in-out, opacity 0.45s ease-in-out;
+      transform-origin: center 30%;
+    }
+    .work-card-stage.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) perspective(1000px) rotateX(0deg) scale(1);
+    }
+    .work-card-stage.folding {
+      transform: translate(-50%, -35%) perspective(1000px) rotateX(-88deg) scale(0.15);
+      opacity: 0;
+    }
+
+    .work-card {
+      width: 100%; height: 100%;
+      background: linear-gradient(165deg, #f8f2e8, var(--paper));
+      clip-path: polygon(1% 2%, 97% 0%, 100% 4%, 98% 96%, 95% 100%, 3% 98%, 0% 94%, 2% 5%);
+      padding: 2rem 1.6rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(43, 74, 95, 0.22);
+      position: relative;
+    }
+    .work-card::before {
+      content: '';
+      position: absolute;
+      top: 14px; left: 16px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--gold), #a08040);
+      box-shadow: 0 0 6px rgba(201, 164, 92, 0.5);
+    }
+    .work-card::after {
+      content: '🍁';
+      position: absolute;
+      bottom: 12px; right: 16px;
+      font-size: 1.1rem;
+      opacity: 0.65;
+    }
+
+    .work-card .card-cat {
+      font-size: 0.75rem;
+      letter-spacing: 0.28em;
+      color: var(--ink-soft);
+      margin-bottom: 0.4rem;
+    }
+    .work-card .card-title {
+      font-size: 1.25rem;
+      letter-spacing: 0.18em;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+    .work-card .card-visual {
+      flex: 1;
+      width: 100%;
+      max-height: 280px;
+      margin: 0.5rem 0 1rem;
+      clip-path: polygon(2% 1%, 98% 3%, 100% 97%, 1% 99%);
+      background: linear-gradient(145deg, #f0ebe0, #ddd0c0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(74, 55, 40, 0.15);
+    }
+    .work-card .card-visual .glyph {
+      font-size: 2.5rem;
+      opacity: 0.25;
+      color: var(--ink);
+    }
+    .work-card .card-visual .sub {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      color: var(--ink-soft);
+    }
+    .work-card .card-verse {
+      font-size: 0.82rem;
+      line-height: 1.85;
+      color: color-mix(in srgb, var(--ink) 75%, var(--ink-soft));
+      letter-spacing: 0.06em;
+      padding: 0 0.5rem;
+    }
+
+    /* ===== 展匣 · 古树 ===== */
+    .gallery-gate { text-align: center; margin: 2.5rem 0 1rem; }
+    .gallery-btn {
+      font-family: var(--serif);
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      padding: 0.5rem 1.4rem;
+      border: 1px dashed rgba(43, 74, 95, 0.3);
+      background: transparent;
+      color: var(--ink-soft);
+      cursor: pointer;
+    }
+
+    .tree-wrap { display: none; margin-top: 1rem; }
+    .tree-wrap.open { display: block; animation: fadeUp 0.8s ease-in-out; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+    .tree-label {
+      text-align: center;
+      font-size: 0.95rem;
+      letter-spacing: 0.24em;
+      color: var(--ink-soft);
+      margin-bottom: 0.75rem;
+    }
+
+    .tree-canvas {
+      position: relative;
+      width: 100%;
+      min-height: 520px;
+    }
+    .tree-canvas svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .hero-row { flex-direction: column; align-items: stretch; }
+      .lot-col { flex: none; width: 100%; }
+      .lot-vessel { margin: 0 auto; }
+      .work-card-stage { height: min(550px, 78vh); }
+    }
   </style>
 </head>
-<body class="spring">
+<body>
   <div class="demo-banner">
-    Demo v5 · 仅预览 · 未接入主站 ·
-    <a href="index%20(1).html">返回主页</a> ·
-    <a href="assets/things/DESIGN.md">素材指南</a>
+    Demo · 签筒抽签 · 仅预览未接入主站 · <a href="index%20(1).html">返回主页</a>
   </div>
 
-  <div class="content-wrapper">
-    <section class="things-v5 visible" id="things-demo">
-      <h2 class="things-main-title">匣中签 · 物有灵犀</h2>
+  <div class="wrap">
+    <h1 class="main-title">匣中签 · 物有灵犀</h1>
 
-      <div class="intro-env-row">
-        <div class="things-welcome">
-          <p class="intro-line" data-type="岁月是一首未尽的诗。若你也偏爱袖珍的光影与墨迹，欢迎在此驻足。"></p>
-          <p class="intro-line" data-type="它们不急着被看完，像窗台上晾着的字，等风，也等一个愿意停下来的你。"></p>
-          <p class="intro-line intro-gap" data-type="欢迎来到我的原创世界"></p>
-          <p class="intro-line" data-type="此处每一缕墨色、每一道纸痕，皆出自我手；愿你在翻阅之间，与我隔空相遇，默然相知。"></p>
+    <div class="hero-row">
+      <div class="intro-col">
+        <p class="intro-line" data-t="岁月是一首未尽的诗。若你也偏爱袖珍的光影与墨迹，欢迎在此驻足。"></p>
+        <p class="intro-line" data-t="它们不急着被看完，像窗台上晾着的字，等风，也等一个愿意停下来的你。"></p>
+        <p class="intro-line gap" data-t="欢迎来到我的原创世界"></p>
+        <p class="intro-line" data-t="此处每一缕墨色、每一道纸痕，皆出自我手；愿你在翻阅之间，与我隔空相遇，默然相知。"></p>
+
+        <div class="cat-row" aria-hidden="true">
+          <span>书法</span><span>国画</span><span>染卡</span><span>手作</span><span>折扇</span>
         </div>
+      </div>
 
-        <div class="envelope-stack">
-          <p class="env-hint">择一封而启</p>
-          <div class="env-pile" role="group" aria-label="信封堆，点击抽选">
-            <!-- JS 生成信封堆；有上传图则用 assets/things/ui/envelope.png -->
+      <div class="lot-col">
+        <div class="lot-scene">
+          <div class="lot-vessel" id="vessel">
+            <div class="sticks-fan" id="sticksFan"></div>
+            <div class="lot-rim"><div class="lot-rim-inner"></div></div>
+            <div class="lot-body"></div>
           </div>
-          <div class="floral-burst" aria-hidden="true"></div>
+          <p class="stick-hint" id="stickHint">点击下方，摇签一束</p>
         </div>
+        <button type="button" class="action-btn" id="mainBtn">再抽一封</button>
       </div>
+    </div>
 
-      <div class="poetic-chips" aria-hidden="true">
-        <span>墨迹</span><span>纸痕</span><span>袖珍</span><span>风信</span><span>慢作</span><span>窗晾</span>
-      </div>
+    <div class="gallery-gate">
+      <button type="button" class="gallery-btn" id="galleryBtn">展开展匣，慢慢翻阅</button>
+    </div>
 
-      <div class="env-foot">
-        <button type="button" class="env-again-btn" hidden>再抽一封</button>
-        <button type="button" class="env-find-btn" hidden>在展匣中寻它</button>
-      </div>
-
-      <div class="gallery-gate">
-        <button type="button" class="gallery-toggle-btn">展开展匣，慢慢翻阅</button>
-      </div>
-
-      <div class="wish-tree-wrap">
-        <p class="wish-tree-label">展匣</p>
-        <div class="wish-tree">
-          <img class="tree-art-fallback" src="assets/things/ui/wish-tree.png" alt=""
-            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <svg class="tree-svg-painted" viewBox="0 0 600 760" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            <defs>
-              <filter id="paperTex">
-                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="n"/>
-                <feColorMatrix type="saturate" values="0"/>
-                <feBlend in="SourceGraphic" in2="n" mode="multiply"/>
-              </filter>
-              <linearGradient id="trunkG" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0%" stop-color="#6a5848"/><stop offset="50%" stop-color="#8a7a62"/><stop offset="100%" stop-color="#5a6a52"/>
-              </linearGradient>
-              <radialGradient id="leafG1" cx="40%" cy="40%"><stop offset="0%" stop-color="#c8e0b8" stop-opacity="0.7"/><stop offset="100%" stop-color="#a8c8a0" stop-opacity="0"/></radialGradient>
-              <radialGradient id="leafG2" cx="50%" cy="50%"><stop offset="0%" stop-color="#dce8c8" stop-opacity="0.65"/><stop offset="100%" stop-color="#b8d0a8" stop-opacity="0"/></radialGradient>
-            </defs>
-            <rect width="600" height="760" fill="#f5f2ea" opacity="0.35"/>
-            <ellipse cx="420" cy="180" rx="95" ry="70" fill="url(#leafG1)" filter="url(#paperTex)"/>
-            <ellipse cx="280" cy="140" rx="80" ry="58" fill="url(#leafG2)" filter="url(#paperTex)"/>
-            <ellipse cx="180" cy="220" rx="70" ry="50" fill="url(#leafG1)" opacity="0.8"/>
-            <ellipse cx="350" cy="280" rx="88" ry="62" fill="url(#leafG2)"/>
-            <ellipse cx="220" cy="320" rx="75" ry="55" fill="url(#leafG1)" opacity="0.75"/>
-            <ellipse cx="480" cy="320" rx="65" ry="48" fill="url(#leafG2)" opacity="0.7"/>
-            <ellipse cx="140" cy="380" rx="60" ry="42" fill="url(#leafG1)" opacity="0.65"/>
-            <ellipse cx="400" cy="420" rx="72" ry="50" fill="url(#leafG2)" opacity="0.7"/>
-            <path d="M460 720 C450 620, 435 520, 418 440 C400 360, 385 290, 368 220 C352 155, 338 100, 322 55" fill="none" stroke="url(#trunkG)" stroke-width="14" stroke-linecap="round" opacity="0.85"/>
-            <path d="M418 440 C360 420, 300 400, 240 385 C180 370, 120 358, 70 348" fill="none" stroke="#6a7a58" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
-            <path d="M418 440 C395 390, 368 342, 335 298 C302 254, 265 215, 220 180" fill="none" stroke="#7a8a68" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
-            <path d="M368 220 C340 198, 308 180, 272 165 C236 150, 195 138, 150 128" fill="none" stroke="#6a7a58" stroke-width="2" opacity="0.4"/>
-            <path d="M368 220 C382 175, 392 135, 398 98 C404 61, 408 30, 410 5" fill="none" stroke="#7a8a68" stroke-width="2" opacity="0.4"/>
-            <path d="M322 55 C298 42, 270 32, 238 24 C206 16, 168 10, 125 5" fill="none" stroke="#6a7a58" stroke-width="1.8" opacity="0.35"/>
-            <path d="M418 440 C438 400, 458 358, 475 312 C492 266, 505 218, 515 168" fill="none" stroke="#7a8a68" stroke-width="2.5" opacity="0.42"/>
-            <path d="M335 298 C312 278, 285 260, 252 245" fill="none" stroke="#8a9a78" stroke-width="1.6" opacity="0.38"/>
-            <path d="M475 312 C492 300, 508 284, 522 262" fill="none" stroke="#8a9a78" stroke-width="1.4" opacity="0.35"/>
-            <path d="M220 180 C198 158, 172 140, 140 125" fill="none" stroke="#8a9a78" stroke-width="1.4" opacity="0.35"/>
-            <path d="M460 720 C478 685, 492 645, 502 598 C512 551, 518 500, 520 448" fill="none" stroke="#6a5848" stroke-width="8" stroke-linecap="round" opacity="0.3"/>
-          </svg>
-          <div class="tree-tags"></div>
-        </div>
-      </div>
-
-      <div class="thing-modal"></div>
-    </section>
+    <div class="tree-wrap" id="treeWrap">
+      <p class="tree-label">展匣</p>
+      <div class="tree-canvas" id="treeCanvas"></div>
+    </div>
   </div>
 
-  <script src="assets/things-section.js?v=6"></script>
+  <div class="card-overlay" id="cardOverlay"></div>
+  <div class="work-card-stage" id="cardStage"></div>
+
   <script>
-    document.addEventListener('DOMContentLoaded', () => initThingsSection('things-demo'));
+  const FIXED_VERSE = '岁月是一首未尽的诗。若你也偏爱袖珍的光影与墨迹，欢迎在此驻足。';
+
+  const STICKS = [
+    { id: 's1', cat: '书法', label: '隶意', name: '隶意残帖', glyph: '墨', verse: '墨停处，风也轻了半寸。' },
+    { id: 's2', cat: '书法', label: '小楷', name: '雨夜小楷', glyph: '雨', verse: '字越小，心越静。' },
+    { id: 's3', cat: '国画', label: '枫意', name: '枫叶渐层', glyph: '枫', verse: '等色定，心也定。' },
+    { id: 's4', cat: '国画', label: '春意', name: '暮春试色', glyph: '染', verse: '春色不必满纸，一点就够。' },
+    { id: 's5', cat: '染卡', label: '海色', name: '海盐蓝调', glyph: '蓝', verse: '深浅之间，自有分寸。' },
+    { id: 's6', cat: '染卡', label: '试色', name: '暮春试色', glyph: '晕', verse: '颜料晕开，像情绪找到形状。' },
+    { id: 's7', cat: '手作', label: '叶脉', name: '银杏叶签', glyph: '叶', verse: '翻页时，请轻一点。' },
+    { id: 's8', cat: '手作', label: '微光', name: '烫金细签', glyph: '金', verse: '微光处，值得停留。' },
+    { id: 's9', cat: '折扇', label: '折扇', name: '折扇小稿', glyph: '扇', verse: '收合之间，皆是风景。' },
+    { id: 's10', cat: '折扇', label: '邮笺', name: '港城明信片', glyph: '城', verse: '未寄出的，最懂远方。' }
+  ];
+
+  const FAN_SPREAD = 72;
+  let drawn = new Set();
+  let pulledId = null;
+  let cardOpen = false;
+  let busy = false;
+
+  const vessel = document.getElementById('vessel');
+  const sticksFan = document.getElementById('sticksFan');
+  const stickHint = document.getElementById('stickHint');
+  const mainBtn = document.getElementById('mainBtn');
+  const cardOverlay = document.getElementById('cardOverlay');
+  const cardStage = document.getElementById('cardStage');
+  const galleryBtn = document.getElementById('galleryBtn');
+  const treeWrap = document.getElementById('treeWrap');
+
+  function fanAngle(i, n) {
+    if (n <= 1) return 0;
+    const start = -FAN_SPREAD / 2;
+    const step = FAN_SPREAD / (n - 1);
+    return start + step * i;
+  }
+
+  function renderFan() {
+    const pool = STICKS.filter(s => !drawn.has(s.id));
+    sticksFan.innerHTML = '';
+    pool.forEach((s, i) => {
+      const el = document.createElement('div');
+      el.className = 'lot-stick';
+      el.dataset.id = s.id;
+      const ang = fanAngle(i, pool.length);
+      el.style.transform = `rotate(${ang}deg)`;
+      el.style.zIndex = i;
+      el.innerHTML = `<div class="lot-stick-inner">${s.label}</div>`;
+      sticksFan.appendChild(el);
+    });
+  }
+
+  function typeIntro() {
+    const lines = [...document.querySelectorAll('.intro-line[data-t]')];
+    let li = 0, ci = 0;
+    const cur = document.createElement('span');
+    cur.className = 'intro-cursor';
+    function tick() {
+      if (li >= lines.length) { cur.remove(); return; }
+      const line = lines[li];
+      const txt = line.dataset.t || '';
+      if (ci === 0) line.appendChild(cur);
+      if (ci < txt.length) {
+        cur.before(document.createTextNode(txt[ci++]));
+        setTimeout(tick, 48 + Math.random() * 28);
+      } else { li++; ci = 0; setTimeout(tick, li === 3 ? 450 : 280); }
+    }
+    setTimeout(tick, 500);
+  }
+
+  function pickStick() {
+    const pool = STICKS.filter(s => !drawn.has(s.id));
+    if (!pool.length) return null;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function shakeThenDraw() {
+    if (busy || cardOpen || pulledId) return;
+    const pick = pickStick();
+    if (!pick) return;
+    busy = true;
+    mainBtn.disabled = true;
+    vessel.classList.add('shaking');
+    stickHint.textContent = '签落筒中…';
+
+    setTimeout(() => {
+      vessel.classList.remove('shaking');
+      const stickEl = sticksFan.querySelector(`[data-id="${pick.id}"]`);
+      if (!stickEl) { busy = false; updateBtn(); return; }
+
+      pulledId = pick.id;
+      const rect = stickEl.getBoundingClientRect();
+      const vRect = vessel.getBoundingClientRect();
+      stickEl.classList.add('pulling');
+      stickEl.style.position = 'fixed';
+      stickEl.style.left = rect.left + rect.width / 2 + 'px';
+      stickEl.style.top = rect.top + 'px';
+      stickEl.style.marginLeft = '-14px';
+      stickEl.style.transform = stickEl.style.transform.replace(/translate[^)]*\)/, '') || stickEl.style.transform;
+
+      requestAnimationFrame(() => {
+        const targetTop = vRect.top - 70;
+        const targetLeft = vRect.left + vRect.width / 2;
+        stickEl.style.left = targetLeft + 'px';
+        stickEl.style.top = targetTop + 'px';
+        stickEl.style.transform = 'rotate(5deg)';
+      });
+
+      setTimeout(() => {
+        drawn.add(pick.id);
+        renderFan();
+        stickEl.classList.remove('pulling');
+        stickEl.classList.add('pulled-out');
+        stickEl.style.position = 'absolute';
+        stickEl.style.left = '50%';
+        stickEl.style.top = '-60px';
+        stickEl.style.marginLeft = '-14px';
+        stickEl.style.transform = 'translateX(-50%) rotate(5deg)';
+        vessel.appendChild(stickEl);
+        stickEl.addEventListener('click', () => openCard(pick));
+        stickHint.textContent = '轻触签条，展阅作品';
+        busy = false;
+        updateBtn();
+      }, 820);
+    }, 600);
+  }
+
+  function openCard(item) {
+    if (cardOpen || busy) return;
+    cardOpen = true;
+    cardOverlay.classList.add('active');
+    cardStage.innerHTML = `
+      <div class="work-card">
+        <p class="card-cat">${item.cat}</p>
+        <h3 class="card-title">${item.name}</h3>
+        <div class="card-visual">
+          <span class="glyph">${item.glyph}</span>
+          <span class="sub">纸痕 · 墨迹</span>
+        </div>
+        <p class="card-verse">${FIXED_VERSE}</p>
+      </div>`;
+    cardStage.classList.remove('folding');
+    requestAnimationFrame(() => cardStage.classList.add('open'));
+    mainBtn.textContent = '收起展匣';
+    stickHint.textContent = '';
+  }
+
+  function closeCard() {
+    if (!cardOpen || busy) return;
+    busy = true;
+    cardStage.classList.add('folding');
+    cardStage.classList.remove('open');
+    cardOverlay.classList.remove('active');
+
+    setTimeout(() => {
+      cardOpen = false;
+      const stick = vessel.querySelector('.lot-stick.pulled-out');
+      if (stick) {
+        stick.style.transition = 'top 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.5s ease-in-out';
+        stick.style.top = '42px';
+        stick.style.opacity = '0';
+        stick.style.transform = 'translate(-50%, 0) rotate(0deg) scale(0.5)';
+        setTimeout(() => stick.remove(), 500);
+      }
+      pulledId = null;
+      renderFan();
+      updateBtn();
+      stickHint.textContent = drawn.size >= STICKS.length ? '匣已空，待来日' : '点击下方，摇签一束';
+      busy = false;
+    }, 650);
+  }
+
+  function updateBtn() {
+    if (drawn.size >= STICKS.length && !cardOpen && !pulledId) {
+      mainBtn.textContent = '匣已空，待来日';
+      mainBtn.disabled = true;
+    } else if (cardOpen) {
+      mainBtn.textContent = '收起展匣';
+      mainBtn.disabled = false;
+    } else {
+      mainBtn.textContent = '再抽一封';
+      mainBtn.disabled = !!pulledId || busy || drawn.size >= STICKS.length;
+    }
+  }
+
+  mainBtn.addEventListener('click', () => {
+    if (cardOpen) closeCard();
+    else shakeThenDraw();
+  });
+
+  cardOverlay.addEventListener('click', () => { if (cardOpen) closeCard(); });
+
+  galleryBtn.addEventListener('click', () => {
+    const open = treeWrap.classList.toggle('open');
+    galleryBtn.textContent = open ? '收起展匣' : '展开展匣，慢慢翻阅';
+    if (open && !document.getElementById('inkTree')) paintTree();
+  });
+
+  function paintTree() {
+    const host = document.getElementById('treeCanvas');
+    if (document.getElementById('inkTree')) return;
+    host.innerHTML = `
+<svg id="inkTree" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="bleed" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="turbulence" baseFrequency="0.04" numOctaves="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="moss">
+      <feTurbulence baseFrequency="0.9" numOctaves="2"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.4"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="600" height="700" fill="#e8dccc" opacity="0.5"/>
+  <path d="M420 680 C415 590, 400 500, 378 410 C358 325, 342 250, 325 175 C308 105, 292 55, 278 15" fill="none" stroke="#4a3728" stroke-width="22" stroke-linecap="round" filter="url(#bleed)" opacity="0.85"/>
+  <path d="M400 520 C398 505, 405 490, 402 475 C399 458, 408 440, 400 420" fill="none" stroke="#3a2a1e" stroke-width="14" stroke-linecap="round" opacity="0.5"/>
+  <path d="M360 380 C355 365, 362 348, 358 330" fill="none" stroke="#3a2a1e" stroke-width="10" opacity="0.45"/>
+  <path d="M378 410 C320 395, 255 378, 185 362 C115 346, 55 332, 15 322" fill="none" stroke="#2b4a5f" stroke-width="2.2" stroke-linecap="round" opacity="0.35" filter="url(#bleed)"/>
+  <path d="M378 410 C355 355, 328 305, 295 258 C262 211, 225 168, 180 128" fill="none" stroke="#2b4a5f" stroke-width="1.8" opacity="0.32"/>
+  <path d="M325 175 C298 152, 265 132, 225 115 C185 98, 140 84, 88 72" fill="none" stroke="#2b4a5f" stroke-width="1.6" opacity="0.3"/>
+  <path d="M325 175 C338 128, 348 88, 355 52 C362 16, 368 -8, 372 -28" fill="none" stroke="#2b4a5f" stroke-width="1.5" opacity="0.28"/>
+  <path d="M278 15 C248 2, 212 -8, 168 -16 C124 -24, 78 -30, 28 -36" fill="none" stroke="#2b4a5f" stroke-width="1.4" opacity="0.25"/>
+  <path d="M378 410 C398 365, 418 318, 435 268 C452 218, 465 165, 475 108" fill="none" stroke="#2b4a5f" stroke-width="2" opacity="0.33"/>
+  <path d="M435 268 C452 252, 468 232, 482 208" fill="none" stroke="#2b4a5f" stroke-width="1.3" opacity="0.28"/>
+  <path d="M295 258 C272 238, 245 220, 212 205" fill="none" stroke="#2b4a5f" stroke-width="1.2" opacity="0.26"/>
+  <path d="M180 128 C158 102, 130 80, 95 62" fill="none" stroke="#2b4a5f" stroke-width="1.1" opacity="0.24"/>
+  <path d="M355 52 C372 42, 388 28, 402 10" fill="none" stroke="#2b4a5f" stroke-width="1" opacity="0.22"/>
+  <path d="M400 420 C388 400, 378 378, 365 352 C352 326, 345 298, 338 268" fill="none" stroke="#4a3728" stroke-width="1.5" opacity="0.3"/>
+  <path d="M338 268 C325 248, 308 230, 285 215" fill="none" stroke="#2b4a5f" stroke-width="1.1" opacity="0.25"/>
+  <g filter="url(#moss)" opacity="0.55">
+    <circle cx="310" cy="95" r="2.5" fill="#2b4a5f"/><circle cx="318" cy="88" r="1.8" fill="#2b4a5f"/>
+    <circle cx="305" cy="102" r="2" fill="#2b4a5f"/><circle cx="325" cy="98" r="1.5" fill="#2b4a5f"/>
+    <circle cx="200" cy="145" r="2.2" fill="#2b4a5f"/><circle cx="208" cy="138" r="1.6" fill="#2b4a5f"/>
+    <circle cx="195" cy="152" r="1.8" fill="#2b4a5f"/><circle cx="215" cy="148" r="2" fill="#2b4a5f"/>
+    <circle cx="380" cy="280" r="2" fill="#2b4a5f"/><circle cx="388" cy="272" r="1.5" fill="#2b4a5f"/>
+    <circle cx="375" cy="288" r="2.2" fill="#2b4a5f"/><circle cx="395" cy="278" r="1.7" fill="#2b4a5f"/>
+    <circle cx="120" cy="340" r="2" fill="#2b4a5f"/><circle cx="128" cy="332" r="1.5" fill="#2b4a5f"/>
+    <circle cx="450" cy="195" r="1.8" fill="#2b4a5f"/><circle cx="458" cy="188" r="1.4" fill="#2b4a5f"/>
+    <circle cx="265" cy="220" r="2" fill="#2b4a5f"/><circle cx="272" cy="212" r="1.6" fill="#2b4a5f"/>
+    <circle cx="168" cy="108" r="1.8" fill="#2b4a5f"/><circle cx="175" cy="100" r="1.3" fill="#2b4a5f"/>
+    <circle cx="340" cy="350" r="2.1" fill="#2b4a5f"/><circle cx="348" cy="342" r="1.5" fill="#2b4a5f"/>
+  </g>
+  <g opacity="0.2" stroke="#2b4a5f" stroke-width="0.8" fill="none">
+    <path d="M300 120 Q315 105 330 115"/><path d="M190 160 Q205 145 220 158"/>
+    <path d="M400 300 Q415 285 428 298"/><path d="M140 350 Q155 335 170 348"/>
+  </g>
+</svg>`;
+  }
+
+  renderFan();
+  typeIntro();
+  updateBtn();
   </script>
 </body>
 </html>
