@@ -230,18 +230,6 @@
   backdrop-filter: blur(4px);
 }
 
-#dh .dh-vibe::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 1.5rem;
-  width: 3px;
-  height: 100%;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-  border-radius: 2px;
-  opacity: 0.65;
-}
-
 #dh .dh-vibe h4 {
   font-family: 'ZCOOL XiaoWei', var(--cn-title), var(--serif);
   font-size: 2.35rem;
@@ -269,12 +257,31 @@
   margin-bottom: 0.65rem;
 }
 
-#dh .dh-vibe p {
+#dh .dh-vibe .dh-vibe-tag,
+#dh .dh-vibe .dh-vibe-site,
+#dh .dh-vibe .dh-vibe-cn,
+#dh .dh-vibe .dh-vibe-en {
+  white-space: nowrap;
+}
+
+#dh .dh-vibe .dh-vibe-cn {
   font-family: var(--cn-light);
   font-size: 0.95rem;
   line-height: 1.85;
   color: color-mix(in srgb, var(--text) 75%, var(--soft));
-  max-width: 520px;
+  margin: 0;
+}
+
+#dh .dh-vibe .dh-vibe-en {
+  font-family: var(--english);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--soft);
+  margin-top: 0.45rem;
+}
+
+#dh .dh-vibe p {
+  max-width: none;
   margin-left: 0;
   margin-right: auto;
 }
@@ -306,7 +313,10 @@
   #dh .dh-vibe,
   #dh .dh-hint { text-align: center; }
   #dh .dh-vibe p { margin-left: auto; margin-right: auto; }
-  #dh .dh-vibe::before { display: none; }
+  #dh .dh-vibe .dh-vibe-tag,
+  #dh .dh-vibe .dh-vibe-site,
+  #dh .dh-vibe .dh-vibe-cn,
+  #dh .dh-vibe .dh-vibe-en { white-space: normal; }
 }
 
 @media (max-width: 520px) {
