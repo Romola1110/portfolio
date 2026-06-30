@@ -83,19 +83,29 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .photo-card.film span { color: #555; bottom: 12px; }
 .photo-card.film .photo-inner { background: #111; display:block; padding:0; }
 .photo-card.film .photo-inner.film-cover img { width:100%; height:100%; object-fit:cover; display:block; }
-.photo-card.film.film-portrait { width: 272px; height: 172px; padding: 14px 12px 38px; }
+.photo-card.film.film-portrait { width: 500px; height: 312px; padding: 20px 18px 46px; }
 
-/* 帧频：竖向堆叠展开，避免横向遮挡右侧文字 */
-.motion-gallery { flex: 0 0 300px; width: 300px; max-width: 300px; height: 540px; margin-right: auto; margin-left: 0; }
+/* 帧频：默认紧凑堆叠，悬停扇形展开，上下倾斜仅角部轻叠 */
+.motion-gallery {
+  flex: 0 0 380px; width: 380px; max-width: 380px; height: 820px;
+  margin-right: auto; margin-left: 0; overflow: visible;
+}
+.motion-gallery .photo-card.film-portrait {
+  transform-origin: center center;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.7s ease, z-index 0s;
+}
 .motion-gallery .photo-card.film-portrait .photo-inner.film-cover img { object-fit: cover; object-position: center; }
-.motion-gallery .photo-card.film-portrait.p1 { transform: translate(-50%, -50%) rotate(-3deg) translateY(-88px) translateX(-6px); z-index: 1; }
-.motion-gallery .photo-card.film-portrait.p2 { transform: translate(-50%, -50%) rotate(0deg) translateY(0); z-index: 3; box-shadow: 0 18px 38px rgba(0,0,0,0.14); }
-.motion-gallery .photo-card.film-portrait.p3 { transform: translate(-50%, -50%) rotate(3deg) translateY(88px) translateX(6px); z-index: 2; }
-.motion-gallery:hover .photo-card.film-portrait.p1 { transform: translate(-50%, -50%) rotate(-5deg) translateY(-148px) translateX(-10px) scale(1.03); z-index: 2; }
-.motion-gallery:hover .photo-card.film-portrait.p2 { transform: translate(-50%, -50%) rotate(0deg) translateY(0) scale(1.05); z-index: 10; box-shadow: 0 26px 50px rgba(0,0,0,0.18); }
-.motion-gallery:hover .photo-card.film-portrait.p3 { transform: translate(-50%, -50%) rotate(5deg) translateY(148px) translateX(10px) scale(1.03); z-index: 2; }
-.album-row.motion-row { gap: 5.5rem; }
+/* 默认：三层竖叠 */
+.motion-gallery .photo-card.film-portrait.p1 { transform: translate(-50%, -50%) rotate(-5deg) translateY(-76px) translateX(8px); z-index: 1; }
+.motion-gallery .photo-card.film-portrait.p2 { transform: translate(-50%, -50%) rotate(0deg) translateY(0) translateX(4px); z-index: 3; box-shadow: 0 18px 38px rgba(0,0,0,0.14); }
+.motion-gallery .photo-card.film-portrait.p3 { transform: translate(-50%, -50%) rotate(5deg) translateY(76px) translateX(8px); z-index: 2; }
+/* 悬停：扇形展开 — 上图左倾、下图右倾，仅左下/右下角被中层轻遮 */
+.motion-gallery:hover .photo-card.film-portrait.p1 { transform: translate(-50%, -50%) rotate(-18deg) translateX(-72px) translateY(-178px); z-index: 2; }
+.motion-gallery:hover .photo-card.film-portrait.p2 { transform: translate(-50%, -50%) rotate(0deg) translateX(-36px) translateY(0) scale(1.03); z-index: 5; box-shadow: 0 30px 58px rgba(0,0,0,0.2); }
+.motion-gallery:hover .photo-card.film-portrait.p3 { transform: translate(-50%, -50%) rotate(18deg) translateX(0px) translateY(178px); z-index: 3; }
+.album-row.motion-row { gap: 7.5rem; align-items: center; overflow: visible; }
 .album-row.motion-row .album-text { flex: 1; min-width: 0; }
+.album-row.motion-row .album-photos { overflow: visible; }
 
 .stamp-gallery .photo-card { width: 300px; height: 390px; }
 
@@ -223,7 +233,7 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .pdf-btn{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;padding:8px 22px;background:rgba(229,169,192,0.10);border:1px solid var(--accent);border-radius:999px;color:var(--accent);font-family:var(--english);font-size:0.88rem;letter-spacing:0.06em;text-decoration:none;transition:all 0.25s;}
 .pdf-btn:hover{background:var(--accent);color:#fff;}
 #layoutDescEN,#motionDescEN,#scriptDescEN{font-family:'Cormorant Garamond','Georgia',serif!important;font-size:1.08rem;font-style:italic;color:#5A5070;line-height:2.15;}
-@media (max-width: 900px){.album-row,.album-row:nth-child(even){flex-direction:column}.album-row:nth-child(even) .album-text,.album-text,.album-row.motion-row .album-text{text-align:center}.theater-content{flex-direction:column;height:90vh;gap:1rem}.theater-right{max-height:38vh;overflow:auto}.phone-mockup{width:300px;height:590px}.layout-gallery .photo-card{width:230px;height:300px}.layout-gallery .photo-card:nth-child(n+3){width:300px;height:180px}.motion-gallery{flex:1 1 auto;width:100%;max-width:100%;height:480px}.motion-gallery .photo-card.film-portrait{width:250px;height:158px}.motion-gallery .photo-card.film-portrait.p1{transform:translate(-50%,-50%) rotate(-4deg) translateY(-75px)}.motion-gallery:hover .photo-card.film-portrait.p1{transform:translate(-50%,-50%) rotate(-5deg) translateY(-120px)}.motion-gallery .photo-card.film-portrait.p3{transform:translate(-50%,-50%) rotate(4deg) translateY(75px)}.motion-gallery:hover .photo-card.film-portrait.p3{transform:translate(-50%,-50%) rotate(5deg) translateY(120px)}}
+@media (max-width: 900px){.album-row,.album-row:nth-child(even){flex-direction:column}.album-row:nth-child(even) .album-text,.album-text,.album-row.motion-row .album-text{text-align:center}.theater-content{flex-direction:column;height:90vh;gap:1rem}.theater-right{max-height:38vh;overflow:auto}.phone-mockup{width:300px;height:590px}.layout-gallery .photo-card{width:230px;height:300px}.layout-gallery .photo-card:nth-child(n+3){width:300px;height:180px}.motion-gallery{flex:1 1 auto;width:100%;max-width:100%;height:640px}.motion-gallery .photo-card.film-portrait{width:340px;height:212px}.motion-gallery .photo-card.film-portrait.p1{transform:translate(-50%,-50%) rotate(-5deg) translateY(-68px) translateX(4px)}.motion-gallery:hover .photo-card.film-portrait.p1{transform:translate(-50%,-50%) rotate(-16deg) translateX(-48px) translateY(-138px)}.motion-gallery .photo-card.film-portrait.p3{transform:translate(-50%,-50%) rotate(5deg) translateY(68px) translateX(4px)}.motion-gallery:hover .photo-card.film-portrait.p3{transform:translate(-50%,-50%) rotate(16deg) translateX(4px) translateY(138px)}.motion-gallery:hover .photo-card.film-portrait.p2{transform:translate(-50%,-50%) rotate(0deg) translateX(-20px) translateY(0) scale(1.03)}}
 
 </style>
 </head>
@@ -282,7 +292,7 @@ your glance completes, your thoughts renew.</p>
         <p class="a-desc motion-desc-block" id="motionDescCN"><span class="lead-line">创意先行，万物归宗。</span>画面的流动，并非影像在动，而是思绪在延伸。素材皆在，只待一缕气息贯之，便自成形。删减之难，甚于增添——一段不舍，一段难留，去后回看，反觉圆满。凡踌躇处，即用心处。<br><br>字、画、声、律，四者相揉，不过求一恰如其分之距。近则逼仄，远则疏离，若即若离，乃得从容。设若它们各安其位、各尽其责、彼此成全，便自有风骨；动静之间，不过一念。</p>
 <span class="lang-toggle" onclick="toggleLang('motion')">🌐 点击查看英文版 (EN)</span>
 <p class="a-desc" id="motionDescEN" style="display:none;"><span class="lead-line">Where the idea leads, all things find their way home.</span> Images do not move—thoughts do. The raw material waits; a single breath runs through, and it awakens into form. To subtract is harder than to add—a shot you cannot bear to lose, yet cannot bear to keep; in its absence, the whole feels fuller.<br><br>Words, images, sound, rhythm—their harmony lies in distance. Too close, they crowd; too far, they drift. Let each hold its place and give way to the other; between stillness and motion, just a thought, and everything turns.</p>
-        <span class="a-hint">Hover to expand the films, click to play.</span>
+        <span class="a-hint">悬停扇形展开预览，点击进入放映。</span>
       </div>
       <div class="album-photos motion-gallery" onclick="openTheater('motion')">
         <div class="photo-card film film-portrait p1"><div class="photo-inner film-cover"><img src="assets/previews/spring-summer.png" alt="春夏之交"></div><span>Spring/Summer</span></div>
