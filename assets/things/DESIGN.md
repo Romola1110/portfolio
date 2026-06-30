@@ -1,74 +1,97 @@
-# 匣中签 · 物有灵犀 · 设计说明 v3
+# 匣中签 · 物有灵犀 · Demo v4 设计说明
 
-## 体验结构
+> **仅 `demo_things.html` 预览，未接入主站。** 确认满意后再替换 `#things`。
+
+---
+
+## v4 体验结构
 
 ```
-引语（默认可见）
-  └─ 岁月诗 + 原创世界寄语
-签筒（抽签）
-  └─ 摇签 → 信封启封 → 信纸抽出 → 签意 + 赠言 + 物记
+标题（居中一行）
+  └─ 匣中签 · 物有灵犀
+引语（居中、同一古典字体、打字机出场）
+  └─ 背景有漂浮小签（墨迹 / 纸痕 / 袖珍…）
+信封（无签筒）
+  └─ 点击信封 → 随机抽一纸信笺 → 信笺抽出 → 点击放大阅全文
 展匣（点击展开）
-  └─ 许愿树吊牌，默认隐藏，点开再挂出
+  └─ 放大古树 + 飘落树叶 + 书签吊牌（保留 v3 签样式）
 ```
 
 ---
 
-## 概念语气
+## 可选精致素材（有了会更美，没有也能跑）
 
-- **不是吉凶签**：签意依物而定（墨痕签、夜雨签、叶脉签…），气质偏诗词
-- **不是商店，是角落**：原创手作，隔空交流的安静空间
-- **许愿树展匣**：书签式竖吊牌，沿古树垂枝串联，不铺网格
+### 1. 信封 / 信纸（推荐 PNG 或 SVG）
+
+| 文件建议名 | 用途 | 规格 |
+|-----------|------|------|
+| `envelope-closed.png` | 替换 CSS 绘制的闭合信封 | 透明底，宽约 560px |
+| `envelope-open.png` | 启封状态（可选，做更细腻翻盖） | 同上 |
+| `letter-paper.png` | 信笺底纹（宣纸纹、毛边） | 竖版，宽约 400px |
+| `wax-seal.png` | 火漆印（可选） | 小图 ~80px |
+
+放入 `assets/things/ui/`，在 JS 里给 `.envelope-art` 加 `background-image` 或替换 `<svg>` 为 `<img>`。
+
+### 2. 古树（强烈推荐）
+
+| 文件 | 用途 | 规格 |
+|------|------|------|
+| `wish-tree.svg` 或 `wish-tree.png` | 替换现用线描 SVG | 竖版 **800×1100px** 左右，线稿或淡彩，枝繁叶茂、右侧主干的构图 |
+
+参考你发的 David Wiseman 线描：细枝垂挂、留白多。  
+放入 `assets/things/ui/wish-tree.svg`，在 `demo_things.html` 把 `.tree-svg` 换成：
+
+```html
+<img class="tree-art" src="assets/things/ui/wish-tree.svg" alt="">
+```
+
+书签吊牌仍叠在树上，位置在 `TREE_SLOTS` 里微调。
+
+### 3. 手作实拍（书签吊牌 + 信笺缩略图）
+
+每件竖版书签式照片，见下表。路径填进 `THINGS_DATA` 的 `image` 字段即可自动显示。
+
+```
+assets/things/bookmark-ginkgo.png
+assets/things/calligraphy-rain.jpg
+…
+```
+
+### 4. 漂浮背景小签（可选）
+
+6–8 张极小 PNG（墨迹、纸痕等二字），可替换 CSS 里的 `.ft` 文字标签。
 
 ---
 
-## 你需要准备的素材
-
-### 1. 拍摄（优先）
-
-| 项目 | 建议 |
-|------|------|
-| 数量 | 约 10–15 件即可上线 |
-| 画幅 | 长边 **1200–1600px**，**竖版书签式**最适合许愿树吊牌 |
-| 光线 | 自然光 + 纯色或木纹桌面 |
-| 角度 | 正面或微俯，留呼吸边 |
-
-### 2. 每件需提供
+## 每件手作需提供
 
 ```
 文件名：bookmark-ginkgo.png
 中文名：银杏叶签
-签意 signLabel：叶脉签（诗词气质，非大吉小吉）
+签意 signLabel：叶脉签
 物记 note：夹在书页之间，替思绪留住页码。
 赠言 verse：翻页时，请轻一点。
-小故事 story：2–3 句，点击吊牌弹层用（可选）
-装帧：cutout | soft
+故事 story：2–3 句（点击弹层）
 ```
 
-### 3. 图片处理
-
-- **cutout**：书法、书签、轮廓清晰小物 → PNG 透明底
-- **soft**：染卡、明信片 → JPG + 衬纸裁切
-
-路径填进 `assets/things-section.js` 的 `THINGS_DATA`。
+在 `assets/things-section.js` → `THINGS_DATA` 填入 `image: 'assets/things/xxx.png'`。
 
 ---
 
-## 文件结构
+## 预览
 
-```
-assets/things/           # 图片
-assets/things-section.css
-assets/things-section.js
-demo_things.html         # 独立预览
-```
+https://romola1110.github.io/portfolio/demo_things.html?v=5
 
-预览：`https://romola1110.github.io/portfolio/demo_things.html`
+合并后请 **Ctrl+Shift+R** 强刷。
 
 ---
 
-## 日后接入主站
+## 文件
 
-- 区块标题：**匣中签 · 物有灵犀**
-- 与「数境人文」换位（导航 + `#things` / `#dh` 顺序）
-- `#things` 引入 css/js，加 `things-v3` class
-- 主站藤蔓与其他版块暂不改动
+```
+demo_things.html          # v4 独立预览
+assets/things-section.css # 含 #things-demo.things-v4 样式
+assets/things-section.js  # v4 / v3 分支逻辑
+assets/things/            # 你的图片
+assets/things/ui/         # 信封、古树等 UI 素材（可选）
+```
