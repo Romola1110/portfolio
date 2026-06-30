@@ -1,0 +1,329 @@
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+const ASSETS = {
+  layout1: 'layout%201.pdf',
+  layout2: 'layout%202.pdf',
+  layout4: 'layout%204.pdf',
+  canvaCuhk: 'https://canva.link/663t5zvt4gjrm63',
+  pdfHuaxin: encodeURI('华信mall广告宣传.pdf'),
+  pdfCommendation: encodeURI('外院表彰大会  20周年及校友篇.pdf'),
+  pdfAntiFraud: encodeURI('反诈最强音.png')
+};
+
+function makePdfPptHtml(pdfUrl, title) {
+  return `<div class="ppt-viewer pdf-ppt-viewer" data-pdf="${pdfUrl}" data-title="${title}" onclick="nextPdfPptPage(this)" aria-label="${title}">
+    <canvas class="pdf-ppt-canvas"></canvas>
+    <div class="ppt-hint">点击画面切换下一页 · 加载中…</div>
+  </div>`;
+}
+
+function makeBiliVideoHtml(bvid, caption) {
+  return `<div class="video-shell"><iframe src="//player.bilibili.com/player.html?bvid=${bvid}&high_quality=1&danmaku=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div><div class="video-caption">${caption}</div>`;
+}
+
+function makeWechatVideoHtml(url, title, caption) {
+  return `<div class="video-shell"><a class="wechat-play-card" href="${url}" target="_blank" rel="noopener noreferrer"><div class="play"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><b>${title}</b><p>该视频发布于微信视频号<br>点击后在微信中观看</p></a></div><div class="video-caption">${caption}</div>`;
+}
+
+const ppt1Html = makePdfPptHtml(ASSETS.layout1, '课堂展示排版·飞鸟集');
+const ppt2Html = makePdfPptHtml(ASSETS.layout2, '课堂展示排版·诗经');
+const ppt4Html = makePdfPptHtml(ASSETS.layout4, '课堂展示排版·语言学');
+const ulyssesHtml = `<img src="1.png" alt="尤利西斯 第1页"><img src="2.png" alt="尤利西斯 第2页"><img src="3.png" alt="尤利西斯 第3页">`;
+const cuhkHtml = `<img src="1.jpg" alt="CUHK留学日记封面"><div class="phone-canva-footer"><p>完整排版较长，已在 Canva 发布<br>点击下方按钮查看完整设计</p><a class="pdf-btn" href="${ASSETS.canvaCuhk}" target="_blank" rel="noopener noreferrer">在 Canva 中打开 ↗</a></div>`;
+
+const visualData = {
+  'layout': {
+    tag: 'LAYOUTS', title: '尺幅之间', desc: '尺幅之间，自有天地。', effect:'spring',
+    items: [
+      { name: '课堂展示排版·飞鸟集', type: 'ppt', html: ppt1Html, effect:'spring', extraDesc:'' },
+      { name: '课堂展示排版·诗经', type: 'ppt', html: ppt2Html, effect:'summer', extraDesc:'' },
+      { name: '课堂展示排版·语言学', type: 'ppt', html: ppt4Html, effect:'autumn', extraDesc:'' },
+      { name: '公众号排版·尤利西斯', type: 'phone', html: ulyssesHtml, effect:'winter', extraDesc:'' },
+      { name: '公众号排版·CU留学日记', type: 'phone', html: cuhkHtml, effect:'spring', extraDesc:'' }
+    ]
+  },
+  'motion': {
+    tag: 'MOTION & VOICE', title: '帧频之中', desc: '创意先行，万物归宗。', effect:'spring',
+    items: [
+      { name: '创意视频·商场周年庆广告', type: 'video', html: makeWechatVideoHtml('https://weixin.qq.com/sph/AQc1S3Ln5U', '商场周年庆广告', '华信mall周年庆短视频项目，负责创意策划、脚本分镜、logo设计及部分剪辑工作。以"博物馆奇妙夜"为灵感，让假人模特活化体验多元场景，品牌背景墙模特走过即点亮——创意从脚本延伸至线下交互装置，成为当地社交平台热门打卡点'), effect:'autumn', extraDesc:'' },
+      { name: '创意视频·反诈最强音', type: 'video', html: makeWechatVideoHtml('https://weixin.qq.com/sph/AXJb7I4fMv', '反诈最强音', '参与歌词与脚本撰写，部分拍摄剪辑'), effect:'winter', extraDesc:'' },
+      { name: '创意视频·春夏之交', type: 'video', html: makeBiliVideoHtml('BV13LK96WEEs', '个人作品，独立进行手机拍摄与剪辑'), effect:'summer', extraDesc:'' },
+      { name: '学术展示视频·都柏林人', type: 'video', html: makeBiliVideoHtml('BV1hjK96XEKS', '独立策划完成数字人文项目，借助R语言实现数据可视化，获评A，并进行全专业展示，广受教授好评。'), effect:'winter', extraDesc:'' },
+      { name: '电影配音·僵尸新娘', type: 'video', html: makeBiliVideoHtml('BV1gjK96XE6q', '《僵尸新娘》为女主角艾米丽配音'), effect:'halloween', extraDesc:'' },
+      { name: '电影配音·鬼妈妈', type: 'video', html: makeBiliVideoHtml('BV13jK96XE3u', '《鬼妈妈》为小女孩卡洛琳配音'), effect:'halloween', extraDesc:'' },
+      { name: '电影配音·小妇人', type: 'video', html: makeBiliVideoHtml('BV1MpK96SEV2', '《小妇人》为女主角乔配音'), effect:'winter', extraDesc:'' }
+    ]
+  },
+  'script': {
+    tag: 'SCRIPTS', title: '幕布之后', desc: '光影未至，文字先行。', effect:'autumn',
+    items: [
+      { name: '华信广告分镜头脚本', type: 'script', html: `<div class="script-paper"><h2>华信 Mall 周年庆广告脚本</h2><p class="quote"><b>创作概念：</b>闭店后的商场如同夜间博物馆。假人模特在灯光亮起时苏醒，带领观众穿行品牌场景，品牌背景墙模特走过即点亮——创意从脚本延伸至线下交互装置。</p><p><b>镜1</b> 全景/仰拍/固定 — 夜晚，华信Mall外立面仰拍，背景的天空变换风景，画面叠化一个快速旋转的时钟</p><p><b>镜2</b> 全景/正面/推进 — 商场内，临近关门时间，玻璃橱窗后面站着一个穿着漂亮的假人模特，保安拿着手电筒从橱窗前经过，镜头推进<br><em>同期声</em></p><p><b>镜3</b> 近景/斜侧/上移-固定 — 镜头从模特的领口位置上移，到脸部入画，商场熄灯，模特始终看着前方一动不动<br><em>脚步声渐远 / 商场关灯音效</em></p><p><b>镜4</b> 特写/正面/固定 — 墙上的时钟特写23:59分，秒针从59指向0点<br><em>钟表声</em></p><p><b>镜5</b> 特写/正面/固定 — 日历滑向2023年9月9日星期六</p><p><b>镜6</b> 特写/正面/固定 — 模特看着镜头，突然眨了眨眼<br><em>传说每年的九月九日，在华信Mall的夜晚，当灯光暗下的那一刻，所有最美好的愿望将化为现实</em></p><p><b>镜7</b> 近景/水平/固定 — 模特下垂的左手像机器人一样缓缓抬起</p><p><b>镜8</b> 中近景/背面/推进 — 模特微微歪头，身体也随之活过来，动作幅度越来越大</p><p><b>镜9</b> 全景/正面/固定 — 橱窗外拍摄，模特转身从台上走下来，出画</p><p><b>镜10</b> 特写/水平/固定 — 模特的手打开电闸特写</p><p><b>镜11</b> 全景/仰拍/上摇 — 商场大全景，灯一层层亮起，镜头逐渐上摇</p><p><b>镜12</b> 中景/侧面/固定 — 模特在丝芙兰的口红柜前驻足<br><em>你是奇妙夜晚的尊贵来客，也是绚丽生活的领衔主演 / 那些古怪而神秘、热烈而温暖的梦想，在这一天，都将奔你而来</em></p><p><b>镜13</b> 近景/过肩/固定 — 过肩，镜子的反射里，模特举着一只口红照</p><p><b>镜14</b> 中景/背面/推进 — 模特坐在海马体的镜子前，椅子旋转，模特转至正面</p><p><b>镜15</b> 中景/正面/分屏 — 画面分三屏，模特在女装店里试不同款式的服装</p><p><b>镜16</b> 中景/侧面/固定 — 双人镜头，服装店里的假人模特站在左边</p><p><b>镜17</b> 特写/侧面/推进-固定 — 模特好奇地俯身凑近观察假人模特<br><em>不一样的美丽，也渴望着遇到懂Ta的人</em></p><p><b>镜18</b> 特写-近景/侧面/推进-固定 — 模特侧面特写，镜头后拉，模特在星际传奇操作摩托游戏<br><em>你是奇妙夜晚的尊贵来客，也是绚丽生活的领衔主演</em></p><p><b>镜19</b> 全景-中景/水平/推进-固定 — 模特坐在餐厅圆桌前打个响指，圆桌上顿时出现一桌美食</p><p><b>镜20</b> 近景/正面/固定 — 模特独自坐在商场内的电影院里，抱着一桶爆米花，露出大笑、流泪的夸张表情</p><p><b>镜21</b> 全景/水平/固定 — 模特从品牌背景墙面前走过，墙上logo一个个点亮</p><p><b>镜22</b> 全景/仰视/上移 — 商场外立面，天空由夜晚星空转变为清晨日光初升<br><em>享受当下的每分每秒，更憧憬明天的无限可能</em></p><p><b>镜23</b> 特写/俯视/固定 — 保安的手在打开商场大门的U型锁</p><p><b>镜24</b> 中景-近景/水平/拉进 — 模特穿华丽衣服，手提购物袋和奶茶，听到开门声猛然回头</p><p><b>镜25</b> 全景/水平/固定 — 保安推开玻璃门，探进半个身子往里看</p><p><b>镜26</b> 近景/水平/固定 — 多角度，保安往商场里看</p><p><b>镜27</b> 全景/水平/推进 — 反打，商场全景，一切归于安静并恢复原样，渐隐</p><p><b>镜28</b> / — 一周年主KV浮现，几秒后黑场</p><p><b>镜29</b> 全景/正面/推进 — 画面再亮起，白天的商场内部，模特橱窗前人来人往<br><em>九月九日华信Mall奇妙夜，心无止境，自成一派</em></p><p><b>镜30</b> 近景/正面/固定 — 模特看着镜头，突然快速眨了下眼睛</p><p><b>配合拍摄事项</b><br>1. 镜2-镜3 假人模特与真人模特切换，需提供假人模特及服装<br>2. 闭店配合拍摄：女装店<br>3. 夜晚配合拍摄：女装店、丝芙兰、海马体、电影院、星际传奇、餐厅<br>4. 白天配合拍摄：女装店<br>5. 闭店拍摄需商场工作人员配合控灯</p><a class="pdf-btn" href="${ASSETS.pdfHuaxin}" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'autumn' },
+      { name: '表彰大会舞台剧脚本', type: 'script', html: `<div class="script-paper"><h2>外院表彰大会 · 20周年院庆暨校友篇</h2>
+<p class="quote"><b>献礼二十大 奋进新征程</b><br><b>小标题："砥砺奋进，再创辉煌"</b></p>
+<p><b>引言</b><br>时光流转，岁月代序。今年是外国语学院成立二十周年，在这继往开来的二十年里，一代代外院人秉持着使命与担当，在学习竞赛、志愿服务、各行各业的发展中都取得了丰硕成果。</p>
+<p>一代人有一代人的长征，我们无法比较哪一代人的长征更艰辛或者更有意义。但可以确定的是，缺少哪一代人的长征都无法成就现在，铸就如今之辉煌。蓝图已绘就，奋进正当时。</p>
+<p>二十年来，学院在历届校友的关怀和支持下，不断完善教学方式和理念，秉持"崇德尚能、经世济民"的校训，培养了一批又一批"有大世界观的外语人"。</p>
+<p>他们在取得成功后，从未忘却母校和学弟学妹们，而是不断地在关心学院、助力学院发展，参加校友访谈、分享会，给同学们提供丰富的学习经验，帮助同学们明确未来规划。在同学们成长的道路中，他们又成为了下一代外语人的明灯和引路人……万语千言，都凝结在了这一封封来信……</p>
+<p><b>【第一封信】大一·选择</b><br>我叫xxx，是外国语学院2023级商务英语专业的一名新生。高中三年我只要按部就班地完成学习任务，可是到了大学，各种活动纷至沓来，我不知道怎么取舍……</p>
+<p class="quote"><b>2008级 孙可学长：</b>"展信安。学弟你好，大一刚入学的焦虑和迷茫都很正常。作为学长，我能和你们说的是，一定好好学习本专业知识，从我们班毕业情况看，也是专业能力好的同学发展的比较好。专业学习是第一位的，不管是考研、保研还是留学、就业都很看重绩点。在此基础上也要注重综合能力的培养，多参加校内及校外组织的各种活动，但是不要被这些所困扰，要多选择质量较高的、对自己发展更有裨益的活动，就比如我，我本科就是做了很多志愿活动和社会实践（实地考察的那种），我觉得经历、经验和见识对我之后的发展都有很大帮助。所以不必焦虑，学会选择，好好享受这四年的时光吧！"</p>
+<p><b>【第二封信】大二·挫败</b><br>大二学生小王：哎，还不是之前的英语演讲比赛，我都大二了竞赛还是一无所获，我是不是太差劲了啊……</p>
+<p class="quote"><b>2010级 王宇学长：</b>"你好啊，小王。曾经我也跟你一样，在各种竞赛中摸爬滚打，走了很多弯路。当年我与我的队友参加"挑战杯"，第一年石沉大海，我们几个都觉得熬夜赶稿的心血白费了。第二年我们改良了方向和选题，经过了很多次的复盘、修改，最后才取得了不错的成绩。参加竞赛本来就是一个尝试、成长与得到反馈的过程，而且备赛的过程中你的能力也得到了锻炼，不是吗？再者，选择也是一种智慧，要通过尝试摸索找到适合自己的赛道。你才大二，不必过于着急，除了竞赛，实习、社会实践、社团活动也很重要。要相信自己的能力，加油！"</p>
+<p><b>【第三封信】大三·焦虑</b><br>我叫xxx，已经大三了，想跨考新传，可是又怕考研失败，要不还是毕业先找工作积累经验吧，哎，感觉压力好大……</p>
+<p class="quote"><b>2009级 温雯学姐：</b>"学妹，你好呀。我想对你说，与其犹豫不决，彷徨不定，不如先做好两手准备，制定计划并执行起来，这样会在很大程度上减少焦虑。以我自己来说，当时我是毅然决然地选择了先考研后考公的道路。你完全可以先准备考研，大四的时候也投投简历，多一个选择总归不是坏的。但无论如何都要有坚持和接受失败的勇气。何况你们都还年轻，不必困于一时。成功还是不成功路上都是迷茫，先找到自己才能找到自己的路。相信你定有所成！"</p>
+<p><b>【第四封信】大四·求职</b><br>我叫xxx，大四了，已经投了好几十份简历了，刚刚双选会也面试了十几家不同行业的企业，却好像没有一个对我感兴趣，找工作真的太难了……</p>
+<p class="quote"><b>2011级 付丽娜学姐：</b>"你好呀，看到你的经历就仿佛看到了当年的我自己。当年我也是连连被拒，最后也是在家人和一位学姐的鼓励之下才重新找到了自己的方向。毕业后求职失败是一条必经之路，只有这样我们才能知道自己的弱势在哪。想要在求职过程中在一众求职者中脱颖而出，我的建议是增强个人的能力和素质，其次是提升个人的情商，学习更多的面试技巧。面对高负荷的工作和复杂的人际关系，要锤炼自己交际技能，才能得到别人的理解和支持。同时，人际关系也是人生重要资源，良好的人际关系往往能获得更多的成功机会。所有的阴霾都将过去，祝你今年成功斩获offer，加油！"</p>
+<p><b>结尾</b><br>这一封封真切的来信将本属于两个世界的外语人以同样的身份连结在了一起。外院人从来都不是一个个孤立的个体，而是由千丝万缕联系起来的一家人。而这种互助、传承与延续，生生不息。</p>
+<p><b>胡继禹校友：</b>"每当我在工作上遇到困难时，我都会想到我的母校，现在我们在做的白塔寺景区项目主要工作方向是对外接待外国的友人。而现在我们需要大量的外语人才来到我们白塔寺景区工作，我希望给我的学弟学妹们一个发展的平台、一个实习的方向……"</p>
+<p><b>学生：</b>"通过胡学长提供的机会，让我见识到了更宽广的世界，与此同时在与外国旅客进行交流的同时我的外语技能也得到了巨大的提升……"</p>
+<p><b>老师：</b>"为了连结在校同学和校友，搭建资源共享，交流互助的桥梁，我们成立了校友工作坊……外院从不只是一个简单的名称，而是温暖、团结、互助、传承的代名词。"</p>
+<p><b>同学（齐声）：</b>"作为一门外语学子，我感受到了互助与友爱的外院氛围……在未来的道路上，让我们怀着对外语人精神传承的敬意和珍视，砥砺奋进，坚定前行！"</p>
+<a class="pdf-btn" href="${ASSETS.pdfCommendation}" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'spring' },
+      { name: '反诈宣传片脚本', type: 'script', html: `<div class="script-paper"><h2>反诈最强音 · MV分镜脚本</h2>
+<p class="quote"><b>主题：</b>淮安公安全民反诈主题MV</p>
+<p><b>【前奏】</b></p>
+<p><em>清澈的爱 心中滚烫</em></p>
+<p><em>竭尽全力 为这身藏蓝戎装</em></p>
+<p><em>日出东方 为我照亮</em></p>
+<p><em>96110 守护幸福理想</em></p>
+<p><em>是我理想</em></p>
+<p><b>【城市篇】</b></p>
+<p><em>我穿梭在漕运总督府</em></p>
+<p><em>我生活在清江浦</em></p>
+<p><em>全民反诈 警民携手齐努力</em></p>
+<p><em>定要下载国家反诈中心APP</em></p>
+<p><b>【说唱 · 情景】</b></p>
+<p><em>诱你投资 再给你高额回报的收益</em></p>
+<p><em>送上门的投资 骗子怎会让你发财</em></p>
+<p><em>贷款诈骗 / 婚恋交友诈骗</em></p>
+<p><em>收起你的贪念 骗子们再老练</em></p>
+<p><em>拙劣的演技</em></p>
+<p><em>逃不过 正义光芒的宝剑</em></p>
+<p><b>【副歌】</b></p>
+<p><em>清澈的爱 心中滚烫</em></p>
+<p><em>竭尽全力 为这身藏蓝戎装</em></p>
+<p><em>日出东方 为我照亮</em></p>
+<p><em>96110 守护幸福理想</em></p>
+<p><b>【宣讲】</b></p>
+<p><em>面对着违法和犯罪我们勇于亮剑</em></p>
+<p><em>藏蓝色是我们心中燃起的火焰</em></p>
+<p><em>我们不畏惧艰险 把困难悉数攻坚</em></p>
+<p><em>共同筑牢反诈防线守卫身边人安全</em></p>
+<p><em>从大街到小巷再从傍晚奋斗直到天明</em></p>
+<p><em>就让我们一起坚守努力发出反诈最强音</em></p>
+<p><em>看我们乘风又破浪为这世间美好的愿望</em></p>
+<p><em>清除诈骗犯是我们坚持的理想</em></p>
+<p><em>做好榜样 即便受伤 也要祖国人民山河无恙</em></p>
+<p><em>祝愿每个擦肩而过都能上扬嘴角</em></p>
+<p><em>把犯罪分子诈骗团伙统统围剿</em></p>
+<p><em>全民反诈</em></p>
+<p><b>【尾声】</b></p>
+<p><em>清澈的爱 心中滚烫 / 竭尽全力 为这身藏蓝戎装 / 日出东方 为我照亮 / 96110 守护幸福理想 / 是我理想</em></p>
+<a class="pdf-btn" href="${ASSETS.pdfAntiFraud}" target="_blank">📄 查看完整分镜脚本</a></div>`, effect:'winter' }
+    ]
+  }
+};
+
+let currentVisCat = null;
+
+async function renderPdfPage(container) {
+  const pdf = container._pdfDoc;
+  const pageNum = container._pageNum || 1;
+  const canvas = container.querySelector('.pdf-ppt-canvas');
+  const hint = container.querySelector('.ppt-hint');
+  if (!pdf || !canvas) return;
+  const page = await pdf.getPage(pageNum);
+  const box = container.getBoundingClientRect();
+  const base = page.getViewport({ scale: 1 });
+  const scale = Math.min((box.width - 24) / base.width, (box.height - 56) / base.height, 2.2);
+  const viewport = page.getViewport({ scale: Math.max(scale, 0.2) });
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+  await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+  if (hint) hint.textContent = `点击画面切换下一页 · ${pageNum} / ${container._totalPages}`;
+}
+
+async function initPdfPptViewer(container) {
+  if (container._pdfDoc || container.dataset.loading === '1') return;
+  container.dataset.loading = '1';
+  try {
+    const pdf = await pdfjsLib.getDocument(container.dataset.pdf).promise;
+    container._pdfDoc = pdf;
+    container._pageNum = 1;
+    container._totalPages = pdf.numPages;
+    await renderPdfPage(container);
+  } catch (err) {
+    const hint = container.querySelector('.ppt-hint');
+    if (hint) hint.textContent = 'PDF 加载失败，请确认文件已上传至 GitHub';
+    console.error(err);
+  } finally {
+    container.dataset.loading = '0';
+  }
+}
+
+async function loadPdfThumb(el) {
+  const url = el.dataset.pdf;
+  if (!url || el.dataset.loaded === '1') return;
+  el.dataset.loaded = '1';
+  const cover = el.dataset.cover === '1';
+  try {
+    const pdf = await pdfjsLib.getDocument(url).promise;
+    const page = await pdf.getPage(1);
+    const canvas = document.createElement('canvas');
+    canvas.className = 'pdf-thumb-canvas';
+    const viewport = page.getViewport({ scale: 1 });
+    let scale;
+    if (cover) {
+      scale = Math.max(el.clientWidth / viewport.width, el.clientHeight / viewport.height, 0.15) * 1.12;
+    } else {
+      scale = Math.min(el.clientWidth / viewport.width, el.clientHeight / viewport.height, 1.6);
+    }
+    const scaled = page.getViewport({ scale: Math.max(scale, 0.15) });
+    canvas.width = scaled.width;
+    canvas.height = scaled.height;
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport: scaled }).promise;
+    el.innerHTML = '';
+    el.appendChild(canvas);
+  } catch (err) {
+    el.innerHTML = '<span class="pdf-thumb-loading">预览加载失败</span>';
+    console.error(err);
+  }
+}
+
+function openTheater(catId) {
+  const cat = visualData[catId];
+  if(!cat) return;
+  currentVisCat = cat;
+
+  const textBox = document.getElementById('theaterText');
+  const subList = document.getElementById('subItemsList');
+
+  const style = getComputedStyle(document.body);
+  const themeColor = style.getPropertyValue('--accent').trim() || '#D88CA8';
+  const bg = style.getPropertyValue('--bg').trim() || '#F8F4EC';
+  document.getElementById('theaterModal').style.background = `radial-gradient(circle at 28% 45%, rgba(255,255,255,.86) 0%, ${themeColor}22 46%, ${bg} 100%)`;
+
+  textBox.innerHTML = `<div class="t-tag">${cat.tag}</div><h2 class="t-title">${cat.title}</h2><div class="t-desc">${cat.desc}</div><div id="extraDescArea"></div>`;
+
+  subList.innerHTML = '';
+  cat.items.forEach((item, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'sub-item-btn';
+    btn.textContent = item.name;
+    btn.onclick = () => renderSubItem(index, btn);
+    subList.appendChild(btn);
+  });
+
+  document.getElementById('theaterModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  if(cat.items.length > 0) renderSubItem(0, subList.firstChild);
+}
+
+function renderSubItem(index, btnEl) {
+  document.querySelectorAll('.sub-item-btn').forEach(b => b.classList.remove('active'));
+  btnEl.classList.add('active');
+
+  const item = currentVisCat.items[index];
+  playSeasonEffect(item.effect || currentVisCat.effect || 'spring');
+  const visualBox = document.getElementById('theaterVisual');
+  visualBox.classList.remove('ppt-stage');
+  const extraArea = document.getElementById('extraDescArea');
+
+  if (item.extraDesc) {
+    extraArea.innerHTML = `<div class="t-extra-desc"><p>${item.extraDesc}</p></div>`;
+  } else {
+    extraArea.innerHTML = '';
+  }
+
+  if (item.type === 'phone') {
+    visualBox.innerHTML = `<div class="phone-mockup"><div class="phone-notch"></div><div class="phone-screen">${item.html}${item.html.includes('phone-canva-footer') ? '' : '<div class="scroll-hint">↓ 向下滑动查看</div>'}</div></div>`;
+    visualBox.style.background = 'transparent'; visualBox.style.boxShadow = 'none';
+  } else if (item.type === 'script') {
+    visualBox.innerHTML = item.html;
+    visualBox.style.background = 'rgba(255,255,255,.45)'; visualBox.style.boxShadow = '0 22px 50px rgba(92,74,105,0.18)';
+  } else if (item.type === 'ppt') {
+    visualBox.classList.add('ppt-stage');
+    visualBox.innerHTML = item.html;
+    visualBox.style.background = 'rgba(255,255,255,.45)'; visualBox.style.boxShadow = '0 22px 50px rgba(92,74,105,0.18)';
+    visualBox.querySelectorAll('.pdf-ppt-viewer').forEach(initPdfPptViewer);
+  } else if (item.type === 'video') {
+    const _t=document.createElement('div');_t.innerHTML=item.html;
+    const _cp=_t.querySelector('.video-caption');const _ct=_cp?_cp.innerHTML:'';
+    if(_cp)_cp.remove();
+    visualBox.innerHTML='<div class="video-wrapper">'+_t.innerHTML+(_ct?'<div class="video-caption">'+_ct+'</div>':'')+'</div>';
+    visualBox.style.background='transparent';visualBox.style.boxShadow='none';
+  } else {
+    visualBox.innerHTML = item.html;
+    visualBox.style.background = 'rgba(255,255,255,.45)'; visualBox.style.boxShadow = '0 22px 50px rgba(92,74,105,0.18)';
+  }
+}
+
+function playSeasonEffect(kind) {
+  const box = document.getElementById('seasonEffects');
+  if(!box) return;
+  const palettes = {
+    spring: ['🌸','✿','❀','🌸','✦'],
+    summer: ['🍃','✧','🌿','𖤓','🍃'],
+    autumn: ['🍂','✦','✧','🍁','✦'],
+    winter: ['❄','✧','⋆','❅','❄'],
+    halloween: ['✦','🦋','⋆','✧','🕯']
+  };
+  const symbols = palettes[kind] || palettes.spring;
+  for(let i=0;i<16;i++){
+    const el = document.createElement('span');
+    el.className = 'season-fx';
+    el.textContent = symbols[i % symbols.length];
+    el.style.top = (28 + Math.random()*48) + '%';
+    el.style.right = (4 + Math.random()*22) + '%';
+    el.style.animationDelay = (Math.random()*0.28) + 's';
+    el.style.animationDuration = (1.05 + Math.random()*1.1) + 's';
+    el.style.fontSize = (14 + Math.random()*20) + 'px';
+    box.appendChild(el);
+    setTimeout(()=>el.remove(), 2400);
+  }
+}
+
+function closeTheater() {
+  document.getElementById('theaterModal').classList.remove('active');
+  document.body.style.overflow = 'auto';
+  setTimeout(() => { document.getElementById('theaterVisual').innerHTML = ''; }, 400);
+}
+
+function toggleLang(section) {
+  const cn = document.getElementById(section + 'DescCN');
+  const en = document.getElementById(section + 'DescEN');
+  const btn = event.target;
+  if (!cn || !en) return;
+  if (en.style.display === 'none') {
+    en.style.display = 'block';
+    cn.style.display = 'none';
+    btn.textContent = '🌐 点击查看中文版 (CN)';
+  } else {
+    en.style.display = 'none';
+    cn.style.display = 'block';
+    btn.textContent = '🌐 点击查看英文版 (EN)';
+  }
+}
+
+function nextPptPage(container) {
+  const pages = container.querySelectorAll('.ppt-page');
+  if(pages.length === 0) return;
+  let activeIdx = -1;
+  pages.forEach((p, i) => { if(p.classList.contains('active')) activeIdx = i; });
+  if(activeIdx !== -1) pages[activeIdx].classList.remove('active');
+  const nextIdx = (activeIdx + 1) % pages.length;
+  pages[nextIdx].classList.add('active');
+}
+
+async function nextPdfPptPage(container) {
+  if (!container._pdfDoc) {
+    await initPdfPptViewer(container);
+    return;
+  }
+  container._pageNum = (container._pageNum % container._totalPages) + 1;
+  await renderPdfPage(container);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.pdf-thumb').forEach(loadPdfThumb);
+});
