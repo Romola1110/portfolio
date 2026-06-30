@@ -83,16 +83,19 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .photo-card.film span { color: #555; bottom: 12px; }
 .photo-card.film .photo-inner { background: #111; display:block; padding:0; }
 .photo-card.film .photo-inner.film-cover img { width:100%; height:100%; object-fit:cover; display:block; }
-.photo-card.film.film-wide { width: 380px; height: 228px; padding: 16px 14px 40px; }
+.photo-card.film.film-portrait { width: 272px; height: 172px; padding: 14px 12px 38px; }
 
-/* 帧频横屏：扇形展开，占满左侧画面区 */
-.motion-gallery { flex: 1.75; height: 340px; margin-right: auto; }
-.motion-gallery .photo-card.film-wide.p1 { transform: translate(-50%, -50%) rotate(-5deg) translateX(-175px) translateY(6px); z-index: 1; }
-.motion-gallery .photo-card.film-wide.p2 { transform: translate(-50%, -50%) rotate(0deg) translateX(20px) translateY(-8px); z-index: 3; box-shadow: 0 18px 38px rgba(0,0,0,0.14); }
-.motion-gallery .photo-card.film-wide.p3 { transform: translate(-50%, -50%) rotate(5deg) translateX(195px) translateY(6px); z-index: 2; }
-.motion-gallery:hover .photo-card.film-wide.p1 { transform: translate(-50%, -50%) rotate(-9deg) translateX(-250px) translateY(12px) scale(1.02); z-index: 2; }
-.motion-gallery:hover .photo-card.film-wide.p2 { transform: translate(-50%, -50%) rotate(0deg) translateX(20px) translateY(-16px) scale(1.05); z-index: 10; box-shadow: 0 26px 50px rgba(0,0,0,0.18); }
-.motion-gallery:hover .photo-card.film-wide.p3 { transform: translate(-50%, -50%) rotate(9deg) translateX(270px) translateY(12px) scale(1.02); z-index: 2; }
+/* 帧频：竖向堆叠展开，避免横向遮挡右侧文字 */
+.motion-gallery { flex: 0 0 300px; width: 300px; max-width: 300px; height: 540px; margin-right: auto; margin-left: 0; }
+.motion-gallery .photo-card.film-portrait .photo-inner.film-cover img { object-fit: cover; object-position: center; }
+.motion-gallery .photo-card.film-portrait.p1 { transform: translate(-50%, -50%) rotate(-3deg) translateY(-88px) translateX(-6px); z-index: 1; }
+.motion-gallery .photo-card.film-portrait.p2 { transform: translate(-50%, -50%) rotate(0deg) translateY(0); z-index: 3; box-shadow: 0 18px 38px rgba(0,0,0,0.14); }
+.motion-gallery .photo-card.film-portrait.p3 { transform: translate(-50%, -50%) rotate(3deg) translateY(88px) translateX(6px); z-index: 2; }
+.motion-gallery:hover .photo-card.film-portrait.p1 { transform: translate(-50%, -50%) rotate(-5deg) translateY(-148px) translateX(-10px) scale(1.03); z-index: 2; }
+.motion-gallery:hover .photo-card.film-portrait.p2 { transform: translate(-50%, -50%) rotate(0deg) translateY(0) scale(1.05); z-index: 10; box-shadow: 0 26px 50px rgba(0,0,0,0.18); }
+.motion-gallery:hover .photo-card.film-portrait.p3 { transform: translate(-50%, -50%) rotate(5deg) translateY(148px) translateX(10px) scale(1.03); z-index: 2; }
+.album-row.motion-row { gap: 5.5rem; }
+.album-row.motion-row .album-text { flex: 1; min-width: 0; }
 
 .stamp-gallery .photo-card { width: 300px; height: 390px; }
 
@@ -178,7 +181,7 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .script-shot-preview { padding:0 !important; border:none !important; background:#fff !important; overflow:hidden; }
 .script-shot-preview img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
 .a-desc .lead-line { display:block; font-weight:700; color:var(--text-dark); margin-bottom:1rem; }
-.photo-card.film.film-wide .photo-inner { height: 100%; }
+.photo-card.film.film-portrait .photo-inner { height: 100%; }
 .season-effects { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:1; }
 .season-fx { position:absolute; right:9%; top:52%; opacity:0; transform:translate(24px,-8px) scale(.8) rotate(0deg); animation: driftIn 1.45s ease-out forwards; font-size:22px; filter: drop-shadow(0 6px 10px rgba(216,140,168,.16)); }
 @keyframes driftIn { 0%{opacity:0; transform:translate(70px,20px) scale(.65) rotate(-12deg);} 18%{opacity:.95;} 100%{opacity:0; transform:translate(-55px,-105px) scale(1.15) rotate(32deg);} }
@@ -220,7 +223,7 @@ body { font-family: var(--serif); color: var(--text-dark); background: var(--bg)
 .pdf-btn{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;padding:8px 22px;background:rgba(229,169,192,0.10);border:1px solid var(--accent);border-radius:999px;color:var(--accent);font-family:var(--english);font-size:0.88rem;letter-spacing:0.06em;text-decoration:none;transition:all 0.25s;}
 .pdf-btn:hover{background:var(--accent);color:#fff;}
 #layoutDescEN,#motionDescEN,#scriptDescEN{font-family:'Cormorant Garamond','Georgia',serif!important;font-size:1.08rem;font-style:italic;color:#5A5070;line-height:2.15;}
-@media (max-width: 900px){.album-row,.album-row:nth-child(even){flex-direction:column}.album-row:nth-child(even) .album-text,.album-text,.album-row.motion-row .album-text{text-align:center}.theater-content{flex-direction:column;height:90vh;gap:1rem}.theater-right{max-height:38vh;overflow:auto}.phone-mockup{width:300px;height:590px}.layout-gallery .photo-card{width:230px;height:300px}.layout-gallery .photo-card:nth-child(n+3){width:300px;height:180px}.photo-card.film.film-wide{width:280px;height:180px}.motion-gallery{height:300px}.motion-gallery .photo-card.film-wide.p1{transform:translate(-50%,-50%) rotate(-6deg) translateX(-90px)}.motion-gallery .photo-card.film-wide.p3{transform:translate(-50%,-50%) rotate(6deg) translateX(90px)}}
+@media (max-width: 900px){.album-row,.album-row:nth-child(even){flex-direction:column}.album-row:nth-child(even) .album-text,.album-text,.album-row.motion-row .album-text{text-align:center}.theater-content{flex-direction:column;height:90vh;gap:1rem}.theater-right{max-height:38vh;overflow:auto}.phone-mockup{width:300px;height:590px}.layout-gallery .photo-card{width:230px;height:300px}.layout-gallery .photo-card:nth-child(n+3){width:300px;height:180px}.motion-gallery{flex:1 1 auto;width:100%;max-width:100%;height:480px}.motion-gallery .photo-card.film-portrait{width:250px;height:158px}.motion-gallery .photo-card.film-portrait.p1{transform:translate(-50%,-50%) rotate(-4deg) translateY(-75px)}.motion-gallery:hover .photo-card.film-portrait.p1{transform:translate(-50%,-50%) rotate(-5deg) translateY(-120px)}.motion-gallery .photo-card.film-portrait.p3{transform:translate(-50%,-50%) rotate(4deg) translateY(75px)}.motion-gallery:hover .photo-card.film-portrait.p3{transform:translate(-50%,-50%) rotate(5deg) translateY(120px)}}
 
 </style>
 </head>
@@ -282,9 +285,9 @@ your glance completes, your thoughts renew.</p>
         <span class="a-hint">Hover to expand the films, click to play.</span>
       </div>
       <div class="album-photos motion-gallery" onclick="openTheater('motion')">
-        <div class="photo-card film film-wide p1"><div class="photo-inner film-cover"><img src="assets/previews/spring-summer.png" alt="春夏之交"></div><span>Spring/Summer</span></div>
-        <div class="photo-card film film-wide p2"><div class="photo-inner film-cover"><img src="assets/previews/dubliners.jpg" alt="都柏林人"></div><span>Dubliners</span></div>
-        <div class="photo-card film film-wide p3"><div class="photo-inner film-cover"><img src="assets/previews/mall.jpg" alt="商场周年庆"></div><span>Commercial Works</span></div>
+        <div class="photo-card film film-portrait p1"><div class="photo-inner film-cover"><img src="assets/previews/spring-summer.png" alt="春夏之交"></div><span>Spring/Summer</span></div>
+        <div class="photo-card film film-portrait p2"><div class="photo-inner film-cover"><img src="assets/previews/dubliners.jpg" alt="都柏林人"></div><span>Dubliners</span></div>
+        <div class="photo-card film film-portrait p3"><div class="photo-inner film-cover"><img src="assets/previews/mall.jpg" alt="商场周年庆"></div><span>Commercial Works</span></div>
       </div>
     </div>
 
@@ -408,45 +411,45 @@ const visualData = {
 <p><b>同学（齐声）：</b>"作为一门外语学子，我感受到了互助与友爱的外院氛围……在未来的道路上，让我们怀着对外语人精神传承的敬意和珍视，砥砺奋进，坚定前行！"</p>
 <a class="pdf-btn" href="${ASSETS.pdfCommendation}" target="_blank">📄 点击阅读完整版 PDF</a></div>`, effect:'spring' },
       { name: '反诈宣传片脚本', type: 'script', html: `<div class="script-paper"><h2>反诈最强音 · MV分镜脚本</h2>
-<p class="quote"><b>主题：</b>淮安公安全民反诈主题MV（字幕摘自分镜脚本原文）</p>
+<p class="quote"><b>主题：</b>淮安公安全民反诈主题MV</p>
 <p><b>【前奏】</b></p>
-<p><em>清澈的爱 心中洋溢</em></p>
+<p><em>清澈的爱 心中滚烫</em></p>
 <p><em>竭尽全力 为这身藏蓝戎装</em></p>
-<p><em>日出东方 为我点亮</em></p>
+<p><em>日出东方 为我照亮</em></p>
 <p><em>96110 守护幸福理想</em></p>
 <p><em>是我理想</em></p>
 <p><b>【城市篇】</b></p>
-<p><em>我穿梭在清运总督府</em></p>
-<p><em>我生活在清江清</em></p>
+<p><em>我穿梭在漕运总督府</em></p>
+<p><em>我生活在清江浦</em></p>
 <p><em>全民反诈 警民携手齐努力</em></p>
-<p><em>走要下载国家反诈中心APP</em></p>
+<p><em>定要下载国家反诈中心APP</em></p>
 <p><b>【说唱 · 情景】</b></p>
-<p><em>请你投资再给你高额回报的收益</em></p>
-<p><em>找上门的投资骗子怎会让你发财</em></p>
+<p><em>诱你投资 再给你高额回报的收益</em></p>
+<p><em>送上门的投资 骗子怎会让你发财</em></p>
 <p><em>贷款诈骗 / 婚恋交友诈骗</em></p>
-<p><em>勾起你的贪念骗子们再老练</em></p>
+<p><em>收起你的贪念 骗子们再老练</em></p>
 <p><em>拙劣的演技</em></p>
-<p><em>光不灭 正义光芒的宝剑</em></p>
+<p><em>逃不过 正义光芒的宝剑</em></p>
 <p><b>【副歌】</b></p>
-<p><em>清澈的爱 心中洋溢</em></p>
+<p><em>清澈的爱 心中滚烫</em></p>
 <p><em>竭尽全力 为这身藏蓝戎装</em></p>
-<p><em>日出东方 为我点亮</em></p>
+<p><em>日出东方 为我照亮</em></p>
 <p><em>96110 守护幸福理想</em></p>
 <p><b>【宣讲】</b></p>
 <p><em>面对着违法和犯罪我们勇于亮剑</em></p>
-<p><em>警察蓝是我们心中燃起的火焰</em></p>
-<p><em>我们不畏惧艰险 砥柱难关攻坚</em></p>
-<p><em>同筑牢反诈防线守卫身边人安全</em></p>
+<p><em>藏蓝色是我们心中燃起的火焰</em></p>
+<p><em>我们不畏惧艰险 把困难悉数攻坚</em></p>
+<p><em>共同筑牢反诈防线守卫身边人安全</em></p>
 <p><em>从大街到小巷再从傍晚奋斗直到天明</em></p>
-<p><em>我们一起坚守努力发出反诈最强音</em></p>
+<p><em>就让我们一起坚守努力发出反诈最强音</em></p>
 <p><em>看我们乘风又破浪为这世间美好的愿望</em></p>
-<p><em>铲除诈骗犯是我们坚持的理想</em></p>
+<p><em>清除诈骗犯是我们坚持的理想</em></p>
 <p><em>做好榜样 即便受伤 也要祖国人民山河无恙</em></p>
-<p><em>祝愿每次擦肩而过都能上扬嘴角</em></p>
-<p><em>把犯罪分子诈骗团伙统统围歼</em></p>
+<p><em>祝愿每个擦肩而过都能上扬嘴角</em></p>
+<p><em>把犯罪分子诈骗团伙统统围剿</em></p>
 <p><em>全民反诈</em></p>
 <p><b>【尾声】</b></p>
-<p><em>清澈的爱 心中洋溢 / 竭尽全力 为这身藏蓝戎装 / 日出东方 为我点亮 / 96110 守护幸福理想 / 是我理想</em></p>
+<p><em>清澈的爱 心中滚烫 / 竭尽全力 为这身藏蓝戎装 / 日出东方 为我照亮 / 96110 守护幸福理想 / 是我理想</em></p>
 <a class="pdf-btn" href="${ASSETS.pdfAntiFraud}" target="_blank">📄 查看完整分镜脚本</a></div>`, effect:'winter' }
     ]
   }
