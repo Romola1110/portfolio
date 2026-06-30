@@ -477,51 +477,53 @@ function runTypewriter(root) {
   setTimeout(typeChar, 600);
 }
 
-/* ---------- v6 主站（窗台晾签绳 · 错落晾晒）---------- */
+/* ---------- v6 主站（窗台晾签绳 · 宣纸展台）---------- */
 
 const ROPE_BOTTOM_MARKS = ['·', '○', '△', '•'];
 
-function buildRopeLayout(count) {
+function getItemSymbol(item) {
+  if (item.ph === 'ph-dye') return '🖌';
+  if (item.ph === 'ph-bookmark' || item.ph === 'ph-calligraphy') return '🍁';
+  return '✧';
+}
+
+function buildRopeLayout(items) {
   const slots = [];
-  let cursor = 28;
-  for (let i = 0; i < count; i++) {
+  let cursor = 48;
+  const count = items.length;
+  items.forEach((item, i) => {
     const progress = count > 1 ? i / (count - 1) : 0.5;
-    const waveY = Math.sin(progress * Math.PI * 1.6) * 14;
-    const randomTop = 38 + waveY + (Math.random() * 50 - 25);
-    const randomRotate = Math.random() * 12 - 6;
-    const randomWidth = 60 + Math.random() * 40;
-    const randomHeight = 120 + Math.random() * 60;
-    const randomZIndex = Math.floor(progress * 6 + Math.random() * 4) + 1;
+    const waveY = Math.sin(progress * Math.PI * 1.5) * 12;
+    const height = 100 + Math.random() * 50;
+    const width = Math.max(56, Math.min(128, item.name.length * 16 + 32));
+    const randomTop = 56 + waveY + (Math.random() * 30 - 15);
+    const randomRotate = Math.random() * 8 - 4;
+    const randomZIndex = Math.floor(progress * 5 + Math.random() * 4) + 1;
     const left = cursor;
-    cursor += randomWidth * (0.84 + Math.random() * 0.06);
+    cursor += width + 25 + Math.random() * 14;
     slots.push({
       x: left,
       top: randomTop,
       rotate: randomRotate,
-      width: randomWidth,
-      height: randomHeight,
+      width,
+      height,
       zIndex: randomZIndex,
       mark: ROPE_BOTTOM_MARKS[Math.floor(Math.random() * ROPE_BOTTOM_MARKS.length)],
-      delay: `${(i * 0.31) % 2.4}s`
+      delay: `${(i * 0.28) % 2.2}s`
     });
-  }
-  return { slots, totalWidth: cursor + 48 };
+  });
+  return { slots, totalWidth: cursor + 56 };
 }
 
 function initThingsV6(root) {
   const vessel = root.querySelector('.lot-vessel');
   const drawBtn = root.querySelector('.draw-btn');
   const drawPanel = root.querySelector('.draw-panel');
-  const drawZone = root.querySelector('.draw-zone');
-  const envelopeStage = root.querySelector('.envelope-stage');
-  const envelopeWrap = root.querySelector('.envelope-wrap');
-  const letterSheet = root.querySelector('.letter-sheet');
-  const signLabel = root.querySelector('.letter-sign-label');
-  const letterVerse = root.querySelector('.letter-verse');
-  const letterItemName = root.querySelector('.letter-item-name');
-  const letterNote = root.querySelector('.letter-note');
-  const letterThumb = root.querySelector('.letter-thumb');
-  const letterActions = root.querySelector('.letter-actions');
+  const paperStand = root.querySelector('.paper-stand');
+  const emptyHint = root.querySelector('.stand-empty-hint');
+  const standCard = root.querySelector('.stand-card');
+  const standActions = root.querySelector('.stand-actions');
+  const foldBtn = root.querySelector('.fold-painting-btn');
   const galleryToggle = root.querySelector('.gallery-toggle-btn');
   const ropeWrap = root.querySelector('.rope-gallery-wrap');
   const ropeSigns = root.querySelector('.rope-signs');
@@ -532,7 +534,7 @@ function initThingsV6(root) {
   let ropeOpen = false;
   let drawing = false;
   let drawnIds = new Set();
-  let ropeLayout = buildRopeLayout(THINGS_DATA.length);
+  let ropeLayout = buildRopeLayout(THINGS_DATA);
 
   function renderThumb(item) {
     if (item.image) return `<img src="${item.image}" alt="${item.name}" loading="lazy">`;
@@ -543,10 +545,9 @@ function initThingsV6(root) {
     const cx = slot.x + slot.width / 2;
     return `
       <div class="rope-sign" data-id="${item.id}" data-slot="${i}"
-        style="left:${cx}px;top:${slot.top}px;width:${slot.width}px;--h:${slot.height}px;--rot:${slot.rotate}deg;--delay:${slot.delay};z-index:${slot.zIndex}">
-        <div class="rope-tag-body" style="min-height:var(--h)">
-          <div class="tag-visual">${renderThumb(item)}</div>
-          <div class="tag-name">${item.name}</div>
+        style="left:${cx}px;top:${slot.top}px;--w:${slot.width}px;--h:${slot.height}px;--rot:${slot.rotate}deg;--delay:${slot.delay};z-index:${slot.zIndex}">
+        <div class="rope-tag-body">
+          <span class="tag-name">${item.name}</span>
           <span class="tag-mark">${slot.mark}</span>
         </div>
       </div>`;
@@ -554,20 +555,43 @@ function initThingsV6(root) {
 
   function renderRopeGallery() {
     if (!ropeSigns) return;
-    ropeLayout = buildRopeLayout(THINGS_DATA.length);
+    ropeLayout = buildRopeLayout(THINGS_DATA);
     ropeSigns.style.minWidth = `${ropeLayout.totalWidth}px`;
-    ropeSigns.style.height = `${Math.max(200, ...ropeLayout.slots.map(s => s.top + s.height + 24))}px`;
+    ropeSigns.style.height = `${Math.max(220, ...ropeLayout.slots.map(s => s.top + s.height + 40))}px`;
     if (emptyClips) emptyClips.innerHTML = '';
-    ropeSigns.innerHTML = THINGS_DATA.map((item, i) =>
-      renderRopeSign(item, ropeLayout.slots[i], i)
-    ).join('');
-    drawnIds.forEach(id => markRopeDrawn(id, false));
+    const kept = new Set(drawnIds);
+    ropeSigns.innerHTML = THINGS_DATA.map((item, i) => {
+      if (kept.has(item.id)) return '';
+      return renderRopeSign(item, ropeLayout.slots[i], i);
+    }).join('');
+    kept.forEach(id => {
+      const i = THINGS_DATA.findIndex(t => t.id === id);
+      if (i < 0) return;
+      const sign = ropeSigns.querySelector(`[data-id="${id}"]`);
+      if (!sign) addEmptyClip(id, ropeLayout.slots[i], i);
+    });
+  }
+
+  function addEmptyClip(id, slot, i) {
+    if (!emptyClips || emptyClips.querySelector(`[data-id="${id}"]`)) return;
+    const cx = slot.x + slot.width / 2;
+    const clip = document.createElement('div');
+    clip.className = 'rope-clip-empty';
+    clip.dataset.id = id;
+    clip.style.left = `${cx}px`;
+    clip.style.top = `${slot.top}px`;
+    clip.innerHTML = '<span class="clip-rope-remnant" aria-hidden="true"></span>';
+    emptyClips.appendChild(clip);
   }
 
   function markRopeDrawn(id, animate = true) {
     const sign = ropeSigns?.querySelector(`[data-id="${id}"]`);
-    if (!sign || sign.classList.contains('drawn-away')) return;
-    const left = sign.style.left;
+    if (!sign || sign.classList.contains('drawn-away')) {
+      const i = THINGS_DATA.findIndex(t => t.id === id);
+      if (i >= 0) addEmptyClip(id, ropeLayout.slots[i], i);
+      return;
+    }
+    const cx = sign.style.left;
     const top = sign.style.top;
     if (animate) {
       sign.classList.add('unclipping');
@@ -579,48 +603,43 @@ function initThingsV6(root) {
       const clip = document.createElement('div');
       clip.className = 'rope-clip-empty';
       clip.dataset.id = id;
-      clip.style.left = left;
+      clip.style.left = cx;
       clip.style.top = top;
       clip.innerHTML = '<span class="clip-rope-remnant" aria-hidden="true"></span>';
       emptyClips.appendChild(clip);
     }
   }
 
+  function restoreSignOnRope(id) {
+    drawnIds.delete(id);
+    emptyClips?.querySelector(`[data-id="${id}"]`)?.remove();
+    const i = THINGS_DATA.findIndex(t => t.id === id);
+    if (i < 0 || !ropeSigns) return;
+    const item = THINGS_DATA[i];
+    const slot = ropeLayout.slots[i];
+    const wrap = document.createElement('div');
+    wrap.innerHTML = renderRopeSign(item, slot, i);
+    const el = wrap.firstElementChild;
+    el.classList.add('returning');
+    ropeSigns.appendChild(el);
+  }
+
   function pickItem() {
     let pool = THINGS_DATA.filter(t => !drawnIds.has(t.id));
     if (!pool.length) pool = [...THINGS_DATA];
     if (pool.length > 1 && lastDrawId) pool = pool.filter(t => t.id !== lastDrawId);
-    const item = pool[Math.floor(Math.random() * pool.length)];
-    lastDrawId = item.id;
-    return item;
-  }
-
-  function fillLetter(item) {
-    if (signLabel) signLabel.textContent = item.signLabel;
-    if (letterVerse) letterVerse.textContent = `「${item.verse}」`;
-    if (letterItemName) letterItemName.textContent = item.name;
-    if (letterNote) letterNote.textContent = item.note;
-    if (letterThumb) letterThumb.innerHTML = renderThumb(item);
-    letterSheet?.setAttribute('data-id', item.id);
-  }
-
-  function getModalFormat(item) {
-    if (item.ph === 'ph-bookmark' || item.ph === 'ph-calligraphy') return 'bookmark';
-    if (item.ph === 'ph-paper') return 'postcard';
-    return 'letter';
+    return pool[Math.floor(Math.random() * pool.length)];
   }
 
   function openModal(item) {
     if (!modal) return;
-    const fmt = getModalFormat(item);
-    const innerClass = fmt === 'bookmark' ? 'bookmark-sheet' : fmt === 'postcard' ? 'postcard-sheet' : 'letter-sheet-modal';
     modal.innerHTML = `
-      <div class="thing-modal-box modal-${fmt}">
+      <div class="thing-modal-box modal-bookmark">
         <button type="button" class="thing-modal-close" aria-label="关闭">×</button>
-        <div class="${innerClass}">
+        <div class="bookmark-sheet">
           <div class="sheet-crease" aria-hidden="true"></div>
           <p class="letter-sign-label">${item.signLabel}</p>
-          <div class="modal-visual">${renderThumb(item)}</div>
+          <div class="modal-visual modal-visual-tall">${renderThumb(item)}</div>
           <p class="letter-item-name">${item.name}</p>
           <p class="letter-note">${item.note}</p>
           <p class="letter-verse">「${item.verse}」</p>
@@ -634,15 +653,46 @@ function initThingsV6(root) {
 
   function closeModal() { modal?.classList.remove('open'); }
 
-  function resetEnvelope() {
-    envelopeWrap?.classList.remove('open', 'pull');
-    envelopeStage?.classList.remove('active');
-    envelopeStage?.setAttribute('aria-hidden', 'true');
-    drawZone?.classList.remove('has-letter');
-    vessel?.classList.remove('hidden', 'shaking');
-    if (drawPanel) { drawPanel.style.opacity = ''; drawPanel.style.pointerEvents = ''; }
-    drawing = false;
-    if (drawBtn) { drawBtn.disabled = false; drawBtn.textContent = '摇一枝签'; }
+  function showStandCard(item) {
+    if (!paperStand || !standCard || !emptyHint) return;
+    emptyHint.hidden = true;
+    standCard.hidden = false;
+    standCard.classList.remove('landed', 'folding');
+    const sym = standCard.querySelector('.stand-card-symbol');
+    const name = standCard.querySelector('.stand-card-name');
+    const verse = standCard.querySelector('.stand-card-verse');
+    if (sym) sym.textContent = getItemSymbol(item);
+    if (name) name.textContent = item.name;
+    if (verse) verse.textContent = `「${item.verse}」`;
+    standCard.dataset.id = item.id;
+    if (standActions) standActions.hidden = false;
+    paperStand.classList.add('has-card');
+    requestAnimationFrame(() => requestAnimationFrame(() => standCard.classList.add('landed')));
+  }
+
+  function clearStand() {
+    const id = lastDrawId;
+    if (!standCard || !paperStand) return;
+    standCard.classList.remove('landed');
+    standCard.classList.add('folding');
+    setTimeout(() => {
+      standCard.hidden = true;
+      standCard.classList.remove('folding');
+      if (emptyHint) emptyHint.hidden = false;
+      if (standActions) standActions.hidden = true;
+      paperStand.classList.remove('has-card');
+      if (id) restoreSignOnRope(id);
+      lastDrawId = null;
+    }, 480);
+  }
+
+  function expandSign(item) {
+    lastDrawId = item.id;
+    if (!drawnIds.has(item.id)) {
+      markRopeDrawn(item.id, true);
+      drawnIds.add(item.id);
+    }
+    showStandCard(item);
   }
 
   function drawLot() {
@@ -651,37 +701,18 @@ function initThingsV6(root) {
     if (drawBtn) { drawBtn.disabled = true; drawBtn.textContent = '签落…'; }
     vessel?.classList.add('shaking');
     const item = pickItem();
-    fillLetter(item);
-    markRopeDrawn(item.id, true);
-    drawnIds.add(item.id);
-
     setTimeout(() => {
       vessel?.classList.remove('shaking');
-      vessel?.classList.add('hidden');
-      if (drawPanel) { drawPanel.style.opacity = '0'; drawPanel.style.pointerEvents = 'none'; }
-      envelopeStage?.classList.add('active');
-      envelopeStage?.setAttribute('aria-hidden', 'false');
-      drawZone?.classList.add('has-letter');
-      setTimeout(() => envelopeWrap?.classList.add('open'), 300);
-      setTimeout(() => {
-        envelopeWrap?.classList.add('pull');
-        if (drawBtn) drawBtn.textContent = '已得签';
-      }, 900);
+      expandSign(item);
+      if (drawBtn) { drawBtn.disabled = false; drawBtn.textContent = '摇一枝签'; }
+      drawing = false;
+      if (!ropeOpen) {
+        ropeOpen = true;
+        ropeWrap?.classList.add('is-open');
+        if (galleryToggle) galleryToggle.textContent = '收起展匣';
+        renderRopeGallery();
+      }
     }, 520);
-  }
-
-  function openRopeAndFind(id) {
-    ropeOpen = true;
-    ropeWrap?.classList.add('is-open');
-    if (galleryToggle) galleryToggle.textContent = '收起展匣';
-    if (!ropeSigns?.children.length) renderRopeGallery();
-    setTimeout(() => {
-      ropeSigns?.querySelectorAll('.rope-sign').forEach(el => el.classList.remove('highlight'));
-      const target = ropeSigns?.querySelector(`[data-id="${id}"]:not(.drawn-away)`)
-        || emptyClips?.querySelector(`[data-id="${id}"]`);
-      target?.classList.add('highlight');
-      target?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-    }, 120);
   }
 
   drawBtn?.addEventListener('click', drawLot);
@@ -690,25 +721,15 @@ function initThingsV6(root) {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); drawLot(); }
   });
 
-  letterSheet?.addEventListener('click', () => {
-    if (!envelopeWrap?.classList.contains('pull')) return;
-    const id = letterSheet.getAttribute('data-id');
-    const item = THINGS_DATA.find(t => t.id === id);
+  standCard?.addEventListener('click', () => {
+    const item = THINGS_DATA.find(t => t.id === standCard.dataset.id);
     if (item) openModal(item);
   });
-  letterSheet?.addEventListener('keydown', e => {
-    if ((e.key === 'Enter' || e.key === ' ') && envelopeWrap?.classList.contains('pull')) {
-      e.preventDefault();
-      letterSheet.click();
-    }
+  standCard?.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); standCard.click(); }
   });
 
-  letterActions?.addEventListener('click', e => {
-    const btn = e.target.closest('button');
-    if (!btn) return;
-    if (btn.dataset.action === 'again') { resetEnvelope(); setTimeout(drawLot, 280); }
-    if (btn.dataset.action === 'find' && lastDrawId) openRopeAndFind(lastDrawId);
-  });
+  foldBtn?.addEventListener('click', clearStand);
 
   galleryToggle?.addEventListener('click', () => {
     ropeOpen = !ropeOpen;
@@ -719,9 +740,9 @@ function initThingsV6(root) {
 
   ropeSigns?.addEventListener('click', e => {
     const tag = e.target.closest('.rope-sign:not(.drawn-away)');
-    if (!tag) return;
+    if (!tag || drawing) return;
     const item = THINGS_DATA.find(t => t.id === tag.dataset.id);
-    if (item) openModal(item);
+    if (item) expandSign(item);
   });
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
