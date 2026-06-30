@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>寄情于物 · Demo v2 — 楊雪琪</title>
+  <title>匣中签 · 物有灵犀 — Demo v3 — 楊雪琪</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
@@ -12,12 +12,13 @@
   <style>
     :root {
       --bg: #F2EDF8; --text: #2D2536; --soft: #8A92B0; --accent: #D88CA8;
-      --g1: #E2DDF2; --g2: #F5DDEB;
+      --g1: #E2DDF2; --g2: #F5DDEB; --branch: #6a5f7a;
       --serif: 'Noto Serif SC', serif;
       --english: 'Cormorant Garamond', Georgia, serif;
       --cn-light: 'LXGW WenKai', 'Noto Serif SC', serif;
       --cn-title: 'Noto Serif SC', serif;
       --cn-poem: 'LXGW WenKai', serif;
+      --cn-art: 'ZCOOL XiaoWei', serif;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -38,82 +39,97 @@
     }
     .demo-banner a { color: var(--accent); }
     .content-wrapper { max-width: 920px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
-    .section-title {
-      font-family: var(--cn-title);
-      font-size: 3.2rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.25rem;
-      text-align: right;
-    }
-    .section-en {
-      font-family: var(--english);
-      font-style: italic;
-      font-size: 1.05rem;
-      color: var(--soft);
-      margin-bottom: 2rem;
-      font-weight: 600;
-      text-align: right;
-    }
+    .align-right { text-align: right; }
   </style>
 </head>
 <body class="spring">
   <div class="demo-banner">
-    Demo v2 · 未接入主站 ·
+    Demo v3 · 匣中签 · 未接入主站 ·
     <a href="index%20(1).html">返回主页</a> ·
     <a href="assets/things/DESIGN.md">素材指南</a>
   </div>
 
   <div class="content-wrapper">
-    <section class="open-section align-right visible" id="things-demo">
-      <h2 class="section-title">寄情于物</h2>
-      <p class="section-en">A corner of small makings — pause if you like</p>
+    <section class="open-section align-right visible things-v3" id="things-demo">
+      <h2 class="things-dual-title">
+        匣中签
+        <span class="t-sub">物有灵犀</span>
+      </h2>
 
-      <!-- 门厅：默认仅此可见 -->
-      <div class="things-lobby">
-        <div class="things-welcome">
-          <span class="verse">若你也偏爱袖珍的光影与墨迹，<br>欢迎在此驻足。</span>
-          <span class="body">
-            这里收着我慢吞吞做的小东西——书法、染卡、书签与纸艺。
-            它们不急着被看完，像窗台上晾着的字，等风，也等一个愿意停下来的你。
-          </span>
-          <span class="en">Welcome to a quiet corner of my world —<br>stay awhile, if the day allows.</span>
-        </div>
-        <button type="button" class="things-enter-btn">
-          <span class="icon">◦</span>
-          <span>在此稍作停歇</span>
-        </button>
-        <p class="things-enter-hint">for those who wish to look closer</p>
+      <div class="things-welcome">
+        <span class="verse">
+          岁月是一首未尽的诗。若你也偏爱袖珍的光影与墨迹，欢迎在此驻足。<br>
+          它们不急着被看完，像窗台上晾着的字，等风，也等一个愿意停下来的你。
+        </span>
+        <span class="origin-block">
+          <span class="origin-title">欢迎来到我的原创世界</span>
+          此处每一缕墨色、每一道纸痕，皆出自我手；愿你在翻阅之间，与我隔空相遇，默然相知。
+        </span>
+        <span class="en">Every stroke and fold here is mine —<br>may we meet across the quiet of this page.</span>
       </div>
 
-      <!-- 内室：点击后展开 -->
-      <div class="things-inner">
-        <p class="things-inner-lead">手作是时间的褶皱。拆一份轻伤轻放的赠礼，或翻开展匣，慢慢翻阅。</p>
-
-        <div class="gift-zone">
-          <div class="gift-box-wrap" role="button" tabindex="0" aria-label="礼物盒">
-            <div class="gift-glow"></div>
-            <div class="gift-ribbon-v"></div>
-            <div class="gift-base"></div>
-            <div class="gift-lid"></div>
-            <div class="gift-ribbon-h"></div>
-            <div class="gift-bow"></div>
+      <div class="draw-zone">
+        <div class="lot-vessel" role="button" tabindex="0" aria-label="签筒">
+          <div class="vessel-sticks">
+            <i></i><i></i><i></i><i></i>
           </div>
-          <div class="gift-panel">
-            <p class="gift-hint">每一份都是偶然相遇的小物<br>不贵重，只是恰好想与你分享</p>
-            <button type="button" class="gift-open-btn">轻轻拆开</button>
-            <div class="gift-reveal"></div>
-          </div>
+          <div class="vessel-rim"></div>
+          <div class="vessel-body"></div>
         </div>
 
-        <div class="gallery-gate">
-          <button type="button" class="gallery-toggle-btn">展开展匣，慢慢翻阅</button>
+        <div class="draw-panel">
+          <p class="draw-hint">
+            签筒里收着偶然相遇的小物<br>
+            不贵重，只是恰好想与你分享
+          </p>
+          <button type="button" class="draw-btn">摇一枝签</button>
         </div>
 
-        <div class="things-gallery-wrap">
-          <div class="things-filter"></div>
-          <p class="things-gallery-label">展匣</p>
-          <div class="things-gallery"></div>
+        <div class="envelope-stage" aria-hidden="true">
+          <div>
+            <div class="envelope-wrap">
+              <div class="envelope-back"></div>
+              <div class="letter-sheet">
+                <p class="letter-sign-label"></p>
+                <p class="letter-verse"></p>
+                <p class="letter-item-name"></p>
+                <p class="letter-note"></p>
+                <div class="letter-thumb"></div>
+              </div>
+              <div class="envelope-front"></div>
+              <div class="envelope-flap"></div>
+            </div>
+            <div class="letter-actions">
+              <button type="button" data-action="again">再摇一枝</button>
+              <button type="button" data-action="find">在展匣中寻它</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-gate">
+        <button type="button" class="gallery-toggle-btn">展开展匣，慢慢翻阅</button>
+      </div>
+
+      <div class="wish-tree-wrap">
+        <p class="wish-tree-label">展匣</p>
+        <div class="wish-tree">
+          <svg class="tree-svg" viewBox="0 0 400 520" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <path d="M340 500 C330 420, 318 360, 300 300 C285 250, 270 200, 255 155 C240 110, 228 75, 218 48"/>
+            <path d="M300 300 C260 285, 220 270, 175 258 C130 246, 90 238, 55 232"/>
+            <path d="M300 300 C285 265, 268 232, 248 200 C228 168, 205 140, 178 115"/>
+            <path d="M255 155 C235 140, 212 128, 185 118 C158 108, 128 100, 95 94"/>
+            <path d="M255 155 C268 125, 278 98, 285 72 C292 46, 296 28, 298 12"/>
+            <path d="M218 48 C200 38, 178 30, 152 24 C126 18, 98 14, 68 12"/>
+            <path d="M300 300 C320 275, 338 248, 352 218 C366 188, 376 155, 382 120"/>
+            <path d="M352 218 C368 210, 382 198, 392 182"/>
+            <path d="M248 200 C230 185, 208 172, 182 162"/>
+            <path d="M178 115 C165 95, 148 78, 125 64"/>
+            <path d="M285 72 C300 68, 315 62, 328 52"/>
+            <path d="M340 500 C355 480, 368 455, 378 425 C388 395, 394 360, 396 325"/>
+            <path d="M318 360 C335 345, 348 325, 356 300"/>
+          </svg>
+          <div class="tree-tags"></div>
         </div>
       </div>
 
