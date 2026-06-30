@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>匣中签 · 物有灵犀 — Demo v4 — 楊雪琪</title>
+  <title>匣中签 · 物有灵犀 — Demo v5 — 楊雪琪</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
-  <link rel="stylesheet" href="assets/things-section.css?v=5">
+  <link rel="stylesheet" href="assets/things-section.css?v=6">
   <style>
     :root {
       --bg: #F2EDF8; --text: #2D2536; --soft: #8A92B0; --accent: #D88CA8;
-      --g1: #E2DDF2; --g2: #F5DDEB; --branch: #5a4f62;
+      --g1: #E2DDF2; --g2: #F5DDEB; --branch: #4a6a52;
       --cn-classic: 'LXGW WenKai', 'ZCOOL XiaoWei', serif;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,75 +32,44 @@
       border-bottom: 1px dashed color-mix(in srgb, var(--accent) 25%, transparent);
     }
     .demo-banner a { color: var(--accent); }
-    .content-wrapper { max-width: 960px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+    .content-wrapper { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
   </style>
 </head>
 <body class="spring">
   <div class="demo-banner">
-    Demo v4 · 仅预览 · 未接入主站 ·
+    Demo v5 · 仅预览 · 未接入主站 ·
     <a href="index%20(1).html">返回主页</a> ·
     <a href="assets/things/DESIGN.md">素材指南</a>
   </div>
 
   <div class="content-wrapper">
-    <section class="things-v4 visible" id="things-demo">
+    <section class="things-v5 visible" id="things-demo">
       <h2 class="things-main-title">匣中签 · 物有灵犀</h2>
 
-      <div class="things-welcome">
-        <div class="float-tags" aria-hidden="true">
-          <span class="ft" style="--x:8%;--y:12%;--r:-12deg;--d:0s">墨迹</span>
-          <span class="ft" style="--x:82%;--y:18%;--r:8deg;--d:1.2s">纸痕</span>
-          <span class="ft" style="--x:15%;--y:68%;--r:6deg;--d:2.4s">袖珍</span>
-          <span class="ft" style="--x:88%;--y:72%;--r:-5deg;--d:0.8s">风信</span>
-          <span class="ft" style="--x:48%;--y:8%;--r:3deg;--d:1.8s">慢作</span>
-          <span class="ft" style="--x:72%;--y:52%;--r:-8deg;--d:3s">窗晾</span>
+      <div class="intro-env-row">
+        <div class="things-welcome">
+          <p class="intro-line" data-type="岁月是一首未尽的诗。若你也偏爱袖珍的光影与墨迹，欢迎在此驻足。"></p>
+          <p class="intro-line" data-type="它们不急着被看完，像窗台上晾着的字，等风，也等一个愿意停下来的你。"></p>
+          <p class="intro-line intro-gap" data-type="欢迎来到我的原创世界"></p>
+          <p class="intro-line" data-type="此处每一缕墨色、每一道纸痕，皆出自我手；愿你在翻阅之间，与我隔空相遇，默然相知。"></p>
         </div>
-        <p class="intro-line" data-type="岁月是一首未尽的诗。若你也偏爱袖珍的光影与墨迹，欢迎在此驻足。"></p>
-        <p class="intro-line" data-type="它们不急着被看完，像窗台上晾着的字，等风，也等一个愿意停下来的你。"></p>
-        <p class="intro-line intro-gap" data-type="欢迎来到我的原创世界"></p>
-        <p class="intro-line" data-type="此处每一缕墨色、每一道纸痕，皆出自我手；愿你在翻阅之间，与我隔空相遇，默然相知。"></p>
+
+        <div class="envelope-stack">
+          <p class="env-hint">择一封而启</p>
+          <div class="env-pile" role="group" aria-label="信封堆，点击抽选">
+            <!-- JS 生成信封堆；有上传图则用 assets/things/ui/envelope.png -->
+          </div>
+          <div class="floral-burst" aria-hidden="true"></div>
+        </div>
       </div>
 
-      <div class="envelope-zone">
-        <p class="env-hint">偶然相遇的小物，藏于未启的信封里</p>
-        <div class="envelope-art" role="button" tabindex="0" aria-label="启封信封，随机得一纸信笺">
-          <div class="env-shadow"></div>
-          <svg class="env-svg" viewBox="0 0 280 200" aria-hidden="true">
-            <defs>
-              <linearGradient id="paperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#faf6ee"/>
-                <stop offset="55%" stop-color="#f0e8d8"/>
-                <stop offset="100%" stop-color="#e6dcc8"/>
-              </linearGradient>
-              <linearGradient id="flapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#ebe3d2"/>
-                <stop offset="100%" stop-color="#d9cdb8"/>
-              </linearGradient>
-              <filter id="paperSoft" x="-5%" y="-5%" width="110%" height="110%">
-                <feGaussianBlur stdDeviation="0.4" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-            <rect class="env-body" x="24" y="58" width="232" height="128" rx="5" fill="url(#paperGrad)" stroke="#c4b49a" stroke-width="0.8" filter="url(#paperSoft)"/>
-            <path class="env-interior" d="M24 58 L140 118 L256 58" fill="none" stroke="#d0c4b0" stroke-width="0.6" opacity="0.7"/>
-            <path class="env-front-fold" d="M24 186 L140 118 L256 186 Z" fill="url(#flapGrad)" stroke="#c4b49a" stroke-width="0.7"/>
-            <path class="env-flap" d="M24 58 L140 118 L256 58 Z" fill="url(#flapGrad)" stroke="#c4b49a" stroke-width="0.7"/>
-            <circle class="env-seal" cx="140" cy="108" r="14" fill="#c98a9a" opacity="0.55"/>
-            <circle cx="140" cy="108" r="9" fill="none" stroke="#fff8f0" stroke-width="0.6" opacity="0.5"/>
-          </svg>
-          <div class="letter-card" aria-hidden="true">
-            <p class="letter-sign-label"></p>
-            <p class="letter-verse"></p>
-            <p class="letter-item-name"></p>
-            <p class="letter-note"></p>
-            <div class="letter-thumb"></div>
-            <span class="letter-tap-hint">点击信笺，展阅全文</span>
-          </div>
-        </div>
-        <div class="env-actions">
-          <button type="button" class="env-again-btn" hidden>再启一封</button>
-          <button type="button" class="env-find-btn" hidden>在展匣中寻它</button>
-        </div>
+      <div class="poetic-chips" aria-hidden="true">
+        <span>墨迹</span><span>纸痕</span><span>袖珍</span><span>风信</span><span>慢作</span><span>窗晾</span>
+      </div>
+
+      <div class="env-foot">
+        <button type="button" class="env-again-btn" hidden>再抽一封</button>
+        <button type="button" class="env-find-btn" hidden>在展匣中寻它</button>
       </div>
 
       <div class="gallery-gate">
@@ -110,34 +79,41 @@
       <div class="wish-tree-wrap">
         <p class="wish-tree-label">展匣</p>
         <div class="wish-tree">
-          <div class="tree-leaves" aria-hidden="true"></div>
-          <svg class="tree-svg" viewBox="0 0 500 680" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            <path class="trunk" d="M380 660 C370 580, 355 500, 338 420 C322 345, 305 275, 288 210 C272 150, 258 95, 245 48"/>
-            <path d="M338 420 C295 400, 248 382, 198 368 C148 354, 98 342, 48 332"/>
-            <path d="M338 420 C318 370, 295 322, 268 278 C241 234, 210 195, 172 160"/>
-            <path d="M288 210 C262 188, 232 170, 198 155 C164 140, 125 128, 82 118"/>
-            <path d="M288 210 C302 168, 312 130, 318 95 C324 60, 328 32, 330 8"/>
-            <path d="M245 48 C222 36, 195 26, 162 18 C129 10, 92 4, 52 0"/>
-            <path d="M338 420 C358 385, 378 348, 395 308 C412 268, 425 225, 435 178"/>
-            <path d="M395 308 C412 298, 428 284, 442 265"/>
-            <path d="M268 278 C248 258, 222 240, 190 225"/>
-            <path d="M172 160 C158 132, 138 108, 112 88"/>
-            <path d="M318 95 C335 88, 352 78, 368 64"/>
-            <path d="M380 660 C398 630, 412 595, 422 555 C432 515, 438 470, 440 425"/>
-            <path d="M355 500 C372 478, 385 452, 392 422"/>
-            <path d="M305 275 C325 255, 348 238, 375 225"/>
-            <path d="M255 155 C240 135, 218 118, 190 105"/>
-            <path d="M198 368 C175 355, 152 348, 128 345"/>
-            <path d="M425 225 C438 215, 452 200, 462 180"/>
-            <path d="M112 88 C95 72, 72 58, 45 48"/>
-            <path d="M368 64 C382 58, 395 48, 405 34"/>
-            <path class="twig" d="M330 8 C345 2, 360 -4, 378 -8"/>
-            <path class="twig" d="M52 0 C38 -6, 22 -10, 5 -14"/>
-            <path class="twig" d="M462 180 C475 172, 488 160, 498 145"/>
-            <ellipse cx="318" cy="95" rx="18" ry="12" fill="#e8d4dc" opacity="0.45"/>
-            <ellipse cx="198" cy="155" rx="14" ry="9" fill="#e0d8e8" opacity="0.4"/>
-            <ellipse cx="395" cy="308" rx="16" ry="10" fill="#dce8e0" opacity="0.38"/>
-            <ellipse cx="128" cy="345" rx="12" ry="8" fill="#e8dce4" opacity="0.38"/>
+          <img class="tree-art-fallback" src="assets/things/ui/wish-tree.png" alt=""
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <svg class="tree-svg-painted" viewBox="0 0 600 760" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs>
+              <filter id="paperTex">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="n"/>
+                <feColorMatrix type="saturate" values="0"/>
+                <feBlend in="SourceGraphic" in2="n" mode="multiply"/>
+              </filter>
+              <linearGradient id="trunkG" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stop-color="#6a5848"/><stop offset="50%" stop-color="#8a7a62"/><stop offset="100%" stop-color="#5a6a52"/>
+              </linearGradient>
+              <radialGradient id="leafG1" cx="40%" cy="40%"><stop offset="0%" stop-color="#c8e0b8" stop-opacity="0.7"/><stop offset="100%" stop-color="#a8c8a0" stop-opacity="0"/></radialGradient>
+              <radialGradient id="leafG2" cx="50%" cy="50%"><stop offset="0%" stop-color="#dce8c8" stop-opacity="0.65"/><stop offset="100%" stop-color="#b8d0a8" stop-opacity="0"/></radialGradient>
+            </defs>
+            <rect width="600" height="760" fill="#f5f2ea" opacity="0.35"/>
+            <ellipse cx="420" cy="180" rx="95" ry="70" fill="url(#leafG1)" filter="url(#paperTex)"/>
+            <ellipse cx="280" cy="140" rx="80" ry="58" fill="url(#leafG2)" filter="url(#paperTex)"/>
+            <ellipse cx="180" cy="220" rx="70" ry="50" fill="url(#leafG1)" opacity="0.8"/>
+            <ellipse cx="350" cy="280" rx="88" ry="62" fill="url(#leafG2)"/>
+            <ellipse cx="220" cy="320" rx="75" ry="55" fill="url(#leafG1)" opacity="0.75"/>
+            <ellipse cx="480" cy="320" rx="65" ry="48" fill="url(#leafG2)" opacity="0.7"/>
+            <ellipse cx="140" cy="380" rx="60" ry="42" fill="url(#leafG1)" opacity="0.65"/>
+            <ellipse cx="400" cy="420" rx="72" ry="50" fill="url(#leafG2)" opacity="0.7"/>
+            <path d="M460 720 C450 620, 435 520, 418 440 C400 360, 385 290, 368 220 C352 155, 338 100, 322 55" fill="none" stroke="url(#trunkG)" stroke-width="14" stroke-linecap="round" opacity="0.85"/>
+            <path d="M418 440 C360 420, 300 400, 240 385 C180 370, 120 358, 70 348" fill="none" stroke="#6a7a58" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+            <path d="M418 440 C395 390, 368 342, 335 298 C302 254, 265 215, 220 180" fill="none" stroke="#7a8a68" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+            <path d="M368 220 C340 198, 308 180, 272 165 C236 150, 195 138, 150 128" fill="none" stroke="#6a7a58" stroke-width="2" opacity="0.4"/>
+            <path d="M368 220 C382 175, 392 135, 398 98 C404 61, 408 30, 410 5" fill="none" stroke="#7a8a68" stroke-width="2" opacity="0.4"/>
+            <path d="M322 55 C298 42, 270 32, 238 24 C206 16, 168 10, 125 5" fill="none" stroke="#6a7a58" stroke-width="1.8" opacity="0.35"/>
+            <path d="M418 440 C438 400, 458 358, 475 312 C492 266, 505 218, 515 168" fill="none" stroke="#7a8a68" stroke-width="2.5" opacity="0.42"/>
+            <path d="M335 298 C312 278, 285 260, 252 245" fill="none" stroke="#8a9a78" stroke-width="1.6" opacity="0.38"/>
+            <path d="M475 312 C492 300, 508 284, 522 262" fill="none" stroke="#8a9a78" stroke-width="1.4" opacity="0.35"/>
+            <path d="M220 180 C198 158, 172 140, 140 125" fill="none" stroke="#8a9a78" stroke-width="1.4" opacity="0.35"/>
+            <path d="M460 720 C478 685, 492 645, 502 598 C512 551, 518 500, 520 448" fill="none" stroke="#6a5848" stroke-width="8" stroke-linecap="round" opacity="0.3"/>
           </svg>
           <div class="tree-tags"></div>
         </div>
@@ -147,7 +123,7 @@
     </section>
   </div>
 
-  <script src="assets/things-section.js?v=5"></script>
+  <script src="assets/things-section.js?v=6"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => initThingsSection('things-demo'));
   </script>

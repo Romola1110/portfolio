@@ -36,11 +36,223 @@ const TREE_SLOTS = [
 function initThingsSection(rootId) {
   const root = document.getElementById(rootId);
   if (!root) return;
+  if (root.classList.contains('things-v5')) {
+    initThingsV5(root);
+    return;
+  }
   if (root.classList.contains('things-v4')) {
     initThingsV4(root);
     return;
   }
   initThingsV3(root);
+}
+
+/* ---------- v5 Demo ---------- */
+
+const UI_ASSETS = {
+  envelope: 'assets/things/ui/envelope.png',
+  florals: [
+    'assets/things/ui/floral-1.png',
+    'assets/things/ui/floral-2.png',
+    'assets/things/ui/floral-3.png',
+    'assets/things/ui/floral-4.png',
+    'assets/things/ui/floral-5.png',
+    'assets/things/ui/floral-6.png'
+  ]
+};
+
+const ENV_OFFSETS = [
+  { x: -14, y: 16, r: -16, z: 1 },
+  { x: 8, y: 10, r: 10, z: 2 },
+  { x: -6, y: 4, r: -6, z: 3 },
+  { x: 12, y: -2, r: 14, z: 4 },
+  { x: -2, y: -8, r: -4, z: 5 },
+  { x: 16, y: -4, r: 8, z: 6 },
+  { x: 0, y: -18, r: 0, z: 7 }
+];
+
+function getModalFormat(item) {
+  if (item.ph === 'ph-bookmark' || item.ph === 'ph-calligraphy') return 'bookmark';
+  if (item.ph === 'ph-paper') return 'postcard';
+  return 'letter';
+}
+
+function initThingsV5(root) {
+  const envPile = root.querySelector('.env-pile');
+  const floralBurst = root.querySelector('.floral-burst');
+  const againBtn = root.querySelector('.env-again-btn');
+  const findBtn = root.querySelector('.env-find-btn');
+  const galleryToggle = root.querySelector('.gallery-toggle-btn');
+  const wishTreeWrap = root.querySelector('.wish-tree-wrap');
+  const treeTags = root.querySelector('.tree-tags');
+  const modal = root.querySelector('.thing-modal');
+
+  let lastDrawId = null;
+  let treeOpen = false;
+  let drawing = false;
+
+  runTypewriter(root);
+  buildEnvPile(envPile);
+  setupFlorals(floralBurst);
+
+  function renderThumb(item) {
+    if (item.image) return `<img src="${item.image}" alt="${item.name}" loading="lazy">`;
+    return `<div class="ph ${item.ph}">${item.glyph}</div>`;
+  }
+
+  function renderTreeTag(item, slot, i) {
+    return `
+      <div class="tree-tag" data-id="${item.id}"
+        style="left:${slot.x}%;top:${slot.y}%;--rot:${slot.rot}deg;--str:${slot.str}px;--delay:${slot.delay || `${i * 0.15}s`}">
+        <span class="tag-string"></span>
+        <div class="tag-body">
+          <div class="tag-hole"></div>
+          <div class="tag-visual">${renderThumb(item)}</div>
+          <div class="tag-name">${item.name}</div>
+        </div>
+      </div>`;
+  }
+
+  function renderWishTree() {
+    if (!treeTags) return;
+    treeTags.innerHTML = THINGS_DATA.map((item, i) =>
+      renderTreeTag(item, TREE_SLOTS[i % TREE_SLOTS.length], i)
+    ).join('');
+  }
+
+  function pickItem() {
+    let pool = [...THINGS_DATA];
+    if (pool.length > 1 && lastDrawId) pool = pool.filter(t => t.id !== lastDrawId);
+    const item = pool[Math.floor(Math.random() * pool.length)];
+    lastDrawId = item.id;
+    return item;
+  }
+
+  function openModal(item) {
+    if (!modal) return;
+    const fmt = getModalFormat(item);
+    const visualClass = fmt === 'bookmark' ? 'modal-visual-tall' : fmt === 'postcard' ? 'modal-visual-wide' : 'modal-visual-letter';
+    modal.innerHTML = `
+      <div class="thing-modal-box modal-${fmt}">
+        <button type="button" class="thing-modal-close" aria-label="关闭">×</button>
+        <div class="modal-paper">
+          <p class="letter-sign-label">${item.signLabel}</p>
+          <div class="modal-visual ${visualClass}">${renderThumb(item)}</div>
+          <p class="letter-item-name">${item.name}</p>
+          <p class="letter-note">${item.note}</p>
+          <p class="letter-verse">「${item.verse}」</p>
+          <p class="modal-story">${item.story}</p>
+        </div>
+      </div>`;
+    modal.classList.add('open');
+    modal.querySelector('.thing-modal-close')?.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  }
+
+  function closeModal() { modal?.classList.remove('open'); }
+
+  function resetPile() {
+    envPile?.classList.remove('shuffling');
+    envPile?.querySelectorAll('.env-piece').forEach(b => {
+      b.classList.remove('picked', 'opening');
+    });
+    floralBurst?.classList.remove('active');
+    drawing = false;
+  }
+
+  function playFloralBurst() {
+    if (!floralBurst) return;
+    floralBurst.classList.add('active');
+    setTimeout(() => floralBurst.classList.remove('active'), 1100);
+  }
+
+  function drawFromPile(btn) {
+    if (drawing) return;
+    drawing = true;
+    const item = pickItem();
+    envPile?.querySelectorAll('.env-piece').forEach(b => b.classList.remove('picked', 'opening'));
+    btn?.classList.add('picked');
+    envPile?.classList.add('shuffling');
+
+    setTimeout(() => {
+      envPile?.classList.remove('shuffling');
+      btn?.classList.add('opening');
+      playFloralBurst();
+      setTimeout(() => {
+        openModal(item);
+        againBtn?.removeAttribute('hidden');
+        findBtn?.removeAttribute('hidden');
+        btn?.classList.remove('opening');
+        drawing = false;
+      }, 680);
+    }, 420);
+  }
+
+  function openTreeAndFind(id) {
+    treeOpen = true;
+    wishTreeWrap?.classList.add('is-open');
+    if (galleryToggle) galleryToggle.textContent = '收起展匣';
+    if (!treeTags?.children.length) renderWishTree();
+    setTimeout(() => {
+      treeTags?.querySelectorAll('.tree-tag').forEach(el => el.classList.remove('highlight'));
+      treeTags?.querySelector(`[data-id="${id}"]`)?.classList.add('highlight');
+      treeTags?.querySelector(`[data-id="${id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 120);
+  }
+
+  envPile?.addEventListener('click', e => {
+    const btn = e.target.closest('.env-piece');
+    if (btn) drawFromPile(btn);
+  });
+
+  againBtn?.addEventListener('click', () => {
+    resetPile();
+    againBtn.setAttribute('hidden', '');
+    findBtn?.setAttribute('hidden', '');
+  });
+
+  findBtn?.addEventListener('click', () => { if (lastDrawId) openTreeAndFind(lastDrawId); });
+
+  galleryToggle?.addEventListener('click', () => {
+    treeOpen = !treeOpen;
+    wishTreeWrap?.classList.toggle('is-open', treeOpen);
+    galleryToggle.textContent = treeOpen ? '收起展匣' : '展开展匣，慢慢翻阅';
+    if (treeOpen && !treeTags?.children.length) renderWishTree();
+  });
+
+  treeTags?.addEventListener('click', e => {
+    const tag = e.target.closest('.tree-tag');
+    if (!tag) return;
+    const item = THINGS_DATA.find(t => t.id === tag.dataset.id);
+    if (item) openModal(item);
+  });
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+}
+
+function buildEnvPile(container) {
+  if (!container) return;
+  container.innerHTML = ENV_OFFSETS.map((o, i) => `
+    <button type="button" class="env-piece" data-i="${i}"
+      style="--tx:${o.x}px;--ty:${o.y}px;--rot:${o.r}deg;z-index:${o.z}"
+      aria-label="抽选信封">
+      <img class="env-img" src="${UI_ASSETS.envelope}" alt="" loading="lazy">
+      <span class="env-css-fallback" aria-hidden="true"></span>
+    </button>
+  `).join('');
+  container.querySelectorAll('.env-img').forEach(img => {
+    img.addEventListener('error', () => img.classList.add('missing'));
+  });
+}
+
+function setupFlorals(container) {
+  if (!container) return;
+  container.innerHTML = UI_ASSETS.florals.map((src, i) =>
+    `<img class="floral-piece" src="${src}" alt="" style="--fi:${i}" loading="lazy">`
+  ).join('');
+  container.querySelectorAll('.floral-piece').forEach(img => {
+    img.addEventListener('error', () => img.remove());
+  });
 }
 
 /* ---------- v4 Demo ---------- */
