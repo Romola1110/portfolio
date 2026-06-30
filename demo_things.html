@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>寄情于物 · Demo — 楊雪琪</title>
+  <title>寄情于物 · Demo v2 — 楊雪琪</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
   <style>
     :root {
       --bg: #F2EDF8; --text: #2D2536; --soft: #8A92B0; --accent: #D88CA8;
-      --g1: #E2DDF2; --g2: #F5DDEB; --g3: #DCE8F5;
+      --g1: #E2DDF2; --g2: #F5DDEB;
       --serif: 'Noto Serif SC', serif;
       --english: 'Cormorant Garamond', Georgia, serif;
       --cn-light: 'LXGW WenKai', 'Noto Serif SC', serif;
@@ -24,108 +24,101 @@
       font-family: var(--serif);
       color: var(--text);
       min-height: 100vh;
-      background:
-        radial-gradient(circle at 10% 20%, var(--g1) 0%, transparent 60%),
-        radial-gradient(circle at 80% 30%, var(--g2) 0%, transparent 60%),
-        var(--bg);
+      background: radial-gradient(circle at 12% 18%, var(--g1) 0%, transparent 55%),
+        radial-gradient(circle at 82% 28%, var(--g2) 0%, transparent 50%), var(--bg);
     }
     .demo-banner {
       text-align: center;
-      padding: 1.2rem 1rem;
+      padding: 1rem;
       font-family: var(--cn-light);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--soft);
-      background: rgba(255,255,255,0.4);
-      border-bottom: 1px dashed color-mix(in srgb, var(--accent) 30%, transparent);
+      background: rgba(255,255,255,0.35);
+      border-bottom: 1px dashed color-mix(in srgb, var(--accent) 25%, transparent);
     }
     .demo-banner a { color: var(--accent); }
-    .content-wrapper { max-width: 960px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+    .content-wrapper { max-width: 920px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
     .section-title {
       font-family: var(--cn-title);
       font-size: 3.2rem;
       font-weight: 400;
       letter-spacing: 0.1em;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.25rem;
+      text-align: right;
     }
     .section-en {
       font-family: var(--english);
       font-style: italic;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--soft);
       margin-bottom: 2rem;
       font-weight: 600;
+      text-align: right;
     }
-    .design-notes {
-      margin-top: 3rem;
-      padding: 1.5rem;
-      background: rgba(255,255,255,0.45);
-      border-radius: 12px;
-      font-family: var(--cn-light);
-      font-size: 0.88rem;
-      line-height: 1.85;
-      color: color-mix(in srgb, var(--text) 70%, var(--soft));
-    }
-    .design-notes h3 {
-      font-size: 1rem;
-      margin-bottom: 0.8rem;
-      color: var(--text);
-    }
-    .design-notes ul { padding-left: 1.2rem; }
-    .design-notes li { margin-bottom: 0.4rem; }
   </style>
 </head>
 <body class="spring">
   <div class="demo-banner">
-    独立 Demo · 未接入主站 ·
+    Demo v2 · 未接入主站 ·
     <a href="index%20(1).html">返回主页</a> ·
-    <a href="assets/things/DESIGN.md">设计方案</a>
+    <a href="assets/things/DESIGN.md">素材指南</a>
   </div>
 
   <div class="content-wrapper">
     <section class="open-section align-right visible" id="things-demo">
       <h2 class="section-title">寄情于物</h2>
-      <p class="section-en">Objects — where feeling takes shape</p>
+      <p class="section-en">A corner of small makings — pause if you like</p>
 
-      <div class="things-intro">
-        <span class="lead">物不必贵重，被指尖摩挲过的温度，会在时光里留下褶皱。</span>
-        这里收着书法、染卡、书签与纸艺——类型各异，却都是同一段日子的脚注。
-        不必一次看完。摇一摇签筒，让今日的小物先走到你面前。
-        <span class="en">Not every keepsake is precious — some are simply warm from being held.</span>
+      <!-- 门厅：默认仅此可见 -->
+      <div class="things-lobby">
+        <div class="things-welcome">
+          <span class="verse">若你也偏爱袖珍的光影与墨迹，<br>欢迎在此驻足。</span>
+          <span class="body">
+            这里收着我慢吞吞做的小东西——书法、染卡、书签与纸艺。
+            它们不急着被看完，像窗台上晾着的字，等风，也等一个愿意停下来的你。
+          </span>
+          <span class="en">Welcome to a quiet corner of my world —<br>stay awhile, if the day allows.</span>
+        </div>
+        <button type="button" class="things-enter-btn">
+          <span class="icon">◦</span>
+          <span>在此稍作停歇</span>
+        </button>
+        <p class="things-enter-hint">for those who wish to look closer</p>
       </div>
 
-      <!-- 签筒互动 -->
-      <div class="lottery-zone">
-        <div class="lottery-tube" aria-hidden="true">
-          <div class="tube-sticks">
-            <span></span><span></span><span></span><span></span>
+      <!-- 内室：点击后展开 -->
+      <div class="things-inner">
+        <p class="things-inner-lead">手作是时间的褶皱。拆一份轻伤轻放的赠礼，或翻开展匣，慢慢翻阅。</p>
+
+        <div class="gift-zone">
+          <div class="gift-box-wrap" role="button" tabindex="0" aria-label="礼物盒">
+            <div class="gift-glow"></div>
+            <div class="gift-ribbon-v"></div>
+            <div class="gift-base"></div>
+            <div class="gift-lid"></div>
+            <div class="gift-ribbon-h"></div>
+            <div class="gift-bow"></div>
           </div>
-          <div class="tube-body"></div>
+          <div class="gift-panel">
+            <p class="gift-hint">每一份都是偶然相遇的小物<br>不贵重，只是恰好想与你分享</p>
+            <button type="button" class="gift-open-btn">轻轻拆开</button>
+            <div class="gift-reveal"></div>
+          </div>
         </div>
-        <div class="lottery-result">
-          <p class="lottery-hint">心有所念时，求一签便知今日与哪件小物相遇</p>
-          <button type="button" class="lottery-btn">求一签</button>
-          <div class="draw-card"></div>
+
+        <div class="gallery-gate">
+          <button type="button" class="gallery-toggle-btn">展开展匣，慢慢翻阅</button>
+        </div>
+
+        <div class="things-gallery-wrap">
+          <div class="things-filter"></div>
+          <p class="things-gallery-label">展匣</p>
+          <div class="things-gallery"></div>
         </div>
       </div>
-
-      <!-- 分类筛选 -->
-      <div class="things-filter"></div>
-
-      <p class="things-gallery-label">展匣</p>
-      <div class="things-gallery"></div>
 
       <div class="thing-modal"></div>
     </section>
-
-    <aside class="design-notes">
-      <h3>设计说明（本 Demo）</h3>
-      <ul>
-        <li><strong>图片策略</strong>：默认「宣纸衬纸框」统一装帧，不必全抠图；仅 3–5 件代表作可精修 PNG。</li>
-        <li><strong>互动</strong>：签筒随机抽签 → 签文 + 物记；可「收入展匣」高亮对应格子。</li>
-        <li><strong>陈列</strong>：错落展匣墙 + 分类筛选；点击可看详情弹层。</li>
-        <li><strong>接入主站</strong>：将图片放入 <code>assets/things/</code>，在 <code>things-section.js</code> 的 <code>image</code> 字段填入路径即可。</li>
-      </ul>
-    </aside>
   </div>
 
   <script src="assets/things-section.js"></script>
