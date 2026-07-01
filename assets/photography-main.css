@@ -1,25 +1,218 @@
-/* 主站四时摄影 · 风拂晾晒嵌入 */
+/* 主站四时摄影 · 风拂晾晒嵌入（复刻 Demo 比例与布局） */
 
-#photography .pb-wrap {
+#photography.open-section {
   max-width: 1120px;
-  margin: 0 auto;
-  padding: 0.25rem 0 1.5rem;
+  width: 100%;
+  text-align: center;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
-#photography .pb-clothesline {
-  margin: 0.75rem 0 1.5rem;
+#photography .photo-section-head {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.35rem;
 }
 
-#photography .pb-seasons {
-  margin-bottom: 1.25rem;
+#photography .section-title {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
-#photography .pb-hint {
-  margin-top: 0.25rem;
-  margin-bottom: 0;
+#photography .section-en {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.75rem;
+  text-align: center;
 }
 
 #photography .section-desc {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 36em;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.28);
   line-height: 1.95;
   letter-spacing: 0.06em;
+  margin-bottom: 1.25rem;
+}
+
+/* 晾绳数轴 → 季节选栏 → 图片（与 Demo 一致） */
+#photography .pb-wrap {
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem 4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+#photography .pb-clothesline {
+  order: 1;
+  margin: 0 0 2rem;
+  flex-shrink: 0;
+}
+
+#photography .pb-seasons {
+  order: 2;
+  margin: 0 0 1.5rem;
+  flex-shrink: 0;
+  gap: 0.65rem 2rem;
+}
+
+#photography .pb-gallery {
+  order: 3;
+  column-count: 5;
+  column-gap: 8px;
+  width: 100%;
+  padding: 0.15rem 0 2rem;
+}
+
+#photography .pb-hint {
+  order: 4;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* 胶片相纸：保持 Demo 不透明纸质，不用透明框 */
+#photography .pb-polaroid {
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(160, 130, 90, 0.03) 20px, rgba(160, 130, 90, 0.03) 21px),
+    #f7f1ea !important;
+  opacity: 1;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(68, 48, 32, 0.06);
+  box-shadow: 1px 4px 12px rgba(44, 36, 27, 0.08);
+}
+
+#photography .pb-img {
+  background: #ece6dc;
+}
+
+/* 季节选栏：水墨晕染（禁用 Demo 模糊光条） */
+#photography .pb-season-glow {
+  display: none !important;
+}
+
+#photography .pb-seasons button {
+  isolation: isolate;
+}
+
+/* 主墨晕：不规则宣纸洇色 */
+#photography .pb-seasons button::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 4.6em;
+  height: 3.6em;
+  transform: translate(-50%, -50%) scale(0.5) rotate(-4deg);
+  border-radius: 46% 54% 58% 42% / 52% 48% 55% 45%;
+  background:
+    radial-gradient(ellipse 58% 52% at 34% 38%, rgba(var(--season-hue), 0.92) 0%, rgba(var(--season-hue), 0.48) 32%, transparent 68%),
+    radial-gradient(ellipse 48% 44% at 72% 52%, rgba(var(--season-hue), 0.78) 0%, rgba(var(--season-hue), 0.32) 38%, transparent 72%),
+    radial-gradient(circle at 50% 72%, rgba(var(--season-hue), 0.55) 0%, transparent 58%);
+  opacity: 0;
+  transition: opacity 0.38s ease, transform 0.42s ease;
+  z-index: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* 副墨尾：笔尖拖曳的细晕 */
+#photography .pb-seasons button::after {
+  content: '';
+  position: absolute;
+  left: 58%;
+  top: 68%;
+  width: 2.4em;
+  height: 1.35em;
+  transform: translate(-50%, -50%) rotate(18deg) scale(0.45);
+  border-radius: 38% 62% 72% 28% / 48% 42% 58% 52%;
+  background: radial-gradient(ellipse 70% 55% at 42% 48%, rgba(var(--season-hue), 0.82) 0%, rgba(var(--season-hue), 0.28) 45%, transparent 78%);
+  opacity: 0;
+  transition: opacity 0.38s ease, transform 0.42s ease;
+  z-index: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+#photography .pb-seasons button:hover::before {
+  opacity: 0.82;
+  transform: translate(-50%, -50%) scale(0.88) rotate(-2deg);
+}
+
+#photography .pb-seasons button:hover::after {
+  opacity: 0.62;
+  transform: translate(-50%, -50%) rotate(12deg) scale(0.78);
+}
+
+#photography .pb-seasons button.is-active::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  animation: photoInkBloom 2.4s ease-in-out infinite;
+}
+
+#photography .pb-seasons button.is-active::after {
+  opacity: 0.88;
+  transform: translate(-50%, -50%) rotate(8deg) scale(0.92);
+  animation: photoInkTail 2.4s ease-in-out infinite;
+}
+
+#photography .pb-seasons button.is-active .pb-season-text {
+  animation: photoInkTextMain 2.4s ease-in-out infinite;
+  color: rgba(44, 36, 27, 0.96);
+}
+
+#photography .pb-seasons button.is-active .pb-season-en {
+  color: rgba(44, 36, 27, 0.74);
+}
+
+@keyframes photoInkBloom {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.94) rotate(-2deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08) rotate(3deg);
+    opacity: 1;
+  }
+}
+
+@keyframes photoInkTail {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(6deg) scale(0.86);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translate(-48%, -52%) rotate(14deg) scale(1.02);
+    opacity: 0.95;
+  }
+}
+
+@keyframes photoInkTextMain {
+  0%, 100% {
+    text-shadow:
+      0 0 8px rgba(var(--season-hue), 0.42),
+      0 0 20px rgba(var(--season-hue), 0.24);
+  }
+  50% {
+    text-shadow:
+      0 0 4px rgba(var(--season-hue), 0.72),
+      0 0 14px rgba(var(--season-hue), 0.58),
+      0 0 28px rgba(var(--season-hue), 0.36);
+  }
+}
+
+@media (max-width: 900px) {
+  #photography .pb-gallery { column-count: 4; }
+}
+
+@media (max-width: 560px) {
+  #photography .pb-gallery { column-count: 3; }
+  #photography.open-section { padding-left: 1rem; padding-right: 1rem; }
+  #photography .pb-wrap { padding-left: 0.85rem; padding-right: 0.85rem; }
 }
