@@ -105,6 +105,21 @@
   z-index: 2;
 }
 
+.pb-season-count {
+  position: relative;
+  z-index: 2;
+  margin-left: 0.35em;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.72em;
+  letter-spacing: 0.06em;
+  color: rgba(44, 36, 27, 0.38);
+  font-style: italic;
+}
+
+.pb-seasons button.is-active .pb-season-count {
+  color: rgba(44, 36, 27, 0.58);
+}
+
 .pb-season-glow {
   position: absolute;
   left: 50%;
@@ -160,9 +175,59 @@
 
 /* Masonry 错落网格 — 列流自动上填空隙 */
 .pb-gallery {
+  padding: 0.15rem 0 2rem;
+}
+
+.pb-gallery--all {
+  padding-bottom: 1rem;
+}
+
+.pb-masonry {
   column-count: 5;
   column-gap: 8px;
-  padding: 0.15rem 0 2rem;
+}
+
+.pb-season-block {
+  margin-bottom: 2rem;
+}
+
+.pb-season-block:last-child {
+  margin-bottom: 0.5rem;
+}
+
+.pb-season-divider {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.55rem;
+  margin: 0 0 0.85rem;
+  padding: 0.2rem 0 0.5rem;
+  font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  letter-spacing: 0.28em;
+  color: rgba(44, 36, 27, 0.72);
+  border: none;
+  position: relative;
+}
+
+.pb-season-divider::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(120px, 28%);
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(var(--season-hue), 0.45), transparent);
+}
+
+.pb-season-divider-count {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  color: rgba(44, 36, 27, 0.4);
+  font-style: italic;
 }
 
 .pb-card {
@@ -401,10 +466,10 @@
 }
 
 @media (max-width: 900px) {
-  .pb-gallery { column-count: 4; column-gap: 8px; }
+  .pb-masonry { column-count: 4; column-gap: 8px; }
 }
 @media (max-width: 560px) {
-  .pb-gallery { column-count: 3; column-gap: 7px; }
+  .pb-masonry { column-count: 3; column-gap: 7px; }
   .pb-seasons button { font-size: 1rem; }
   .pb-lb-nav { display: none; }
 }

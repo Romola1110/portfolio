@@ -195,7 +195,7 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "ea362f700efe3b17b28ab47113cf3f78.jpg",
-      "title": "海棠",
+      "title": "城花",
       "orient": "landscape",
       "caption": "海棠与高楼对望，城市也有柔软春色。",
       "diary": "仰拍枝头繁花，玻璃幕墙映着蓝天。四月八日，海棠开得正好，钢筋水泥间忽然有了诗意。",
