@@ -4,15 +4,12 @@ const PB_MAX_TILT = 10;
 const PB_ACTIVE = new Set();
 const PB_MOTIF_GAP = 6;
 
-function pbRand(min, max) {
-  return min + Math.random() * (max - min);
-}
-
-function pbLayoutVars() {
+function pbLayoutVars(index) {
+  const wave = Math.sin(index * 0.7) * 2;
   return {
-    rot: pbRand(-5, 5).toFixed(2),
-    y: pbRand(-6, 6).toFixed(0),
-    delay: pbRand(0, 0.5).toFixed(2)
+    rot: wave.toFixed(2),
+    y: (Math.cos(index * 0.5) * 3).toFixed(0),
+    delay: (Math.min(index * 0.03, 0.45)).toFixed(2)
   };
 }
 
@@ -52,12 +49,23 @@ function pbRenderGallery(items, displaySeason) {
   let motifCount = 0;
   items.forEach((item, i) => {
     if (i > 0 && i % PB_MOTIF_GAP === 0) {
-      const mKey = displaySeason === 'all' ? item.season : displaySeason;
-      html += pbMotifHtml(mKey, motifCount++);
+      html += pbMotifHtml(displaySeason, motifCount++);
     }
-    html += pbCardHtml(item, pbLayoutVars());
+    html += pbCardHtml(item, pbLayoutVars(i));
   });
   return html;
+}
+
+function pbRenderAllSections() {
+  const keys = ['spring', 'summer', 'autumn', 'winter'];
+  return keys.map(key => {
+    const items = PHOTO_GALLERY_DATA[key] || [];
+    const meta = PHOTO_SEASONS[key];
+    return `<section class="pb-season-block" data-season="${key}" style="--season-hue:${meta.hue}">
+      <h2 class="pb-season-divider"><span class="pb-season-divider-text">${meta.label}</span><span class="pb-season-divider-count">${items.length}</span></h2>
+      <div class="pb-masonry">${pbRenderGallery(items, key)}</div>
+    </section>`;
+  }).join('');
 }
 
 function pbBindImages(root) {
@@ -79,7 +87,10 @@ function pbSeasonNav(root, season, onPick) {
   const order = window.PHOTO_SEASON_ORDER || Object.keys(PHOTO_SEASONS);
   nav.innerHTML = order.map(key => {
     const s = PHOTO_SEASONS[key];
-    return `<button type="button" data-season="${s.key}" class="${s.key === season ? 'is-active' : ''}" style="--season-hue:${s.hue}"><span class="pb-season-text">${s.label}</span><span class="pb-season-glow" aria-hidden="true"></span></button>`;
+    const count = key === 'all'
+      ? (PHOTO_GALLERY_DATA.all || []).length
+      : (PHOTO_GALLERY_DATA[key] || []).length;
+    return `<button type="button" data-season="${s.key}" class="${s.key === season ? 'is-active' : ''}" style="--season-hue:${s.hue}"><span class="pb-season-text">${s.label}</span><span class="pb-season-count">${count}</span><span class="pb-season-glow" aria-hidden="true"></span></button>`;
   }).join('');
   nav.onclick = e => {
     const btn = e.target.closest('button[data-season]');
@@ -260,7 +271,8 @@ function initPhotoBreeze(rootId = 'pbRoot') {
     season = s;
     PB_ACTIVE.clear();
     const items = PHOTO_GALLERY_DATA[season] || [];
-    gallery.innerHTML = pbRenderGallery(items, season);
+    gallery.classList.toggle('pb-gallery--all', s === 'all');
+    gallery.innerHTML = s === 'all' ? pbRenderAllSections() : pbRenderGallery(items, s);
     pbBindImages(root);
     pbSetupReveal(root);
     pbSetupHover(root);

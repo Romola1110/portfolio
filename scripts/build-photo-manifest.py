@@ -18,12 +18,15 @@ SEASONS = ('spring', 'summer', 'autumn', 'winter')
 
 def load_content():
     if not CONTENT.exists():
-        return {}
+        return {}, {}
     data = json.loads(CONTENT.read_text(encoding='utf-8'))
-    out = {}
+    by_file = {}
+    order = {}
     for season in SEASONS:
-        out[season] = {e['file']: e for e in data.get(season, [])}
-    return out
+        entries = data.get(season, [])
+        by_file[season] = {e['file']: e for e in entries}
+        order[season] = [e['file'] for e in entries]
+    return by_file, order
 
 
 def image_meta(path: Path):
@@ -33,23 +36,21 @@ def image_meta(path: Path):
     return orient, w, h
 
 
-def list_folder_images(folder: Path):
-    files = []
+def list_folder_images(folder: Path, preferred_order: list):
+    on_disk = set()
     for ext in ('*.jpg', '*.jpeg', '*.JPG', '*.png'):
-        files.extend(f.name for f in folder.glob(ext))
-    seen = set()
-    unique = []
-    for f in sorted(files):
-        if f not in seen and not f.startswith('.'):
-            seen.add(f)
-            unique.append(f)
-    return unique
+        on_disk.update(f.name for f in folder.glob(ext) if not f.name.startswith('.'))
+    ordered = [f for f in preferred_order if f in on_disk]
+    for f in sorted(on_disk):
+        if f not in ordered:
+            ordered.append(f)
+    return ordered
 
 
-def build_season(season: str, content_map: dict):
+def build_season(season: str, content_map: dict, content_order: dict):
     folder = PHOTOS / season
     items = []
-    for i, file in enumerate(list_folder_images(folder)):
+    for file in list_folder_images(folder, content_order.get(season, [])):
         path = folder / file
         if not path.exists():
             continue
@@ -67,8 +68,8 @@ def build_season(season: str, content_map: dict):
 
 
 def main():
-    content_map = load_content()
-    manifest = {s: build_season(s, content_map) for s in SEASONS}
+    content_map, content_order = load_content()
+    manifest = {s: build_season(s, content_map, content_order) for s in SEASONS}
     total = sum(len(v) for v in manifest.values())
     js = '/* AUTO-GENERATED — run scripts/build-photo-manifest.py */\n'
     js += f'const PHOTO_MANIFEST_GENERATED = {json.dumps(manifest, ensure_ascii=False, indent=2)};\n'
