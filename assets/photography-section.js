@@ -53,17 +53,39 @@ function initPhotographyGallery(root, options = {}) {
     return `${(Math.random() * 6 - 3).toFixed(1)}deg`;
   }
 
-  function renderPolaroid(item, index, seasonKey) {
+  function renderFlowFilm(item, index, seasonKey) {
     const indexLabel = `${PHOTO_SEASONS[seasonKey]?.label || ''} · ${String(item.id).padStart(2, '0')}`;
-    const rot = mode === 'flow'
-      ? `${((index % 5) - 2) * 1.2}deg`
-      : getEnterRotate(index);
-    const flowClass = mode === 'flow' ? ' is-visible flow-card' : '';
-    const enterClass = mode === 'flow' ? '' : ` ${getEnterClass(index)}`;
-    const delay = mode === 'flow' ? '0s' : `${(Math.random() * 0.4).toFixed(2)}s`;
+    const orient = item.orient === 'portrait' ? 'portrait' : 'landscape';
+    const aspect = orient === 'portrait' ? '3 / 4' : '4 / 3';
 
     return `
-      <article class="photo-polaroid${flowClass}${enterClass}"
+      <article class="photo-film photo-polaroid is-visible film-${orient}"
+        data-id="${item.id}"
+        data-season="${seasonKey}"
+        data-title="${item.title}"
+        data-caption="${item.caption}"
+        data-index-label="${indexLabel}"
+        data-src="${item.src}"
+        data-fallback="${item.fallback}">
+        <div class="film-frame">
+          <div class="film-img-wrap" style="aspect-ratio:${aspect}">
+            <img src="${item.src}" alt="${item.title}" loading="lazy" decoding="async">
+          </div>
+          <p class="film-label">${item.title}</p>
+        </div>
+      </article>`;
+  }
+
+  function renderPolaroid(item, index, seasonKey) {
+    if (mode === 'flow') return renderFlowFilm(item, index, seasonKey);
+
+    const indexLabel = `${PHOTO_SEASONS[seasonKey]?.label || ''} · ${String(item.id).padStart(2, '0')}`;
+    const rot = getEnterRotate(index);
+    const enterClass = ` ${getEnterClass(index)}`;
+    const delay = `${(Math.random() * 0.4).toFixed(2)}s`;
+
+    return `
+      <article class="photo-polaroid${enterClass}"
         data-id="${item.id}"
         data-season="${seasonKey}"
         data-title="${item.title}"
@@ -85,6 +107,7 @@ function initPhotographyGallery(root, options = {}) {
 
   function setupFlowShell() {
     if (mode !== 'flow' || !masonry || flowStage) return;
+    masonry.classList.add('photo-flow-grid');
     flowStage = document.createElement('div');
     flowStage.className = 'photo-flow-stage';
     const viewport = document.createElement('div');
@@ -92,7 +115,7 @@ function initPhotographyGallery(root, options = {}) {
     flowTrack = document.createElement('div');
     flowTrack.className = 'photo-flow-track';
     flowClone = document.createElement('div');
-    flowClone.className = 'photo-masonry photo-masonry-clone';
+    flowClone.className = 'photo-masonry photo-masonry-clone photo-flow-grid';
     flowClone.setAttribute('aria-hidden', 'true');
 
     masonry.parentNode.insertBefore(flowStage, masonry);
@@ -111,8 +134,8 @@ function initPhotographyGallery(root, options = {}) {
     if (mode !== 'flow' || !flowTrack || !masonry) return;
     const h = masonry.offsetHeight;
     if (!h) return;
-    const pxPerSec = options.flowSpeed || 26;
-    const duration = Math.max(48, Math.min(140, h / pxPerSec));
+    const pxPerSec = options.flowSpeed || 62;
+    const duration = Math.max(22, Math.min(68, h / pxPerSec));
     flowTrack.style.setProperty('--flow-duration', `${duration}s`);
   }
 

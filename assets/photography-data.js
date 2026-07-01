@@ -56,7 +56,12 @@ const PHOTO_CAPTIONS = [
   '四时轮转，光影为证'
 ];
 
-const PHOTO_ASPECTS = [0.72, 0.85, 1.0, 1.15, 1.28, 0.78, 0.92, 1.08, 1.22, 0.88];
+const PHOTO_ORIENT_PATTERN = [
+  'landscape', 'landscape', 'portrait', 'landscape', 'portrait',
+  'portrait', 'landscape', 'portrait', 'landscape', 'landscape',
+  'landscape', 'portrait', 'landscape', 'portrait', 'landscape',
+  'portrait', 'landscape', 'landscape', 'portrait', 'landscape'
+];
 
 function padPhotoId(n) {
   return String(n).padStart(2, '0');
@@ -66,24 +71,28 @@ function photoLocalSrc(season, id) {
   return `assets/photos/${season}/${padPhotoId(id)}.jpg`;
 }
 
-function photoFallbackSrc(season, id, aspect) {
-  const h = Math.round(600 * aspect);
-  return `https://picsum.photos/seed/${season}-${id}/600/${h}`;
+function photoFallbackSrc(season, id, orient) {
+  if (orient === 'portrait') {
+    return `https://picsum.photos/seed/${season}-${id}/400/520`;
+  }
+  return `https://picsum.photos/seed/${season}-${id}/520/400`;
 }
 
 function buildPhotoItems(season) {
   const titles = PHOTO_TITLES[season] || [];
   return titles.map((title, i) => {
     const id = i + 1;
-    const aspect = PHOTO_ASPECTS[i % PHOTO_ASPECTS.length];
+    const orient = PHOTO_ORIENT_PATTERN[i % PHOTO_ORIENT_PATTERN.length];
+    const aspect = orient === 'portrait' ? 1.28 : 0.75;
     return {
       id,
       season,
       title,
       caption: PHOTO_CAPTIONS[i % PHOTO_CAPTIONS.length],
+      orient,
       aspect,
       src: photoLocalSrc(season, id),
-      fallback: photoFallbackSrc(season, id, aspect)
+      fallback: photoFallbackSrc(season, id, orient)
     };
   });
 }

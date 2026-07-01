@@ -230,17 +230,17 @@
 }
 
 #photography.mode-flow .photo-flow-viewport {
-  height: min(640px, 72vh);
+  height: min(520px, 64vh);
   overflow: hidden;
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
 }
 
 #photography.mode-flow .photo-flow-track {
   display: flex;
   flex-direction: column;
   will-change: transform;
-  animation: photoFlowUp var(--flow-duration, 72s) linear infinite;
+  animation: photoFlowUp var(--flow-duration, 42s) linear infinite;
 }
 
 #photography.mode-flow .photo-flow-stage:hover .photo-flow-track,
@@ -253,36 +253,107 @@
   to { transform: translate3d(0, -50%, 0); }
 }
 
-#photography.mode-flow .photo-masonry {
-  column-count: 3;
-  column-gap: 1.25rem;
-  padding: 1rem 1.25rem 1.5rem;
+#photography.mode-flow .photo-masonry,
+#photography.mode-flow .photo-flow-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px 11px;
+  padding: 10px 12px 14px;
   margin: 0;
+  column-count: unset;
+  align-items: start;
 }
 
 #photography.mode-flow .photo-masonry-clone {
   padding-top: 0;
 }
 
-#photography.mode-flow .photo-polaroid {
+#photography.mode-flow .photo-polaroid,
+#photography.mode-flow .photo-film {
   opacity: 1;
-  transform: rotate(var(--enter-rot, 0deg));
-  margin-bottom: 1.25rem;
-  transition: none;
+  transform: none;
+  margin: 0;
+  min-width: 0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-#photography.mode-flow .photo-polaroid:hover .polaroid-tilt {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 16px 44px rgba(181, 67, 58, 0.14);
+#photography.mode-flow .film-frame {
+  position: relative;
+  background: #fffaf4;
+  padding: 5px 5px 18px;
+  border-left: 6px solid #2c241b;
+  border-right: 6px solid #2c241b;
+  box-shadow: 0 2px 7px rgba(44, 36, 27, 0.07);
+  cursor: pointer;
 }
 
-#photography.mode-flow .photo-polaroid:hover .polaroid-label {
+#photography.mode-flow .film-frame::before,
+#photography.mode-flow .film-frame::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background-image: radial-gradient(circle 1.8px at 3px 6px, rgba(255, 255, 255, 0.92) 100%, transparent 0);
+  background-size: 6px 12px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+#photography.mode-flow .film-frame::before { left: -6px; }
+#photography.mode-flow .film-frame::after { right: -6px; }
+
+#photography.mode-flow .film-img-wrap {
+  background: #14110e;
+  overflow: hidden;
+  line-height: 0;
+  width: 100%;
+}
+
+#photography.mode-flow .film-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#photography.mode-flow .film-landscape .film-img-wrap {
+  aspect-ratio: 4 / 3;
+}
+
+#photography.mode-flow .film-portrait .film-img-wrap {
+  aspect-ratio: 3 / 4;
+}
+
+#photography.mode-flow .film-label {
+  margin: 3px 0 0;
+  text-align: center;
+  font-family: 'ZCOOL XiaoWei', var(--cn-title), serif;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: rgba(44, 36, 27, 0.52);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.25s ease;
+}
+
+#photography.mode-flow .photo-film:hover {
+  transform: translateY(-3px);
+  z-index: 2;
+}
+
+#photography.mode-flow .photo-film:hover .film-frame {
+  box-shadow: 0 8px 22px rgba(181, 67, 58, 0.14);
+}
+
+#photography.mode-flow .photo-film:hover .film-label {
   color: #b5433a;
 }
 
 #photography.mode-flow .photo-flow-hint {
   margin: 0;
-  padding: 0.55rem 0 0.85rem;
+  padding: 0.5rem 0 0.75rem;
   text-align: center;
   font-family: var(--cn-light);
   font-size: 10px;
@@ -292,22 +363,25 @@
 }
 
 @media (max-width: 900px) {
-  #photography.mode-flow .photo-masonry {
-    column-count: 2;
+  #photography.mode-flow .photo-masonry,
+  #photography.mode-flow .photo-flow-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px 10px;
   }
   #photography.mode-flow .photo-flow-viewport {
-    height: min(560px, 68vh);
+    height: min(480px, 60vh);
   }
 }
 
 @media (max-width: 560px) {
-  #photography.mode-flow .photo-masonry {
-    column-count: 2;
-    column-gap: 0.85rem;
-    padding: 0.75rem 0.85rem 1rem;
+  #photography.mode-flow .photo-masonry,
+  #photography.mode-flow .photo-flow-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px 9px;
+    padding: 8px 10px 12px;
   }
   #photography.mode-flow .photo-flow-viewport {
-    height: min(480px, 62vh);
+    height: min(420px, 56vh);
   }
 }
 
