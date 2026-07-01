@@ -82,42 +82,95 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-.pb-seasons button {
-  font-family: inherit;
-  font-size: 0.84rem;
-  letter-spacing: 0.16em;
-  padding: 0.42rem 1.05rem;
-  border-radius: 999px;
-  border: 1px solid rgba(44, 36, 27, 0.1);
-  background: rgba(255, 255, 255, 0.4);
-  color: var(--pb-ink);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.pb-seasons button.is-active,
-.pb-seasons button:hover {
-  background: rgba(44, 36, 27, 0.88);
-  color: #f4ede4;
-  border-color: transparent;
+  gap: 0.35rem 0.85rem;
+  margin-bottom: 1.35rem;
 }
 
-/* 错落网格 */
+.pb-seasons button {
+  position: relative;
+  font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.22em;
+  padding: 0.35rem 0.15rem;
+  border: none;
+  background: transparent;
+  color: rgba(44, 36, 27, 0.42);
+  cursor: pointer;
+  overflow: visible;
+  transition: color 0.45s ease, transform 0.35s ease, text-shadow 0.55s ease;
+}
+
+.pb-season-text {
+  position: relative;
+  z-index: 2;
+}
+
+.pb-season-glow {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 140%;
+  height: 180%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(var(--season-hue), 0.38) 0%, rgba(var(--season-hue), 0.12) 45%, transparent 72%);
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.55s ease, filter 0.55s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.pb-seasons button:hover,
+.pb-seasons button.is-active {
+  color: rgba(44, 36, 27, 0.92);
+  transform: translateY(-1px);
+}
+
+.pb-seasons button.is-active .pb-season-text {
+  animation: pbInkText 3.6s ease-in-out infinite;
+}
+
+.pb-seasons button.is-active .pb-season-glow {
+  opacity: 1;
+  animation: pbInkPulse 3.2s ease-in-out infinite;
+}
+
+.pb-seasons button:hover .pb-season-glow {
+  opacity: 0.65;
+}
+
+@keyframes pbInkPulse {
+  0%, 100% { filter: blur(10px); opacity: 0.82; transform: translate(-50%, -50%) scale(1); }
+  50% { filter: blur(16px); opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+@keyframes pbInkText {
+  0%, 100% {
+    text-shadow:
+      0 0 0 transparent,
+      0 0 12px rgba(var(--season-hue), 0.15);
+  }
+  50% {
+    text-shadow:
+      0 0 8px rgba(var(--season-hue), 0.35),
+      0 0 22px rgba(var(--season-hue), 0.22),
+      0 1px 0 rgba(44, 36, 27, 0.08);
+  }
+}
+
+/* Masonry 错落网格 — 列流自动上填空隙 */
 .pb-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 18px 20px;
-  padding: 0.5rem 0 2rem;
+  column-count: 5;
+  column-gap: 8px;
+  padding: 0.15rem 0 2rem;
 }
 
 .pb-card {
   position: relative;
-  flex-shrink: 0;
-  width: var(--pb-w, 220px);
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 8px;
+  break-inside: avoid;
   perspective: 900px;
   opacity: 0;
   transform: translateY(calc(var(--pb-y, 0px) + 60px)) rotate(calc(var(--pb-rot, 0deg) + 10deg));
@@ -149,9 +202,9 @@
   background:
     repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(160, 130, 90, 0.03) 20px, rgba(160, 130, 90, 0.03) 21px),
     var(--pb-paper);
-  padding: 10px 10px 28px;
-  border: 1px solid rgba(68, 48, 32, 0.07);
-  box-shadow: 2px 5px 16px rgba(44, 36, 27, 0.06);
+  padding: 6px 6px 18px;
+  border: 1px solid rgba(68, 48, 32, 0.06);
+  box-shadow: 1px 4px 12px rgba(44, 36, 27, 0.05);
 }
 
 .pb-img {
@@ -172,7 +225,7 @@
   margin: 8px 0 0;
   text-align: center;
   font-family: 'Ma Shan Zheng', 'ZCOOL XiaoWei', cursive;
-  font-size: 1.05rem;
+  font-size: 1.12rem;
   letter-spacing: 0.12em;
   color: rgba(44, 36, 27, 0.62);
   transition: color 0.3s ease;
@@ -182,6 +235,26 @@
   padding: 0 4px;
 }
 .pb-card.is-hovering .pb-label { color: var(--pb-seal); }
+
+.pb-motif {
+  break-inside: avoid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 28px;
+  margin: 0 0 6px;
+  pointer-events: none;
+  opacity: 0.48;
+}
+.pb-motif svg { width: 24px; height: 24px; }
+.pb-motif--spring { color: rgba(214, 158, 168, 0.65); }
+.pb-motif--summer { color: rgba(118, 168, 142, 0.6); }
+.pb-motif--autumn { color: rgba(196, 118, 68, 0.62); }
+.pb-motif--winter { color: rgba(148, 168, 198, 0.58); }
+.pb-motif--all   { color: rgba(150, 130, 110, 0.5); }
+.pb-motif--v1 svg { transform: scale(0.88) rotate(-8deg); }
+.pb-motif--v2 svg { transform: scale(1.05) rotate(6deg); }
 
 .pb-hint {
   text-align: center;
@@ -327,8 +400,12 @@
   margin-inline: auto;
 }
 
+@media (max-width: 900px) {
+  .pb-gallery { column-count: 4; column-gap: 8px; }
+}
 @media (max-width: 560px) {
-  .pb-gallery { gap: 14px 12px; }
+  .pb-gallery { column-count: 3; column-gap: 7px; }
+  .pb-seasons button { font-size: 1rem; }
   .pb-lb-nav { display: none; }
 }
 
