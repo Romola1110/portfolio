@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>摄影 Demo D · 涟漪显影</title>
+  <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/photography-demos.css?v=1">
+  <style>
+    body { margin: 0; background: #f8f4ec; font-family: 'LXGW WenKai', serif; color: #2c241b; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  </style>
+</head>
+<body>
+  <nav class="pd-nav-bar">
+    <strong>四时摄影 Demo</strong>
+    <a href="demo_photography_drift.html">A 墨流</a>
+    <a href="demo_photography_tide.html">B 双潮</a>
+    <a href="demo_photography_magnetic.html">C 磁力</a>
+    <a class="is-here" href="demo_photography_ripple.html">D 涟漪</a>
+    <a href="demo_photography_index.html">全部方案</a>
+  </nav>
+  <div class="wrap">
+    <div class="pd-head">
+      <h1>涟漪显影</h1>
+      <p>五列上涌；经过视窗中央时由墨雾渐清，两侧仍沉入模糊低饱和，如暗房显影涟漪。</p>
+    </div>
+    <div class="pd-root" id="photography">
+      <nav class="pd-seasons" aria-label="四季"></nav>
+      <div class="pd-stage"></div>
+    </div>
+  </div>
+  <script src="assets/photography-data.js?v=4"></script>
+  <script src="assets/photography-demos.js?v=1"></script>
+  <script>initPhotoDemo('photography', 'ripple');</script>
+</body>
+</html>
