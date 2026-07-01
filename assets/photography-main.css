@@ -1,0 +1,25 @@
+/* 主站四时摄影 · 风拂晾晒嵌入 */
+
+#photography .pb-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0.25rem 0 1.5rem;
+}
+
+#photography .pb-clothesline {
+  margin: 0.75rem 0 1.5rem;
+}
+
+#photography .pb-seasons {
+  margin-bottom: 1.25rem;
+}
+
+#photography .pb-hint {
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+#photography .section-desc {
+  line-height: 1.95;
+  letter-spacing: 0.06em;
+}

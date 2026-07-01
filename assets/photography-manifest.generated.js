@@ -506,7 +506,7 @@ const PHOTO_MANIFEST_GENERATED = {
       "title": "香山",
       "orient": "landscape",
       "caption": "石桥横跨叶池，游人如织，秋色正浓。",
-      "diary": "不管是香山红叶和香山秋叶，都美的醉人。",
+      "diary": "不管是香山红叶还是香山黄叶，都美的醉人。",
       "exif": "1706×1279"
     },
     {
