@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parent.parent
 INDEX = ROOT / 'index (1).html'
 
 CSS_LINKS = '''<link rel="stylesheet" href="assets/photography-breeze.css?v=7">
-<link rel="stylesheet" href="assets/photography-main.css?v=1">'''
+<link rel="stylesheet" href="assets/photography-main.css?v=3">'''
 
 OLD_PHOTO_BLOCK = '''  <div class="open-section" data-delay="100" id="photography">
     <h2 class="section-title">四时·流转之境</h2>
