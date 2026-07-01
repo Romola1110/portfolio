@@ -3,7 +3,6 @@
 const PB_MAX_TILT = 10;
 const PB_ACTIVE = new Set();
 const PB_MOTIF_GAP = 6;
-const PB_SEASON_KEYS = ['spring', 'summer', 'autumn', 'winter'];
 
 function pbShuffle(arr) {
   const a = arr.slice();
@@ -12,13 +11,6 @@ function pbShuffle(arr) {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
-}
-
-function pbWinterFillFiles(items) {
-  return items
-    .filter(it => it.orient !== 'portrait')
-    .slice(-3)
-    .map(it => it.file);
 }
 
 function pbLayoutVars(index) {
@@ -43,10 +35,10 @@ function pbMotifHtml(seasonKey, variant) {
   return `<div class="pb-motif pb-motif--${sk} pb-motif--v${variant % 3}" aria-hidden="true">${PB_MOTIF_SVG[sk]}</div>`;
 }
 
-function pbCardHtml(item, layout, extraClass = '') {
+function pbCardHtml(item, layout) {
   const orient = item.orient === 'portrait' ? 'portrait' : 'landscape';
   return `
-    <article class="pb-card is-${orient}${extraClass}"
+    <article class="pb-card is-${orient}"
       data-id="${item.id}" data-season="${item.season}" data-file="${item.file}"
       data-title="${item.title}" data-caption="${item.caption || ''}"
       data-diary="${item.diary || item.caption || ''}" data-exif="${item.exif || ''}"
@@ -64,29 +56,14 @@ function pbCardHtml(item, layout, extraClass = '') {
 function pbRenderGallery(items, displaySeason) {
   let html = '';
   let motifCount = 0;
-  const fillSet = displaySeason === 'winter'
-    ? new Set(pbWinterFillFiles(items))
-    : null;
   items.forEach((item, i) => {
     if (i > 0 && i % PB_MOTIF_GAP === 0) {
-      html += pbMotifHtml(displaySeason, motifCount++);
+      const mKey = displaySeason === 'all' ? item.season : displaySeason;
+      html += pbMotifHtml(mKey, motifCount++);
     }
-    const fillCls = fillSet?.has(item.file) ? ' is-fill' : '';
-    html += pbCardHtml(item, pbLayoutVars(i), fillCls);
+    html += pbCardHtml(item, pbLayoutVars(i));
   });
   return html;
-}
-
-function pbRenderAllSections() {
-  const keys = pbShuffle(PB_SEASON_KEYS);
-  return keys.map(key => {
-    const items = PHOTO_GALLERY_DATA[key] || [];
-    const meta = PHOTO_SEASONS[key];
-    return `<section class="pb-season-block" data-season="${key}" style="--season-hue:${meta.hue}">
-      <h2 class="pb-season-divider"><span class="pb-season-divider-text">${meta.label}</span><span class="pb-season-divider-count">${items.length}</span></h2>
-      <div class="pb-masonry">${pbRenderGallery(items, key)}</div>
-    </section>`;
-  }).join('');
 }
 
 function pbBindImages(root) {
@@ -289,9 +266,10 @@ function initPhotoBreeze(rootId = 'pbRoot') {
   function render(s) {
     season = s;
     PB_ACTIVE.clear();
-    const items = PHOTO_GALLERY_DATA[season] || [];
-    gallery.classList.toggle('pb-gallery--all', s === 'all');
-    gallery.innerHTML = s === 'all' ? pbRenderAllSections() : pbRenderGallery(items, s);
+    const items = s === 'all'
+      ? pbShuffle(PHOTO_GALLERY_DATA.all || [])
+      : (PHOTO_GALLERY_DATA[s] || []);
+    gallery.innerHTML = pbRenderGallery(items, s);
     pbBindImages(root);
     pbSetupReveal(root);
     pbSetupHover(root);

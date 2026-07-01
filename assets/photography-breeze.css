@@ -82,16 +82,16 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5rem 1.35rem;
-  margin-bottom: 1.35rem;
+  gap: 0.65rem 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .pb-seasons button {
   position: relative;
   font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', serif;
-  font-size: 1.15rem;
-  letter-spacing: 0.22em;
-  padding: 0.35rem 0.55rem 0.5rem 0.25rem;
+  font-size: 1.42rem;
+  letter-spacing: 0.24em;
+  padding: 0.45rem 0.75rem 0.6rem 0.45rem;
   border: none;
   background: transparent;
   color: rgba(44, 36, 27, 0.42);
@@ -107,13 +107,13 @@
 
 .pb-season-en {
   position: absolute;
-  right: -0.05rem;
-  bottom: -0.02rem;
+  right: -0.1rem;
+  bottom: 0.02rem;
   z-index: 2;
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 0.5rem;
-  letter-spacing: 0.08em;
-  color: rgba(44, 36, 27, 0.36);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: rgba(44, 36, 27, 0.4);
   font-style: italic;
   line-height: 1;
   pointer-events: none;
@@ -178,16 +178,9 @@
 
 /* Masonry 错落网格 — 列流自动上填空隙 */
 .pb-gallery {
-  padding: 0.15rem 0 2rem;
-}
-
-.pb-gallery:not(.pb-gallery--all) {
   column-count: 5;
   column-gap: 8px;
-}
-
-.pb-gallery--all {
-  padding-bottom: 1rem;
+  padding: 0.15rem 0 2rem;
 }
 
 .pb-masonry {
@@ -293,18 +286,6 @@
 }
 .pb-card.is-landscape .pb-img { aspect-ratio: 4 / 3; }
 .pb-card.is-portrait .pb-img { aspect-ratio: 3 / 4; }
-
-/* 冬季末几张横图略放大填隙 */
-.pb-card.is-fill.is-landscape {
-  column-span: all;
-  width: 56%;
-  margin: 0 auto 10px;
-  display: block;
-}
-
-.pb-card.is-fill.is-landscape .pb-img {
-  aspect-ratio: 16 / 9;
-}
 
 .pb-label {
   margin: 8px 0 0;
@@ -486,13 +467,14 @@
 }
 
 @media (max-width: 900px) {
-  .pb-gallery:not(.pb-gallery--all),
+  .pb-gallery,
   .pb-masonry { column-count: 4; column-gap: 8px; }
 }
 @media (max-width: 560px) {
-  .pb-gallery:not(.pb-gallery--all),
+  .pb-gallery,
   .pb-masonry { column-count: 3; column-gap: 7px; }
-  .pb-seasons button { font-size: 1rem; }
+  .pb-seasons button { font-size: 1.2rem; }
+  .pb-season-en { font-size: 0.58rem; }
   .pb-lb-nav { display: none; }
 }
 
