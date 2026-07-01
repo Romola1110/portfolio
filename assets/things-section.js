@@ -516,127 +516,77 @@ function buildRopeLayout(items) {
 }
 
 function initThingsV6(root) {
-  const vessel = root.querySelector('.lot-vessel');
+  const bucket = root.querySelector('.lot-bucket');
   const drawBtn = root.querySelector('.draw-btn');
-  const drawPanel = root.querySelector('.draw-panel');
-  const paperStand = root.querySelector('.paper-stand');
-  const emptyHint = root.querySelector('.stand-empty-hint');
-  const standCard = root.querySelector('.stand-card');
-  const standActions = root.querySelector('.stand-actions');
-  const foldBtn = root.querySelector('.fold-painting-btn');
-  const galleryToggle = root.querySelector('.gallery-toggle-btn');
-  const ropeWrap = root.querySelector('.rope-gallery-wrap');
-  const ropeSigns = root.querySelector('.rope-signs');
-  const emptyClips = root.querySelector('.rope-empty-clips');
+  const stickFly = root.querySelector('.stick-flyout');
+  const curtainThreads = root.querySelector('.curtain-threads');
   const modal = root.querySelector('.thing-modal');
 
   let lastDrawId = null;
-  let ropeOpen = false;
   let drawing = false;
-  let drawnIds = new Set();
-  let ropeLayout = buildRopeLayout(THINGS_DATA);
+  const drawnIds = new Set();
+  const THREAD_COUNT = 5;
 
   function renderThumb(item) {
     if (item.image) return `<img src="${item.image}" alt="${item.name}" loading="lazy">`;
     return `<div class="ph ${item.ph}">${item.glyph}</div>`;
   }
 
-  function renderRopeSign(item, slot, i) {
-    const cx = slot.x + slot.width / 2;
+  function renderCurtainTag(item, hangTop, delay) {
+    const drawn = drawnIds.has(item.id);
     return `
-      <div class="rope-sign" data-id="${item.id}" data-slot="${i}"
-        style="left:${cx}px;top:${slot.top}px;--w:${slot.width}px;--h:${slot.height}px;--rot:${slot.rotate}deg;--delay:${slot.delay};z-index:${slot.zIndex}">
-        <div class="rope-tag-body">
-          <span class="tag-name">${item.name}</span>
-          <span class="tag-mark">${slot.mark}</span>
-        </div>
-      </div>`;
+      <button type="button" class="curtain-tag${drawn ? ' is-drawn' : ''}" data-id="${item.id}"
+        style="--hang-top:${hangTop}px;--swing-delay:${delay}s" ${drawn ? 'disabled' : ''}>
+        <span class="curtain-clip" aria-hidden="true"></span>
+        <span class="curtain-card">
+          <span class="curtain-glyph">${item.glyph}</span>
+          <span class="curtain-name">${item.name}</span>
+        </span>
+      </button>`;
   }
 
-  function renderRopeGallery() {
-    if (!ropeSigns) return;
-    ropeLayout = buildRopeLayout(THINGS_DATA);
-    ropeSigns.style.minWidth = `${ropeLayout.totalWidth}px`;
-    ropeSigns.style.height = `${Math.max(220, ...ropeLayout.slots.map(s => s.top + s.height + 40))}px`;
-    if (emptyClips) emptyClips.innerHTML = '';
-    const kept = new Set(drawnIds);
-    ropeSigns.innerHTML = THINGS_DATA.map((item, i) => {
-      if (kept.has(item.id)) return '';
-      return renderRopeSign(item, ropeLayout.slots[i], i);
+  function renderCurtain() {
+    if (!curtainThreads) return;
+    const buckets = Array.from({ length: THREAD_COUNT }, () => []);
+    THINGS_DATA.forEach((item, i) => buckets[i % THREAD_COUNT].push(item));
+    curtainThreads.innerHTML = buckets.map((items, ti) => {
+      const tx = 8 + (ti / Math.max(THREAD_COUNT - 1, 1)) * 84;
+      const hangs = items.map((item, hi) =>
+        renderCurtainTag(item, 36 + hi * 78 + (ti % 2) * 12, (ti * 0.35 + hi * 0.18) % 2.4)
+      ).join('');
+      return `
+        <div class="curtain-thread" style="--tx:${tx}%">
+          <span class="thread-line" aria-hidden="true"></span>
+          <div class="thread-hangs">${hangs}</div>
+        </div>`;
     }).join('');
-    kept.forEach(id => {
-      const i = THINGS_DATA.findIndex(t => t.id === id);
-      if (i < 0) return;
-      const sign = ropeSigns.querySelector(`[data-id="${id}"]`);
-      if (!sign) addEmptyClip(id, ropeLayout.slots[i], i);
-    });
   }
 
-  function addEmptyClip(id, slot, i) {
-    if (!emptyClips || emptyClips.querySelector(`[data-id="${id}"]`)) return;
-    const cx = slot.x + slot.width / 2;
-    const clip = document.createElement('div');
-    clip.className = 'rope-clip-empty';
-    clip.dataset.id = id;
-    clip.style.left = `${cx}px`;
-    clip.style.top = `${slot.top}px`;
-    clip.innerHTML = '<span class="clip-rope-remnant" aria-hidden="true"></span>';
-    emptyClips.appendChild(clip);
-  }
-
-  function markRopeDrawn(id, animate = true) {
-    const sign = ropeSigns?.querySelector(`[data-id="${id}"]`);
-    if (!sign || sign.classList.contains('drawn-away')) {
-      const i = THINGS_DATA.findIndex(t => t.id === id);
-      if (i >= 0) addEmptyClip(id, ropeLayout.slots[i], i);
-      return;
+  function markCurtainDrawn(id) {
+    drawnIds.add(id);
+    const tag = curtainThreads?.querySelector(`.curtain-tag[data-id="${id}"]`);
+    if (tag) {
+      tag.classList.add('is-drawn');
+      tag.disabled = true;
     }
-    const cx = sign.style.left;
-    const top = sign.style.top;
-    if (animate) {
-      sign.classList.add('unclipping');
-      setTimeout(() => sign.classList.add('drawn-away'), 480);
-    } else {
-      sign.classList.add('drawn-away');
-    }
-    if (emptyClips && !emptyClips.querySelector(`[data-id="${id}"]`)) {
-      const clip = document.createElement('div');
-      clip.className = 'rope-clip-empty';
-      clip.dataset.id = id;
-      clip.style.left = cx;
-      clip.style.top = top;
-      clip.innerHTML = '<span class="clip-rope-remnant" aria-hidden="true"></span>';
-      emptyClips.appendChild(clip);
-    }
-  }
-
-  function restoreSignOnRope(id) {
-    drawnIds.delete(id);
-    emptyClips?.querySelector(`[data-id="${id}"]`)?.remove();
-    const i = THINGS_DATA.findIndex(t => t.id === id);
-    if (i < 0 || !ropeSigns) return;
-    const item = THINGS_DATA[i];
-    const slot = ropeLayout.slots[i];
-    const wrap = document.createElement('div');
-    wrap.innerHTML = renderRopeSign(item, slot, i);
-    const el = wrap.firstElementChild;
-    el.classList.add('returning');
-    ropeSigns.appendChild(el);
   }
 
   function pickItem() {
     let pool = THINGS_DATA.filter(t => !drawnIds.has(t.id));
-    if (!pool.length) pool = [...THINGS_DATA];
+    if (!pool.length) {
+      drawnIds.clear();
+      renderCurtain();
+      pool = [...THINGS_DATA];
+    }
     if (pool.length > 1 && lastDrawId) pool = pool.filter(t => t.id !== lastDrawId);
     return pool[Math.floor(Math.random() * pool.length)];
   }
 
-  function openModal(item) {
+  function openBookmarkModal(item) {
     if (!modal) return;
     modal.innerHTML = `
-      <div class="thing-modal-box modal-bookmark">
-        <button type="button" class="thing-modal-close" aria-label="关闭">×</button>
-        <div class="bookmark-sheet">
+      <div class="thing-modal-box modal-bookmark-only">
+        <div class="bookmark-sheet bookmark-sheet--modal">
           <div class="sheet-crease" aria-hidden="true"></div>
           <p class="letter-sign-label">${item.signLabel}</p>
           <div class="modal-visual modal-visual-tall">${renderThumb(item)}</div>
@@ -644,108 +594,75 @@ function initThingsV6(root) {
           <p class="letter-note">${item.note}</p>
           <p class="letter-verse">「${item.verse}」</p>
           <p class="modal-story">${item.story}</p>
+          <div class="bookmark-modal-actions">
+            <button type="button" class="bm-btn bm-fold">收起</button>
+            <button type="button" class="bm-btn bm-again">再摇一支</button>
+          </div>
         </div>
       </div>`;
     modal.classList.add('open');
-    modal.querySelector('.thing-modal-close')?.addEventListener('click', closeModal);
-    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    modal.querySelector('.bm-fold')?.addEventListener('click', closeModal);
+    modal.querySelector('.bm-again')?.addEventListener('click', () => {
+      closeModal();
+      setTimeout(drawLot, 300);
+    });
+    modal.onclick = e => { if (e.target === modal) closeModal(); };
   }
 
-  function closeModal() { modal?.classList.remove('open'); }
-
-  function showStandCard(item) {
-    if (!paperStand || !standCard || !emptyHint) return;
-    emptyHint.hidden = true;
-    standCard.hidden = false;
-    standCard.classList.remove('landed', 'folding');
-    const sym = standCard.querySelector('.stand-card-symbol');
-    const name = standCard.querySelector('.stand-card-name');
-    const verse = standCard.querySelector('.stand-card-verse');
-    if (sym) sym.textContent = getItemSymbol(item);
-    if (name) name.textContent = item.name;
-    if (verse) verse.textContent = `「${item.verse}」`;
-    standCard.dataset.id = item.id;
-    if (standActions) standActions.hidden = false;
-    paperStand.classList.add('has-card');
-    requestAnimationFrame(() => requestAnimationFrame(() => standCard.classList.add('landed')));
-  }
-
-  function clearStand() {
-    const id = lastDrawId;
-    if (!standCard || !paperStand) return;
-    standCard.classList.remove('landed');
-    standCard.classList.add('folding');
-    setTimeout(() => {
-      standCard.hidden = true;
-      standCard.classList.remove('folding');
-      if (emptyHint) emptyHint.hidden = false;
-      if (standActions) standActions.hidden = true;
-      paperStand.classList.remove('has-card');
-      if (id) restoreSignOnRope(id);
-      lastDrawId = null;
-    }, 480);
-  }
-
-  function expandSign(item) {
-    lastDrawId = item.id;
-    if (!drawnIds.has(item.id)) {
-      markRopeDrawn(item.id, true);
-      drawnIds.add(item.id);
-    }
-    showStandCard(item);
+  function closeModal() {
+    modal?.classList.remove('open');
+    if (modal) modal.onclick = null;
   }
 
   function drawLot() {
     if (drawing) return;
     drawing = true;
-    if (drawBtn) { drawBtn.disabled = true; drawBtn.textContent = '签落…'; }
-    vessel?.classList.add('shaking');
+    if (drawBtn) {
+      drawBtn.disabled = true;
+      const inner = drawBtn.querySelector('.draw-btn-inner');
+      if (inner) inner.textContent = '签落…';
+    }
+    bucket?.classList.add('shaking');
     const item = pickItem();
     setTimeout(() => {
-      vessel?.classList.remove('shaking');
-      expandSign(item);
-      if (drawBtn) { drawBtn.disabled = false; drawBtn.textContent = '摇一枝签'; }
-      drawing = false;
-      if (!ropeOpen) {
-        ropeOpen = true;
-        ropeWrap?.classList.add('is-open');
-        if (galleryToggle) galleryToggle.textContent = '收起展匣';
-        renderRopeGallery();
-      }
+      bucket?.classList.remove('shaking');
+      stickFly?.classList.remove('fly');
+      void stickFly?.offsetWidth;
+      stickFly?.classList.add('fly');
+      setTimeout(() => {
+        stickFly?.classList.remove('fly');
+        lastDrawId = item.id;
+        markCurtainDrawn(item.id);
+        openBookmarkModal(item);
+        if (drawBtn) {
+          drawBtn.disabled = false;
+          const inner = drawBtn.querySelector('.draw-btn-inner');
+          if (inner) inner.textContent = '摇一支签';
+        }
+        drawing = false;
+      }, 620);
     }, 520);
   }
 
   drawBtn?.addEventListener('click', drawLot);
-  vessel?.addEventListener('click', drawLot);
-  vessel?.addEventListener('keydown', e => {
+  bucket?.addEventListener('click', drawLot);
+  bucket?.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); drawLot(); }
   });
 
-  standCard?.addEventListener('click', () => {
-    const item = THINGS_DATA.find(t => t.id === standCard.dataset.id);
-    if (item) openModal(item);
-  });
-  standCard?.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); standCard.click(); }
-  });
-
-  foldBtn?.addEventListener('click', clearStand);
-
-  galleryToggle?.addEventListener('click', () => {
-    ropeOpen = !ropeOpen;
-    ropeWrap?.classList.toggle('is-open', ropeOpen);
-    galleryToggle.textContent = ropeOpen ? '收起展匣' : '展开展匣，慢慢翻阅';
-    if (ropeOpen) renderRopeGallery();
-  });
-
-  ropeSigns?.addEventListener('click', e => {
-    const tag = e.target.closest('.rope-sign:not(.drawn-away)');
+  curtainThreads?.addEventListener('click', e => {
+    const tag = e.target.closest('.curtain-tag:not(.is-drawn)');
     if (!tag || drawing) return;
     const item = THINGS_DATA.find(t => t.id === tag.dataset.id);
-    if (item) expandSign(item);
+    if (item) {
+      lastDrawId = item.id;
+      markCurtainDrawn(item.id);
+      openBookmarkModal(item);
+    }
   });
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  renderCurtain();
 }
 
 /* ---------- v3 主站（保留签筒逻辑）---------- */
