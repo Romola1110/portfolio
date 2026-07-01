@@ -7,7 +7,7 @@ const PHOTO_SEASONS = {
   spring: { key: 'spring', label: '春',   hue: '218, 168, 178', motif: 'spring' },
   summer: { key: 'summer', label: '夏',   hue: '98, 158, 128',  motif: 'summer' },
   autumn: { key: 'autumn', label: '秋',   hue: '198, 118, 72',  motif: 'autumn' },
-  winter: { key: 'winter', label: '归藏', hue: '138, 152, 182', motif: 'winter' }
+  winter: { key: 'winter', label: '冬', hue: '138, 152, 182', motif: 'winter' }
 };
 
 const PHOTO_MANIFEST = (typeof PHOTO_MANIFEST_GENERATED !== 'undefined')
@@ -86,7 +86,17 @@ function buildSeasonItems(season) {
 
 function buildPhotoItems(season) {
   if (season === 'all') {
-    return PHOTO_SEASON_ORDER.filter(k => k !== 'all').flatMap(buildSeasonItems);
+    const seen = new Set();
+    const items = [];
+    PHOTO_SEASON_ORDER.filter(k => k !== 'all').forEach(key => {
+      buildSeasonItems(key).forEach(item => {
+        const uid = `${item.season}/${item.file}`;
+        if (seen.has(uid)) return;
+        seen.add(uid);
+        items.push(item);
+      });
+    });
+    return items;
   }
   return buildSeasonItems(season);
 }
