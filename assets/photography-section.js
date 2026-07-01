@@ -7,16 +7,20 @@ const PHOTO_MAX_TILT = 8;
 function initPhotographyGallery(root, options = {}) {
   if (!root || typeof PHOTO_GALLERY_DATA === 'undefined') return;
 
-  const mode = options.mode || 'parallax';
+  const mode = options.mode || 'flow';
   const seasonNav = root.querySelector('.photo-season-nav');
-  const masonry = root.querySelector('.photo-masonry');
+  let masonry = root.querySelector('.photo-masonry');
   const lightbox = document.getElementById('photoLightbox');
+  let flowClone = null;
+  let flowStage = null;
+  let flowTrack = null;
   let currentSeason = options.season || 'spring';
   let revealObserver = null;
   let tiltObserver = null;
 
   root.classList.toggle('mode-darkroom', mode === 'darkroom');
   root.classList.toggle('mode-scroll', mode === 'scroll');
+  root.classList.toggle('mode-flow', mode === 'flow');
 
   function bindImageFallback(img, fallback) {
     if (!img || !fallback) return;
@@ -25,6 +29,16 @@ function initPhotographyGallery(root, options = {}) {
       img.dataset.fallbackApplied = '1';
       img.src = fallback;
     }, { once: true });
+  }
+
+  function bindAllImages(items) {
+    root.querySelectorAll('.photo-masonry img').forEach((img, i) => {
+      const idx = i % items.length;
+      bindImageFallback(img, items[idx]?.fallback);
+      if (!img.complete) {
+        img.addEventListener('load', () => setupFlowDuration(), { once: true });
+      }
+    });
   }
 
   function getEnterClass(index) {
@@ -40,14 +54,16 @@ function initPhotographyGallery(root, options = {}) {
   }
 
   function renderPolaroid(item, index, seasonKey) {
-    const enterClass = getEnterClass(index);
-    const delay = (Math.random() * 0.4).toFixed(2);
-    const rot = getEnterRotate(index);
-    const aspectPct = Math.round(item.aspect * 100);
     const indexLabel = `${PHOTO_SEASONS[seasonKey]?.label || ''} · ${String(item.id).padStart(2, '0')}`;
+    const rot = mode === 'flow'
+      ? `${((index % 5) - 2) * 1.2}deg`
+      : getEnterRotate(index);
+    const flowClass = mode === 'flow' ? ' is-visible flow-card' : '';
+    const enterClass = mode === 'flow' ? '' : ` ${getEnterClass(index)}`;
+    const delay = mode === 'flow' ? '0s' : `${(Math.random() * 0.4).toFixed(2)}s`;
 
     return `
-      <article class="photo-polaroid ${enterClass}"
+      <article class="photo-polaroid${flowClass}${enterClass}"
         data-id="${item.id}"
         data-season="${seasonKey}"
         data-title="${item.title}"
@@ -67,14 +83,51 @@ function initPhotographyGallery(root, options = {}) {
       </article>`;
   }
 
+  function setupFlowShell() {
+    if (mode !== 'flow' || !masonry || flowStage) return;
+    flowStage = document.createElement('div');
+    flowStage.className = 'photo-flow-stage';
+    const viewport = document.createElement('div');
+    viewport.className = 'photo-flow-viewport';
+    flowTrack = document.createElement('div');
+    flowTrack.className = 'photo-flow-track';
+    flowClone = document.createElement('div');
+    flowClone.className = 'photo-masonry photo-masonry-clone';
+    flowClone.setAttribute('aria-hidden', 'true');
+
+    masonry.parentNode.insertBefore(flowStage, masonry);
+    flowStage.appendChild(viewport);
+    viewport.appendChild(flowTrack);
+    flowTrack.appendChild(masonry);
+    flowTrack.appendChild(flowClone);
+
+    const hint = document.createElement('p');
+    hint.className = 'photo-flow-hint';
+    hint.textContent = '悬停可暂停 · 点击展卷';
+    flowStage.appendChild(hint);
+  }
+
+  function setupFlowDuration() {
+    if (mode !== 'flow' || !flowTrack || !masonry) return;
+    const h = masonry.offsetHeight;
+    if (!h) return;
+    const pxPerSec = options.flowSpeed || 26;
+    const duration = Math.max(48, Math.min(140, h / pxPerSec));
+    flowTrack.style.setProperty('--flow-duration', `${duration}s`);
+  }
+
+  function setFlowPaused(paused) {
+    flowStage?.classList.toggle('is-paused', !!paused);
+  }
+
   function renderSeason(seasonKey) {
     if (!masonry) return;
     currentSeason = seasonKey;
     const items = PHOTO_GALLERY_DATA[seasonKey] || [];
-    masonry.innerHTML = items.map((item, i) => renderPolaroid(item, i, seasonKey)).join('');
-    masonry.querySelectorAll('img').forEach((img, i) => {
-      bindImageFallback(img, items[i]?.fallback);
-    });
+    const html = items.map((item, i) => renderPolaroid(item, i, seasonKey)).join('');
+    masonry.innerHTML = html;
+    if (flowClone) flowClone.innerHTML = html;
+    bindAllImages(items);
     seasonNav?.querySelectorAll('.season-pill').forEach(btn => {
       btn.classList.toggle('is-active', btn.dataset.season === seasonKey);
       const meta = PHOTO_SEASONS[seasonKey];
@@ -82,9 +135,14 @@ function initPhotographyGallery(root, options = {}) {
         btn.style.setProperty('--season-hue', meta.hue);
       }
     });
+    requestAnimationFrame(() => {
+      setupFlowDuration();
+      requestAnimationFrame(setupFlowDuration);
+    });
   }
 
   function setupRevealObserver() {
+    if (mode === 'flow') return;
     revealObserver?.disconnect();
     const cards = masonry?.querySelectorAll('.photo-polaroid') || [];
     revealObserver = new IntersectionObserver((entries) => {
@@ -145,7 +203,8 @@ function initPhotographyGallery(root, options = {}) {
   }
 
   function setupTiltObserver() {
-    if (mode === 'darkroom') {
+    if (mode === 'flow' || mode === 'darkroom') {
+      if (mode !== 'darkroom') return;
       tiltObserver?.disconnect();
       const cards = masonry?.querySelectorAll('.photo-polaroid') || [];
       tiltObserver = new IntersectionObserver((entries) => {
@@ -206,6 +265,7 @@ function initPhotographyGallery(root, options = {}) {
 
   function openLightbox(card) {
     if (!lightbox) return;
+    setFlowPaused(true);
     const img = lightbox.querySelector('.photo-lightbox-img');
     const indexEl = lightbox.querySelector('.lb-index');
     const titleEl = lightbox.querySelector('.lb-title');
@@ -232,6 +292,7 @@ function initPhotographyGallery(root, options = {}) {
     lightbox.classList.add('is-closing');
     lightbox.classList.remove('is-open');
     document.body.style.overflow = '';
+    setFlowPaused(false);
     setTimeout(() => lightbox.classList.remove('is-closing'), 400);
   }
 
@@ -247,9 +308,15 @@ function initPhotographyGallery(root, options = {}) {
       setupScrollCenter();
     });
 
-    masonry?.addEventListener('click', e => {
+    const clickHost = flowStage || masonry;
+    clickHost?.addEventListener('click', e => {
       const card = e.target.closest('.photo-polaroid');
       if (card) openLightbox(card);
+    });
+
+    flowStage?.addEventListener('mouseenter', () => setFlowPaused(true));
+    flowStage?.addEventListener('mouseleave', () => {
+      if (!lightbox?.classList.contains('is-open')) setFlowPaused(false);
     });
 
     lightbox?.addEventListener('click', e => {
@@ -281,6 +348,7 @@ function initPhotographyGallery(root, options = {}) {
     masonry.style.columnCount = 'unset';
   }
 
+  setupFlowShell();
   initSeasonNav();
   renderSeason(currentSeason);
   bindEvents();
