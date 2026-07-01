@@ -93,8 +93,15 @@ function initPhotographyGallery(root, options = {}) {
         entry.target.classList.add('is-visible');
         revealObserver.unobserve(entry.target);
       });
-    }, { root: null, rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-    cards.forEach(card => revealObserver.observe(card));
+    }, { root: null, rootMargin: '0px 0px -5% 0px', threshold: 0.08 });
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.95 && rect.bottom > 0) {
+        card.classList.add('is-visible');
+        return;
+      }
+      revealObserver.observe(card);
+    });
   }
 
   function handleTiltMove(e) {
