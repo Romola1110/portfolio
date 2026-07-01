@@ -178,6 +178,11 @@
   padding: 0.15rem 0 2rem;
 }
 
+.pb-gallery:not(.pb-gallery--all) {
+  column-count: 5;
+  column-gap: 8px;
+}
+
 .pb-gallery--all {
   padding-bottom: 1rem;
 }
@@ -466,9 +471,11 @@
 }
 
 @media (max-width: 900px) {
+  .pb-gallery:not(.pb-gallery--all),
   .pb-masonry { column-count: 4; column-gap: 8px; }
 }
 @media (max-width: 560px) {
+  .pb-gallery:not(.pb-gallery--all),
   .pb-masonry { column-count: 3; column-gap: 7px; }
   .pb-seasons button { font-size: 1rem; }
   .pb-lb-nav { display: none; }
