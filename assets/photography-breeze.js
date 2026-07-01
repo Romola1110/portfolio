@@ -3,6 +3,23 @@
 const PB_MAX_TILT = 10;
 const PB_ACTIVE = new Set();
 const PB_MOTIF_GAP = 6;
+const PB_SEASON_KEYS = ['spring', 'summer', 'autumn', 'winter'];
+
+function pbShuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function pbWinterFillFiles(items) {
+  return items
+    .filter(it => it.orient !== 'portrait')
+    .slice(-3)
+    .map(it => it.file);
+}
 
 function pbLayoutVars(index) {
   const wave = Math.sin(index * 0.7) * 2;
@@ -26,10 +43,10 @@ function pbMotifHtml(seasonKey, variant) {
   return `<div class="pb-motif pb-motif--${sk} pb-motif--v${variant % 3}" aria-hidden="true">${PB_MOTIF_SVG[sk]}</div>`;
 }
 
-function pbCardHtml(item, layout) {
+function pbCardHtml(item, layout, extraClass = '') {
   const orient = item.orient === 'portrait' ? 'portrait' : 'landscape';
   return `
-    <article class="pb-card is-${orient}"
+    <article class="pb-card is-${orient}${extraClass}"
       data-id="${item.id}" data-season="${item.season}" data-file="${item.file}"
       data-title="${item.title}" data-caption="${item.caption || ''}"
       data-diary="${item.diary || item.caption || ''}" data-exif="${item.exif || ''}"
@@ -47,17 +64,21 @@ function pbCardHtml(item, layout) {
 function pbRenderGallery(items, displaySeason) {
   let html = '';
   let motifCount = 0;
+  const fillSet = displaySeason === 'winter'
+    ? new Set(pbWinterFillFiles(items))
+    : null;
   items.forEach((item, i) => {
     if (i > 0 && i % PB_MOTIF_GAP === 0) {
       html += pbMotifHtml(displaySeason, motifCount++);
     }
-    html += pbCardHtml(item, pbLayoutVars(i));
+    const fillCls = fillSet?.has(item.file) ? ' is-fill' : '';
+    html += pbCardHtml(item, pbLayoutVars(i), fillCls);
   });
   return html;
 }
 
 function pbRenderAllSections() {
-  const keys = ['spring', 'summer', 'autumn', 'winter'];
+  const keys = pbShuffle(PB_SEASON_KEYS);
   return keys.map(key => {
     const items = PHOTO_GALLERY_DATA[key] || [];
     const meta = PHOTO_SEASONS[key];
@@ -87,10 +108,8 @@ function pbSeasonNav(root, season, onPick) {
   const order = window.PHOTO_SEASON_ORDER || Object.keys(PHOTO_SEASONS);
   nav.innerHTML = order.map(key => {
     const s = PHOTO_SEASONS[key];
-    const count = key === 'all'
-      ? (PHOTO_GALLERY_DATA.all || []).length
-      : (PHOTO_GALLERY_DATA[key] || []).length;
-    return `<button type="button" data-season="${s.key}" class="${s.key === season ? 'is-active' : ''}" style="--season-hue:${s.hue}"><span class="pb-season-text">${s.label}</span><span class="pb-season-count">${count}</span><span class="pb-season-glow" aria-hidden="true"></span></button>`;
+    const sub = key === 'all' ? '' : (s.en || '');
+    return `<button type="button" data-season="${s.key}" class="${s.key === season ? 'is-active' : ''}" style="--season-hue:${s.hue}"><span class="pb-season-text">${s.label}</span>${sub ? `<span class="pb-season-en">${sub}</span>` : ''}<span class="pb-season-glow" aria-hidden="true"></span></button>`;
   }).join('');
   nav.onclick = e => {
     const btn = e.target.closest('button[data-season]');

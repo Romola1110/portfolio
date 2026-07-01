@@ -4,10 +4,10 @@ const PHOTO_SEASON_ORDER = ['all', 'spring', 'summer', 'autumn', 'winter'];
 
 const PHOTO_SEASONS = {
   all:    { key: 'all',    label: '全部', hue: '118, 98, 78',  motif: 'all' },
-  spring: { key: 'spring', label: '春',   hue: '218, 168, 178', motif: 'spring' },
-  summer: { key: 'summer', label: '夏',   hue: '98, 158, 128',  motif: 'summer' },
-  autumn: { key: 'autumn', label: '秋',   hue: '198, 118, 72',  motif: 'autumn' },
-  winter: { key: 'winter', label: '冬', hue: '138, 152, 182', motif: 'winter' }
+  spring: { key: 'spring', label: '春',   en: 'Spring',  hue: '218, 168, 178', motif: 'spring' },
+  summer: { key: 'summer', label: '夏',   en: 'Summer',  hue: '98, 158, 128',  motif: 'summer' },
+  autumn: { key: 'autumn', label: '秋',   en: 'Autumn',  hue: '198, 118, 72',  motif: 'autumn' },
+  winter: { key: 'winter', label: '冬',   en: 'Winter',  hue: '138, 152, 182', motif: 'winter' }
 };
 
 const PHOTO_MANIFEST = (typeof PHOTO_MANIFEST_GENERATED !== 'undefined')

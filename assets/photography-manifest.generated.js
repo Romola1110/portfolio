@@ -30,7 +30,7 @@ const PHOTO_MANIFEST_GENERATED = {
       "title": "香梦",
       "orient": "portrait",
       "caption": "梨花如雪，一枚书签在枝头轻轻摇晃。",
-      "diary": "史湘云的书签挂在梨树上，写着香梦沉酣四个字。阳光穿过花瓣，像从红楼里走出来的一场春梦。",
+      "diary": "醉眼芳树下，半被落花埋。在那个世界里，湘云妹妹也许一直在花下醉眠……",
       "exif": "1279×1706"
     },
     {
@@ -46,15 +46,15 @@ const PHOTO_MANIFEST_GENERATED = {
       "title": "窗猫",
       "orient": "portrait",
       "caption": "黑猫趴在窗棂，四月从树影里照进来。",
-      "diary": "窗后的猫安静地看着外面，玻璃上映着绿树和蓝天。Hello, April——四月就这样从铁栅栏后面探出了头。",
+      "diary": "窗后的猫安静地看着外面，玻璃上映着绿树和蓝天。Hello, 小猫咪！Hello, April——四月就这样从铁栅栏后面探出了头。",
       "exif": "1280×1920"
     },
     {
       "file": "41e184e0410007643d9e3e0a18802ff9.jpg",
-      "title": "初绿",
+      "title": "丁香",
       "orient": "landscape",
-      "caption": "一半是花，一半是芽，蓝天里有星轻轻落下。",
-      "diary": "仰头望去，粉花与嫩叶在天空里各占一半。那些白色的小星点像是春天偷偷撒下的光，亮得晃眼。",
+      "caption": "春风不展丁香结。",
+      "diary": "春风不展丁香结。",
       "exif": "1706×1279"
     },
     {
@@ -67,10 +67,10 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "4d0641d0f58490f010ee26af0e63eab6.jpg",
-      "title": "姑苏",
+      "title": "涿州",
       "orient": "portrait",
-      "caption": "白墙题字，古塔在春树后方沉默矗立。",
-      "diary": "乙巳春三个字写在苏州的墙上，虎丘塔从树梢后探出头来。风过新绿，千年古意与眼前春光叠在一起。",
+      "caption": "白墙黛瓦，古韵涿州。",
+      "diary": "白墙黛瓦，古韵涿州。",
       "exif": "1279×1706"
     },
     {
@@ -83,10 +83,10 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "6706bcc5e5a5ecb20548914033f3d07e.jpg",
-      "title": "书花",
+      "title": "私语",
       "orient": "portrait",
-      "caption": "樱花落在书页间，像一封春天的信。",
-      "diary": "几朵重瓣樱花开在课本上，花瓣散在字里行间。你就是盛开着的漫山遍野的温柔——读到这里，忽然合不上书了。",
+      "caption": "上学路上采的榆叶梅，就这样放在书上，让他们窃窃私语……",
+      "diary": "上学路上采的榆叶梅，就这样放在书上，让他们窃窃私语……",
       "exif": "1279×1706"
     },
     {
@@ -126,7 +126,7 @@ const PHOTO_MANIFEST_GENERATED = {
       "title": "春影",
       "orient": "portrait",
       "caption": "三月的光里，影子比梦更甜。",
-      "diary": "对着浅蓝幕布比了个耶，又给自己画上睡眼。三月愉快，愿日子像果酱一样柔软。",
+      "diary": "对着阳光比了个耶，又给自己画上睡眼。三月愉快，愿日子像果酱一样柔软。",
       "exif": "1279×1706"
     },
     {
@@ -163,10 +163,10 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "aed92c4b08afbbfae0c0fe62dea7c605.jpg",
-      "title": "春课",
+      "title": "课堂",
       "orient": "portrait",
-      "caption": "空教室里，新绿正从窗外漫进来。",
-      "diary": "橙椅与绿椅静静排列，阳光在地板上画出窗格的影。上课铃未响，心已随树影飘远。",
+      "caption": "慎思楼一楼的阳光与座椅，当时只是上课前匆匆地拍下。",
+      "diary": "慎思楼一楼的阳光与座椅，当时只是上课前匆匆地拍下，现在觉得再看一眼，就已经能闻到大学校园十点暖阳的香气，听到那个遥远的上课铃声。",
       "exif": "2348×3540"
     },
     {
@@ -179,10 +179,10 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "cc70f8005ac92dbdd923e0d00c467bf5.jpg",
-      "title": "粉樱",
+      "title": "碧桃",
       "orient": "landscape",
-      "caption": "近看每一瓣，都是春天写下的诗。",
-      "diary": "指尖几乎触到花瓣，粉与紫红叶相映。风过处，落英轻颤，像一句未说完的话。",
+      "caption": "十八年来堕世间，瑶池归梦碧桃闲。",
+      "diary": "十八年来堕世间，瑶池归梦碧桃闲。",
       "exif": "1919×1279"
     },
     {
@@ -213,10 +213,10 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "0aa0a4d4a92e1e17c08f1be1e0ec390e.jpg",
-      "title": "暮窗",
+      "title": "夜色",
       "orient": "landscape",
-      "caption": "六点半，万家灯火替晚霞点灯。",
-      "diary": "树影后面望见住宅楼，一扇扇窗亮起来，像是夏夜提前开始了。",
+      "caption": "从港中文的最高点下山，林荫与暮色交错，灯光指引着前方的路。",
+      "diary": "从港中文的最高点下山，林荫与暮色交错，灯光指引着前方的路。",
       "exif": "1705×1279"
     },
     {
@@ -245,10 +245,10 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "16750ee15e8a3a2f812d62610c5f6e73.jpg",
-      "title": "镜海",
+      "title": "天人合一",
       "orient": "landscape",
-      "caption": "无边泳池尽头，人与山海叠成一幅画。",
-      "diary": "站在池边什么也不说，云很低，岛很远，倒影里多了一个安静的我。",
+      "caption": "新亚书院的海与天，是我最难忘的瞬间。",
+      "diary": "新亚书院的海与天，是我最难忘的瞬间。",
       "exif": "4080×3060"
     },
     {
@@ -309,18 +309,18 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "798a48526163097e38495078c7d518d7.jpg",
-      "title": "荷村",
+      "title": "宏村",
       "orient": "landscape",
-      "caption": "荷塘映着白墙灰瓦，远山如黛云欲雨。",
-      "diary": "站在高处看古村落，莲叶铺满水面，红灯笼在檐下轻轻摇。",
+      "caption": "远眺宏村，临街而望，远山如黛，近水生烟。",
+      "diary": "远眺宏村，临街而望，远山如黛，近水生烟。",
       "exif": "1919×1279"
     },
     {
       "file": "831099fb6f51d2f74a5162ca69954c26.jpg",
-      "title": "迷雾",
+      "title": "中环",
       "orient": "landscape",
-      "caption": "白雾里悬着大钟，人影浮在夏天午后。",
-      "diary": "室内突然起雾，看不清路却看得清时间，像夏天做了一个短暂的梦。",
+      "caption": "躲进中环的迷雾里，不想被时间找到。",
+      "diary": "躲进中环的迷雾里，不想被时间找到。",
       "exif": "1046×697"
     },
     {
@@ -333,7 +333,7 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "9546f879631d010cbfc3ac4cc67c17a0.jpg",
-      "title": "港彩",
+      "title": "蓝屋",
       "orient": "portrait",
       "caption": "蓝墙黄屋之间，红色出租车掠过夏日街角。",
       "diary": "湾仔的午后没有烈日，只有层层叠叠的色，和一辆匆匆驶过的红。",
@@ -381,10 +381,10 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "d29c30c4f25f6a947a570d7cc6b78ef1.jpg",
-      "title": "午憩",
+      "title": "花影",
       "orient": "landscape",
-      "caption": "拱门阴影里，一朵红玫瑰替阳光守桌。",
-      "diary": "两把皮椅对坐无声，三十二号的霓虹在暗处微微发亮。",
+      "caption": "来吧，我们在小酒馆里聊聊天。看人影迷乱，树影婆娑。",
+      "diary": "来吧，我们在小酒馆里聊聊天。看人影迷乱，树影婆娑。",
       "exif": "1706×1279"
     },
     {
@@ -392,7 +392,7 @@ const PHOTO_MANIFEST_GENERATED = {
       "title": "绿荫",
       "orient": "landscape",
       "caption": "满墙新绿攀上老屋，红灯笼还未来得及换季。",
-      "diary": "正午的光太硬，藤蔓替木门挡住一半暑气，也遮住半边招牌字。",
+      "diary": "阳光太烈，藤蔓替木门挡住一半暑气。",
       "exif": "1919×1279"
     },
     {
@@ -405,10 +405,10 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "dc4666f23946dd757363bde23485e286.jpg",
-      "title": "入户",
+      "title": "柴扉",
       "orient": "landscape",
-      "caption": "朱联半掩，对门庭院里彩色小网轻轻晃动。",
-      "diary": "戴帽的人只露半张侧脸，门外的光却已经把红色对联照得发烫。",
+      "caption": "在皖南的夏日里，坐在门里，望向另一扇门。",
+      "diary": "在皖南的夏日里，坐在门里，望向另一扇门。",
       "exif": "1919×1279"
     },
     {
@@ -416,7 +416,7 @@ const PHOTO_MANIFEST_GENERATED = {
       "title": "海云",
       "orient": "landscape",
       "caption": "浓云压海，远处小舟划开一整片铅蓝夏日。",
-      "diary": "暴风雨要来没来之间，海与天的交界只剩一条温柔的灰线。",
+      "diary": "暴风雨要来没来之间，海与天的交界只剩一条温柔的灰线。在麦理浩径，你可以走到世界尽头。",
       "exif": "3264×2448"
     },
     {
@@ -432,7 +432,7 @@ const PHOTO_MANIFEST_GENERATED = {
       "title": "小径",
       "orient": "landscape",
       "caption": "檐下写着做你自己，阳光已铺到路的尽头。",
-      "diary": "晴天娃娃挂在墙角，我顺着光影走进更深的绿，哪里都不同也没关系。",
+      "diary": "今天选择了一条不同的路，去寻找无尽的夏天。",
       "exif": "1707×1279"
     }
   ],
@@ -479,10 +479,10 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "606a3b0c40fd500eeac474093845637a.jpg",
-      "title": "红屋",
+      "title": "碎金",
       "orient": "landscape",
       "caption": "林间小屋红得醒目，被金黄与翠绿温柔环抱。",
-      "diary": "沿着小路深入林中，忽然看见那间红屋。秋意在这里，安静得像一首诗。",
+      "diary": "沉思往事立残阳，当时只道是寻常。",
       "exif": "1920×1280"
     },
     {
@@ -503,10 +503,10 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "68cd81b5a9266f696cad6a1cf2d803a8.jpg",
-      "title": "拱桥",
+      "title": "香山",
       "orient": "landscape",
       "caption": "石桥横跨叶池，游人如织，秋色正浓。",
-      "diary": "满池落叶铺成地毯，桥上人来人往。我在人群中，也成了一道秋景。",
+      "diary": "不管是香山红叶和香山秋叶，都美的醉人。",
       "exif": "1706×1279"
     },
     {
@@ -514,7 +514,7 @@ const PHOTO_MANIFEST_GENERATED = {
       "title": "镜影",
       "orient": "portrait",
       "caption": "雕花木镜里，古画与窗光静静相望。",
-      "diary": "镜中映出油画与窗，时光仿佛停在了某个温暖的午后。",
+      "diary": "庆王府的角落，有一个镜子在看油画，我们不要打扰它。",
       "exif": "1279×1706"
     },
     {
@@ -543,7 +543,7 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "e56d7388ca96fd6bc2d0ad62f13cf6d0.jpg",
-      "title": "秋校",
+      "title": "秋日",
       "orient": "landscape",
       "caption": "金树掩映红楼，窗里窗外，皆是秋光。",
       "diary": "校园的银杏黄了，红砖楼映着树影。走在树下，脚步都轻了几分。",
@@ -551,10 +551,10 @@ const PHOTO_MANIFEST_GENERATED = {
     },
     {
       "file": "ff268d9e10ecf9c8607fe679d3d6e0be.jpg",
-      "title": "暮海",
+      "title": "暮色",
       "orient": "portrait",
       "caption": "舷窗框住落日，远船静泊，海天染成金红。",
-      "diary": "坐在船舱里望出去，晚霞与海面相接。这一程归途，被秋日的余晖轻轻托住。",
+      "diary": "暮色苍茫，想起了一首电影的结尾。",
       "exif": "1024×1366"
     }
   ],
@@ -644,7 +644,7 @@ const PHOTO_MANIFEST_GENERATED = {
       "title": "落幕",
       "orient": "portrait",
       "caption": "枯树擎天，彩鸢挂在枝头，「落幕」二字随风轻叹。",
-      "diary": "光秃秃的树上卡着一只褪色的风筝，画面上写着「落幕」，像冬天悄悄收走了最后一场热闹。",
+      "diary": "我不知道风筝从何而来，去往何方，但是它在这里永远停在了树上。",
       "exif": "1279×1604"
     },
     {
