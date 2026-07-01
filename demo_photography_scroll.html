@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>摄影画廊 Demo · 长卷横滑</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=LXGW+WenKai&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/photography-section.css?v=1">
+  <style>
+    :root {
+      --cn-title: 'ZCOOL XiaoWei', serif;
+      --cn-poem: 'LXGW WenKai', serif;
+      --cn-light: 'LXGW WenKai', serif;
+      --english: 'Cormorant Garamond', serif;
+      --text: #2c241b;
+      --soft: #b0a396;
+    }
+    body { margin: 0; background: linear-gradient(180deg, #f8f4ec, #efe8dc); color: var(--text); font-family: var(--cn-light); }
+    .demo-bar {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+      padding: 0.75rem 1rem; background: rgba(248, 244, 236, 0.92);
+      border-bottom: 1px solid rgba(44, 36, 27, 0.08);
+    }
+    .demo-bar a { color: #2c241b; text-decoration: none; font-size: 0.85rem; }
+    .demo-bar a.is-here { color: #b5433a; font-weight: 700; }
+    .demo-wrap { max-width: 100%; margin: 0 auto; padding: 2rem 0 4rem; }
+    .demo-inner { max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
+    h1 { font-family: var(--cn-title); font-weight: 400; letter-spacing: 0.12em; font-size: 1.6rem; }
+    .demo-note { color: var(--soft); font-size: 0.9rem; line-height: 1.8; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <nav class="demo-bar">
+    <strong>四时摄影 Demo</strong>
+    <a href="demo_photography_3d.html">① 3D 瀑布流</a>
+    <a href="demo_photography_darkroom.html">② 暗房显影</a>
+    <a class="is-here" href="demo_photography_scroll.html">③ 长卷横滑</a>
+  </nav>
+  <div class="demo-wrap">
+    <div class="demo-inner">
+      <h1>方案三 · 长卷展开横滑</h1>
+      <p class="demo-note">放弃纵向瀑布，改为横向长卷。中央照片清晰放大，两侧虚化缩小。可拖拽或滚轮横向滑动；上方切换四季。</p>
+    </div>
+    <div class="open-section photo-gallery-section" id="photography">
+      <div class="demo-inner"><nav class="photo-season-nav" aria-label="四季摄影"></nav></div>
+      <div class="photo-masonry"></div>
+    </div>
+  </div>
+  <div class="photo-lightbox" id="photoLightbox" aria-hidden="true">
+    <button type="button" class="photo-lightbox-close" aria-label="关闭">×</button>
+    <div class="photo-lightbox-stage">
+      <img class="photo-lightbox-img" src="" alt="">
+      <div class="photo-lightbox-meta">
+        <p class="lb-index"></p>
+        <p class="lb-title"></p>
+        <p class="lb-caption"></p>
+      </div>
+    </div>
+  </div>
+  <script src="assets/photography-data.js?v=1"></script>
+  <script src="assets/photography-section.js?v=1"></script>
+  <script>initPhotographySection('photography', { mode: 'scroll' });</script>
+</body>
+</html>
