@@ -63,6 +63,29 @@ const PHOTO_ORIENT_PATTERN = [
   'portrait', 'landscape', 'landscape', 'portrait', 'landscape'
 ];
 
+const PHOTO_DIARY = [
+  '那日有风，帘角微动，便按下快门。',
+  '雨停之后，路面映出碎金般的天光。',
+  '在旧巷口徘徊许久，只为等这一束斜照。',
+  '镜头里留着未说完的话，像晾着的字笺。',
+  '光落檐角，梦醒时分，恰好路过。',
+  '行到水穷，云起时按下一张。',
+  '薄暮将至，色彩忽然变得温柔。',
+  '想留住风经过树叶的那一秒。',
+  '远处有钟，近处是静默的影。',
+  '此间风物，皆出自我手与眼。',
+  '冬日午后，炉边光影极淡极长。',
+  '春信来时，枝头先绿了一寸。',
+  '夏夜潮声远，近处只剩路灯。',
+  '秋深叶落，石径上响着细碎声。',
+  '港城夜雨，霓虹在水面揉碎。',
+  '游园偶得，不贵重，却想分享。',
+  '纸窗透进半阙月色，便足矣。',
+  '苔痕上阶绿，镜头比诗更慢。',
+  '风起时，画面忽然有了呼吸。',
+  '片刻凝驻，长久回响。'
+];
+
 function padPhotoId(n) {
   return String(n).padStart(2, '0');
 }
@@ -89,6 +112,8 @@ function buildPhotoItems(season) {
       season,
       title,
       caption: PHOTO_CAPTIONS[i % PHOTO_CAPTIONS.length],
+      diary: PHOTO_DIARY[i % PHOTO_DIARY.length],
+      exif: `f/${(1.8 + (i % 4) * 0.7).toFixed(1)} · 1/${200 + i * 17}s · ISO ${100 + (i % 5) * 100} · ${28 + (i % 3) * 7}mm`,
       orient,
       aspect,
       src: photoLocalSrc(season, id),
