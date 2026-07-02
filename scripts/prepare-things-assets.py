@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""从 GitHub 上传原图生成物有灵犀精确素材。"""
+"""从上传原图/矢量图生成物有灵犀主站素材。"""
 
 from __future__ import annotations
 
@@ -8,18 +8,22 @@ from io import BytesIO
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFilter, ImageOps
+from PIL import Image, ImageFilter, ImageOps
 from rembg import remove
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / 'assets/things/ui'
+ITEM_OUT = OUT / 'items'
 CURTAIN_OUT = OUT / 'curtain'
 
 SRC_BUCKET = ROOT / '签筒2.png'
-SRC_PATTERN_COMPOSED = ROOT / '加入暗纹背景效果.png'
-SRC_PATTERN_ADV = ROOT / '进阶版.png'
-SRC_CURTAIN = ROOT / '垂帘参考 加千纸鹤和风铃.png'
-PATTERN_MAX = 520
+SRC_PATTERN = ROOT / '暗纹素材新.png'
+SRC_PATTERN_REF = ROOT / '加入暗纹背景效果.png'
+SRC_CRANE = ROOT / '千纸鹤.png'
+SRC_CHIME1 = ROOT / '风铃1.png'
+SRC_CHIME2 = ROOT / '风铃2.png'
+PHOTO_DIR = ROOT / 'assets/things/ui/processed/original'
+PATTERN_MAX = 560
 
 
 def save_png(img: Image.Image, path: Path) -> None:
@@ -38,21 +42,7 @@ def resize_longest(img: Image.Image, max_px: int) -> Image.Image:
     return img.resize((int(w * s), int(h * s)), Image.Resampling.LANCZOS)
 
 
-def alpha_from_paper(img: Image.Image, *, white_thresh: float = 238.0) -> Image.Image:
-    """把纸白背景抠成透明，保留暗纹/鹤/风铃等墨色线条。"""
-    arr = np.array(img.convert('RGBA')).astype(np.float32)
-    r, g, b = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2]
-    lum = 0.299 * r + 0.587 * g + 0.114 * b
-    sat = np.sqrt(((arr[:, :, :3] - arr[:, :, :3].mean(axis=2, keepdims=True)) ** 2).sum(axis=2))
-    # 纸白 → 透明；淡墨/彩线 → 保留
-    alpha = np.clip((white_thresh - lum) / 42.0, 0, 1)
-    alpha *= np.clip(sat / 18.0, 0.35, 1.0)
-    alpha = np.clip(alpha, 0, 1)
-    arr[:, :, 3] = (alpha * 255).astype(np.uint8)
-    return Image.fromarray(arr.astype(np.uint8))
-
-
-def trim_alpha(img: Image.Image, pad: int = 4) -> Image.Image:
+def trim_alpha(img: Image.Image, pad: int = 2) -> Image.Image:
     a = img.split()[-1]
     bbox = a.getbbox()
     if not bbox:
@@ -61,146 +51,113 @@ def trim_alpha(img: Image.Image, pad: int = 4) -> Image.Image:
     return img.crop((max(0, x0 - pad), max(0, y0 - pad), x1 + pad, y1 + pad))
 
 
-def process_bucket() -> None:
-    img = Image.open(SRC_BUCKET).convert('RGBA')
+def alpha_from_paper(img: Image.Image, white_thresh: float = 236.0) -> Image.Image:
+    arr = np.array(img.convert('RGBA')).astype(np.float32)
+    r, g, b = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2]
+    lum = 0.299 * r + 0.587 * g + 0.114 * b
+    sat = np.sqrt(((arr[:, :, :3] - arr[:, :, :3].mean(axis=2, keepdims=True)) ** 2).sum(axis=2))
+    alpha = np.clip((white_thresh - lum) / 48.0, 0, 1)
+    alpha *= np.clip(sat / 16.0, 0.3, 1.0)
+    alpha = np.clip(alpha, 0, 1)
+    arr[:, :, 3] = (alpha * 255).astype(np.uint8)
+    return Image.fromarray(arr.astype(np.uint8))
+
+
+def fade_half(img: Image.Image, side: str) -> Image.Image:
+    arr = np.array(img).astype(np.float32)
+    ww = arr.shape[1]
+    for x in range(ww):
+        t = x / max(ww - 1, 1)
+        fade = t if side == 'left' else (1 - t)
+        fade = np.clip(fade ** 0.42, 0, 1)
+        arr[:, x, 3] *= fade
+    return Image.fromarray(arr.astype(np.uint8))
+
+
+def cutout_soft(img: Image.Image, feather: int = 6) -> Image.Image:
     cut = remove(img)
     if isinstance(cut, bytes):
         cut = Image.open(BytesIO(cut)).convert('RGBA')
     cut = trim_alpha(cut)
+    a = cut.split()[-1]
+    a = a.filter(ImageFilter.GaussianBlur(feather))
+    cut.putalpha(a)
+    return cut
+
+
+def process_bucket() -> None:
+    cut = cutout_soft(Image.open(SRC_BUCKET).convert('RGBA'), feather=4)
     save_png(cut, OUT / 'lot-bucket-2.png')
 
 
 def process_patterns() -> None:
-    """从进阶版/合成效果图提取透明暗纹，避免纸白网格渗出。"""
-    composed = resize_longest(Image.open(SRC_PATTERN_COMPOSED).convert('RGBA'), PATTERN_MAX)
-    adv = resize_longest(Image.open(SRC_PATTERN_ADV).convert('RGBA'), PATTERN_MAX)
-    cw, ch = composed.size
-    aw, ah = adv.size
+    ref = resize_longest(Image.open(SRC_PATTERN_REF).convert('RGBA'), PATTERN_MAX)
+    pat = resize_longest(Image.open(SRC_PATTERN).convert('RGBA'), PATTERN_MAX)
+    w, h = pat.size
 
-    center = alpha_from_paper(composed.crop((cw // 4, 0, 3 * cw // 4, ch)))
-    center = trim_alpha(center)
+    center_src = alpha_from_paper(ref.crop((w // 4, 0, 3 * w // 4, h)), white_thresh=232.0)
+    center = trim_alpha(center_src)
     save_png(center, OUT / 'dark-pattern.png')
 
-    left_src = alpha_from_paper(adv.crop((0, 0, aw // 2, ah)))
-    right_src = alpha_from_paper(adv.crop((aw // 2, 0, aw, ah)))
-    save_png(trim_alpha(left_src), OUT / 'dark-pattern-half-left.png')
-    save_png(trim_alpha(right_src), OUT / 'dark-pattern-half-right.png')
+    left = trim_alpha(alpha_from_paper(pat.crop((0, 0, w // 2, h)), white_thresh=234.0))
+    right = trim_alpha(alpha_from_paper(pat.crop((w // 2, 0, w, h)), white_thresh=234.0))
+    save_png(fade_half(left, 'left'), OUT / 'dark-pattern-half-left.png')
+    save_png(fade_half(right, 'right'), OUT / 'dark-pattern-half-right.png')
 
 
-def classify_blob(bw: int, bh: int, area: int) -> str | None:
-    aspect = bw / max(bh, 1)
-    if area < 180 or bw < 12 or bh < 12:
-        return None
-    # 排除横排文字、垂帘竖线
-    if aspect > 3.2 and bh < 72:
-        return None
-    if aspect < 0.22 and bh > 100:
-        return None
-    if area > 180000 or bw > 520 or bh > 160:
-        return None
-    if aspect < 0.38 and 40 <= bh <= 100:
-        return 'chime'
-    if 0.45 <= aspect <= 3.0 and 280 <= area <= 42000:
-        return 'crane'
-    if aspect < 0.55 and bh > bw and 400 <= area <= 8000:
-        return 'chime'
-    return None
-
-
-def curtain_foreground_mask(img: Image.Image) -> np.ndarray:
+def process_vector_sprite(src: Path, out: Path, max_px: int = 220) -> dict:
+    img = ImageOps.exif_transpose(Image.open(src).convert('RGBA'))
     arr = np.array(img).astype(np.float32)
-    r, g, b = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2]
-    lum = 0.299 * r + 0.587 * g + 0.114 * b
-    sat = np.abs(r - g) + np.abs(g - b) + np.abs(r - b)
-    fg = (lum < 235) & (lum > 42) & (sat > 12)
-    return fg
+    lum = 0.299 * arr[:, :, 0] + 0.587 * arr[:, :, 1] + 0.114 * arr[:, :, 2]
+    sat = np.abs(arr[:, :, 0] - arr[:, :, 1]) + np.abs(arr[:, :, 1] - arr[:, :, 2])
+    fg = (lum < 238) & (sat > 8)
+    out_arr = arr.copy()
+    out_arr[:, :, 3] = np.where(fg, out_arr[:, :, 3], 0)
+    cut = trim_alpha(Image.fromarray(out_arr.astype(np.uint8)))
+    cut = resize_longest(cut, max_px)
+    save_png(cut, out)
+    return {'file': str(out.relative_to(ROOT)).replace('\\', '/'), 'w': cut.size[0], 'h': cut.size[1]}
 
 
-def extract_curtain_sprites() -> list[dict]:
-    ref = ImageOps.exif_transpose(Image.open(SRC_CURTAIN).convert('RGBA'))
-    rw, rh = ref.size
-    work_w = 1600
-    scale = work_w / rw
-    img = ref.resize((work_w, int(rh * scale)), Image.Resampling.LANCZOS)
-    fg = curtain_foreground_mask(img)
-    mask = (fg.astype(np.uint8) * 255)
-    mask = Image.fromarray(mask).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.MinFilter(3))
-    m = np.array(mask)
-    h, w = m.shape
-    visited = np.zeros_like(m, dtype=bool)
-    blobs: list[dict] = []
-
-    for y in range(h):
-        for x in range(w):
-            if not m[y, x] or visited[y, x]:
-                continue
-            stack = [(x, y)]
-            minx = maxx = x
-            miny = maxy = y
-            count = 0
-            while stack:
-                cx, cy = stack.pop()
-                if cx < 0 or cy < 0 or cx >= w or cy >= h:
-                    continue
-                if visited[cy, cx] or not m[cy, cx]:
-                    continue
-                visited[cy, cx] = True
-                count += 1
-                minx, miny = min(minx, cx), min(miny, cy)
-                maxx, maxy = max(maxx, cx), max(maxy, cy)
-                stack.extend([(cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)])
-            bw, bh = maxx - minx + 1, maxy - miny + 1
-            kind = classify_blob(bw, bh, count)
-            if not kind:
-                continue
-            pad = 10
-            crop = img.crop((max(0, minx - pad), max(0, miny - pad), min(w, maxx + pad), min(h, maxy + pad)))
-            # 用 mask 把背景清掉
-            ca = np.array(crop)
-            cm = curtain_foreground_mask(crop)
-            ca[:, :, 3] = np.where(cm, ca[:, :, 3], 0)
-            crop = Image.fromarray(ca)
-            alpha = np.array(crop.split()[-1])
-            ys, xs = np.where(alpha > 40)
-            if len(xs) == 0:
-                continue
-            crop = crop.crop((xs.min(), ys.min(), xs.max() + 1, ys.max() + 1))
-            blobs.append({'kind': kind, 'area': count, 'image': crop, 'cx': (minx + maxx) / 2})
-
-    cranes = sorted([b for b in blobs if b['kind'] == 'crane'], key=lambda b: b['cx'])
-    chimes = sorted([b for b in blobs if b['kind'] == 'chime'], key=lambda b: -b['area'])
-    selected = cranes[:9] + chimes[:4]
-    if len(selected) < 6:
-        selected = sorted(blobs, key=lambda b: -b['area'])[:10]
-
+def process_curtain_vectors() -> list[dict]:
     CURTAIN_OUT.mkdir(parents=True, exist_ok=True)
     for p in CURTAIN_OUT.glob('*.png'):
-        if not p.name.startswith('_'):
-            p.unlink()
-
+        p.unlink()
     meta = []
-    counters = {'crane': 0, 'chime': 0}
-    for blob in selected:
-        kind = blob['kind']
-        counters[kind] += 1
-        name = f'{kind}-{counters[kind]:02d}.png'
-        save_png(blob['image'], CURTAIN_OUT / name)
-        meta.append({
-            'file': f'assets/things/ui/curtain/{name}',
-            'kind': kind,
-            'w': blob['image'].size[0],
-            'h': blob['image'].size[1],
-        })
-
+    crane = process_vector_sprite(SRC_CRANE, CURTAIN_OUT / 'crane-master.png', 120)
+    crane['kind'] = 'crane'
+    meta.append(crane)
+    for i, src in enumerate([SRC_CHIME1, SRC_CHIME2], 1):
+        ch = process_vector_sprite(src, CURTAIN_OUT / f'chime-{i:02d}.png', 72)
+        ch['kind'] = 'chime'
+        meta.append(ch)
     (OUT / 'curtain-sprites.json').write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding='utf-8')
     return meta
+
+
+def soft_edge_photo(src: Path, out: Path) -> None:
+    img = Image.open(src).convert('RGBA')
+    cut = cutout_soft(img, feather=8)
+    save_png(cut, out)
+
+
+def process_item_photos() -> list[str]:
+    ITEM_OUT.mkdir(parents=True, exist_ok=True)
+    files = sorted(PHOTO_DIR.glob('*.jpg'))[:12]
+    paths = []
+    for i, src in enumerate(files, 1):
+        out = ITEM_OUT / f'{i:02d}-soft.png'
+        soft_edge_photo(src, out)
+        paths.append(str(out.relative_to(ROOT)).replace('\\', '/'))
+    return paths
 
 
 def main() -> None:
     process_bucket()
     process_patterns()
-    sprites = extract_curtain_sprites()
-    print(f'curtain sprites: {len(sprites)}')
+    sprites = process_curtain_vectors()
+    photos = process_item_photos()
+    print(f'curtain sprites: {len(sprites)}, item photos: {len(photos)}')
 
 
 if __name__ == '__main__':
