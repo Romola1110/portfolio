@@ -15,13 +15,17 @@ for f in "$ROOT"/*.pdf; do
   [ -f "$f" ] && cp "$f" "$OUT/"
 done
 
+# Only root assets referenced by the live site
 for f in yuwei.ttf yuweifanti.ttf 1.jpg 1.png 2.png 3.png; do
   [ -f "$ROOT/$f" ] && cp "$ROOT/$f" "$OUT/"
 done
 
 while IFS= read -r -d '' f; do
-  cp "$f" "$OUT/"
-done < <(find "$ROOT" -maxdepth 1 -type f \( -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' \) ! -name 'Screenshot*' -print0)
+  base="$(basename "$f")"
+  case "$base" in
+    反诈最强音.png) cp "$f" "$OUT/" ;;
+  esac
+done < <(find "$ROOT" -maxdepth 1 -type f -name '*.png' -print0)
 
 mkdir -p "$OUT/assets"
 cp -r "$ROOT/assets/." "$OUT/assets/"
