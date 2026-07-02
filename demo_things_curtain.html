@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>垂帘千纸鹤 · 物有灵犀 Demo — 楊雪琪</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/things-section.css?v=12">
+  <style>
+    :root {
+      --bg: #F2EDF8; --text: #2D2536; --soft: #8A92B0; --accent: #D88CA8;
+      --g1: #E2DDF2; --g2: #F5DDEB;
+      --cn-classic: 'LXGW WenKai', 'ZCOOL XiaoWei', serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--cn-classic);
+      color: var(--text);
+      min-height: 100vh;
+      background: radial-gradient(circle at 12% 18%, var(--g1) 0%, transparent 55%),
+        radial-gradient(circle at 82% 28%, var(--g2) 0%, transparent 50%), var(--bg);
+    }
+    .demo-banner {
+      text-align: center;
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+      color: var(--soft);
+      background: rgba(255,255,255,0.4);
+      border-bottom: 1px dashed color-mix(in srgb, var(--accent) 25%, transparent);
+      line-height: 1.6;
+    }
+    .demo-banner a { color: var(--accent); }
+    .content-wrapper { max-width: 1080px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    #things-curtain-demo.open-section { opacity: 1; transform: none; }
+    #things-curtain-demo .curtain-stage { min-height: 520px; overflow: visible; }
+    #things-curtain-demo .curtain-thread .thread-hangs { max-height: 480px; }
+  </style>
+</head>
+<body class="spring">
+  <div class="demo-banner">
+    Demo · 垂帘 / 签筒 / 暗纹 调试页（未接入主站）·
+    <a href="index%20(1).html">返回主页</a>
+  </div>
+
+  <div class="content-wrapper">
+    <section class="open-section things-v6 things-curtain-demo visible" id="things-curtain-demo" style="max-width:1080px;">
+      <div class="things-title-row">
+        <div class="things-title-main">
+          <h2 class="section-title">物有灵犀 · 垂帘 Demo</h2>
+        </div>
+        <p class="section-en things-title-en">— Curtain &amp; lot bucket preview</p>
+      </div>
+
+      <div class="things-hero">
+        <div class="things-welcome">
+          <p class="verse">
+            此页用于调试垂帘串联、暗纹旋转与抽签交互。<br>
+            确认效果后再合并入主站。
+          </p>
+        </div>
+
+        <div class="draw-zone" id="thingsDrawZone">
+          <div class="pattern-side pattern-side--left" aria-hidden="true">
+            <img src="assets/things/ui/dark-pattern-half-left.png" alt="">
+          </div>
+          <div class="pattern-side pattern-side--right" aria-hidden="true">
+            <img src="assets/things/ui/dark-pattern-half-right.png" alt="">
+          </div>
+          <div class="lot-scene">
+            <div class="pattern-center" aria-hidden="true">
+              <img src="assets/things/ui/dark-pattern.png" alt="">
+            </div>
+            <div class="lot-bucket" role="button" tabindex="0" aria-label="签筒">
+              <img class="bucket-art" src="assets/things/ui/lot-bucket-2.png" alt="" width="219" height="297">
+            </div>
+          </div>
+          <div class="stick-flyout" aria-hidden="true"></div>
+          <div class="draw-panel">
+            <p class="draw-hint">摇签后，对应垂帘签纸会标记为已展<br>亦可直接点击垂帘上的签纸</p>
+            <button type="button" class="draw-btn"><span class="draw-btn-inner">摇一支签</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="curtain-gallery">
+        <p class="curtain-label">展笺 · 垂幕如许</p>
+        <div class="curtain-stage">
+          <div class="curtain-bar" aria-hidden="true"></div>
+          <div class="curtain-threads"></div>
+        </div>
+      </div>
+
+      <div class="thing-modal"></div>
+    </section>
+  </div>
+
+  <script src="assets/things-section.js?v=12"></script>
+  <script>
+    (async () => {
+      try {
+        const res = await fetch('assets/things/ui/curtain-sprites.json');
+        window.CURTAIN_SPRITES = await res.json();
+      } catch (e) {
+        console.warn('curtain-sprites.json load failed', e);
+      }
+      initThingsSection('things-curtain-demo');
+    })();
+  </script>
+</body>
+</html>

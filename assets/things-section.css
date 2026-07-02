@@ -2461,6 +2461,10 @@
   pointer-events: none;
 }
 
+#things.open-section.things-v6:not(.things-curtain-demo) .curtain-chain {
+  display: none;
+}
+
 #things.open-section.things-v6 .pattern-center img {
   width: 100%;
   height: 100%;
