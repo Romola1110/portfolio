@@ -1,0 +1,177 @@
+/* 垂帘 Demo 独立样式 — 不污染主站 */
+.demo-banner {
+  text-align: center;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  color: #8a92b0;
+  background: rgba(255,255,255,0.5);
+  border-bottom: 1px dashed rgba(216,140,168,0.35);
+  font-family: 'LXGW WenKai', serif;
+}
+.demo-banner a { color: #c07088; }
+.demo-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  background: linear-gradient(180deg, #f8f4ec, #f2edf8 40%, #f8f4ec);
+  min-height: 100vh;
+}
+.demo-curtain .demo-heading {
+  text-align: center;
+  font-family: 'LXGW WenKai', serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 0.4rem;
+}
+.demo-curtain .demo-sub {
+  text-align: center;
+  font-size: 0.88rem;
+  color: #8a92b0;
+  margin-bottom: 1.5rem;
+}
+.demo-curtain .draw-zone {
+  position: relative;
+  min-height: 280px;
+  margin-bottom: 1.5rem;
+}
+.demo-curtain .lot-scene {
+  position: relative;
+  width: 200px;
+  height: 260px;
+  margin: 0 auto;
+}
+.demo-curtain .pattern-center {
+  position: absolute;
+  inset: -12px -20px;
+  opacity: 0.36;
+  pointer-events: none;
+}
+.demo-curtain .pattern-center img { width: 100%; height: 100%; object-fit: contain; }
+.demo-curtain .draw-zone.is-drawing .pattern-center img {
+  animation: patternSpinCW 2.4s ease-in-out forwards;
+}
+.demo-curtain .lot-bucket {
+  position: relative;
+  z-index: 2;
+  width: 180px;
+  height: 250px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.demo-curtain .lot-bucket.shaking { animation: vesselShake 0.5s ease-in-out; transform-origin: 50% 85%; }
+.demo-curtain .bucket-art { width: 100%; height: 100%; object-fit: contain; }
+.demo-curtain .draw-panel { text-align: center; margin-top: 0.5rem; }
+.demo-curtain .draw-btn {
+  font-family: 'LXGW WenKai', serif;
+  border: 1px solid #5a4838;
+  background: transparent;
+  padding: 0.55rem 1.6rem;
+  cursor: pointer;
+  letter-spacing: 0.15em;
+}
+.demo-curtain .curtain-stage {
+  position: relative;
+  min-height: 440px;
+  padding: 0 0.5rem 1.5rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent 60%);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.demo-curtain .curtain-bar {
+  height: 5px;
+  margin: 0 4%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, transparent, rgba(120,100,80,0.35), transparent);
+}
+.demo-curtain .curtain-threads {
+  position: relative;
+  height: 400px;
+  margin-top: 4px;
+}
+.demo-curtain .demo-thread {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--tx);
+  width: 0;
+  transform: translateX(-50%);
+}
+.demo-curtain .demo-thread-rope {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(100,80,60,0.45), rgba(100,80,60,0.08));
+}
+.demo-curtain .demo-thread-decor {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  transform: translateX(-50%);
+  color: rgba(90, 75, 55, 0.75);
+  z-index: 2;
+}
+.demo-curtain .demo-crane { width: 28px; height: auto; display: block; }
+.demo-curtain .demo-chime { width: 14px; height: auto; display: block; }
+.demo-curtain .demo-thread-tags { position: relative; height: 100%; }
+.demo-curtain .demo-tag {
+  position: absolute;
+  left: 50%;
+  top: var(--top);
+  transform: translateX(-50%);
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  animation: demoTagSwing 4s ease-in-out infinite;
+}
+.demo-curtain .demo-tag.is-drawn { opacity: 0.38; cursor: default; }
+.demo-curtain .demo-tag-line {
+  display: block;
+  width: 1px;
+  height: 18px;
+  margin: 0 auto;
+  background: rgba(100,80,60,0.25);
+}
+.demo-curtain .demo-tag-card {
+  display: block;
+  min-width: 52px;
+  padding: 0.35rem 0.4rem 0.45rem;
+  background: linear-gradient(180deg, #faf6ee, #efe6d6);
+  border: 1px solid rgba(120,100,80,0.2);
+  border-radius: 2px;
+  box-shadow: 0 3px 8px rgba(80,60,40,0.08);
+  clip-path: polygon(2% 0, 98% 0, 100% 3%, 99% 97%, 96% 100%, 4% 100%, 0 96%, 1% 4%);
+}
+.demo-curtain .demo-tag-glyph {
+  display: block;
+  font-family: 'LXGW WenKai', serif;
+  font-size: 1.1rem;
+  color: #4a3828;
+}
+.demo-curtain .demo-tag-name {
+  display: block;
+  font-size: 0.62rem;
+  color: #8a7a68;
+  margin-top: 0.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 64px;
+}
+@keyframes demoTagSwing {
+  0%, 100% { transform: translateX(-50%) rotate(-1deg); }
+  50% { transform: translateX(-50%) rotate(1.5deg); }
+}
+@keyframes patternSpinCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(180deg); }
+}
+@keyframes vesselShake {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-4deg); }
+  40% { transform: rotate(4deg); }
+  60% { transform: rotate(-3deg); }
+  80% { transform: rotate(2deg); }
+}
