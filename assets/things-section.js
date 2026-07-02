@@ -4,18 +4,18 @@
  * v4: Demo #things-demo.things-v4（信封直抽）
  */
 const THINGS_DATA = [
-  { id: 'c1', name: '隶香残帖', signLabel: '墨痕签', signature: '—— 雪琪手书', note: '临帖未完，余墨先走。', story: '那一笔拖得太长，像一句没说完的话。我留着它，像留一扇半掩的门，等风来读完。', verse: '墨停处，风也轻了半寸。', blessing: '愿君笔下有山河，纸上无尘埃。', ph: 'ph-calligraphy', glyph: '墨', image: 'assets/things/ui/items/01-soft.png' },
-  { id: 'c2', name: '雨窗小楷', signLabel: '夜雨签', signature: '—— 枕书人', note: '窗上的水痕，成了字距。', story: '小楷要慢。那晚窗外有雨，我便写得更慢，仿佛字迹落进涟漪里。', verse: '字越小，心越静。', blessing: '夜雨敲窗时，有人为你留一盏灯。', ph: 'ph-calligraphy', glyph: '雨', image: 'assets/things/ui/items/02-soft.png' },
-  { id: 'd1', name: '暮春试色', signLabel: '春意签', signature: '—— 染香斋', note: '颜料晕开，像情绪找到形状。', story: '本想试一抹色，整张卡却先绿了起来，像春天悄悄落进掌心。', verse: '春色不必满纸，一点就够。', blessing: '愿君眉目有春光，行路有花香。', ph: 'ph-dye', glyph: '染', image: 'assets/things/ui/items/03-soft.png' },
-  { id: 'd2', name: '海盐蓝调', signLabel: '海色签', signature: '—— 听潮客', note: '冷色里藏着一点暖。', story: '染到第三遍，才觉得像海边的风——咸的、轻的、不肯停。', verse: '深浅之间，自有分寸。', blessing: '愿君心似海平，远帆有归期。', ph: 'ph-dye', glyph: '蓝', image: 'assets/things/ui/items/04-soft.png' },
-  { id: 'b1', name: '银杏叶签', signLabel: '叶脉签', signature: '—— 拾叶人', note: '夹在书页之间，替思绪留住页码。', story: '那片叶子是在校园里捡的。书翻到哪一页，它就在哪一页等我。', verse: '翻页时，请轻一点。', blessing: '愿君秋日有闲步，脚下有落叶的金。', ph: 'ph-bookmark', glyph: '叶', image: 'assets/things/ui/items/05-soft.png' },
-  { id: 'b2', name: '绳结纸签', signLabel: '绳结签', signature: '—— 手作人', note: '棉线绕了三圈，系住未读完的章节。', story: '绳结可以重系，有些句子却不能。我便把念想让棉线替我说完。', verse: '系紧一点，别弄丢正在读的自己。', blessing: '愿君所系皆温柔，所读皆入心。', ph: 'ph-bookmark', glyph: '签', image: 'assets/things/ui/items/06-soft.png' },
-  { id: 'p1', name: '折扇小稿', signLabel: '折扇签', signature: '—— 雪琪', note: '扇骨未上，画意先满。', story: '折扇合拢时，画藏在时间里；展开时，才肯给人看半分风景。', verse: '收合之间，皆是风景。', blessing: '愿君怀中有清风，扇面有远山。', ph: 'ph-paper', glyph: '扇', image: 'assets/things/ui/items/07-soft.png' },
-  { id: 'p2', name: '港城明信片', signLabel: '邮笺签', signature: '—— 远行人', note: '写了一半地址，寄给自己。', story: '最动人的明信片，常常是还没贴邮票的那一面——字已抵达，人还在路上。', verse: '未寄出的，最懂远方。', blessing: '愿君行处有灯火，归途有等候。', ph: 'ph-paper', glyph: '城', image: 'assets/things/ui/items/08-soft.png' },
-  { id: 'p3', name: '手撕纸边集', signLabel: '毛边签', signature: '—— 雪琪', note: '毛边比直线诚实。', story: '撕纸那一下，往往比剪刀更听手的话。不规则的边，是手作留下的体温。', verse: '不整齐处，最像手作。', blessing: '愿君敢爱不规则的美，敢留真实的痕。', ph: 'ph-paper', glyph: '纸', image: 'assets/things/ui/items/09-soft.png' },
-  { id: 'c3', name: '信笺草稿', signLabel: '笺墨签', signature: '—— 雪琪', note: '写给未来的自己。', story: '删了又写，最后留下一行：别急着长大。墨迹浅了，心意却深了。', verse: '草稿里，住着真话。', blessing: '愿君对己温柔，对岁月诚实。', ph: 'ph-calligraphy', glyph: '信', image: 'assets/things/ui/items/10-soft.png' },
-  { id: 'd3', name: '枫叶渐层', signLabel: '秋晕签', signature: '—— 染秋人', note: '秋意在纸上慢慢渗透。', story: '这一张染了一个下午，窗外真的起了风，叶色便悄悄爬上纸面。', verse: '等色定，心也定。', blessing: '愿君秋日有静观，心间有暖色。', ph: 'ph-dye', glyph: '枫', image: 'assets/things/ui/items/11-soft.png' },
-  { id: 'b3', name: '烫金细签', signLabel: '微光签', signature: '—— 雪琪', note: '光落在字上，像加了标点。', story: '烫金会脱，但某一瞬的亮是真的。我留住那瞬，像留住一句祝福。', verse: '微光处，值得停留。', blessing: '愿君平凡日子里，常有微光乍现。', ph: 'ph-bookmark', glyph: '金', image: 'assets/things/ui/items/12-soft.png' }
+  { id: 'c1', name: '秋风归舟笺', signLabel: '秋风签', signature: '—— 雪琪手书', note: '长条行草，墨势如风。', story: '纸上是“怎耐秋风凄凉”的旧句，笔锋起落像船过江心。它不是悲声，更像把心事写给晚风。', verse: '秋声落纸，归意满舟。', blessing: '愿君逢风不惊，归途自明。', ph: 'ph-calligraphy', glyph: '秋', image: 'assets/things/ui/processed/original/01-045cb3d0cec8f28e23eb81e01be066de.jpg' },
+  { id: 'c2', name: '和光同尘双签', signLabel: '和光签', signature: '—— 枕书人', note: '双流苏书签，字在水彩上开花。', story: '左签写“和光同尘”，右签落“腹有诗书”，像把温柔与锋芒并排系在书页里。', verse: '心有诗书，步履生光。', blessing: '愿君藏锋而不藏志，温润亦有锋芒。', ph: 'ph-calligraphy', glyph: '和', image: 'assets/things/ui/processed/original/02-07ace9576db66c0b16db23c12fe3ee4e.jpg' },
+  { id: 'd1', name: '金龙红福笺', signLabel: '金福签', signature: '—— 染香斋', note: '朱红底上金字与龙纹相映。', story: '“逢”字落在正中，像把热烈的新年气压进纸纤维，抬眼就有喜气扑面。', verse: '一纸金红，万事逢春。', blessing: '愿君所逢皆吉，所愿皆成。', ph: 'ph-dye', glyph: '福', image: 'assets/things/ui/processed/original/03-228ca3a499cf924d100e4a3bec82abc7.jpg' },
+  { id: 'd2', name: '港城迎新明信片', signLabel: '港城签', signature: '—— 听潮客', note: '手写 welcome 与贴纸并置，像旅程起点。', story: '“下一站，CUHK!!”写得很大，像一口气把勇气写满卡片，寄给还未抵达的自己。', verse: '山海未远，前路可期。', blessing: '愿君远行有光，初见即欢。', ph: 'ph-dye', glyph: '港', image: 'assets/things/ui/processed/original/04-2568c6df2a6c63cd721067ee7102ff70.jpg' },
+  { id: 'b1', name: '月吻花笺', signLabel: '花吻签', signature: '—— 拾叶人', note: '粉色半透便笺，英诗与花贴重叠。', story: '“sunlight、moonbeams、sea breeze”三句被剪贴在一起，像把轻柔的爱意分行收藏。', verse: '月色轻吻，花影成诗。', blessing: '愿君被温柔轻轻环抱，被爱悄悄应答。', ph: 'ph-bookmark', glyph: '月', image: 'assets/things/ui/processed/original/05-2743242f6133414515bbe88127c9f880.jpg' },
+  { id: 'b2', name: '蓝夜万圣小卡', signLabel: '夜蓝签', signature: '—— 手作人', note: '幽蓝底色与小幽灵，节日气息轻灵。', story: '“圣诞还没开始，月光先把季节照亮”，一张卡把万圣夜写成温柔的夜航。', verse: '月光微寒，心火仍暖。', blessing: '愿君夜行有灯，怪可爱而梦不惊。', ph: 'ph-bookmark', glyph: '夜', image: 'assets/things/ui/processed/original/06-2a0ff0f29195957ed52d1ccd86a95189.jpg' },
+  { id: 'p1', name: '愿愿兼得双签', signLabel: '愿成签', signature: '—— 雪琪', note: '两枚手作书签并列，粉紫晕染。', story: '“绝对幸运”与“愿愿兼得”并排，像是给生活的双重注脚：既盼好运，也盼心愿落地。', verse: '愿望有声，幸运有形。', blessing: '愿君所念皆有回响，所愿皆能兼得。', ph: 'ph-paper', glyph: '愿', image: 'assets/things/ui/processed/original/07-3342d23334b32db5fc096dc62d3e79da.jpg' },
+  { id: 'p2', name: '樱桃芭蕉笺', signLabel: '樱蕉签', signature: '—— 远行人', note: '纯白长签，墨字简净。', story: '“念了樱桃红，芭蕉浅”这句写得克制，像春夏交界时一口很轻的叹息。', verse: '樱红初醒，蕉影微凉。', blessing: '愿君心中常有四时，眼底常有新色。', ph: 'ph-paper', glyph: '樱', image: 'assets/things/ui/processed/original/08-382474fe42c4d93735d4dd0675de3d18.jpg' },
+  { id: 'p3', name: '晨铃粉珠签', signLabel: '晨铃签', signature: '—— 雪琪', note: '横向签纸与粉珠手链相映。', story: '“晨钟催鸿门”旁缀一圈粉珠，像在利落笔触外，多加了一层柔软的回音。', verse: '铃声一动，晨意先来。', blessing: '愿君清晨有好消息，黄昏有好心情。', ph: 'ph-paper', glyph: '铃', image: 'assets/things/ui/processed/original/09-39e3893ea792f14056d35ef163eaefef.jpg' },
+  { id: 'c3', name: '蓝雾情书碎片', signLabel: '夜语签', signature: '—— 雪琪', note: '撕边蓝纸，白墨英文像雾。', story: '“The night is moist...”被写在一片蓝雾里，右上角纸鹤像一封尚未寄出的晚安。', verse: '夜色微湿，情话无声。', blessing: '愿君有人可念，有夜可安。', ph: 'ph-calligraphy', glyph: '爱', image: 'assets/things/ui/processed/original/10-4a204e9a96f5a80f4c7c2570a668e837.jpg' },
+  { id: 'd3', name: '逢考必过红笺', signLabel: '必过签', signature: '—— 染秋人', note: '红底金字，手持拍摄更显热烈。', story: '“逢考必过!!”写得直白又可爱，是把焦虑化成祝福的最有效咒语。', verse: '金字一落，心定笔稳。', blessing: '愿君落笔生花，逢考必过。', ph: 'ph-dye', glyph: '考', image: 'assets/things/ui/processed/original/11-594b42125f596fc8a1fdf642929c210f.jpg' },
+  { id: 'b3', name: '绝对幸运流苏签', signLabel: '幸运签', signature: '—— 雪琪', note: '红流苏与珐琅耳饰，吉意明亮。', story: '“绝对幸运”落在粉绿晕染中央，像把好运具体地系在指尖，一看就想带走。', verse: '流苏轻摆，福意自来。', blessing: '愿君今日有小确幸，明日有大如愿。', ph: 'ph-bookmark', glyph: '运', image: 'assets/things/ui/processed/original/12-649013fd915f7db5f073405b1d623abd.jpg' }
 ];
 
 const TREE_SLOTS = [
@@ -538,8 +538,9 @@ function renderChainMarkup(threadIndex) {
   const chimes = sprites.filter((s) => s.kind === 'chime');
   const chime = chimes[threadIndex % Math.max(chimes.length, 1)] || crane;
   const parts = [];
-  const craneW = Math.round((crane?.w || 56) * (0.78 + (threadIndex % 4) * 0.06));
-  const chimeW = Math.round((chime?.w || 36) * 0.82);
+  const craneW = Math.round((crane?.w || 56) * (0.72 + (threadIndex % 4) * 0.08));
+  const craneW2 = Math.round(craneW * (0.8 + (threadIndex % 3) * 0.04));
+  const chimeW = Math.round((chime?.w || 36) * (0.78 + (threadIndex % 2) * 0.08));
   const craneRot = (threadIndex % 2 === 0 ? -8 : 7) + (threadIndex % 3);
   const delay = ((threadIndex * 0.35) % 2.2).toFixed(2);
 
@@ -547,10 +548,15 @@ function renderChainMarkup(threadIndex) {
     `<img class="chain-sprite chain-sprite--crane" src="${crane.file}" alt="" aria-hidden="true" ` +
     `style="--sprite-w:${craneW}px;--sprite-rot:${craneRot}deg;--chain-delay:${delay}s">`
   );
-  parts.push('<span class="chain-connector" style="--link-h:14px"></span>');
+  parts.push('<span class="chain-connector" style="--link-h:10px"></span>');
   parts.push(
     `<img class="chain-sprite chain-sprite--chime" src="${chime.file}" alt="" aria-hidden="true" ` +
     `style="--sprite-w:${chimeW}px;--sprite-rot:${-craneRot * 0.5}deg;--chain-delay:${(Number(delay) + 0.4).toFixed(2)}s">`
+  );
+  parts.push('<span class="chain-connector" style="--link-h:12px"></span>');
+  parts.push(
+    `<img class="chain-sprite chain-sprite--crane" src="${crane.file}" alt="" aria-hidden="true" ` +
+    `style="--sprite-w:${craneW2}px;--sprite-rot:${-craneRot * 0.7}deg;--chain-delay:${(Number(delay) + 0.8).toFixed(2)}s">`
   );
   return `<div class="curtain-chain">${parts.join('')}</div>`;
 }
