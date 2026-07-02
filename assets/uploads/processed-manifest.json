@@ -1,189 +1,220 @@
 [
   {
-    "category": "cutout",
-    "name": "01-045cb3d0cec8f28e23eb81e01be066de.png",
+    "category": "atmosphere",
+    "name": "01-045cb3d0cec8f28e23eb81e01be066de.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/045cb3d0cec8f28e23eb81e01be066de.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/01-045cb3d0cec8f28e23eb81e01be066de.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/01-045cb3d0cec8f28e23eb81e01be066de.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "cutout",
-    "name": "02-07ace9576db66c0b16db23c12fe3ee4e.png",
+    "category": "atmosphere",
+    "name": "02-07ace9576db66c0b16db23c12fe3ee4e.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/07ace9576db66c0b16db23c12fe3ee4e.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/02-07ace9576db66c0b16db23c12fe3ee4e.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/02-07ace9576db66c0b16db23c12fe3ee4e.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "cutout",
-    "name": "03-228ca3a499cf924d100e4a3bec82abc7.png",
+    "category": "atmosphere",
+    "name": "03-228ca3a499cf924d100e4a3bec82abc7.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/228ca3a499cf924d100e4a3bec82abc7.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/03-228ca3a499cf924d100e4a3bec82abc7.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/03-228ca3a499cf924d100e4a3bec82abc7.jpg",
+    "profile": "moody"
   },
   {
-    "category": "cutout",
-    "name": "04-2568c6df2a6c63cd721067ee7102ff70.png",
+    "category": "atmosphere",
+    "name": "04-2568c6df2a6c63cd721067ee7102ff70.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/2568c6df2a6c63cd721067ee7102ff70.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/04-2568c6df2a6c63cd721067ee7102ff70.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/04-2568c6df2a6c63cd721067ee7102ff70.jpg",
+    "profile": "chromatic"
   },
   {
-    "category": "cutout",
-    "name": "05-2743242f6133414515bbe88127c9f880.png",
+    "category": "atmosphere",
+    "name": "05-2743242f6133414515bbe88127c9f880.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/2743242f6133414515bbe88127c9f880.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/05-2743242f6133414515bbe88127c9f880.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/05-2743242f6133414515bbe88127c9f880.jpg",
+    "profile": "neutral"
   },
   {
-    "category": "cutout",
-    "name": "06-2a0ff0f29195957ed52d1ccd86a95189.png",
+    "category": "atmosphere",
+    "name": "06-2a0ff0f29195957ed52d1ccd86a95189.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/2a0ff0f29195957ed52d1ccd86a95189.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/06-2a0ff0f29195957ed52d1ccd86a95189.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/06-2a0ff0f29195957ed52d1ccd86a95189.jpg",
+    "profile": "neutral"
   },
   {
-    "category": "cutout",
-    "name": "07-3342d23334b32db5fc096dc62d3e79da.png",
+    "category": "atmosphere",
+    "name": "07-3342d23334b32db5fc096dc62d3e79da.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/3342d23334b32db5fc096dc62d3e79da.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/07-3342d23334b32db5fc096dc62d3e79da.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/07-3342d23334b32db5fc096dc62d3e79da.jpg",
+    "profile": "neutral"
   },
   {
-    "category": "cutout",
-    "name": "08-382474fe42c4d93735d4dd0675de3d18.png",
+    "category": "atmosphere",
+    "name": "08-382474fe42c4d93735d4dd0675de3d18.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/382474fe42c4d93735d4dd0675de3d18.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/08-382474fe42c4d93735d4dd0675de3d18.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/08-382474fe42c4d93735d4dd0675de3d18.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "cutout",
-    "name": "09-39e3893ea792f14056d35ef163eaefef.png",
+    "category": "atmosphere",
+    "name": "09-39e3893ea792f14056d35ef163eaefef.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/39e3893ea792f14056d35ef163eaefef.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/09-39e3893ea792f14056d35ef163eaefef.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/09-39e3893ea792f14056d35ef163eaefef.jpg",
+    "profile": "neutral"
   },
   {
-    "category": "cutout",
-    "name": "10-4a204e9a96f5a80f4c7c2570a668e837.png",
+    "category": "atmosphere",
+    "name": "10-4a204e9a96f5a80f4c7c2570a668e837.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/4a204e9a96f5a80f4c7c2570a668e837.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/10-4a204e9a96f5a80f4c7c2570a668e837.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/10-4a204e9a96f5a80f4c7c2570a668e837.jpg",
+    "profile": "neutral"
   },
   {
-    "category": "cutout",
-    "name": "11-594b42125f596fc8a1fdf642929c210f.png",
+    "category": "atmosphere",
+    "name": "11-594b42125f596fc8a1fdf642929c210f.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/594b42125f596fc8a1fdf642929c210f.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/11-594b42125f596fc8a1fdf642929c210f.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/11-594b42125f596fc8a1fdf642929c210f.jpg",
+    "profile": "chromatic"
   },
   {
-    "category": "cutout",
-    "name": "12-649013fd915f7db5f073405b1d623abd.png",
+    "category": "atmosphere",
+    "name": "12-649013fd915f7db5f073405b1d623abd.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/649013fd915f7db5f073405b1d623abd.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/12-649013fd915f7db5f073405b1d623abd.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/12-649013fd915f7db5f073405b1d623abd.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "cutout",
-    "name": "13-6624e8fa6f7a5efa6e5fe9637d360d7d.png",
+    "category": "atmosphere",
+    "name": "13-6624e8fa6f7a5efa6e5fe9637d360d7d.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/6624e8fa6f7a5efa6e5fe9637d360d7d.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/13-6624e8fa6f7a5efa6e5fe9637d360d7d.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/13-6624e8fa6f7a5efa6e5fe9637d360d7d.jpg",
+    "profile": "neutral"
   },
   {
-    "category": "cutout",
-    "name": "14-7c70fa12cff3303dd93581944e0bc7c0.png",
+    "category": "atmosphere",
+    "name": "14-7c70fa12cff3303dd93581944e0bc7c0.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/7c70fa12cff3303dd93581944e0bc7c0.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/14-7c70fa12cff3303dd93581944e0bc7c0.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/14-7c70fa12cff3303dd93581944e0bc7c0.jpg",
+    "profile": "neutral"
   },
   {
-    "category": "cutout",
-    "name": "15-8914693783c46f96074b21cbaa4a8c02.png",
+    "category": "atmosphere",
+    "name": "15-8914693783c46f96074b21cbaa4a8c02.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/8914693783c46f96074b21cbaa4a8c02.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/15-8914693783c46f96074b21cbaa4a8c02.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/15-8914693783c46f96074b21cbaa4a8c02.jpg",
+    "profile": "chromatic"
   },
   {
-    "category": "cutout",
-    "name": "16-8ca0b77243e08a4bdeab9bd88b24df33.png",
+    "category": "atmosphere",
+    "name": "16-8ca0b77243e08a4bdeab9bd88b24df33.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/8ca0b77243e08a4bdeab9bd88b24df33.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/16-8ca0b77243e08a4bdeab9bd88b24df33.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/16-8ca0b77243e08a4bdeab9bd88b24df33.jpg",
+    "profile": "moody"
   },
   {
-    "category": "cutout",
-    "name": "17-93df591a21606a3717b4818967ab136d.png",
+    "category": "atmosphere",
+    "name": "17-93df591a21606a3717b4818967ab136d.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/93df591a21606a3717b4818967ab136d.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/17-93df591a21606a3717b4818967ab136d.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/17-93df591a21606a3717b4818967ab136d.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "cutout",
-    "name": "18-Weixin-Image_20260630150147_408_7.png",
+    "category": "atmosphere",
+    "name": "18-Weixin-Image_20260630150147_408_7.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/Weixin Image_20260630150147_408_7.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/18-Weixin-Image_20260630150147_408_7.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/18-Weixin-Image_20260630150147_408_7.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "cutout",
-    "name": "19-Weixin-Image_20260630150211_409_7.png",
+    "category": "atmosphere",
+    "name": "19-Weixin-Image_20260630150211_409_7.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/Weixin Image_20260630150211_409_7.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/19-Weixin-Image_20260630150211_409_7.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/19-Weixin-Image_20260630150211_409_7.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "cutout",
-    "name": "20-a6130df9f5fbb3eec84b2afe76c519ac.png",
+    "category": "atmosphere",
+    "name": "20-a6130df9f5fbb3eec84b2afe76c519ac.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/a6130df9f5fbb3eec84b2afe76c519ac.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/20-a6130df9f5fbb3eec84b2afe76c519ac.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/20-a6130df9f5fbb3eec84b2afe76c519ac.jpg",
+    "profile": "cool"
   },
   {
-    "category": "cutout",
-    "name": "21-c07c517b56607920359cd3b455605fe2.png",
+    "category": "atmosphere",
+    "name": "21-c07c517b56607920359cd3b455605fe2.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/c07c517b56607920359cd3b455605fe2.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/21-c07c517b56607920359cd3b455605fe2.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/21-c07c517b56607920359cd3b455605fe2.jpg",
+    "profile": "cool"
   },
   {
-    "category": "cutout",
-    "name": "22-cbb996e5f255c70cbbf4ce32192a5dd5.png",
+    "category": "atmosphere",
+    "name": "22-cbb996e5f255c70cbbf4ce32192a5dd5.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/cbb996e5f255c70cbbf4ce32192a5dd5.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/22-cbb996e5f255c70cbbf4ce32192a5dd5.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/22-cbb996e5f255c70cbbf4ce32192a5dd5.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "cutout",
-    "name": "23-e51cc7f5fb7b805295ce89534c119647.png",
+    "category": "atmosphere",
+    "name": "23-e51cc7f5fb7b805295ce89534c119647.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/e51cc7f5fb7b805295ce89534c119647.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/23-e51cc7f5fb7b805295ce89534c119647.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/23-e51cc7f5fb7b805295ce89534c119647.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "cutout",
-    "name": "24-f07d7542b38b589c5708305833c27897.png",
+    "category": "atmosphere",
+    "name": "24-f07d7542b38b589c5708305833c27897.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/f07d7542b38b589c5708305833c27897.jpg",
-    "output": "/workspace/assets/things/ui/processed/cutout/24-f07d7542b38b589c5708305833c27897.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/24-f07d7542b38b589c5708305833c27897.jpg",
+    "profile": "chromatic"
   },
   {
-    "category": "cutout",
-    "name": "25-抠图.png",
+    "category": "atmosphere",
+    "name": "25-抠图.jpg",
     "source": "assets/uploads/1-cutout-src/直接抠图/抠图.png",
-    "output": "/workspace/assets/things/ui/processed/cutout/25-抠图.png"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/25-抠图.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "bg_beauty",
-    "name": "01-08adf296715c8d0cd59fd6621d032967.jpg",
+    "category": "atmosphere",
+    "name": "26-08adf296715c8d0cd59fd6621d032967.jpg",
     "source": "assets/uploads/2-bg-beauty-src/需要美化或换背景/08adf296715c8d0cd59fd6621d032967.jpg",
-    "output": "/workspace/assets/things/ui/processed/bg-beauty/01-08adf296715c8d0cd59fd6621d032967.jpg"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/26-08adf296715c8d0cd59fd6621d032967.jpg",
+    "profile": "chromatic"
   },
   {
-    "category": "bg_beauty",
-    "name": "02-1df58a490b8e5e7506b6a12299c16bc5.jpg",
+    "category": "atmosphere",
+    "name": "27-1df58a490b8e5e7506b6a12299c16bc5.jpg",
     "source": "assets/uploads/2-bg-beauty-src/需要美化或换背景/1df58a490b8e5e7506b6a12299c16bc5.jpg",
-    "output": "/workspace/assets/things/ui/processed/bg-beauty/02-1df58a490b8e5e7506b6a12299c16bc5.jpg"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/27-1df58a490b8e5e7506b6a12299c16bc5.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "bg_beauty",
-    "name": "03-2e3c8a9a961ec188ad82940859716b33.jpg",
+    "category": "atmosphere",
+    "name": "28-2e3c8a9a961ec188ad82940859716b33.jpg",
     "source": "assets/uploads/2-bg-beauty-src/需要美化或换背景/2e3c8a9a961ec188ad82940859716b33.jpg",
-    "output": "/workspace/assets/things/ui/processed/bg-beauty/03-2e3c8a9a961ec188ad82940859716b33.jpg"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/28-2e3c8a9a961ec188ad82940859716b33.jpg",
+    "profile": "warm_light"
   },
   {
-    "category": "bg_beauty",
-    "name": "04-93cae8fcf788321994fe5c4398bc6f58.jpg",
+    "category": "atmosphere",
+    "name": "29-93cae8fcf788321994fe5c4398bc6f58.jpg",
     "source": "assets/uploads/2-bg-beauty-src/需要美化或换背景/93cae8fcf788321994fe5c4398bc6f58.jpg",
-    "output": "/workspace/assets/things/ui/processed/bg-beauty/04-93cae8fcf788321994fe5c4398bc6f58.jpg"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/29-93cae8fcf788321994fe5c4398bc6f58.jpg",
+    "profile": "chromatic"
   },
   {
-    "category": "bg_beauty",
-    "name": "05-df27d4087fc4e522eda03a637d9565af.jpg",
+    "category": "atmosphere",
+    "name": "30-df27d4087fc4e522eda03a637d9565af.jpg",
     "source": "assets/uploads/2-bg-beauty-src/需要美化或换背景/df27d4087fc4e522eda03a637d9565af.jpg",
-    "output": "/workspace/assets/things/ui/processed/bg-beauty/05-df27d4087fc4e522eda03a637d9565af.jpg"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/30-df27d4087fc4e522eda03a637d9565af.jpg",
+    "profile": "neutral"
   },
   {
-    "category": "bg_beauty",
-    "name": "06-e6875e72ba40f53d791c210fed56d091.jpg",
+    "category": "atmosphere",
+    "name": "31-e6875e72ba40f53d791c210fed56d091.jpg",
     "source": "assets/uploads/2-bg-beauty-src/需要美化或换背景/e6875e72ba40f53d791c210fed56d091.jpg",
-    "output": "/workspace/assets/things/ui/processed/bg-beauty/06-e6875e72ba40f53d791c210fed56d091.jpg"
+    "output": "/workspace/assets/things/ui/processed/atmosphere/31-e6875e72ba40f53d791c210fed56d091.jpg",
+    "profile": "neutral"
   },
   {
     "category": "as_is",
