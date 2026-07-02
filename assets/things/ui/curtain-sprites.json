@@ -1,0 +1,80 @@
+[
+  {
+    "file": "assets/things/ui/curtain/crane-01.png",
+    "kind": "crane",
+    "w": 146,
+    "h": 114
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-02.png",
+    "kind": "crane",
+    "w": 73,
+    "h": 101
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-03.png",
+    "kind": "crane",
+    "w": 62,
+    "h": 62
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-04.png",
+    "kind": "crane",
+    "w": 41,
+    "h": 58
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-05.png",
+    "kind": "crane",
+    "w": 43,
+    "h": 63
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-06.png",
+    "kind": "crane",
+    "w": 41,
+    "h": 57
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-07.png",
+    "kind": "crane",
+    "w": 56,
+    "h": 55
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-08.png",
+    "kind": "crane",
+    "w": 45,
+    "h": 60
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-09.png",
+    "kind": "crane",
+    "w": 41,
+    "h": 52
+  },
+  {
+    "file": "assets/things/ui/curtain/chime-01.png",
+    "kind": "chime",
+    "w": 70,
+    "h": 138
+  },
+  {
+    "file": "assets/things/ui/curtain/chime-02.png",
+    "kind": "chime",
+    "w": 34,
+    "h": 97
+  },
+  {
+    "file": "assets/things/ui/curtain/chime-03.png",
+    "kind": "chime",
+    "w": 36,
+    "h": 62
+  },
+  {
+    "file": "assets/things/ui/curtain/chime-04.png",
+    "kind": "chime",
+    "w": 29,
+    "h": 51
+  }
+]

@@ -103,6 +103,14 @@
   50% { transform: translate(4px, -5px) rotate(2deg); opacity: 1; }
 }
 
+#photography .photo-title-row--plain {
+  justify-content: center;
+}
+
+#photography .photo-title-row--plain .photo-title-center {
+  flex: 0 1 auto;
+}
+
 #photography .section-desc {
   margin: 1.1rem auto 0;
   max-width: none;

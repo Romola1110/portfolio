@@ -2403,24 +2403,101 @@
 
 #things.open-section.things-v6 .draw-zone {
   flex: none;
-  width: 100%;
-  max-width: 400px;
+  width: min(920px, 100%);
+  max-width: none;
   margin: 0 auto 2.2rem;
-  min-height: auto;
-  padding: 0;
+  min-height: 320px;
+  padding: 0 0 0.5rem;
   background: transparent;
   border: none;
   box-shadow: none;
   position: relative;
+  overflow: visible;
+}
+
+#things.open-section.things-v6 .pattern-side {
+  position: absolute;
+  top: 50%;
+  width: min(200px, 24vw);
+  height: min(220px, 28vw);
+  transform: translateY(-52%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.42;
+}
+
+#things.open-section.things-v6 .pattern-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: opacity(0.95);
+  transition: transform 0.2s linear;
+}
+
+#things.open-section.things-v6 .pattern-side--left {
+  left: max(-12px, -2vw);
+  object-position: right center;
+}
+
+#things.open-section.things-v6 .pattern-side--right {
+  right: max(-12px, -2vw);
+  object-position: left center;
+}
+
+#things.open-section.things-v6 .lot-scene {
+  position: relative;
+  width: 240px;
+  height: 280px;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+#things.open-section.things-v6 .pattern-center {
+  position: absolute;
+  inset: -18px -28px;
+  z-index: 0;
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+#things.open-section.things-v6 .pattern-center img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.2s linear;
+}
+
+#things.open-section.things-v6 .draw-zone.is-drawing .pattern-center img {
+  animation: patternSpinCW 2.8s ease-in-out forwards;
+}
+
+#things.open-section.things-v6 .draw-zone.is-drawing .pattern-side--left img {
+  animation: patternSpinCCW 2.8s ease-in-out forwards;
+}
+
+#things.open-section.things-v6 .draw-zone.is-drawing .pattern-side--right img {
+  animation: patternSpinCW 2.8s ease-in-out forwards;
+}
+
+@keyframes patternSpinCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(180deg); }
+}
+
+@keyframes patternSpinCCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-180deg); }
 }
 
 #things.open-section.things-v6 .lot-bucket {
   position: relative;
-  width: 168px;
-  height: 210px;
-  margin: 0 auto 0.85rem;
+  width: 200px;
+  height: 260px;
+  margin: 0 auto;
   cursor: pointer;
   transition: transform 0.35s ease;
+  z-index: 2;
 }
 
 #things.open-section.things-v6 .lot-bucket:hover {
@@ -2537,7 +2614,7 @@
 
 #things.open-section.things-v6 .curtain-stage {
   position: relative;
-  min-height: 520px;
+  min-height: 580px;
   padding: 0 1.5rem 2.5rem;
   background:
     radial-gradient(ellipse 70% 55% at 18% 22%, rgba(210, 225, 215, 0.22), transparent 68%),
@@ -2566,31 +2643,39 @@
   z-index: 1;
 }
 
-#things.open-section.things-v6 .curtain-crane {
+#things.open-section.things-v6 .curtain-chain {
   position: absolute;
-  opacity: 0.72;
-  filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.5));
-  animation: craneDrift 7s ease-in-out infinite;
-  animation-delay: var(--crane-delay, 0s);
+  left: 50%;
+  top: 8px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  z-index: 1;
 }
 
-#things.open-section.things-v6 .curtain-chime {
-  position: absolute;
-  width: 14px;
-  opacity: 0.55;
-  transform-origin: top center;
-  animation: chimeSway 4.2s ease-in-out infinite;
-  animation-delay: var(--chime-delay, 0s);
+#things.open-section.things-v6 .chain-sprite {
+  display: block;
+  height: auto;
+  filter: drop-shadow(0 2px 5px rgba(255, 255, 255, 0.35));
+  animation: chainFloat 5s ease-in-out infinite;
+  animation-delay: var(--chain-delay, 0s);
 }
 
-@keyframes craneDrift {
-  0%, 100% { transform: translateY(0) rotate(var(--crane-rot, 0deg)); }
-  50% { transform: translateY(-6px) rotate(calc(var(--crane-rot, 0deg) + 4deg)); }
+#things.open-section.things-v6 .chain-sprite--crane { width: var(--sprite-w, 42px); }
+#things.open-section.things-v6 .chain-sprite--chime { width: var(--sprite-w, 16px); opacity: 0.82; }
+
+#things.open-section.things-v6 .chain-connector {
+  display: block;
+  width: 1px;
+  height: var(--link-h, 14px);
+  background: linear-gradient(180deg, rgba(90, 75, 55, 0.45), rgba(90, 75, 55, 0.12));
 }
 
-@keyframes chimeSway {
-  0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
+@keyframes chainFloat {
+  0%, 100% { transform: translateY(0) rotate(var(--sprite-rot, 0deg)); }
+  50% { transform: translateY(-3px) rotate(calc(var(--sprite-rot, 0deg) + 2deg)); }
 }
 
 #things.open-section.things-v6 .curtain-bar {
@@ -2606,7 +2691,7 @@
 
 #things.open-section.things-v6 .curtain-threads {
   position: relative;
-  min-height: 500px;
+  min-height: 560px;
   margin-top: 6px;
   z-index: 2;
 }
@@ -2640,6 +2725,16 @@
   position: relative;
   width: 0;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#things.open-section.things-v6 .tag-link {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(var(--hang-top) - 22px);
 }
 
 #things.open-section.things-v6 .curtain-tag {
@@ -2703,13 +2798,29 @@
   max-width: 68px;
   padding: 0.5rem 0.38rem 0.6rem;
   background:
+    repeating-linear-gradient(transparent, transparent 10px, rgba(180, 160, 130, 0.06) 10px, rgba(180, 160, 130, 0.06) 11px),
     linear-gradient(175deg, rgba(255, 254, 249, 0.96), rgba(249, 243, 232, 0.9));
   border: 1px solid rgba(160, 140, 110, 0.16);
-  border-radius: 3px;
+  border-radius: 0;
   box-shadow:
     0 6px 16px rgba(60, 45, 30, 0.06),
     inset 0 0 10px rgba(255, 255, 255, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  clip-path: polygon(
+    1% 3%, 6% 0%, 14% 4%, 22% 1%, 32% 5%, 42% 0%, 52% 4%, 62% 1%, 72% 5%, 82% 0%, 92% 4%, 99% 2%,
+    100% 97%, 94% 100%, 84% 96%, 74% 100%, 64% 95%, 54% 100%, 44% 96%, 34% 100%, 24% 95%, 14% 100%, 4% 96%, 0% 98%
+  );
+  position: relative;
+}
+
+#things.open-section.things-v6 .curtain-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 30% 0%, rgba(255, 255, 255, 0.35), transparent 55%);
+  mix-blend-mode: screen;
+  clip-path: inherit;
 }
 
 #things.open-section.things-v6 .curtain-tag:not(.is-drawn):hover .curtain-card {
