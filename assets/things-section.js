@@ -515,17 +515,63 @@ function buildRopeLayout(items) {
   return { slots, totalWidth: cursor + 56 };
 }
 
+const THREAD_POSITIONS = [6, 17, 29, 44, 58, 73, 88];
+
+function craneSvg() {
+  return `<svg class="curtain-crane" viewBox="0 0 48 32" width="38" height="26" style="--crane-rot:${(Math.random() * 12 - 6).toFixed(1)}deg;--crane-delay:${(Math.random() * 2).toFixed(2)}s" aria-hidden="true">
+    <path d="M8 18 L24 10 L40 16 L32 14 L28 20 L20 18 Z" fill="rgba(255,255,255,0.88)" stroke="rgba(120,110,95,0.2)" stroke-width="0.6"/>
+    <path d="M24 10 L24 4" stroke="rgba(120,110,95,0.25)" stroke-width="0.8" fill="none"/>
+  </svg>`;
+}
+
+function chimeSvg() {
+  return `<svg class="curtain-chime" viewBox="0 0 16 42" style="--chime-delay:${(Math.random() * 2.5).toFixed(2)}s" aria-hidden="true">
+    <line x1="8" y1="0" x2="8" y2="10" stroke="rgba(100,85,65,0.35)" stroke-width="0.8"/>
+    <path d="M4 10 H12 L10 22 Q8 26 6 22 Z" fill="rgba(200,185,155,0.55)" stroke="rgba(120,100,75,0.2)" stroke-width="0.5"/>
+    <circle cx="8" cy="30" r="2.2" fill="rgba(180,165,130,0.5)"/>
+    <line x1="8" y1="32" x2="8" y2="38" stroke="rgba(140,120,90,0.3)" stroke-width="0.6"/>
+  </svg>`;
+}
+
+let _chimeCtx = null;
+let _chimeLast = 0;
+function playChime() {
+  const now = Date.now();
+  if (now - _chimeLast < 900) return;
+  _chimeLast = now;
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    if (!_chimeCtx) _chimeCtx = new Ctx();
+    if (_chimeCtx.state === 'suspended') _chimeCtx.resume();
+    const t = _chimeCtx.currentTime;
+    [880, 1175].forEach((freq, i) => {
+      const o = _chimeCtx.createOscillator();
+      const g = _chimeCtx.createGain();
+      o.type = 'sine';
+      o.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.04, t + 0.02 + i * 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.55 + i * 0.05);
+      o.connect(g).connect(_chimeCtx.destination);
+      o.start(t + i * 0.03);
+      o.stop(t + 0.7);
+    });
+  } catch (_) { /* optional audio */ }
+}
+
 function initThingsV6(root) {
   const bucket = root.querySelector('.lot-bucket');
   const drawBtn = root.querySelector('.draw-btn');
   const stickFly = root.querySelector('.stick-flyout');
   const curtainThreads = root.querySelector('.curtain-threads');
+  const curtainDecor = root.querySelector('.curtain-decor');
   const modal = root.querySelector('.thing-modal');
 
   let lastDrawId = null;
   let drawing = false;
   const drawnIds = new Set();
-  const THREAD_COUNT = 5;
+  const THREAD_COUNT = THREAD_POSITIONS.length;
 
   function renderThumb(item) {
     if (item.image) return `<img src="${item.image}" alt="${item.name}" loading="lazy">`;
@@ -545,21 +591,44 @@ function initThingsV6(root) {
       </button>`;
   }
 
+  function renderCurtainDecor() {
+    if (!curtainDecor) return;
+    const cranes = [
+      { left: '8%', top: '12%', scale: 1.1 },
+      { left: '22%', top: '28%', scale: 0.85 },
+      { left: '68%', top: '8%', scale: 1 },
+      { left: '84%', top: '22%', scale: 0.9 },
+      { left: '52%', top: '18%', scale: 0.75 },
+    ];
+    const chimes = [
+      { left: '12%', top: '2%' },
+      { left: '38%', top: '0%' },
+      { left: '62%', top: '1%' },
+      { left: '88%', top: '3%' },
+    ];
+    curtainDecor.innerHTML =
+      cranes.map(c => `<div style="position:absolute;left:${c.left};top:${c.top};transform:scale(${c.scale})">${craneSvg()}</div>`).join('') +
+      chimes.map(c => `<div style="position:absolute;left:${c.left};top:${c.top}">${chimeSvg()}</div>`).join('');
+  }
+
   function renderCurtain() {
     if (!curtainThreads) return;
     const buckets = Array.from({ length: THREAD_COUNT }, () => []);
     THINGS_DATA.forEach((item, i) => buckets[i % THREAD_COUNT].push(item));
     curtainThreads.innerHTML = buckets.map((items, ti) => {
-      const tx = 8 + (ti / Math.max(THREAD_COUNT - 1, 1)) * 84;
-      const hangs = items.map((item, hi) =>
-        renderCurtainTag(item, 36 + hi * 78 + (ti % 2) * 12, (ti * 0.35 + hi * 0.18) % 2.4)
-      ).join('');
+      const tx = THREAD_POSITIONS[ti];
+      const hangs = items.map((item, hi) => {
+        const hangTop = 44 + hi * 118 + (ti % 3) * 16 + (hi % 2) * 22;
+        const delay = (ti * 0.42 + hi * 0.24) % 2.8;
+        return renderCurtainTag(item, hangTop, delay);
+      }).join('');
       return `
         <div class="curtain-thread" style="--tx:${tx}%">
           <span class="thread-line" aria-hidden="true"></span>
           <div class="thread-hangs">${hangs}</div>
         </div>`;
     }).join('');
+    renderCurtainDecor();
   }
 
   function markCurtainDrawn(id) {
@@ -584,6 +653,7 @@ function initThingsV6(root) {
 
   function openBookmarkModal(item) {
     if (!modal) return;
+    window.scheduleDrawVineTree?.();
     modal.innerHTML = `
       <div class="thing-modal-box modal-bookmark-only">
         <div class="bookmark-sheet bookmark-sheet--modal">
@@ -612,6 +682,7 @@ function initThingsV6(root) {
   function closeModal() {
     modal?.classList.remove('open');
     if (modal) modal.onclick = null;
+    window.scheduleDrawVineTree?.();
   }
 
   function drawLot() {
@@ -634,6 +705,7 @@ function initThingsV6(root) {
         lastDrawId = item.id;
         markCurtainDrawn(item.id);
         openBookmarkModal(item);
+        playChime();
         if (drawBtn) {
           drawBtn.disabled = false;
           const inner = drawBtn.querySelector('.draw-btn-inner');
@@ -653,6 +725,7 @@ function initThingsV6(root) {
   curtainThreads?.addEventListener('click', e => {
     const tag = e.target.closest('.curtain-tag:not(.is-drawn)');
     if (!tag || drawing) return;
+    playChime();
     const item = THINGS_DATA.find(t => t.id === tag.dataset.id);
     if (item) {
       lastDrawId = item.id;
@@ -663,6 +736,7 @@ function initThingsV6(root) {
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   renderCurtain();
+  window.scheduleDrawVineTree?.();
 }
 
 /* ---------- v3 主站（保留签筒逻辑）---------- */
