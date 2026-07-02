@@ -4,18 +4,18 @@
  * v4: Demo #things-demo.things-v4（信封直抽）
  */
 const THINGS_DATA = [
-  { id: 'c1', name: '隶意残帖', signLabel: '墨痕签', note: '临帖未完，余墨先走。', story: '那一笔拖得太长，像一句没说完的话。我留着它，像留一扇半掩的门。', verse: '墨停处，风也轻了半寸。', ph: 'ph-calligraphy', glyph: '墨', image: null },
-  { id: 'c2', name: '雨夜小楷', signLabel: '夜雨签', note: '窗上的水痕，成了字距。', story: '小楷要慢。那晚窗外有雨，我便写得更慢。', verse: '字越小，心越静。', ph: 'ph-calligraphy', glyph: '雨', image: null },
-  { id: 'd1', name: '暮春试色', signLabel: '春意签', note: '颜料晕开，像情绪找到形状。', story: '本想试一抹色，整张卡却先绿了起来。', verse: '春色不必满纸，一点就够。', ph: 'ph-dye', glyph: '染', image: null },
-  { id: 'd2', name: '海盐蓝调', signLabel: '海色签', note: '冷色里藏着一点暖。', story: '染到第三遍，才觉得像海边的风。', verse: '深浅之间，自有分寸。', ph: 'ph-dye', glyph: '蓝', image: null },
-  { id: 'b1', name: '银杏叶签', signLabel: '叶脉签', note: '夹在书页之间，替思绪留住页码。', story: '那片叶子是在校园里捡的。书翻到哪一页，它就在哪一页等我。', verse: '翻页时，请轻一点。', ph: 'ph-bookmark', glyph: '叶', image: null },
-  { id: 'b2', name: '绳结纸签', signLabel: '绳结签', note: '棉线绕了三圈。', story: '绳结可以重系，有些句子却不能。', verse: '系紧一点，别弄丢正在读的自己。', ph: 'ph-bookmark', glyph: '签', image: null },
-  { id: 'p1', name: '折扇小稿', signLabel: '折扇签', note: '扇骨未上，画意先满。', story: '折扇合拢时，画藏在时间里；展开时，才肯给人看。', verse: '收合之间，皆是风景。', ph: 'ph-paper', glyph: '扇', image: null },
-  { id: 'p2', name: '港城明信片', signLabel: '邮笺签', note: '写了一半地址，寄给自己。', story: '最动人的明信片，常常是还没贴邮票的那一面。', verse: '未寄出的，最懂远方。', ph: 'ph-paper', glyph: '城', image: null },
-  { id: 'p3', name: '手撕纸边集', signLabel: '毛边签', note: '毛边比直线诚实。', story: '撕纸那一下，往往比剪刀更听手的话。', verse: '不整齐处，最像手作。', ph: 'ph-paper', glyph: '纸', image: null },
-  { id: 'c3', name: '信笺草稿', signLabel: '笺墨签', note: '写给未来的自己。', story: '删了又写，最后留下一行：别急着长大。', verse: '草稿里，住着真话。', ph: 'ph-calligraphy', glyph: '信', image: null },
-  { id: 'd3', name: '枫叶渐层', signLabel: '秋晕签', note: '秋意在纸上慢慢渗透。', story: '这一张染了一个下午，窗外真的起了风。', verse: '等色定，心也定。', ph: 'ph-dye', glyph: '枫', image: null },
-  { id: 'b3', name: '烫金细签', signLabel: '微光签', note: '光落在字上，像加了标点。', story: '烫金会脱，但某一瞬的亮是真的。', verse: '微光处，值得停留。', ph: 'ph-bookmark', glyph: '金', image: null }
+  { id: 'c1', name: '隶香残帖', signLabel: '墨痕签', signature: '—— 雪琪手书', note: '临帖未完，余墨先走。', story: '那一笔拖得太长，像一句没说完的话。我留着它，像留一扇半掩的门，等风来读完。', verse: '墨停处，风也轻了半寸。', blessing: '愿君笔下有山河，纸上无尘埃。', ph: 'ph-calligraphy', glyph: '墨', image: 'assets/things/ui/items/01-soft.png' },
+  { id: 'c2', name: '雨窗小楷', signLabel: '夜雨签', signature: '—— 枕书人', note: '窗上的水痕，成了字距。', story: '小楷要慢。那晚窗外有雨，我便写得更慢，仿佛字迹落进涟漪里。', verse: '字越小，心越静。', blessing: '夜雨敲窗时，有人为你留一盏灯。', ph: 'ph-calligraphy', glyph: '雨', image: 'assets/things/ui/items/02-soft.png' },
+  { id: 'd1', name: '暮春试色', signLabel: '春意签', signature: '—— 染香斋', note: '颜料晕开，像情绪找到形状。', story: '本想试一抹色，整张卡却先绿了起来，像春天悄悄落进掌心。', verse: '春色不必满纸，一点就够。', blessing: '愿君眉目有春光，行路有花香。', ph: 'ph-dye', glyph: '染', image: 'assets/things/ui/items/03-soft.png' },
+  { id: 'd2', name: '海盐蓝调', signLabel: '海色签', signature: '—— 听潮客', note: '冷色里藏着一点暖。', story: '染到第三遍，才觉得像海边的风——咸的、轻的、不肯停。', verse: '深浅之间，自有分寸。', blessing: '愿君心似海平，远帆有归期。', ph: 'ph-dye', glyph: '蓝', image: 'assets/things/ui/items/04-soft.png' },
+  { id: 'b1', name: '银杏叶签', signLabel: '叶脉签', signature: '—— 拾叶人', note: '夹在书页之间，替思绪留住页码。', story: '那片叶子是在校园里捡的。书翻到哪一页，它就在哪一页等我。', verse: '翻页时，请轻一点。', blessing: '愿君秋日有闲步，脚下有落叶的金。', ph: 'ph-bookmark', glyph: '叶', image: 'assets/things/ui/items/05-soft.png' },
+  { id: 'b2', name: '绳结纸签', signLabel: '绳结签', signature: '—— 手作人', note: '棉线绕了三圈，系住未读完的章节。', story: '绳结可以重系，有些句子却不能。我便把念想让棉线替我说完。', verse: '系紧一点，别弄丢正在读的自己。', blessing: '愿君所系皆温柔，所读皆入心。', ph: 'ph-bookmark', glyph: '签', image: 'assets/things/ui/items/06-soft.png' },
+  { id: 'p1', name: '折扇小稿', signLabel: '折扇签', signature: '—— 雪琪', note: '扇骨未上，画意先满。', story: '折扇合拢时，画藏在时间里；展开时，才肯给人看半分风景。', verse: '收合之间，皆是风景。', blessing: '愿君怀中有清风，扇面有远山。', ph: 'ph-paper', glyph: '扇', image: 'assets/things/ui/items/07-soft.png' },
+  { id: 'p2', name: '港城明信片', signLabel: '邮笺签', signature: '—— 远行人', note: '写了一半地址，寄给自己。', story: '最动人的明信片，常常是还没贴邮票的那一面——字已抵达，人还在路上。', verse: '未寄出的，最懂远方。', blessing: '愿君行处有灯火，归途有等候。', ph: 'ph-paper', glyph: '城', image: 'assets/things/ui/items/08-soft.png' },
+  { id: 'p3', name: '手撕纸边集', signLabel: '毛边签', signature: '—— 雪琪', note: '毛边比直线诚实。', story: '撕纸那一下，往往比剪刀更听手的话。不规则的边，是手作留下的体温。', verse: '不整齐处，最像手作。', blessing: '愿君敢爱不规则的美，敢留真实的痕。', ph: 'ph-paper', glyph: '纸', image: 'assets/things/ui/items/09-soft.png' },
+  { id: 'c3', name: '信笺草稿', signLabel: '笺墨签', signature: '—— 雪琪', note: '写给未来的自己。', story: '删了又写，最后留下一行：别急着长大。墨迹浅了，心意却深了。', verse: '草稿里，住着真话。', blessing: '愿君对己温柔，对岁月诚实。', ph: 'ph-calligraphy', glyph: '信', image: 'assets/things/ui/items/10-soft.png' },
+  { id: 'd3', name: '枫叶渐层', signLabel: '秋晕签', signature: '—— 染秋人', note: '秋意在纸上慢慢渗透。', story: '这一张染了一个下午，窗外真的起了风，叶色便悄悄爬上纸面。', verse: '等色定，心也定。', blessing: '愿君秋日有静观，心间有暖色。', ph: 'ph-dye', glyph: '枫', image: 'assets/things/ui/items/11-soft.png' },
+  { id: 'b3', name: '烫金细签', signLabel: '微光签', signature: '—— 雪琪', note: '光落在字上，像加了标点。', story: '烫金会脱，但某一瞬的亮是真的。我留住那瞬，像留住一句祝福。', verse: '微光处，值得停留。', blessing: '愿君平凡日子里，常有微光乍现。', ph: 'ph-bookmark', glyph: '金', image: 'assets/things/ui/items/12-soft.png' }
 ];
 
 const TREE_SLOTS = [
@@ -518,19 +518,9 @@ function buildRopeLayout(items) {
 const THREAD_POSITIONS = [6, 17, 29, 44, 58, 73, 88];
 
 const CURTAIN_SPRITES = [
-  { file: 'assets/things/ui/curtain/crane-01.png', kind: 'crane', w: 91 },
-  { file: 'assets/things/ui/curtain/crane-02.png', kind: 'crane', w: 73 },
-  { file: 'assets/things/ui/curtain/crane-03.png', kind: 'crane', w: 62 },
-  { file: 'assets/things/ui/curtain/crane-04.png', kind: 'crane', w: 41 },
-  { file: 'assets/things/ui/curtain/crane-05.png', kind: 'crane', w: 30 },
-  { file: 'assets/things/ui/curtain/crane-06.png', kind: 'crane', w: 39 },
-  { file: 'assets/things/ui/curtain/crane-07.png', kind: 'crane', w: 55 },
-  { file: 'assets/things/ui/curtain/crane-08.png', kind: 'crane', w: 37 },
-  { file: 'assets/things/ui/curtain/crane-09.png', kind: 'crane', w: 41 },
-  { file: 'assets/things/ui/curtain/chime-01.png', kind: 'chime', w: 18 },
-  { file: 'assets/things/ui/curtain/chime-02.png', kind: 'chime', w: 14 },
-  { file: 'assets/things/ui/curtain/chime-03.png', kind: 'chime', w: 12 },
-  { file: 'assets/things/ui/curtain/chime-04.png', kind: 'chime', w: 10 },
+  { file: 'assets/things/ui/curtain/crane-master.png', kind: 'crane', w: 120, h: 120 },
+  { file: 'assets/things/ui/curtain/chime-01.png', kind: 'chime', w: 72, h: 72 },
+  { file: 'assets/things/ui/curtain/chime-02.png', kind: 'chime', w: 72, h: 72 },
 ];
 
 function getCurtainSprites() {
@@ -543,30 +533,33 @@ function pickSprite(kind, seed) {
 }
 
 function renderChainMarkup(threadIndex) {
+  const sprites = getCurtainSprites();
+  const crane = sprites.find((s) => s.kind === 'crane') || sprites[0];
+  const chimes = sprites.filter((s) => s.kind === 'chime');
+  const chime = chimes[threadIndex % Math.max(chimes.length, 1)] || crane;
   const parts = [];
-  const seq = [
-    ['crane', 0.92],
-    ['chime', 0.72],
-  ];
-  seq.forEach(([kind, scale], i) => {
-    const sp = pickSprite(kind, threadIndex + i);
-    if (!sp) return;
-    const w = Math.round((sp.w || 40) * scale);
-    const rot = (threadIndex + i) % 2 === 0 ? -5 : 6;
-    if (i) parts.push(`<span class="chain-connector" style="--link-h:12px"></span>`);
-    parts.push(
-      `<img class="chain-sprite chain-sprite--${kind}" src="${sp.file}" alt="" aria-hidden="true" ` +
-      `style="--sprite-w:${w}px;--sprite-rot:${rot}deg;--chain-delay:${((threadIndex * 0.3 + i * 0.2) % 2).toFixed(2)}s">`
-    );
-  });
-  return `<div class="curtain-chain" style="top:6px">${parts.join('')}</div>`;
+  const craneW = Math.round((crane?.w || 56) * (0.78 + (threadIndex % 4) * 0.06));
+  const chimeW = Math.round((chime?.w || 36) * 0.82);
+  const craneRot = (threadIndex % 2 === 0 ? -8 : 7) + (threadIndex % 3);
+  const delay = ((threadIndex * 0.35) % 2.2).toFixed(2);
+
+  parts.push(
+    `<img class="chain-sprite chain-sprite--crane" src="${crane.file}" alt="" aria-hidden="true" ` +
+    `style="--sprite-w:${craneW}px;--sprite-rot:${craneRot}deg;--chain-delay:${delay}s">`
+  );
+  parts.push('<span class="chain-connector" style="--link-h:14px"></span>');
+  parts.push(
+    `<img class="chain-sprite chain-sprite--chime" src="${chime.file}" alt="" aria-hidden="true" ` +
+    `style="--sprite-w:${chimeW}px;--sprite-rot:${-craneRot * 0.5}deg;--chain-delay:${(Number(delay) + 0.4).toFixed(2)}s">`
+  );
+  return `<div class="curtain-chain">${parts.join('')}</div>`;
 }
 
 let _chimeCtx = null;
 let _chimeLast = 0;
 function playChime() {
   const now = Date.now();
-  if (now - _chimeLast < 900) return;
+  if (now - _chimeLast < 700) return;
   _chimeLast = now;
   try {
     const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -574,17 +567,17 @@ function playChime() {
     if (!_chimeCtx) _chimeCtx = new Ctx();
     if (_chimeCtx.state === 'suspended') _chimeCtx.resume();
     const t = _chimeCtx.currentTime;
-    [880, 1175].forEach((freq, i) => {
+    [1046, 1318, 1568].forEach((freq, i) => {
       const o = _chimeCtx.createOscillator();
       const g = _chimeCtx.createGain();
-      o.type = 'sine';
+      o.type = i === 0 ? 'triangle' : 'sine';
       o.frequency.value = freq;
       g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.04, t + 0.02 + i * 0.01);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.55 + i * 0.05);
+      g.gain.exponentialRampToValueAtTime(0.055 - i * 0.012, t + 0.015 + i * 0.008);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.45 + i * 0.06);
       o.connect(g).connect(_chimeCtx.destination);
-      o.start(t + i * 0.03);
-      o.stop(t + 0.7);
+      o.start(t + i * 0.02);
+      o.stop(t + 0.65);
     });
   } catch (_) { /* optional audio */ }
 }
@@ -603,14 +596,14 @@ function initThingsV6(root) {
   const THREAD_COUNT = THREAD_POSITIONS.length;
 
   function renderThumb(item) {
-    if (item.image) return `<img src="${item.image}" alt="${item.name}" loading="lazy">`;
+    if (item.image) return `<img class="thing-photo" src="${item.image}" alt="${item.name}" loading="lazy">`;
     return `<div class="ph ${item.ph}">${item.glyph}</div>`;
   }
 
-  function renderCurtainTag(item, hangTop, delay) {
+  function renderCurtainTag(item, hangTop, delay, isChimeThread) {
     const drawn = drawnIds.has(item.id);
     return `
-      <button type="button" class="curtain-tag${drawn ? ' is-drawn' : ''}" data-id="${item.id}"
+      <button type="button" class="curtain-tag${drawn ? ' is-drawn' : ''}${isChimeThread ? ' curtain-tag--chime' : ''}" data-id="${item.id}"
         style="--hang-top:${hangTop}px;--swing-delay:${delay}s" ${drawn ? 'disabled' : ''}>
         <span class="curtain-clip" aria-hidden="true"></span>
         <span class="curtain-card">
@@ -622,22 +615,21 @@ function initThingsV6(root) {
 
   function renderCurtain() {
     if (!curtainThreads) return;
-    const useChains = root.classList.contains('things-curtain-demo');
     const buckets = Array.from({ length: THREAD_COUNT }, () => []);
     THINGS_DATA.forEach((item, i) => buckets[i % THREAD_COUNT].push(item));
     curtainThreads.innerHTML = buckets.map((items, ti) => {
       const tx = THREAD_POSITIONS[ti];
-      const chainTop = 6;
-      const chainHeight = useChains ? 88 : 0;
+      const chainHeight = 96;
       const hangs = items.map((item, hi) => {
-        const hangTop = chainTop + chainHeight + hi * 118 + (ti % 3) * 14 + (hi % 2) * 18;
-        const delay = (ti * 0.42 + hi * 0.24) % 2.8;
-        return renderCurtainTag(item, hangTop, delay);
+        const hangTop = 8 + chainHeight + hi * 112 + (ti % 3) * 16 + (hi % 2) * 20;
+        const delay = (ti * 0.38 + hi * 0.22) % 2.8;
+        const isChime = ti % 2 === 1;
+        return renderCurtainTag(item, hangTop, delay, isChime);
       }).join('');
       return `
         <div class="curtain-thread" style="--tx:${tx}%">
           <span class="thread-line" aria-hidden="true"></span>
-          ${useChains ? renderChainMarkup(ti) : ''}
+          ${renderChainMarkup(ti)}
           <div class="thread-hangs">${hangs}</div>
         </div>`;
     }).join('');
@@ -666,16 +658,19 @@ function initThingsV6(root) {
   function openBookmarkModal(item) {
     if (!modal) return;
     window.scheduleDrawVineTree?.();
+    const hasPhoto = Boolean(item.image);
     modal.innerHTML = `
-      <div class="thing-modal-box modal-bookmark-only">
-        <div class="bookmark-sheet bookmark-sheet--modal">
+      <div class="thing-modal-box modal-bookmark-only${hasPhoto ? ' modal-has-photo' : ''}">
+        <div class="bookmark-sheet bookmark-sheet--modal bookmark-sheet--rough">
           <div class="sheet-crease" aria-hidden="true"></div>
           <p class="letter-sign-label">${item.signLabel}</p>
           <div class="modal-visual modal-visual-tall">${renderThumb(item)}</div>
           <p class="letter-item-name">${item.name}</p>
           <p class="letter-note">${item.note}</p>
           <p class="letter-verse">「${item.verse}」</p>
+          ${item.blessing ? `<p class="letter-blessing">${item.blessing}</p>` : ''}
           <p class="modal-story">${item.story}</p>
+          ${item.signature ? `<p class="letter-signature">${item.signature}</p>` : ''}
           <div class="bookmark-modal-actions">
             <button type="button" class="bm-btn bm-fold">收起</button>
             <button type="button" class="bm-btn bm-again">再摇一支</button>
