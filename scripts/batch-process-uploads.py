@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""批量处理三类上传素材：抠图 / 美化背景 / 原样优化。"""
+"""批量处理上传素材：氛围背景 / 原样优化。"""
 
 from __future__ import annotations
 
@@ -12,16 +12,13 @@ import numpy as np
 from PIL import Image, ImageEnhance, ImageFilter, ImageOps, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = {
-    'cutout': ROOT / 'assets/uploads/1-cutout-src',
-    'bg_beauty': ROOT / 'assets/uploads/2-bg-beauty-src',
-    'as_is': ROOT / 'assets/uploads/3-as-is-src',
-}
-OUT = {
-    'cutout': ROOT / 'assets/things/ui/processed/cutout',
-    'bg_beauty': ROOT / 'assets/things/ui/processed/bg-beauty',
-    'as_is': ROOT / 'assets/things/ui/processed/as-is',
-}
+SRC_ATMOSPHERE = [
+    ROOT / 'assets/uploads/1-cutout-src',
+    ROOT / 'assets/uploads/2-bg-beauty-src',
+]
+SRC_AS_IS = ROOT / 'assets/uploads/3-as-is-src'
+OUT_ATMOSPHERE = ROOT / 'assets/things/ui/processed/atmosphere'
+OUT_AS_IS = ROOT / 'assets/things/ui/processed/as-is'
 MANIFEST = ROOT / 'assets/uploads/processed-manifest.json'
 PREVIEW = ROOT / 'demo_assets_preview.html'
 
@@ -41,57 +38,6 @@ def iter_images(folder: Path):
             yield p
 
 
-def has_alpha(img: Image.Image) -> bool:
-    if img.mode in ('RGBA', 'LA'):
-        a = img.split()[-1]
-        return a.getextrema()[0] < 250
-    return False
-
-
-def rembg_cutout(img: Image.Image) -> Image.Image:
-    try:
-        from rembg import remove
-        out = remove(img.convert('RGB'))
-        return out.convert('RGBA')
-    except Exception:
-        return pil_cutout(img)
-
-
-def pil_cutout(img: Image.Image) -> Image.Image:
-    img = img.convert('RGBA')
-    arr = np.array(img)
-    rgb = arr[:, :, :3].astype(np.float32)
-    white_dist = np.sqrt(((255 - rgb) ** 2).sum(axis=2))
-    alpha = np.clip((255 - white_dist) * 1.8, 0, 255).astype(np.uint8)
-    arr[:, :, 3] = np.minimum(arr[:, :, 3], alpha) if has_alpha(img) else alpha
-    return Image.fromarray(arr)
-
-
-def add_white_fringe(img: Image.Image, blur: float = 2.8, strength: float = 0.82) -> Image.Image:
-    img = img.convert('RGBA')
-    edge = img.split()[-1].filter(ImageFilter.GaussianBlur(blur))
-    edge_arr = np.array(edge)
-    fringe = np.zeros((*edge_arr.shape, 4), dtype=np.uint8)
-    fringe[:, :, :3] = 255
-    fringe[:, :, 3] = np.clip(edge_arr.astype(float) * strength, 0, 255).astype(np.uint8)
-    canvas = Image.new('RGBA', img.size, (0, 0, 0, 0))
-    canvas = Image.alpha_composite(canvas, Image.fromarray(fringe))
-    return Image.alpha_composite(canvas, img)
-
-
-def trim_transparent(img: Image.Image, pad: int = 8) -> Image.Image:
-    img = img.convert('RGBA')
-    bbox = img.getbbox()
-    if not bbox:
-        return img
-    x0, y0, x1, y1 = bbox
-    x0 = max(0, x0 - pad)
-    y0 = max(0, y0 - pad)
-    x1 = min(img.width, x1 + pad)
-    y1 = min(img.height, y1 + pad)
-    return img.crop((x0, y0, x1, y1))
-
-
 def resize_longest(img: Image.Image, max_px: int) -> Image.Image:
     w, h = img.size
     if max(w, h) <= max_px:
@@ -100,41 +46,133 @@ def resize_longest(img: Image.Image, max_px: int) -> Image.Image:
     return img.resize((int(w * scale), int(h * scale)), Image.Resampling.LANCZOS)
 
 
-def paper_texture(size):
+def analyze_atmosphere(img: Image.Image) -> dict:
+    img = ImageOps.exif_transpose(img.convert('RGB'))
+    small = img.resize((128, 128))
+    arr = np.array(small).astype(np.float32)
+    lum = float(arr.mean())
+    r, g, b = arr[:, :, 0].mean(), arr[:, :, 1].mean(), arr[:, :, 2].mean()
+    warmth = float(r - b)
+    sat = float(np.sqrt(((arr - arr.mean(axis=(0, 1))) ** 2).mean()))
+
+    h, w = arr.shape[:2]
+    cy, cx = h / 2, w / 2
+    y, x = np.ogrid[:h, :w]
+    weight = np.exp(-((x - cx) ** 2 + (y - cy) ** 2) / (0.38 * min(h, w)) ** 2)
+    weighted = arr * weight[:, :, None]
+    dom = (weighted.sum(axis=(0, 1)) / weight.sum()).astype(int).clip(0, 255)
+
+    if lum < 118:
+        profile = 'moody'
+    elif warmth > 16 and lum > 142:
+        profile = 'warm_light'
+    elif warmth < -10 or b > r + 12:
+        profile = 'cool'
+    elif sat > 42:
+        profile = 'chromatic'
+    else:
+        profile = 'neutral'
+
+    return {
+        'profile': profile,
+        'dominant': tuple(int(v) for v in dom),
+        'lum': lum,
+        'warmth': warmth,
+        'sat': sat,
+    }
+
+
+def paper_texture(size: tuple[int, int], base_rgb: tuple[int, int, int]) -> Image.Image:
     w, h = size
-    base = Image.new('RGB', size, (248, 242, 232))
-    noise = Image.effect_noise((w, h), 12).convert('L')
-    noise = ImageEnhance.Brightness(noise).enhance(0.35)
-    tint = Image.new('RGBA', size, (255, 252, 246, 255))
+    base = Image.new('RGB', size, base_rgb)
+    noise = Image.effect_noise((w, h), 11).convert('L')
+    noise = ImageEnhance.Brightness(noise).enhance(0.32)
+    tint = Image.new('RGBA', size, (*base_rgb, 255))
     paper = Image.composite(tint, base.convert('RGBA'), noise)
     draw = ImageDraw.Draw(paper)
-    for y in range(0, h, 28):
-        draw.line([(0, y), (w, y)], fill=(220, 205, 185, 18), width=1)
+    line = tuple(max(0, c - 28) for c in base_rgb)
+    for y in range(0, h, 26):
+        draw.line([(0, y), (w, y)], fill=(*line, 16), width=1)
     return paper.convert('RGBA')
 
 
-def beautify_background(img: Image.Image) -> Image.Image:
-    img = resize_longest(img.convert('RGB'), 1400)
-    w, h = img.size
-    bg = paper_texture((w + 80, h + 80))
-    photo = ImageOps.exif_transpose(img)
-    photo = ImageEnhance.Color(photo).enhance(0.92)
-    photo = ImageEnhance.Contrast(photo).enhance(1.04)
-    photo = ImageEnhance.Brightness(photo).enhance(1.03)
-    shadow = Image.new('RGBA', (photo.width + 24, photo.height + 24), (0, 0, 0, 0))
-    sh = Image.new('RGBA', photo.size, (60, 45, 30, 55))
-    shadow.paste(sh, (12, 14))
-    shadow = shadow.filter(ImageFilter.GaussianBlur(10))
-    canvas = bg.copy()
-    ox, oy = 40, 36
-    canvas.alpha_composite(shadow, (ox - 6, oy - 4))
+def radial_layer(size: tuple[int, int], center: tuple[float, float], radius: float,
+                 color: tuple[int, int, int, int]) -> Image.Image:
+    w, h = size
+    y, x = np.ogrid[:h, :w]
+    cx, cy = center
+    dist = np.sqrt(((x - cx) / radius) ** 2 + ((y - cy) / radius) ** 2)
+    alpha = np.clip(1 - dist, 0, 1) ** 1.6
+    layer = np.zeros((h, w, 4), dtype=np.uint8)
+    layer[:, :, 0] = color[0]
+    layer[:, :, 1] = color[1]
+    layer[:, :, 2] = color[2]
+    layer[:, :, 3] = (alpha * color[3]).astype(np.uint8)
+    return Image.fromarray(layer, 'RGBA')
+
+
+def soften_busy_edges(photo: Image.Image, strength: float = 0.28) -> Image.Image:
+    w, h = photo.size
+    y, x = np.ogrid[:h, :w]
+    cx, cy = w / 2, h / 2
+    dist = np.sqrt(((x - cx) / (w * 0.52)) ** 2 + ((y - cy) / (h * 0.52)) ** 2)
+    mask = 1.0 - strength * np.clip((dist - 0.42) / 0.58, 0, 1)
+    arr = np.array(photo.convert('RGB')).astype(np.float32)
+    arr *= mask[:, :, None]
+    return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
+
+
+def atmosphere_background(img: Image.Image, meta: dict | None = None) -> Image.Image:
+    img = ImageOps.exif_transpose(img.convert('RGB'))
+    meta = meta or analyze_atmosphere(img)
+    profile = meta['profile']
+    dom = meta['dominant']
+
+    photo = resize_longest(img, 1400)
+    photo = soften_busy_edges(photo, strength=0.24 if profile != 'moody' else 0.18)
+    photo = ImageEnhance.Color(photo).enhance(0.94 if profile == 'chromatic' else 0.9)
+    photo = ImageEnhance.Contrast(photo).enhance(1.05)
+    photo = ImageEnhance.Brightness(photo).enhance(1.02 if profile != 'moody' else 0.98)
+
+    w, h = photo.size
+    pad = 72
+    cw, ch = w + pad * 2, h + pad * 2
+
+    palettes = {
+        'warm_light': ((252, 246, 236), (255, 248, 238, 150), (255, 240, 220, 90)),
+        'cool': ((242, 246, 250), (235, 242, 255, 140), (210, 225, 245, 70)),
+        'moody': ((232, 226, 216), (255, 250, 242, 120), (35, 28, 22, 110)),
+        'chromatic': ((248, 244, 238), (*dom, 95), (*dom, 45)),
+        'neutral': ((248, 242, 232), (255, 252, 246, 130), (180, 165, 145, 55)),
+    }
+    paper_rgb, halo_a, halo_b = palettes[profile]
+    canvas = paper_texture((cw, ch), paper_rgb)
+
+    cx, cy = cw / 2, ch / 2 - 8
+    canvas = Image.alpha_composite(canvas, radial_layer((cw, ch), (cx, cy), min(cw, ch) * 0.62, halo_a))
+    if profile in ('moody', 'chromatic', 'warm_light'):
+        canvas = Image.alpha_composite(canvas, radial_layer((cw, ch), (cx, cy), min(cw, ch) * 0.95, halo_b))
+
+    shadow = Image.new('RGBA', (photo.width + 28, photo.height + 28), (0, 0, 0, 0))
+    sh_color = (45, 35, 25, 48) if profile != 'moody' else (20, 16, 12, 65)
+    shadow.paste(Image.new('RGBA', photo.size, sh_color), (14, 16))
+    shadow = shadow.filter(ImageFilter.GaussianBlur(12))
+
+    ox, oy = pad, pad - 6
+    canvas.alpha_composite(shadow, (ox - 8, oy - 6))
     canvas.alpha_composite(photo.convert('RGBA'), (ox, oy))
-    vignette = Image.new('L', canvas.size, 0)
-    draw = ImageDraw.Draw(vignette)
-    draw.ellipse((-40, -40, w + 120, h + 120), fill=210)
-    vignette = vignette.filter(ImageFilter.GaussianBlur(30))
-    dark = Image.new('RGBA', canvas.size, (40, 30, 20, 255))
-    canvas = Image.composite(canvas, dark, vignette)
+
+    # 外缘晕：白晕 / 暗晕 / 彩色晕
+    if profile == 'moody':
+        edge = radial_layer((cw, ch), (cx, cy), min(cw, ch) * 0.78, (25, 20, 16, 130))
+    elif profile == 'cool':
+        edge = radial_layer((cw, ch), (cx, cy), min(cw, ch) * 0.82, (200, 215, 235, 75))
+    elif profile == 'chromatic':
+        edge = radial_layer((cw, ch), (cx, cy), min(cw, ch) * 0.85, (*dom, 60))
+    else:
+        edge = radial_layer((cw, ch), (cx, cy), min(cw, ch) * 0.8, (255, 252, 245, 85))
+    canvas = Image.alpha_composite(canvas, edge)
+
     return canvas.convert('RGB')
 
 
@@ -148,23 +186,13 @@ def optimize_as_is(img: Image.Image) -> Image.Image:
     return img
 
 
-def process_cutout(src: Path, out: Path) -> None:
+def process_atmosphere(src: Path, out: Path) -> dict:
     img = Image.open(src)
-    if has_alpha(img):
-        cut = img.convert('RGBA')
-    else:
-        cut = rembg_cutout(img)
-    cut = trim_transparent(cut)
-    cut = add_white_fringe(cut)
-    cut = resize_longest(cut, 1200)
+    meta = analyze_atmosphere(img)
+    result = atmosphere_background(img, meta)
     out.parent.mkdir(parents=True, exist_ok=True)
-    cut.save(out, 'PNG', optimize=True)
-
-
-def process_bg_beauty(src: Path, out: Path) -> None:
-    img = beautify_background(Image.open(src))
-    out.parent.mkdir(parents=True, exist_ok=True)
-    img.save(out, 'JPEG', quality=88, optimize=True)
+    result.save(out, 'JPEG', quality=90, optimize=True)
+    return meta
 
 
 def process_as_is(src: Path, out: Path) -> None:
@@ -183,37 +211,44 @@ def process_as_is(src: Path, out: Path) -> None:
 
 def write_preview(manifest: list[dict]) -> None:
     sections = {
-        'cutout': ('① 直接抠图（透明 PNG + 毛边白边）', []),
-        'bg_beauty': ('② 美化背景（纸质衬底，不抠图）', []),
-        'as_is': ('③ 原样优化（压缩/锐化）', []),
+        'atmosphere': ('① 氛围背景（抠图+美化合并，按色调加晕）', []),
+        'as_is': ('② 原样优化（未改动）', []),
     }
     for item in manifest:
         sections[item['category']][1].append(item)
 
-    html_parts = ['<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8">',
-                '<meta name="viewport" content="width=device-width,initial-scale=1">',
-                '<title>素材批处理预览</title>',
-                '<style>',
-                'body{font-family:system-ui,sans-serif;background:#f8f4ec;color:#2c241b;margin:0;padding:2rem;}',
-                'h1{text-align:center;letter-spacing:.12em;font-weight:500;}',
-                'h2{margin:2.5rem 0 1rem;font-size:1.1rem;letter-spacing:.1em;}',
-                '.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;}',
-                '.card{background:#fff;border-radius:12px;padding:.75rem;box-shadow:0 4px 18px rgba(0,0,0,.06);}',
-                '.thumb{width:100%;aspect-ratio:1;object-fit:contain;background:repeating-conic-gradient(#eee 0% 25%,#f8f8f8 0% 50%) 50%/20px 20px;border-radius:8px;}',
-                '.name{font-size:.72rem;margin:.5rem 0 0;color:#666;word-break:break-all;}',
-                '.orig{font-size:.65rem;color:#999;}',
-                '</style></head><body>',
-                '<h1>素材批处理预览</h1>',
-                '<p style="text-align:center;color:#888">共处理 ', str(len(manifest)), ' 张</p>']
+    html_parts = [
+        '<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8">',
+        '<meta name="viewport" content="width=device-width,initial-scale=1">',
+        '<title>素材批处理预览 v2</title>',
+        '<style>',
+        'body{font-family:system-ui,sans-serif;background:#f8f4ec;color:#2c241b;margin:0;padding:2rem;}',
+        'h1{text-align:center;letter-spacing:.12em;font-weight:500;}',
+        'h2{margin:2.5rem 0 1rem;font-size:1.1rem;letter-spacing:.1em;}',
+        '.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;}',
+        '.card{background:#fff;border-radius:12px;padding:.75rem;box-shadow:0 4px 18px rgba(0,0,0,.06);}',
+        '.thumb{width:100%;aspect-ratio:1;object-fit:contain;background:#f5f0e8;border-radius:8px;}',
+        '.name{font-size:.72rem;margin:.5rem 0 0;color:#666;word-break:break-all;}',
+        '.orig{font-size:.65rem;color:#999;}',
+        '.tag{font-size:.62rem;color:#b6afa4;margin-top:.2rem;}',
+        '</style></head><body>',
+        '<h1>素材批处理预览 v2</h1>',
+        f'<p style="text-align:center;color:#888">共 {len(manifest)} 张</p>',
+    ]
 
     for key, (title, items) in sections.items():
+        if not items:
+            continue
         html_parts.append(f'<h2>{title}（{len(items)} 张）</h2><div class="grid">')
         for it in items:
             rel = it['output'].replace(str(ROOT) + '/', '')
+            tag = it.get('profile', '')
             html_parts.append(
                 f'<div class="card"><img class="thumb" src="{rel}" alt="">'
                 f'<p class="name">{it["name"]}</p>'
-                f'<p class="orig">原文件：{it["source"]}</p></div>'
+                f'<p class="orig">原：{it["source"]}</p>'
+                f'{f"<p class=tag>氛围：{tag}</p>" if tag else ""}'
+                f'</div>'
             )
         html_parts.append('</div>')
 
@@ -223,51 +258,42 @@ def write_preview(manifest: list[dict]) -> None:
 
 def main() -> None:
     manifest: list[dict] = []
-    counters = {'cutout': 0, 'bg_beauty': 0, 'as_is': 0}
+    counter = 0
 
-    for src_path in iter_images(SRC['cutout']):
-        counters['cutout'] += 1
-        name = f"{counters['cutout']:02d}-{slug(src_path.name)}.png"
-        out_path = OUT['cutout'] / name
-        print(f'[cutout] {src_path.name}')
-        process_cutout(src_path, out_path)
-        manifest.append({
-            'category': 'cutout',
-            'name': name,
-            'source': str(src_path.relative_to(ROOT)),
-            'output': str(out_path),
-        })
+    for folder in SRC_ATMOSPHERE:
+        for src_path in iter_images(folder):
+            counter += 1
+            name = f"{counter:02d}-{slug(src_path.name)}.jpg"
+            out_path = OUT_ATMOSPHERE / name
+            print(f'[atmosphere] {src_path.name}')
+            meta = process_atmosphere(src_path, out_path)
+            manifest.append({
+                'category': 'atmosphere',
+                'name': name,
+                'source': str(src_path.relative_to(ROOT)),
+                'output': str(out_path),
+                'profile': meta['profile'],
+            })
 
-    for src_path in iter_images(SRC['bg_beauty']):
-        counters['bg_beauty'] += 1
-        name = f"{counters['bg_beauty']:02d}-{slug(src_path.name)}.jpg"
-        out_path = OUT['bg_beauty'] / name
-        print(f'[bg-beauty] {src_path.name}')
-        process_bg_beauty(src_path, out_path)
-        manifest.append({
-            'category': 'bg_beauty',
-            'name': name,
-            'source': str(src_path.relative_to(ROOT)),
-            'output': str(out_path),
-        })
-
-    for src_path in iter_images(SRC['as_is']):
-        counters['as_is'] += 1
-        base = f"{counters['as_is']:02d}-{slug(src_path.name)}"
-        out_path = OUT['as_is'] / base
-        print(f'[as-is] {src_path.name}')
-        process_as_is(src_path, out_path)
-        out_file = next(OUT['as_is'].glob(base + '.*'))
-        manifest.append({
-            'category': 'as_is',
-            'name': out_file.name,
-            'source': str(src_path.relative_to(ROOT)),
-            'output': str(out_file),
-        })
+    if OUT_AS_IS.exists():
+        for src_path in iter_images(SRC_AS_IS):
+            base = slug(src_path.name)
+            existing = list(OUT_AS_IS.glob(f'*{base}*'))
+            if not existing:
+                continue
+            out_file = existing[0]
+            manifest.append({
+                'category': 'as_is',
+                'name': out_file.name,
+                'source': str(src_path.relative_to(ROOT)),
+                'output': str(out_file),
+            })
 
     MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
     write_preview(manifest)
-    print(f'\nDone: cutout={counters["cutout"]}, bg_beauty={counters["bg_beauty"]}, as_is={counters["as_is"]}')
+    atm = sum(1 for m in manifest if m['category'] == 'atmosphere')
+    asis = sum(1 for m in manifest if m['category'] == 'as_is')
+    print(f'\nDone: atmosphere={atm}, as_is={asis} (unchanged)')
     print(f'Manifest: {MANIFEST}')
     print(f'Preview:  {PREVIEW}')
 
