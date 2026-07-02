@@ -3,6 +3,21 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths:
+      - 'index.html'
+      - 'index (1).html'
+      - 'assets/**'
+      - '!assets/uploads/**-src/**'
+      - '*.pdf'
+      - 'yuwei.ttf'
+      - 'yuweifanti.ttf'
+      - '1.jpg'
+      - '1.png'
+      - '2.png'
+      - '3.png'
+      - '反诈最强音.png'
+      - '.github/workflows/deploy-pages.yml'
+      - 'scripts/prepare-pages-bundle.sh'
   workflow_dispatch:
 
 permissions:
@@ -12,7 +27,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -31,5 +46,3 @@ jobs:
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          timeout: 600000
