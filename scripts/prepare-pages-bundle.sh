@@ -15,7 +15,6 @@ for f in "$ROOT"/*.pdf; do
   [ -f "$f" ] && cp "$f" "$OUT/"
 done
 
-# Only root assets referenced by the live site
 for f in yuwei.ttf yuweifanti.ttf 1.jpg 1.png 2.png 3.png; do
   [ -f "$ROOT/$f" ] && cp "$ROOT/$f" "$OUT/"
 done
@@ -28,12 +27,14 @@ while IFS= read -r -d '' f; do
 done < <(find "$ROOT" -maxdepth 1 -type f -name '*.png' -print0)
 
 mkdir -p "$OUT/assets"
+shopt -s dotglob
 cp -r "$ROOT/assets/." "$OUT/assets/"
+shopt -u dotglob
+
 rm -rf \
-  "$OUT/assets/uploads/1-cutout-src" \
-  "$OUT/assets/uploads/2-bg-beauty-src" \
-  "$OUT/assets/uploads/3-as-is-src" \
-  "$OUT/assets/uploads/processed-manifest.json"
+  "$OUT/assets/uploads" \
+  "$OUT/assets/decor-src-"*.jpg \
+  "$OUT/assets/decor-src-"*.png
 
 du -sh "$OUT"
 find "$OUT" -type f | wc -l

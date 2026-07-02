@@ -6,43 +6,40 @@ on:
     paths:
       - 'index.html'
       - 'index (1).html'
-      - 'assets/**'
-      - '!assets/uploads/**-src/**'
-      - '*.pdf'
-      - 'yuwei.ttf'
-      - 'yuweifanti.ttf'
-      - '1.jpg'
-      - '1.png'
-      - '2.png'
-      - '3.png'
-      - '反诈最强音.png'
+      - 'assets/things/**'
+      - 'assets/things-section.*'
+      - 'assets/photos/**'
+      - 'assets/previews/**'
+      - 'assets/dh/**'
+      - 'assets/visual-section.*'
+      - 'assets/photography-*'
+      - 'assets/photo/**'
       - '.github/workflows/deploy-pages.yml'
       - 'scripts/prepare-pages-bundle.sh'
   workflow_dispatch:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+
       - name: Prepare lean site bundle
         run: bash scripts/prepare-pages-bundle.sh
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+
+      - name: Publish to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: _site
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: 'deploy: ${{ github.event.head_commit.message || github.sha }}'
