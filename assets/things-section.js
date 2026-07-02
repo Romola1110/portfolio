@@ -533,27 +533,31 @@ const CURTAIN_SPRITES = [
   { file: 'assets/things/ui/curtain/chime-04.png', kind: 'chime', w: 10 },
 ];
 
+function getCurtainSprites() {
+  return (typeof window !== 'undefined' && window.CURTAIN_SPRITES) || CURTAIN_SPRITES;
+}
+
 function pickSprite(kind, seed) {
-  const pool = CURTAIN_SPRITES.filter(s => s.kind === kind);
+  const pool = getCurtainSprites().filter(s => s.kind === kind);
   return pool[seed % pool.length] || pool[0];
 }
 
 function renderChainMarkup(threadIndex) {
   const parts = [];
-  let y = 0;
   const seq = [
-    ['crane', 0.78], ['chime', 0.42], ['crane', 1.05], ['chime', 0.55], ['crane', 0.62]
+    ['crane', 0.92],
+    ['chime', 0.72],
   ];
   seq.forEach(([kind, scale], i) => {
-    const sp = pickSprite(kind, threadIndex * 3 + i);
-    const w = Math.round(sp.w * scale);
-    const rot = (threadIndex + i) % 2 === 0 ? -6 : 8;
-    if (i) parts.push(`<span class="chain-connector" style="--link-h:${10 + (i % 3) * 4}px"></span>`);
+    const sp = pickSprite(kind, threadIndex + i);
+    if (!sp) return;
+    const w = Math.round((sp.w || 40) * scale);
+    const rot = (threadIndex + i) % 2 === 0 ? -5 : 6;
+    if (i) parts.push(`<span class="chain-connector" style="--link-h:12px"></span>`);
     parts.push(
       `<img class="chain-sprite chain-sprite--${kind}" src="${sp.file}" alt="" aria-hidden="true" ` +
-      `style="--sprite-w:${w}px;--sprite-rot:${rot}deg;--chain-delay:${((threadIndex * 0.3 + i * 0.17) % 2).toFixed(2)}s">`
+      `style="--sprite-w:${w}px;--sprite-rot:${rot}deg;--chain-delay:${((threadIndex * 0.3 + i * 0.2) % 2).toFixed(2)}s">`
     );
-    y += w + 12;
   });
   return `<div class="curtain-chain" style="top:6px">${parts.join('')}</div>`;
 }
@@ -618,21 +622,22 @@ function initThingsV6(root) {
 
   function renderCurtain() {
     if (!curtainThreads) return;
+    const useChains = root.classList.contains('things-curtain-demo');
     const buckets = Array.from({ length: THREAD_COUNT }, () => []);
     THINGS_DATA.forEach((item, i) => buckets[i % THREAD_COUNT].push(item));
     curtainThreads.innerHTML = buckets.map((items, ti) => {
       const tx = THREAD_POSITIONS[ti];
       const chainTop = 6;
-      const chainHeight = 168;
+      const chainHeight = useChains ? 88 : 0;
       const hangs = items.map((item, hi) => {
-        const hangTop = chainTop + chainHeight + hi * 128 + (ti % 3) * 18 + (hi % 2) * 24;
+        const hangTop = chainTop + chainHeight + hi * 118 + (ti % 3) * 14 + (hi % 2) * 18;
         const delay = (ti * 0.42 + hi * 0.24) % 2.8;
         return renderCurtainTag(item, hangTop, delay);
       }).join('');
       return `
         <div class="curtain-thread" style="--tx:${tx}%">
           <span class="thread-line" aria-hidden="true"></span>
-          ${renderChainMarkup(ti)}
+          ${useChains ? renderChainMarkup(ti) : ''}
           <div class="thread-hangs">${hangs}</div>
         </div>`;
     }).join('');

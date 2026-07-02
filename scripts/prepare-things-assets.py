@@ -16,9 +16,10 @@ OUT = ROOT / 'assets/things/ui'
 CURTAIN_OUT = OUT / 'curtain'
 
 SRC_BUCKET = ROOT / '签筒2.png'
-SRC_PATTERN = ROOT / '暗纹素材.png'
+SRC_PATTERN_COMPOSED = ROOT / '加入暗纹背景效果.png'
+SRC_PATTERN_ADV = ROOT / '进阶版.png'
 SRC_CURTAIN = ROOT / '垂帘参考 加千纸鹤和风铃.png'
-PATTERN_MAX = 640
+PATTERN_MAX = 520
 
 
 def save_png(img: Image.Image, path: Path) -> None:
@@ -37,85 +38,91 @@ def resize_longest(img: Image.Image, max_px: int) -> Image.Image:
     return img.resize((int(w * s), int(h * s)), Image.Resampling.LANCZOS)
 
 
-def paper_grid_patch(w: int, h: int) -> Image.Image:
-    tile = Image.new('RGBA', (w, h), (246, 238, 224, 255))
-    draw = ImageDraw.Draw(tile)
-    step = 6
-    col = (205, 190, 165, 110)
-    for x in range(0, w, step):
-        draw.line([(x, 0), (x, h)], fill=col, width=1)
-    for y in range(0, h, step):
-        draw.line([(0, y), (w, y)], fill=col, width=1)
-    draw.ellipse((w * 0.3, h * 0.08, w * 0.7, h * 0.32), fill=(232, 185, 170, 45))
-    return tile.filter(ImageFilter.GaussianBlur(0.4))
+def alpha_from_paper(img: Image.Image, *, white_thresh: float = 238.0) -> Image.Image:
+    """把纸白背景抠成透明，保留暗纹/鹤/风铃等墨色线条。"""
+    arr = np.array(img.convert('RGBA')).astype(np.float32)
+    r, g, b = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2]
+    lum = 0.299 * r + 0.587 * g + 0.114 * b
+    sat = np.sqrt(((arr[:, :, :3] - arr[:, :, :3].mean(axis=2, keepdims=True)) ** 2).sum(axis=2))
+    # 纸白 → 透明；淡墨/彩线 → 保留
+    alpha = np.clip((white_thresh - lum) / 42.0, 0, 1)
+    alpha *= np.clip(sat / 18.0, 0.35, 1.0)
+    alpha = np.clip(alpha, 0, 1)
+    arr[:, :, 3] = (alpha * 255).astype(np.uint8)
+    return Image.fromarray(arr.astype(np.uint8))
+
+
+def trim_alpha(img: Image.Image, pad: int = 4) -> Image.Image:
+    a = img.split()[-1]
+    bbox = a.getbbox()
+    if not bbox:
+        return img
+    x0, y0, x1, y1 = bbox
+    return img.crop((max(0, x0 - pad), max(0, y0 - pad), x1 + pad, y1 + pad))
 
 
 def process_bucket() -> None:
     img = Image.open(SRC_BUCKET).convert('RGBA')
-    w, h = img.size
-    overlay = Image.new('RGBA', (w, h), (0, 0, 0, 0))
-    # 签筒2：左右两支「花签」字区
-    for box in [(0.17, 0.34, 0.30, 0.58), (0.70, 0.34, 0.83, 0.58)]:
-        x0, y0 = int(w * box[0]), int(h * box[1])
-        x1, y1 = int(w * box[2]), int(h * box[3])
-        patch = paper_grid_patch(x1 - x0, y1 - y0)
-        overlay.paste(patch, (x0, y0), patch)
-    composed = Image.alpha_composite(img, overlay)
-    cut = remove(composed)
+    cut = remove(img)
     if isinstance(cut, bytes):
         cut = Image.open(BytesIO(cut)).convert('RGBA')
-    bbox = cut.split()[-1].getbbox()
-    if bbox:
-        cut = cut.crop(bbox)
+    cut = trim_alpha(cut)
     save_png(cut, OUT / 'lot-bucket-2.png')
 
 
-def fade_half(img: Image.Image, side: str) -> Image.Image:
-    arr = np.array(img).astype(np.float32)
-    ww = arr.shape[1]
-    for x in range(ww):
-        t = x / max(ww - 1, 1)
-        fade = t if side == 'left' else (1 - t)
-        fade = np.clip(fade ** 0.48, 0, 1)
-        arr[:, x, 3] *= fade
-    return Image.fromarray(arr.astype(np.uint8))
-
-
 def process_patterns() -> None:
-    pat = resize_longest(Image.open(SRC_PATTERN).convert('RGBA'), PATTERN_MAX)
-    w, h = pat.size
-    cx = w // 2
-    save_png(pat, OUT / 'dark-pattern.png')
-    save_png(fade_half(pat.crop((0, 0, cx, h)), 'left'), OUT / 'dark-pattern-half-left.png')
-    save_png(fade_half(pat.crop((cx, 0, w, h)), 'right'), OUT / 'dark-pattern-half-right.png')
+    """从进阶版/合成效果图提取透明暗纹，避免纸白网格渗出。"""
+    composed = resize_longest(Image.open(SRC_PATTERN_COMPOSED).convert('RGBA'), PATTERN_MAX)
+    adv = resize_longest(Image.open(SRC_PATTERN_ADV).convert('RGBA'), PATTERN_MAX)
+    cw, ch = composed.size
+    aw, ah = adv.size
+
+    center = alpha_from_paper(composed.crop((cw // 4, 0, 3 * cw // 4, ch)))
+    center = trim_alpha(center)
+    save_png(center, OUT / 'dark-pattern.png')
+
+    left_src = alpha_from_paper(adv.crop((0, 0, aw // 2, ah)))
+    right_src = alpha_from_paper(adv.crop((aw // 2, 0, aw, ah)))
+    save_png(trim_alpha(left_src), OUT / 'dark-pattern-half-left.png')
+    save_png(trim_alpha(right_src), OUT / 'dark-pattern-half-right.png')
 
 
 def classify_blob(bw: int, bh: int, area: int) -> str | None:
     aspect = bw / max(bh, 1)
-    if area < 220 or bw < 14 or bh < 14:
+    if area < 180 or bw < 12 or bh < 12:
         return None
-    if area > 120000 or bw > 400:
+    # 排除横排文字、垂帘竖线
+    if aspect > 3.2 and bh < 72:
         return None
-    if aspect < 0.42 and bh > 55:
+    if aspect < 0.22 and bh > 100:
+        return None
+    if area > 180000 or bw > 520 or bh > 160:
+        return None
+    if aspect < 0.38 and 40 <= bh <= 100:
         return 'chime'
-    if 0.55 <= aspect <= 2.8 and 350 <= area <= 25000:
+    if 0.45 <= aspect <= 3.0 and 280 <= area <= 42000:
         return 'crane'
-    if aspect < 0.55 and bh > bw and area < 8000:
+    if aspect < 0.55 and bh > bw and 400 <= area <= 8000:
         return 'chime'
     return None
+
+
+def curtain_foreground_mask(img: Image.Image) -> np.ndarray:
+    arr = np.array(img).astype(np.float32)
+    r, g, b = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2]
+    lum = 0.299 * r + 0.587 * g + 0.114 * b
+    sat = np.abs(r - g) + np.abs(g - b) + np.abs(r - b)
+    fg = (lum < 235) & (lum > 42) & (sat > 12)
+    return fg
 
 
 def extract_curtain_sprites() -> list[dict]:
     ref = ImageOps.exif_transpose(Image.open(SRC_CURTAIN).convert('RGBA'))
     rw, rh = ref.size
-    work_w = 1400
+    work_w = 1600
     scale = work_w / rw
     img = ref.resize((work_w, int(rh * scale)), Image.Resampling.LANCZOS)
-    arr = np.array(img).astype(np.float32)
-    r, g, b = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2]
-    lum = 0.299 * r + 0.587 * g + 0.114 * b
-    sat = np.sqrt(((arr[:, :, :3] - arr[:, :, :3].mean(axis=2, keepdims=True)) ** 2).sum(axis=2))
-    fg = (lum > 226) & (sat < 32) & (g < r + 14)
+    fg = curtain_foreground_mask(img)
     mask = (fg.astype(np.uint8) * 255)
     mask = Image.fromarray(mask).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.MinFilter(3))
     m = np.array(mask)
@@ -146,20 +153,25 @@ def extract_curtain_sprites() -> list[dict]:
             kind = classify_blob(bw, bh, count)
             if not kind:
                 continue
-            pad = 8
+            pad = 10
             crop = img.crop((max(0, minx - pad), max(0, miny - pad), min(w, maxx + pad), min(h, maxy + pad)))
+            # 用 mask 把背景清掉
+            ca = np.array(crop)
+            cm = curtain_foreground_mask(crop)
+            ca[:, :, 3] = np.where(cm, ca[:, :, 3], 0)
+            crop = Image.fromarray(ca)
             alpha = np.array(crop.split()[-1])
             ys, xs = np.where(alpha > 40)
             if len(xs) == 0:
                 continue
             crop = crop.crop((xs.min(), ys.min(), xs.max() + 1, ys.max() + 1))
-            blobs.append({'kind': kind, 'area': count, 'image': crop})
+            blobs.append({'kind': kind, 'area': count, 'image': crop, 'cx': (minx + maxx) / 2})
 
-    cranes = sorted([b for b in blobs if b['kind'] == 'crane'], key=lambda b: -b['area'])
+    cranes = sorted([b for b in blobs if b['kind'] == 'crane'], key=lambda b: b['cx'])
     chimes = sorted([b for b in blobs if b['kind'] == 'chime'], key=lambda b: -b['area'])
-    selected = cranes[:9] + chimes[:6]
-    if len(selected) < 8:
-        selected = sorted(blobs, key=lambda b: -b['area'])[:12]
+    selected = cranes[:9] + chimes[:4]
+    if len(selected) < 6:
+        selected = sorted(blobs, key=lambda b: -b['area'])[:10]
 
     CURTAIN_OUT.mkdir(parents=True, exist_ok=True)
     for p in CURTAIN_OUT.glob('*.png'):
@@ -173,7 +185,12 @@ def extract_curtain_sprites() -> list[dict]:
         counters[kind] += 1
         name = f'{kind}-{counters[kind]:02d}.png'
         save_png(blob['image'], CURTAIN_OUT / name)
-        meta.append({'file': f'assets/things/ui/curtain/{name}', 'kind': kind, 'w': blob['image'].size[0], 'h': blob['image'].size[1]})
+        meta.append({
+            'file': f'assets/things/ui/curtain/{name}',
+            'kind': kind,
+            'w': blob['image'].size[0],
+            'h': blob['image'].size[1],
+        })
 
     (OUT / 'curtain-sprites.json').write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding='utf-8')
     return meta
