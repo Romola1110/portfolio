@@ -517,20 +517,45 @@ function buildRopeLayout(items) {
 
 const THREAD_POSITIONS = [6, 17, 29, 44, 58, 73, 88];
 
-function craneSvg() {
-  return `<svg class="curtain-crane" viewBox="0 0 48 32" width="38" height="26" style="--crane-rot:${(Math.random() * 12 - 6).toFixed(1)}deg;--crane-delay:${(Math.random() * 2).toFixed(2)}s" aria-hidden="true">
-    <path d="M8 18 L24 10 L40 16 L32 14 L28 20 L20 18 Z" fill="rgba(255,255,255,0.88)" stroke="rgba(120,110,95,0.2)" stroke-width="0.6"/>
-    <path d="M24 10 L24 4" stroke="rgba(120,110,95,0.25)" stroke-width="0.8" fill="none"/>
-  </svg>`;
+const CURTAIN_SPRITES = [
+  { file: 'assets/things/ui/curtain/crane-01.png', kind: 'crane', w: 91 },
+  { file: 'assets/things/ui/curtain/crane-02.png', kind: 'crane', w: 73 },
+  { file: 'assets/things/ui/curtain/crane-03.png', kind: 'crane', w: 62 },
+  { file: 'assets/things/ui/curtain/crane-04.png', kind: 'crane', w: 41 },
+  { file: 'assets/things/ui/curtain/crane-05.png', kind: 'crane', w: 30 },
+  { file: 'assets/things/ui/curtain/crane-06.png', kind: 'crane', w: 39 },
+  { file: 'assets/things/ui/curtain/crane-07.png', kind: 'crane', w: 55 },
+  { file: 'assets/things/ui/curtain/crane-08.png', kind: 'crane', w: 37 },
+  { file: 'assets/things/ui/curtain/crane-09.png', kind: 'crane', w: 41 },
+  { file: 'assets/things/ui/curtain/chime-01.png', kind: 'chime', w: 18 },
+  { file: 'assets/things/ui/curtain/chime-02.png', kind: 'chime', w: 14 },
+  { file: 'assets/things/ui/curtain/chime-03.png', kind: 'chime', w: 12 },
+  { file: 'assets/things/ui/curtain/chime-04.png', kind: 'chime', w: 10 },
+];
+
+function pickSprite(kind, seed) {
+  const pool = CURTAIN_SPRITES.filter(s => s.kind === kind);
+  return pool[seed % pool.length] || pool[0];
 }
 
-function chimeSvg() {
-  return `<svg class="curtain-chime" viewBox="0 0 16 42" style="--chime-delay:${(Math.random() * 2.5).toFixed(2)}s" aria-hidden="true">
-    <line x1="8" y1="0" x2="8" y2="10" stroke="rgba(100,85,65,0.35)" stroke-width="0.8"/>
-    <path d="M4 10 H12 L10 22 Q8 26 6 22 Z" fill="rgba(200,185,155,0.55)" stroke="rgba(120,100,75,0.2)" stroke-width="0.5"/>
-    <circle cx="8" cy="30" r="2.2" fill="rgba(180,165,130,0.5)"/>
-    <line x1="8" y1="32" x2="8" y2="38" stroke="rgba(140,120,90,0.3)" stroke-width="0.6"/>
-  </svg>`;
+function renderChainMarkup(threadIndex) {
+  const parts = [];
+  let y = 0;
+  const seq = [
+    ['crane', 0.78], ['chime', 0.42], ['crane', 1.05], ['chime', 0.55], ['crane', 0.62]
+  ];
+  seq.forEach(([kind, scale], i) => {
+    const sp = pickSprite(kind, threadIndex * 3 + i);
+    const w = Math.round(sp.w * scale);
+    const rot = (threadIndex + i) % 2 === 0 ? -6 : 8;
+    if (i) parts.push(`<span class="chain-connector" style="--link-h:${10 + (i % 3) * 4}px"></span>`);
+    parts.push(
+      `<img class="chain-sprite chain-sprite--${kind}" src="${sp.file}" alt="" aria-hidden="true" ` +
+      `style="--sprite-w:${w}px;--sprite-rot:${rot}deg;--chain-delay:${((threadIndex * 0.3 + i * 0.17) % 2).toFixed(2)}s">`
+    );
+    y += w + 12;
+  });
+  return `<div class="curtain-chain" style="top:6px">${parts.join('')}</div>`;
 }
 
 let _chimeCtx = null;
@@ -564,8 +589,8 @@ function initThingsV6(root) {
   const bucket = root.querySelector('.lot-bucket');
   const drawBtn = root.querySelector('.draw-btn');
   const stickFly = root.querySelector('.stick-flyout');
+  const drawZone = root.querySelector('.draw-zone');
   const curtainThreads = root.querySelector('.curtain-threads');
-  const curtainDecor = root.querySelector('.curtain-decor');
   const modal = root.querySelector('.thing-modal');
 
   let lastDrawId = null;
@@ -591,44 +616,26 @@ function initThingsV6(root) {
       </button>`;
   }
 
-  function renderCurtainDecor() {
-    if (!curtainDecor) return;
-    const cranes = [
-      { left: '8%', top: '12%', scale: 1.1 },
-      { left: '22%', top: '28%', scale: 0.85 },
-      { left: '68%', top: '8%', scale: 1 },
-      { left: '84%', top: '22%', scale: 0.9 },
-      { left: '52%', top: '18%', scale: 0.75 },
-    ];
-    const chimes = [
-      { left: '12%', top: '2%' },
-      { left: '38%', top: '0%' },
-      { left: '62%', top: '1%' },
-      { left: '88%', top: '3%' },
-    ];
-    curtainDecor.innerHTML =
-      cranes.map(c => `<div style="position:absolute;left:${c.left};top:${c.top};transform:scale(${c.scale})">${craneSvg()}</div>`).join('') +
-      chimes.map(c => `<div style="position:absolute;left:${c.left};top:${c.top}">${chimeSvg()}</div>`).join('');
-  }
-
   function renderCurtain() {
     if (!curtainThreads) return;
     const buckets = Array.from({ length: THREAD_COUNT }, () => []);
     THINGS_DATA.forEach((item, i) => buckets[i % THREAD_COUNT].push(item));
     curtainThreads.innerHTML = buckets.map((items, ti) => {
       const tx = THREAD_POSITIONS[ti];
+      const chainTop = 6;
+      const chainHeight = 168;
       const hangs = items.map((item, hi) => {
-        const hangTop = 44 + hi * 118 + (ti % 3) * 16 + (hi % 2) * 22;
+        const hangTop = chainTop + chainHeight + hi * 128 + (ti % 3) * 18 + (hi % 2) * 24;
         const delay = (ti * 0.42 + hi * 0.24) % 2.8;
         return renderCurtainTag(item, hangTop, delay);
       }).join('');
       return `
         <div class="curtain-thread" style="--tx:${tx}%">
           <span class="thread-line" aria-hidden="true"></span>
+          ${renderChainMarkup(ti)}
           <div class="thread-hangs">${hangs}</div>
         </div>`;
     }).join('');
-    renderCurtainDecor();
   }
 
   function markCurtainDrawn(id) {
@@ -688,6 +695,7 @@ function initThingsV6(root) {
   function drawLot() {
     if (drawing) return;
     drawing = true;
+    drawZone?.classList.add('is-drawing');
     if (drawBtn) {
       drawBtn.disabled = true;
       const inner = drawBtn.querySelector('.draw-btn-inner');
@@ -712,6 +720,7 @@ function initThingsV6(root) {
           if (inner) inner.textContent = '摇一支签';
         }
         drawing = false;
+        setTimeout(() => drawZone?.classList.remove('is-drawing'), 2800);
       }, 620);
     }, 520);
   }
