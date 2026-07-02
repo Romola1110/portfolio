@@ -93,27 +93,23 @@ def process_bucket() -> None:
 def process_patterns() -> None:
     ref = resize_longest(Image.open(SRC_PATTERN_REF).convert('RGBA'), PATTERN_MAX)
     pat = resize_longest(Image.open(SRC_PATTERN).convert('RGBA'), PATTERN_MAX)
-    w, h = pat.size
-
-    center_src = alpha_from_paper(ref.crop((w // 4, 0, 3 * w // 4, h)), white_thresh=232.0)
-    center = trim_alpha(center_src)
+    center = alpha_from_paper(ref, white_thresh=232.0)
     save_png(center, OUT / 'dark-pattern.png')
 
-    left = trim_alpha(alpha_from_paper(pat.crop((0, 0, w // 2, h)), white_thresh=234.0))
-    right = trim_alpha(alpha_from_paper(pat.crop((w // 2, 0, w, h)), white_thresh=234.0))
+    p = alpha_from_paper(pat, white_thresh=234.0)
+    w, h = p.size
+    left = p.crop((0, 0, w // 2, h))
+    right = p.crop((w // 2, 0, w, h))
     save_png(fade_half(left, 'left'), OUT / 'dark-pattern-half-left.png')
     save_png(fade_half(right, 'right'), OUT / 'dark-pattern-half-right.png')
 
 
 def process_vector_sprite(src: Path, out: Path, max_px: int = 220) -> dict:
     img = ImageOps.exif_transpose(Image.open(src).convert('RGBA'))
-    arr = np.array(img).astype(np.float32)
-    lum = 0.299 * arr[:, :, 0] + 0.587 * arr[:, :, 1] + 0.114 * arr[:, :, 2]
-    sat = np.abs(arr[:, :, 0] - arr[:, :, 1]) + np.abs(arr[:, :, 1] - arr[:, :, 2])
-    fg = (lum < 238) & (sat > 8)
-    out_arr = arr.copy()
-    out_arr[:, :, 3] = np.where(fg, out_arr[:, :, 3], 0)
-    cut = trim_alpha(Image.fromarray(out_arr.astype(np.uint8)))
+    cut = remove(img)
+    if isinstance(cut, bytes):
+        cut = Image.open(BytesIO(cut)).convert('RGBA')
+    cut = trim_alpha(cut, pad=4)
     cut = resize_longest(cut, max_px)
     save_png(cut, out)
     return {'file': str(out.relative_to(ROOT)).replace('\\', '/'), 'w': cut.size[0], 'h': cut.size[1]}
@@ -156,8 +152,7 @@ def main() -> None:
     process_bucket()
     process_patterns()
     sprites = process_curtain_vectors()
-    photos = process_item_photos()
-    print(f'curtain sprites: {len(sprites)}, item photos: {len(photos)}')
+    print(f'curtain sprites: {len(sprites)}')
 
 
 if __name__ == '__main__':
