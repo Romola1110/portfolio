@@ -1,0 +1,312 @@
+/* 摄影 Demo · 高级动效（仅 demo 页使用，无主站背景框） */
+
+.pd-root {
+  --pd-ink: #2c241b;
+  --pd-muted: #b0a396;
+  --pd-seal: #b5433a;
+  --pd-film: #fffaf4;
+  --pd-perf: #2c241b;
+}
+
+.pd-head { margin-bottom: 1.25rem; }
+.pd-head h1 {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  font-size: 1.55rem;
+  margin: 0 0 0.45rem;
+}
+.pd-head p {
+  margin: 0;
+  color: var(--pd-muted);
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.pd-nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.65rem;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  background: rgba(248, 244, 236, 0.9);
+  border-bottom: 1px solid rgba(44, 36, 27, 0.06);
+  backdrop-filter: blur(10px);
+}
+.pd-nav-bar a {
+  color: var(--pd-ink);
+  text-decoration: none;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+}
+.pd-nav-bar a.is-here { color: var(--pd-seal); font-weight: 700; }
+
+.pd-seasons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+}
+.pd-seasons button {
+  font-family: inherit;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(44, 36, 27, 0.1);
+  background: rgba(255, 255, 255, 0.35);
+  color: var(--pd-ink);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.pd-seasons button.is-active,
+.pd-seasons button:hover {
+  background: rgba(44, 36, 27, 0.88);
+  color: #f4ede4;
+  border-color: transparent;
+}
+
+/* 舞台：无背景框 */
+.pd-stage {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.pd-viewport {
+  position: relative;
+  overflow: hidden;
+  height: min(540px, 66vh);
+  mask-image: linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
+}
+
+.pd-hint {
+  margin: 0.65rem 0 0;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--pd-muted);
+}
+
+/* 胶片卡片 */
+.pd-card {
+  break-inside: avoid;
+  margin: 0 0 5px;
+  transform: translate3d(var(--tx, 0), var(--ty, 0), 0) rotate(var(--rot, 0deg)) scale(var(--sc, 1));
+  transition: transform 0.18s ease-out, filter 0.35s ease;
+  will-change: transform;
+  cursor: pointer;
+}
+
+.pd-film {
+  display: flex;
+  align-items: stretch;
+  background: var(--pd-film);
+  box-shadow: 0 3px 14px rgba(44, 36, 27, 0.07);
+}
+
+.pd-perf {
+  width: 5px;
+  flex-shrink: 0;
+  background: var(--pd-perf);
+  background-image: radial-gradient(circle 1.4px at 2.5px 5px, rgba(255,255,255,0.88) 100%, transparent 0);
+  background-size: 5px 10px;
+}
+
+.pd-body { flex: 1; min-width: 0; padding: 4px 4px 14px; }
+
+.pd-img {
+  background: #12100e;
+  overflow: hidden;
+  line-height: 0;
+}
+.pd-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pd-card.is-landscape .pd-img { aspect-ratio: 4 / 3; }
+.pd-card.is-portrait .pd-img { aspect-ratio: 3 / 4; }
+.pd-card.sz-s.is-landscape .pd-img { aspect-ratio: 5 / 3; }
+.pd-card.sz-s.is-portrait .pd-img { aspect-ratio: 2 / 3; }
+.pd-card.sz-l.is-landscape .pd-img { aspect-ratio: 16 / 10; }
+.pd-card.sz-l.is-portrait .pd-img { aspect-ratio: 2 / 3.2; }
+
+.pd-tag {
+  display: block;
+  margin-top: 3px;
+  text-align: center;
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  color: rgba(44, 36, 27, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.25s ease;
+}
+.pd-card:hover .pd-tag { color: var(--pd-seal); }
+
+/* —— 方案 A：墨流上浮 —— */
+.pd-mode-drift .pd-mosaic {
+  column-count: 6;
+  column-gap: 5px;
+  padding: 0 2px;
+}
+.pd-mode-drift .pd-track {
+  animation: pdDriftUp var(--pd-dur, 38s) linear infinite;
+  will-change: transform;
+}
+.pd-mode-drift.pd-paused .pd-track { animation-play-state: paused; }
+.pd-mode-drift .pd-viewport {
+  transform: perspective(900px) rotateX(var(--pvx, 0deg)) rotateY(var(--pvy, 0deg));
+  transition: transform 0.2s ease-out;
+}
+@keyframes pdDriftUp {
+  to { transform: translate3d(0, -50%, 0); }
+}
+
+/* —— 方案 B：双潮对涌 —— */
+.pd-mode-tide .pd-tide {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+  height: 100%;
+}
+.pd-mode-tide .pd-tide-col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  will-change: transform;
+  animation: pdTideUp var(--pd-dur, 44s) linear infinite;
+}
+.pd-mode-tide .pd-tide-col:nth-child(even) {
+  animation: pdTideDown var(--pd-dur, 52s) linear infinite;
+}
+.pd-mode-tide.pd-paused .pd-tide-col { animation-play-state: paused; }
+.pd-mode-tide .pd-card { margin: 0; }
+@keyframes pdTideUp {
+  to { transform: translate3d(0, -50%, 0); }
+}
+@keyframes pdTideDown {
+  from { transform: translate3d(0, -50%, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+/* —— 方案 C：磁力参差 —— */
+.pd-mode-magnetic .pd-viewport { height: min(560px, 68vh); }
+.pd-mode-magnetic .pd-magnetic-field {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.pd-mode-magnetic .pd-card {
+  position: absolute;
+  margin: 0;
+  transition: transform 0.12s ease-out, filter 0.3s ease;
+}
+.pd-mode-magnetic .pd-card.is-near {
+  z-index: 5;
+  filter: drop-shadow(0 10px 24px rgba(181, 67, 58, 0.18));
+}
+
+/* —— 方案 D：涟漪显影 —— */
+.pd-mode-ripple .pd-mosaic {
+  column-count: 5;
+  column-gap: 4px;
+  padding: 0 1px;
+}
+.pd-mode-ripple .pd-track {
+  animation: pdDriftUp var(--pd-dur, 48s) linear infinite;
+}
+.pd-mode-ripple.pd-paused .pd-track { animation-play-state: paused; }
+.pd-mode-ripple .pd-card {
+  filter: blur(var(--rb, 6px)) saturate(var(--rs, 0.45));
+  opacity: var(--ro, 0.55);
+}
+
+/* 灯箱 */
+.pd-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: rgba(8, 6, 5, 0);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease, background 0.4s ease;
+}
+.pd-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  background: linear-gradient(165deg, rgba(44, 32, 24, 0.92), rgba(8, 6, 5, 0.96));
+}
+.pd-lightbox img {
+  max-width: min(880px, 92vw);
+  max-height: min(72vh, 720px);
+  object-fit: contain;
+  border: 10px solid #f4ede4;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.45);
+}
+.pd-lightbox-meta {
+  margin-top: 1rem;
+  text-align: center;
+  color: #f4ede4;
+}
+.pd-lightbox-meta .lb-title {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.18em;
+  margin: 0 0 0.35rem;
+}
+.pd-lightbox-meta .lb-caption {
+  font-size: 0.9rem;
+  opacity: 0.72;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+.pd-lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(244,237,228,0.25);
+  background: rgba(0,0,0,0.25);
+  color: #f4ede4;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .pd-mode-drift .pd-mosaic { column-count: 4; }
+  .pd-mode-tide .pd-tide { grid-template-columns: repeat(3, 1fr); }
+  .pd-mode-ripple .pd-mosaic { column-count: 4; }
+}
+@media (max-width: 560px) {
+  .pd-mode-drift .pd-mosaic { column-count: 3; }
+  .pd-mode-tide .pd-tide { grid-template-columns: repeat(2, 1fr); }
+  .pd-mode-ripple .pd-mosaic { column-count: 3; }
+  .pd-viewport { height: min(460px, 58vh); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pd-track, .pd-tide-col { animation: none !important; }
+}

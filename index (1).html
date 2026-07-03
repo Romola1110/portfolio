@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>楊雪琪 · 時光小集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Italiana&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=Ma+Shan+Zheng&family=Zhi+Mang+Xing&family=LXGW+WenKai:wght@300;400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/visual-section.css">
+<link rel="stylesheet" href="assets/dh-section.css">
+<link rel="stylesheet" href="assets/things-section.css?v=17">
+<link rel="stylesheet" href="assets/photography-breeze.css?v=7">
+<link rel="stylesheet" href="assets/photography-main.css?v=8">
+<style>
+/* ===== 字体 ===== */
+@font-face{font-family:'YuweiFanti';src:url('yuweifanti.ttf') format('truetype');font-display:swap;}
+@font-face{font-family:'YuweiJianti';src:url('yuwei.ttf') format('truetype');font-display:swap;}
+
+:root{
+  --bg:#F8F4EC;--soft:#B6AFA4;--accent:#E9D6A5;
+  --serif:'Noto Serif SC',serif;
+  --english:'Cormorant Garamond','Georgia',serif;
+  --cn-title:'YuweiFanti','Noto Serif SC',serif;
+  --cn-title-s:'YuweiJianti','Noto Serif SC',serif;
+  --cn-poem:'LXGW WenKai','Noto Serif SC',serif;
+  --cn-nav:'Ma Shan Zheng','Noto Serif SC',cursive;
+  --cn-light:'LXGW WenKai','Noto Serif SC',serif;
+  --cn-art:'Zhi Mang Xing', cursive; 
+  --transition:1.2s ease;
+}
+
+body.spring{
+  --bg:#F2EDF8;--text:#2D2536;--soft:#8A92B0;--accent:#D88CA8;
+  --g1:#E2DDF2;--g2:#F5DDEB;--g3:#DCE8F5; 
+  --branch:#6A5F7A;--branch-light:#A49DB0;
+}
+body.summer{
+  --bg:#EEF4F0;--text:#1D2B22;--soft:#7A9A8A;--accent:#68A888;
+  --g1:#DCECE0;--g2:#E2F0EA;--g3:#C8E2D5;
+  --branch:#5A7A6A;--branch-light:#8AA89A;
+}
+body.autumn{
+  --bg:#F8EFE4;--text:#382110;--soft:#B08E6C;--accent:#C06B2A;
+  --g1:#F3E2CE;--g2:#F6D3B6;--g3:#E8C59B;
+  --branch:#7A5030;--branch-light:#B08060;
+}
+body.winter{
+  --bg:#EEF0F4;--text:#1F1F28;--soft:#8A8A9C;--accent:#8A9BB8;
+  --g1:#DCE4EC;--g2:#E6E8F0;--g3:#C8D6E8;
+  --branch:#505A6A;--branch-light:#8A98A8;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{overflow-x:hidden; min-height:100vh;}
+body{
+  font-family:var(--serif);color:var(--text);
+  line-height:1.9;transition:color var(--transition);
+  background:transparent;
+}
+
+/* 全局背景晕染与噪点 */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -2;
+  background: 
+    radial-gradient(circle at 10% 20%, var(--g1) 0%, transparent 60%),
+    radial-gradient(circle at 80% 30%, var(--g2) 0%, transparent 60%),
+    radial-gradient(circle at 50% 80%, var(--g3) 0%, transparent 60%),
+    radial-gradient(circle at 90% 85%, var(--g1) 0%, transparent 60%),
+    radial-gradient(circle at 20% 70%, var(--g2) 0%, transparent 60%),
+    var(--bg);
+  transition: background 1.5s ease;
+  filter: blur(10px);
+}
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.7'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  transition: opacity 1.5s ease;
+}
+
+.sparkles {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image: radial-gradient(circle 2px at 10% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
+                    radial-gradient(circle 1.5px at 80% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
+                    radial-gradient(circle 2px at 30% 70%, rgba(255,255,255,0.7) 0%, transparent 100%),
+                    radial-gradient(circle 1.5px at 70% 90%, rgba(255,255,255,0.5) 0%, transparent 100%);
+  background-size: 200px 200px;
+  animation: twinkle 15s linear infinite alternate;
+  opacity: 0.6;
+}
+@keyframes twinkle {
+  0% { transform: translateY(0) scale(1); opacity: 0.4; }
+  50% { transform: translateY(-20px) scale(1.1); opacity: 0.8; }
+  100% { transform: translateY(-40px) scale(1); opacity: 0.4; }
+}
+
+/* ========== 启封页样式 ========== */
+#overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:1000;transition:opacity 1.8s ease;overflow:hidden;}
+#overlay.spring-bg{background:radial-gradient(ellipse 60% 80% at 15% 20%,#FFD4D4 0%,transparent 50%),radial-gradient(ellipse 70% 60% at 85% 30%,#FFE8C7 0%,transparent 50%),radial-gradient(ellipse 80% 70% at 50% 85%,#F5D5E0 0%,transparent 60%),linear-gradient(135deg,#FFF5E8 0%,#FAE8D9 50%,#F5DCC8 100%);}
+#overlay.summer-bg{background:radial-gradient(ellipse 60% 80% at 15% 20%,#C8E0E8 0%,transparent 50%),radial-gradient(ellipse 70% 60% at 85% 30%,#E0EBC8 0%,transparent 50%),radial-gradient(ellipse 80% 70% at 50% 85%,#B8D4DC 0%,transparent 60%),linear-gradient(135deg,#EDF5F3 0%,#DCE8E5 50%,#C8DCD8 100%);}
+#overlay.autumn-bg{background:radial-gradient(ellipse 60% 80% at 15% 20%,#F5C99B 0%,transparent 50%),radial-gradient(ellipse 70% 60% at 85% 30%,#E8A07A 0%,transparent 50%),radial-gradient(ellipse 80% 70% at 50% 85%,#DCC299 0%,transparent 60%),linear-gradient(135deg,#FBF0DC 0%,#F2DCB8 50%,#E8C599 100%);}
+#overlay.winter-bg{background:radial-gradient(ellipse 60% 80% at 15% 20%,#D8E0EC 0%,transparent 50%),radial-gradient(ellipse 70% 60% at 85% 30%,#E8E5F0 0%,transparent 50%),radial-gradient(ellipse 80% 70% at 50% 85%,#C8D2DC 0%,transparent 60%),linear-gradient(135deg,#F4F5F7 0%,#E5E8EC 50%,#D2D8E0 100%);}
+.deco-shape{position:absolute;pointer-events:none;opacity:0.5;z-index:0;}
+.deco-shape.s1{top:8%;left:5%;width:180px;height:180px;}
+.deco-shape.s2{top:60%;right:8%;width:220px;height:220px;}
+.deco-shape.s3{bottom:10%;left:15%;width:140px;height:140px;}
+.deco-shape.s4{top:30%;right:25%;width:100px;height:100px;}
+#poemBg{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1;}
+.poem-fragment{position:absolute;white-space:nowrap;user-select:none;font-family:var(--cn-poem)!important;font-weight:400;transition:transform 1.5s cubic-bezier(0.2,0.8,0.2,1);text-shadow:0 1px 3px rgba(255,255,255,0.4);}
+.poem-fragment.en{font-family:'Cormorant Garamond','Georgia',serif!important;font-style:italic;}
+.poem-fragment.depth-near{opacity:0.48;filter:blur(0);}
+.poem-fragment.depth-mid{opacity:0.32;filter:blur(1.5px);}
+.poem-fragment.depth-far{opacity:0.2;filter:blur(3px);}
+
+.letter-paper{position:relative;z-index:5;max-width:640px;width:85%;padding:5rem 4rem;background:repeating-linear-gradient(0deg,transparent,transparent 23px,rgba(160,130,90,0.06) 23px,rgba(160,130,90,0.06) 24px),repeating-linear-gradient(90deg,transparent,transparent 47px,rgba(140,110,70,0.03) 47px,rgba(140,110,70,0.03) 48px),linear-gradient(170deg,rgba(255,252,242,0.82) 0%,rgba(250,244,230,0.78) 30%,rgba(245,238,218,0.75) 60%,rgba(252,247,235,0.80) 100%);border-radius:4px;box-shadow:0 30px 80px rgba(120,90,60,0.18),0 10px 30px rgba(120,90,60,0.1),inset 0 0 0 1px rgba(255,255,255,0.6),inset 0 0 60px rgba(200,170,120,0.08);text-align:center;backdrop-filter:blur(10px);}
+.letter-paper::before{content:'';position:absolute;inset:0;border-radius:4px;background-image:radial-gradient(ellipse 1px 1px at 20% 30%,rgba(150,120,80,0.08),transparent),radial-gradient(ellipse 1px 1px at 60% 70%,rgba(130,100,60,0.06),transparent);background-size:7px 11px,13px 9px;pointer-events:none;z-index:0;}
+.letter-corner{position:absolute;width:32px;height:32px;border:1.5px solid rgba(150,100,70,0.25);pointer-events:none;z-index:1;}
+.letter-corner.tl{top:18px;left:18px;border-right:none;border-bottom:none;}
+.letter-corner.br{bottom:18px;right:18px;border-left:none;border-top:none;}
+.letter-content{position:relative;z-index:2;}
+
+/* 启封页标题恢复禹卫繁体双行错开 */
+.main-title{font-family:var(--cn-title);font-size:3.5rem;color:#2D1810;display:flex;flex-direction:column;align-items:center;gap:0.4rem;margin-bottom:2.5rem;cursor:pointer;line-height:1.2;transition:color 1s ease;}
+.main-title:hover{color:#9C7A4A;}
+.title-row{display:flex;letter-spacing:0.25em;}
+.title-row.top{align-self:flex-start;margin-left:8%;}
+.title-row.bottom{align-self:flex-end;margin-right:8%;margin-top:-0.2rem;}
+.title-char{display:inline-block;opacity:0;transform:translateY(-30px) scale(0.8);filter:blur(10px);animation:writeIn 0.8s cubic-bezier(0.2,0.6,0.3,1) forwards;}
+@keyframes writeIn{0%{opacity:0;transform:translateY(-30px) scale(0.8);filter:blur(10px);}40%{opacity:0.5;filter:blur(4px);}70%{opacity:0.85;transform:translateY(-3px) scale(1.02);filter:blur(1px);}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}}
+
+.lunar-line{font-family:'Noto Serif SC',serif;font-weight:600;color:#6B4A30;font-size:1.05rem;margin-bottom:2.2rem;letter-spacing:0.15em;opacity:0;animation:slideUp 1.2s ease forwards 3s;}
+.poem-cn{font-family:'Noto Serif SC',serif;font-weight:600;font-size:1.2rem;line-height:2.2;color:#3A2818;margin-bottom:1.5rem;letter-spacing:0.1em;opacity:0;animation:slideUp 1.2s ease forwards 3.3s;}
+.poem-en{font-family:'Cormorant Garamond','Georgia',serif;font-style:italic;font-size:1.05rem;line-height:1.9;color:#7A5C44;margin-bottom:2.5rem;opacity:0;animation:slideUp 1.2s ease forwards 3.6s;}
+.unfold-btn{font-family:'Noto Serif SC',serif;font-weight:600;font-size:1rem;border:1.5px solid #3A2818;background:transparent;color:#2D1810;padding:0.85rem 2.5rem;cursor:pointer;letter-spacing:0.35em;transition:all 0.5s ease;opacity:0;animation:fadeIn 1.5s ease forwards 4s;}
+.unfold-btn:hover{background:#2D1810;color:#FFF5E8;letter-spacing:0.45em;}
+
+.season-mini-switcher{position:absolute;top:30px;right:30px;display:flex;gap:0.5rem;z-index:10;opacity:0;animation:fadeIn 1s ease forwards 1s;}
+.season-mini-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(90,60,40,0.4);background:rgba(255,255,255,0.5);cursor:pointer;font-family:'Noto Serif SC',serif;font-weight:700;font-size:0.9rem;color:#5A3C28;transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;}
+.season-mini-btn:hover, .season-mini-btn.active{background:#5A3C28;color:#FFF5E8;transform:scale(1.1);}
+
+@keyframes slideUp{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+/* ========== 鼠标交互特效 ========== */
+.ink-trail{position:fixed;width:10px;height:10px;background:radial-gradient(circle,rgba(90,60,40,0.5) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:9999;animation:inkFade 1.8s ease forwards;}
+@keyframes inkFade{0%{opacity:0.7;transform:scale(1);}100%{opacity:0;transform:scale(2.5);}}
+.click-effect{position:fixed;pointer-events:none;z-index:9998;}
+.click-petal{width:16px;height:16px;background:linear-gradient(135deg,#FFB8C0,#F595A5);border-radius:50% 0;animation:petalDrift 3s ease-in forwards;}
+.click-ripple{width:30px;height:30px;border:2px solid rgba(120,180,200,0.6);border-radius:50%;animation:rippleOut 1.8s ease-out forwards;}
+.click-leaf{width:24px;height:24px;animation:leafTwirl 3.5s ease-in forwards;}
+.click-snow{width:20px;height:20px;animation:snowFall 3s ease-in forwards;}
+@keyframes petalDrift{0%{opacity:1;transform:translate(0,0) rotate(0);}100%{opacity:0;transform:translate(-35px,180px) rotate(240deg) scale(0.5);}}
+@keyframes rippleOut{0%{opacity:1;transform:scale(0.3);}100%{opacity:0;transform:scale(3);}}
+@keyframes leafTwirl{0%{opacity:1;transform:translate(0,0) rotate(0) scale(1);}50%{transform:translate(-8px,110px) rotate(200deg) scale(0.85);}100%{opacity:0;transform:translate(5px,240px) rotate(520deg) scale(0.3);}}
+@keyframes snowFall{0%{opacity:1;transform:translate(0,0) rotate(0);}100%{opacity:0;transform:translate(-15px,160px) rotate(180deg);}}
+
+/* ========== 真正的季节满屏动效 CSS底层 ========== */
+.season-effect { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:2; }
+
+/* 修复关键帧名称拼写，并移除多余动画参数 */
+
+@keyframes fallStraight {
+  0% { transform: translateY(-5vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+}
+@keyframes fallLeft {
+  0% { transform: translateY(-5vh) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(105vh) translateX(-150px) rotate(360deg); opacity: 0; }
+}
+@keyframes fallRight {
+  0% { transform: translateY(-5vh) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(105vh) translateX(150px) rotate(360deg); opacity: 0; }
+}
+@keyframes dropFall {
+  0% { transform: translateY(-5vh); opacity: 0; }
+  10% { opacity: 1; }
+  90% { transform: translateY(100vh); opacity: 1; height: 35px; }
+  95% { transform: translateY(100vh); opacity: 0; height: 0; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+@keyframes dropSplash {
+  0%, 90% { transform: scale(0.2); opacity: 0; }
+  95% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* Hover Cards */
+.has-hover-card { position: relative; cursor: pointer; }
+.hover-card {
+  position: absolute; top: 50%; left: 105%; transform: translateY(-50%) translateX(20px);
+  width: 360px; background: rgba(255,255,255,0.85); backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.9); border-radius: 12px; padding: 1.5rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08), inset 0 0 15px rgba(255,255,255,0.8);
+  opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 100; pointer-events: none; text-align: left;
+}
+.align-right .hover-card {
+  left: auto; right: 105%; transform: translateY(-50%) translateX(-20px); text-align: right;
+}
+.has-hover-card:hover .hover-card {
+  opacity: 1; visibility: visible; transform: translateY(-50%) translateX(0);
+}
+.hover-cover { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.hover-text .quote-cn { font-family: var(--cn-light); font-size: 0.95rem; color: var(--text); line-height: 1.7; margin-bottom: 0.5rem; font-weight: 700; }
+.hover-text .quote-en { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.9rem; color: var(--soft); line-height: 1.4; }
+.strategy-note { font-family: var(--cn-light); font-size: 0.85rem; color: var(--soft); background: rgba(0,0,0,0.04); padding: 0.8rem; border-radius: 6px; margin-top: 0.8rem; text-align: left; }
+.strategy-note .trans-pair { display: flex; justify-content: space-between; margin-bottom: 0.4rem; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 0.2rem; }
+
+/* Photo Waterfall */
+.photo-waterfall { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.photo-card { background: rgba(255,255,255,0.4); padding: 0.8rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.8); transition: transform 0.4s; }
+.photo-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+.photo-placeholder { width: 100%; height: 260px; background: rgba(0,0,0,0.03); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-family: var(--cn-light); color: var(--soft); font-size: 0.85rem; letter-spacing: 0.1em; }
+.photo-caption { margin-top: 0.8rem; font-family: var(--cn-light); font-size: 0.9rem; color: var(--text); text-align: center; font-weight: 600; letter-spacing: 0.05em; }
+.fall-particle {
+  position: absolute; top: -50px;
+  animation: particleFall var(--dur) linear infinite;
+  animation-delay: var(--delay);
+}
+
+.rain-container { 
+  position: absolute; top: -35px; width: 2px; height: calc(100vh + 35px); 
+  animation-delay: var(--delay);
+}
+
+.raindrop {
+  position: absolute; left: 0; width: 2px; height: 35px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.9));
+  box-shadow: 0 0 4px rgba(255,255,255,0.4);
+  animation: dropFall var(--dur) linear infinite;
+  animation-delay: inherit;
+}
+.rain-ripple-floor {
+  position: absolute; bottom: 0; left: -19px; width: 40px; height: 10px;
+  border: 1.5px solid rgba(255,255,255,0.7);
+  border-radius: 50%; opacity: 0;
+  animation: dropSplash var(--dur) ease-out infinite;
+  animation-delay: inherit;
+}
+
+
+/* ========== 主页 ========== */
+main{opacity:0;visibility:hidden;transition:opacity 1s; position:relative; z-index:1;}
+main.visible{opacity:1;visibility:visible;}
+
+/* === 导航 === */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.6rem 2rem;
+  background:rgba(255,255,255,.45);backdrop-filter:blur(16px);z-index:50;
+  border-bottom:1px solid rgba(0,0,0,0.03);
+}
+.logo{font-family:'Italiana',serif;letter-spacing:.18em;font-size:1rem;color:var(--soft);}
+.nav-items{display:flex;list-style:none;align-items:center;gap:1.5rem;}
+.nav-item a{
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-decoration:none; color:var(--text); transition:all 0.4s ease;
+  border: 1px solid rgba(0,0,0,0.1); border-radius: 20px;
+  padding: 0.3rem 1.2rem; background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(8px); box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+.nav-item a:hover{
+  background: var(--accent); color: #fff; border-color: transparent;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15); transform: translateY(-2px);
+}
+.nav-item .nav-cn{ font-family:var(--cn-nav); font-size:1.35rem; font-weight:600; letter-spacing:0.05em; }
+.nav-item .nav-en{ font-family:'Cormorant Garamond','Georgia',serif; font-size:0.75rem; font-style:italic; font-weight:600; opacity:0.8; }
+
+.sundial-wrap{display:flex;align-items:center;gap:0.8rem;cursor:pointer;}
+.sundial{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#fff8e6 0%,var(--accent) 80%);box-shadow:0 0 10px rgba(0,0,0,.04);transition:transform .5s;order:1;}
+.sundial:hover{transform:scale(1.15);}
+.time-info{text-align:left;line-height:1.4;order:2;}
+.time-info .date-line{font-family:'Cormorant Garamond','Georgia',serif;font-size:0.78rem;color:var(--soft);}
+.time-info .term-line{font-family:'Noto Serif SC',serif;font-weight:700;font-size:0.82rem;color:var(--text);letter-spacing:0.08em;}
+.time-info .term-poem-line{font-family:'Noto Serif SC',serif;font-weight:400;font-size:0.7rem;color:var(--soft);}
+
+/* ===== HERO 第一页 大标题 ===== */
+.hero{
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:transparent;
+}
+.hero-center{position:relative;z-index:5;text-align:center;max-width:800px;padding:0 2rem;}
+
+/* 大标题单行居中 禹卫简体 */
+.hero-title {
+  font-family: var(--cn-title-s);
+  font-size: 4.5rem;
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+  text-shadow: 0 0 20px rgba(255,255,255,0.9);
+  white-space: nowrap; 
+}
+.hero-title-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUpIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@media (max-width: 768px) {
+  .hero-title { font-size: 2.8rem; white-space: normal; } 
+}
+@keyframes fadeUpIn { to { opacity: 1; transform: translateY(0); } }
+
+.hero-subtitle{
+  font-family:'Cormorant Garamond','Georgia',serif;
+  font-style:italic;font-size:1.3rem;font-weight:500;
+  color:var(--soft);letter-spacing:0.05em;margin-bottom:2.5rem;
+  opacity:0; animation:slideUp 1.2s ease forwards 0.8s;
+  text-shadow: 0 0 5px rgba(255,255,255,0.8);
+}
+.hero-greeting{
+  font-family:var(--cn-light);font-size:1.15rem;color:var(--text);
+  letter-spacing:0.08em;line-height:2;min-height:3.5em;
+  opacity:0;animation:fadeIn 1s ease forwards 1.5s;
+  background: transparent; padding: 0; border: none; box-shadow: none;
+}
+.hero-greeting .typing-cursor{
+  display:inline-block;width:2px;height:1.1em;
+  background:var(--text);margin-left:2px;
+  animation:blink 0.8s step-end infinite;vertical-align:text-bottom;
+}
+.scroll-hint{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.4rem;
+  z-index:5;opacity:0;border:none;background:transparent;box-shadow:none;animation:hintPulse 2.5s ease-in-out infinite, fadeIn 1s ease forwards 3s;
+}
+.scroll-hint span{font-family:var(--cn-light);font-size:0.8rem;color:var(--soft);letter-spacing:0.15em;font-weight:600;}
+.scroll-hint svg{width:20px;height:20px;stroke:var(--soft);stroke-width:2;fill:none;}
+
+/* ===== 开放式内容排版 ===== */
+.content-wrapper { position: relative; z-index: 2; padding-bottom: 5rem; }
+.open-section{
+  scroll-margin-top: 120px; 
+  position:relative; max-width:800px; margin:0 auto 8rem auto;
+  padding: 0 2rem;
+  opacity:0; transform:translateY(30px); transition:all 1s cubic-bezier(0.2,0.8,0.2,1);
+  pointer-events:none;
+}
+.open-section.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
+
+/* 标题飘逸风格 */
+.section-title {
+  font-family: var(--cn-art); font-size: 3.5rem; font-weight: 400;
+  color: var(--text); letter-spacing: 0.1em; margin-bottom: 0.2rem;
+  text-shadow: 0 0 12px rgba(255,255,255,0.9), 0 0 6px rgba(255,255,255,0.9);
+  position: relative; display: inline-block;
+}
+.section-title::before {
+  content: ''; position: absolute; inset: -20px; z-index: -1;
+  background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+  opacity: 0; transition: opacity 0.5s ease; border-radius: 50%;
+  animation: glowPulse 3s infinite alternate;
+}
+.open-section.visible .section-title::before { opacity: 1; }
+@keyframes glowPulse { from { transform: scale(0.9); opacity: 0.4; } to { transform: scale(1.1); opacity: 0.8; } }
+
+.section-en {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1.15rem; color: var(--soft); letter-spacing: 0.05em;
+  margin-bottom: 2.5rem; text-shadow: 0 0 5px rgba(255,255,255,0.8); font-weight:600;
+}
+.section-desc {
+  font-family: var(--cn-light); font-size: 1.05rem; line-height: 1.9;
+  color: var(--text); margin-bottom: 2rem; max-width: 90%;
+  text-shadow: 0 0 4px rgba(255,255,255,0.8); font-weight: 500;
+  background: rgba(255,255,255,0.2); padding: 1.2rem; border-radius: 8px; backdrop-filter: blur(4px);
+}
+#about .section-desc{
+  max-width: min(1100px, 96%);
+  margin-left: clamp(-18px, -1.8vw, -8px);
+}
+
+.open-content {
+  display: flex; flex-direction: column; gap: 2rem;
+  background: rgba(255,255,255,0.3); padding: 2rem; border-radius: 16px; backdrop-filter: blur(8px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.04), inset 0 0 10px rgba(255,255,255,0.5);
+  position: relative;
+}
+.open-item { position: relative; padding-left: 1.5rem; }
+.open-item::before {
+  content: ''; position: absolute; left: 0; top: 0.4rem; bottom: 0;
+  width: 3px; background: linear-gradient(to bottom, var(--accent), transparent);
+  border-radius: 2px;
+}
+.open-item h4 {
+  font-family: var(--cn-light); font-size: 1.2rem; font-weight: 700;
+  margin-bottom: 0.3rem; color: var(--text);
+}
+.open-item p {
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic;
+  color: var(--soft); font-weight: 500;
+}
+.open-item.tags-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+.open-item.tags-row span {
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--soft);
+  position: relative; font-weight: 600;
+}
+.open-item.tags-row span:not(:last-child)::after { content: '·'; margin-left: 1rem; opacity: 0.5; }
+
+/* 交错布局 */
+.open-section.align-right { text-align: right; }
+.open-section.align-right .section-desc { margin-left: auto; margin-right: 0; }
+.open-section.align-right .open-item { padding-left: 0; padding-right: 1.5rem; }
+.open-section.align-right .open-item::before { left: auto; right: 0; }
+.open-section.align-right .open-item.tags-row { justify-content: flex-end; }
+.open-section.align-right .open-item.tags-row span:not(:last-child)::after { display: none; }
+.open-section.align-right .open-item.tags-row span:not(:first-child)::before { content: '·'; margin-right: 1rem; opacity: 0.5; }
+
+/* ===== 诗词树干与双线藤蔓 (SVG 背景层) ===== */
+#treeContainer {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+}
+#treeVineClip {
+  position: absolute; inset: 0;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.08s linear;
+  -webkit-mask-image: linear-gradient(to bottom, black 88%, transparent 98%);
+  mask-image: linear-gradient(to bottom, black 88%, transparent 98%);
+}
+.tree-trunk-outline { fill: none; stroke: var(--branch-light); stroke-width: 8px; opacity: 0.15; filter: blur(2px); }
+.tree-text {
+  font-family: var(--cn-poem); font-size: 0.95rem;
+  fill: var(--text); letter-spacing: 0.4em;
+  opacity: 0.9; font-weight: 600;
+  paint-order: stroke fill;
+  stroke: var(--bg); stroke-width: 4px; stroke-opacity: 0.8;
+}
+.tree-text.en {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.95rem; letter-spacing: 0.2em; opacity: 0.8;
+}
+.tree-text-hazy {
+  opacity: 0.42;
+  font-weight: 500;
+  stroke-width: 3px;
+  stroke-opacity: 0.5;
+}
+.hazy-deco {
+  filter: drop-shadow(0 2px 6px rgba(255,255,255,0.8)) blur(0.5px);
+  opacity: 0.85;
+  animation: breathe 4s ease-in-out infinite alternate;
+}
+@keyframes breathe { from { opacity: 0.6; transform: scale(0.95); } to { opacity: 1; transform: scale(1.05); } }
+
+/* 蝴蝶飞舞 */
+.butterfly-layer {
+  position: absolute; width: 45px; height: 45px; pointer-events: none;
+  transition: opacity 0.15s ease;
+  will-change: offset-distance, opacity;
+}
+#bf1 { z-index: 1; opacity: 0; filter: blur(1.5px) drop-shadow(0 0 8px rgba(255,255,255,0.85)) drop-shadow(0 0 5px var(--accent)); }
+#bf2.butterfly-front { position: absolute; top: 0; left: 0; width: 45px; height: 45px; z-index: 3; opacity: 0; filter: blur(2px) drop-shadow(0 0 10px var(--accent)) drop-shadow(0 0 6px rgba(255,255,255,0.7)); transform: scale(0.92); }
+.butterfly-wing { fill: var(--accent); opacity: 0.9; transform-origin: center; }
+.butterfly-wing.left { animation: flapLeft 0.2s ease-in-out infinite alternate; }
+.butterfly-wing.right { animation: flapRight 0.2s ease-in-out infinite alternate; }
+@keyframes flapLeft { from { transform: rotateY(0deg) rotateZ(-10deg); } to { transform: rotateY(65deg) rotateZ(15deg); } }
+@keyframes flapRight { from { transform: rotateY(0deg) rotateZ(10deg); } to { transform: rotateY(-65deg) rotateZ(-15deg); } }
+
+/* 续音卡片 */
+.contact-section{ text-align:center; padding: 4rem 2rem 10rem 2rem; position:relative; z-index:10; }
+.contact-frame {
+  display: inline-block; padding: 3rem 4rem;
+  background: rgba(255,255,255,0.5); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.8); border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.05), inset 0 0 20px rgba(255,255,255,0.6);
+  position: relative; z-index: 5; 
+}
+.contact-frame h3 { font-family: var(--cn-art); font-size: 3.5rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; text-shadow: 0 0 8px #fff; font-weight:400; color:var(--text); }
+.contact-frame .cn { font-family: var(--cn-light); font-size: 1.15rem; margin-bottom: 0.2rem; }
+.contact-frame .en { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--soft); font-size: 1.05rem; margin-bottom: 2rem; font-weight: 600; }
+.contact-details p {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--text);
+  margin-bottom: 0.5rem; font-weight: 600; letter-spacing: 0.05em;
+}
+
+footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.85rem;}
+.modal{position:fixed;inset:0;display:none;background:rgba(0,0,0,.5);align-items:center;justify-content:center;z-index:300;}
+.modal.show{display:flex;}
+.modal-box{background:#fff;padding:2rem;border-radius:14px;text-align:center;font-family:'Noto Serif SC',serif;}
+.modal-box button{margin:.4rem;padding:.5rem 1rem;cursor:pointer;font-family:'Noto Serif SC',serif;font-weight:600;border:1px solid #ddd;border-radius:6px;background:#fafafa;}
+.modal-box button:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+/* ===== 新版 Words 错落网格布局 ===== */
+.words-grid {
+  display: flex; flex-direction: column; gap: 2.8rem; margin-top: 2.2rem; position: relative; z-index: 2;
+}
+.word-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  padding: 3rem 2.8rem 2.6rem;
+  width: 82%;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03), inset 0 0 15px rgba(255,255,255,0.6);
+  cursor: pointer;
+  overflow: visible; 
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* 默认边线为灰色 */
+.word-card.align-left { align-self: flex-start; text-align: left; border-left: 3px solid rgba(160, 155, 165, 0.4); }
+.word-card.align-right { align-self: flex-end; text-align: right; border-right: 3px solid rgba(160, 155, 165, 0.4); }
+
+.word-card:hover {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08), inset 0 0 20px rgba(255,255,255,0.9);
+  transform: translateY(-5px);
+}
+/* 悬停时边线变为主题色 */
+.word-card.align-left:hover { border-left-color: var(--accent); }
+.word-card.align-right:hover { border-right-color: var(--accent); }
+
+/* 活页扣设计 */
+.binder-holes {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 20px; z-index: 20;
+}
+.word-card.align-left .binder-holes { left: 15px; }
+.word-card.align-right .binder-holes { right: 15px; }
+.binder-holes .hole {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--bg); /* 镂空透出背景色 */
+  box-shadow: inset 3px 3px 6px rgba(0,0,0,0.2), inset -2px -2px 4px rgba(255,255,255,0.9), 1px 1px 1px rgba(255,255,255,0.8);
+}
+
+/* 横向书签/飘带 标签设计 */
+.card-ribbon {
+  position: absolute; top: 25px;
+  display: flex; align-items: center; gap: 6px;
+  background: #A09BA5; /* 原始灰色 */
+  padding: 5px 14px;
+  color: #fff; font-family: var(--cn-light); font-weight: 700; font-size: 0.78rem;
+  transition: all 0.4s ease; z-index: 20;
+}
+.word-card.align-left .card-ribbon {
+  left: -10px; border-radius: 4px 4px 4px 0;
+  clip-path: polygon(0 0, 100% 0, 90% 50%, 100% 100%, 0 100%);
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+  padding-right: 22px;
+}
+.word-card.align-left .card-ribbon::before {
+  content:''; position:absolute; bottom:-8px; left:0;
+  border-width: 8px 12px 0 0; border-style: solid; border-color: #807B85 transparent transparent transparent;
+  z-index: -1; transition: border-color 0.4s ease;
+}
+.word-card.align-right .card-ribbon {
+  right: -10px; border-radius: 4px 4px 0 4px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 10% 50%);
+  box-shadow: -2px 4px 10px rgba(0,0,0,0.1);
+  padding-left: 22px;
+}
+.word-card.align-right .card-ribbon::before {
+  content:''; position:absolute; bottom:-8px; right:0;
+  border-width: 8px 0 0 12px; border-style: solid; border-color: #807B85 transparent transparent transparent;
+  z-index: -1; transition: border-color 0.4s ease;
+}
+
+.word-card:hover .card-ribbon { background: var(--accent); }
+.word-card.align-left:hover .card-ribbon::before { border-top-color: var(--accent); filter: brightness(0.8); }
+.word-card.align-right:hover .card-ribbon::before { border-top-color: var(--accent); filter: brightness(0.8); }
+
+.feather-icon { width: 12px; height: 12px; fill: #fff; opacity: 0.9; }
+
+.card-title {
+  font-family: var(--serif); font-size: 1.65rem; font-weight: 600;
+  color: var(--text); margin: 0 0 1.2rem 0; letter-spacing: 0.02em; position:relative; z-index:2; line-height: 1.4;
+}
+.card-quote-box {
+  position: relative; padding: 0 1.2rem; margin-bottom: 1.6rem; z-index:2;
+}
+.quote-mark {
+  position: absolute; top: -15px;
+  font-family: var(--english); font-size: 4rem; font-weight: 700;
+  color: var(--accent); line-height: 1; opacity:0.6;
+}
+.word-card.align-left .quote-mark { left: -10px; }
+.word-card.align-right .quote-mark { left: -10px; }
+
+.card-quote {
+  font-family: var(--english); font-size: 1.1rem; color: var(--soft); margin: 0; line-height: 1.6;
+}
+.card-tag {
+  font-family: var(--english); font-size: 0.78rem; font-weight: 600;
+  color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; position:relative; z-index:2;
+}
+
+/* ===== 卡片悬停抽屉 (Hover slide-in) ===== */
+.hover-panel {
+  position: absolute; top: 0; bottom: 0; width: 70%;
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: 2rem 3rem 2rem 4rem; pointer-events: none; z-index:15; overflow: hidden;
+}
+
+/* 渐变朦胧背景 - 提取主题色 */
+.hover-panel::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: var(--g2, #E2DDF2); /* 主题渐变色 */
+  opacity: 0.85;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+/* 右侧卡片的抽屉：从左侧推出 */
+.word-card.align-right .hover-panel { 
+  left: 0; right: auto; justify-content: flex-start;
+  transform: translateX(-101%); padding: 2rem 4rem 2rem 3rem;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* 反向渐变：左边缘深，右边缘透明 */
+.word-card.align-right .hover-panel::before {
+  mask-image: linear-gradient(to left, transparent 0%, black 40%);
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, black 40%);
+}
+.word-card.align-right:hover .hover-panel { transform: translateX(0); }
+
+/* 左侧卡片的抽屉：从右侧推出 */
+.word-card.align-left .hover-panel.left-panel { 
+  right: 0; left: auto; justify-content: flex-end;
+  transform: translateX(101%); padding: 2rem 3rem 2rem 4rem;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* 反向渐变：右边缘深，左边缘透明 */
+.word-card.align-left .hover-panel.left-panel::before {
+  mask-image: linear-gradient(to right, transparent 0%, black 40%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%);
+}
+.word-card.align-left:hover .hover-panel.left-panel { transform: translateX(0); }
+
+.hover-content { position: relative; z-index: 2; max-width: 95%; opacity: 0; transition: opacity 0.4s ease 0.2s; }
+.word-card:hover .hover-content { opacity: 1; }
+/* 统一文本左对齐，便于阅读 */
+.hover-content { text-align: left; }
+
+/* 悬浮字使用典籍感宋体 */
+.hover-text {
+  font-family: var(--serif); font-size: 1.15rem; color: var(--text);
+  line-height: 1.9; margin-bottom: 1.2rem; text-align: justify; font-weight: 600;
+  text-shadow: 0 0 1px rgba(255,255,255,0.5);
+}
+.hover-hint {
+  font-family: var(--english); font-style: italic; font-size: 0.95rem;
+  color: var(--text); letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.5rem; opacity: 0.8;
+}
+.hover-hint svg { width:18px; height:18px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+/* ===== 书籍翻开式弹窗 (Book Modal) ===== */
+.book-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0, 0.4); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; z-index: 1000;
+  opacity: 0; visibility: hidden; transition: all 0.5s ease;
+}
+.book-overlay.active { opacity: 1; visibility: visible; }
+
+.book-container {
+  display: flex; width: 92vw; max-width: 1250px; height: 88vh; max-height: 850px;
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.2), inset 0 0 20px rgba(255,255,255,0.8);
+  border: 1px solid rgba(255,255,255,0.9);
+  position: relative; transform: scale(0.95) translateY(20px); transition: all 0.5s cubic-bezier(0.2,0.8,0.2,1);
+}
+.book-overlay.active .book-container { transform: scale(1) translateY(0); }
+
+.book-spine {
+  position: absolute; top: 0; bottom: 0; left: 50%; width: 40px; margin-left: -20px;
+  background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 20%, rgba(0,0,0,0) 50%, rgba(255,255,255,0.5) 80%, rgba(0,0,0,0) 100%);
+  z-index: 10; pointer-events: none;
+}
+
+.book-page {
+  flex: 1; padding: 4rem 4.5rem; overflow-y: auto; position: relative; text-align: left;
+}
+.book-page.left { border-right: 1px solid rgba(0,0,0,0.05); }
+.book-page.right { padding: 2rem 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.book-page::-webkit-scrollbar { width: 5px; }
+.book-page::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+
+.close-btn {
+  position: absolute; top: 1.5rem; right: 1.5rem; width: 45px; height: 45px;
+  border-radius: 50%; background: rgba(255,255,255,0.8); box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  font-family: var(--english); font-size: 1.8rem; color: var(--text); z-index: 20; transition: all 0.3s;
+}
+.close-btn:hover { background: var(--text); color: #fff; transform: rotate(90deg); }
+
+.b-full-title { font-family: var(--serif); font-size: 2.2rem; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 2.5rem; }
+.b-intro-title { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; margin-bottom: 1.2rem; color: var(--text); display:flex; align-items:center; gap:0.5rem; }
+.b-intro-title::before { content:''; display:inline-block; width:6px; height:6px; background:var(--accent); border-radius:50%; }
+.b-text { font-family: var(--cn-light); font-size: 1.05rem; line-height: 2.2; color: var(--text); margin-bottom: 1.5rem; text-align: justify; }
+
+.b-right-content { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100%; text-align: center; }
+.b-cover { width: 100%; height: auto; max-height: 75vh; object-fit: contain; border-radius: 6px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); margin-bottom: auto; cursor: zoom-in; transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1); }
+.b-cover:hover { transform: scale(1.02); }
+.b-quote-right { font-family: var(--cn-light); font-size: 1.1rem; color: var(--soft); line-height: 1.8; margin-top: 1rem; margin-bottom: 2rem; padding: 0 1rem; font-weight: 600; }
+.pdf-btn {
+  display: inline-flex; align-items: center; gap: 0.6rem; padding: 1rem 2rem;
+  background: transparent; border: 1px solid var(--text); border-radius: 40px;
+  color: var(--text); font-family: var(--serif); font-size: 1rem; font-weight: 600;
+  text-decoration: none; transition: all 0.3s; cursor: pointer; margin-top: auto; margin-bottom: 1rem;
+}
+.pdf-btn:hover { background: var(--text); color: #fff; border-color: transparent; }
+.pdf-btn-tiny {
+  color: var(--text-soft); font-family: var(--serif); font-size: 0.9rem; text-decoration: underline; margin-top: 1.5rem; transition: color 0.3s; z-index: 10;
+}
+.pdf-btn-tiny:hover { color: var(--accent); }
+.pdf-btn-tiny:hover { color: var(--accent); }
+
+/* 翻译板块专属：卡片堆叠动效 (巨型) */
+.stack-container {
+  position: relative; flex: 1; width: 100%; perspective: 1500px;
+  display: flex; align-items: center; justify-content: center; margin-top: 0.5rem;
+  min-height: 0; /* override earlier min-height if any */
+  height: 100%;
+}
+.stack-card {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow-y: auto;
+  background: rgba(255,255,255,0.98); border: 1px solid rgba(0,0,0,0.06); border-radius: 12px;
+  padding: 2.5rem 3rem 1.5rem 3rem; box-shadow: 0 15px 50px rgba(0,0,0,0.08);
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer; user-select: none; display: flex; flex-direction: column; justify-content: flex-start;
+}
+.stack-card::-webkit-scrollbar { width: 5px; }
+.stack-card::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+.stack-card:hover { border-color: var(--accent); transform: translate3d(0, -5px, 0); }
+
+.stack-card.pos-0 { transform: translate3d(0, 0, 0); z-index: 3; opacity: 1; }
+.stack-card.pos-1 { transform: translate3d(15px, 20px, -60px); z-index: 2; opacity: 0.85; pointer-events: none; }
+.stack-card.pos-2 { transform: translate3d(30px, 40px, -120px); z-index: 1; opacity: 0.6; pointer-events: none; }
+.stack-card.swipe-out { transform: translate3d(-100%, -10%, 0) rotate(-5deg); opacity: 0; z-index: 4; pointer-events: none; }
+
+.st-title { font-family: var(--cn-light); font-weight: 700; font-size: 1.25rem; color: var(--text); margin-bottom: 1.2rem; text-align: left; }
+.st-src { font-family: var(--english); font-style: italic; font-size: 1.15rem; color: var(--soft); line-height: 1.6; margin-bottom: 1.2rem; text-align: left; }
+.st-tgt { font-family: var(--cn-light); font-size: 1.15rem; font-weight: 700; color: var(--text); line-height: 1.8; margin-bottom: 1.5rem; text-align: left; border-left: 3px solid var(--accent); padding-left: 1rem; }
+.st-note { font-family: var(--serif); font-size: 1.05rem; color: #6A5F7A; text-align: left; line-height: 1.9; margin-top: auto; padding-top: 1.5rem; border-top: 1px dashed rgba(0,0,0,0.1); }
+.st-hint { position: sticky; bottom: 0; left: 50%; width: 100%; text-align: center; background: linear-gradient(to top, #fff 60%, transparent); font-family: var(--cn-light); font-weight: 600; font-size: 0.9rem; color: var(--accent); opacity: 0.8; animation: pulse 2s infinite; padding: 1.5rem 0 0.5rem 0; margin-top: 1rem; pointer-events: none; }
+
+
+/* 放大图片的 Lightbox */
+.image-lightbox {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; z-index: 9999;
+  opacity: 0; visibility: hidden; transition: all 0.3s ease; cursor: zoom-out;
+}
+.image-lightbox.active { opacity: 1; visibility: visible; }
+.image-lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); transform: scale(0.95); transition: transform 0.3s ease; }
+.image-lightbox.active img { transform: scale(1); }
+
+</style>
+</head>
+<body class="spring">
+
+<div class="sparkles"></div>
+
+<!-- ========== 启封页 ========== -->
+<div id="overlay">
+  <div class="season-mini-switcher">
+    <div class="season-mini-btn" data-season="spring" title="春">春</div>
+    <div class="season-mini-btn" data-season="summer" title="夏">夏</div>
+    <div class="season-mini-btn" data-season="autumn" title="秋">秋</div>
+    <div class="season-mini-btn" data-season="winter" title="冬">冬</div>
+  </div>
+  <svg class="deco-shape s1" viewBox="0 0 100 100" id="deco1"></svg>
+  <svg class="deco-shape s2" viewBox="0 0 100 100" id="deco2"></svg>
+  <svg class="deco-shape s3" viewBox="0 0 100 100" id="deco3"></svg>
+  <svg class="deco-shape s4" viewBox="0 0 100 100" id="deco4"></svg>
+  <div id="poemBg"></div>
+  <div class="season-effect" id="overlayEffectLayer"></div>
+  
+  <div class="letter-paper">
+    <div class="letter-corner tl"></div>
+    <div class="letter-corner br"></div>
+    <div class="letter-content">
+      <h1 class="main-title" id="overlayTitle">
+        <span class="title-row top" id="rowTop"></span>
+        <span class="title-row bottom" id="rowBottom"></span>
+      </h1>
+      <p class="lunar-line" id="lunarLine">时维桃月，序属仲春</p>
+      <p class="poem-cn">一笺为引，一卷为心；<br>同声相应，与君共寻。</p>
+      <p class="poem-en">A small scroll of light, offered as an invitation —<br>when kindred voices answer, we walk this way together.</p>
+      <button class="unfold-btn" id="unfold">啟封 · Unfold</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 主页 ========== -->
+<main id="main">
+<nav>
+  <div class="logo">YANG XUEQI · STUDIO</div>
+  <ul class="nav-items">
+    <li class="nav-item">
+      <a href="#words">
+        <span class="nav-cn">文</span><span class="nav-en">Writing</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#images">
+        <span class="nav-cn">影</span><span class="nav-en">Visual</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#dh">
+        <span class="nav-cn">数</span><span class="nav-en">Digital</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#things">
+        <span class="nav-cn">物</span><span class="nav-en">Craft</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sundial-wrap" id="sundialBtn">
+    <div class="sundial"></div>
+    <div class="time-info">
+      <div class="date-line" id="solarDate"></div>
+      <div class="term-line" id="termName"></div>
+      <div class="term-poem-line" id="termPoem"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- 诗词树干与藤蔓 SVG 背景层 -->
+<!-- vine-engine-v13 -->
+<div id="treeContainer">
+  <div id="treeVineClip"></div>
+  <!-- 蝴蝶沿藤蔓下行 -->
+  <div class="butterfly-layer" id="bf1">
+    <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
+      <g transform="translate(50,50)"><path class="butterfly-wing left" d="M 0 0 C -30 -35, -45 10, -10 15 C -25 35, -15 45, 0 20 Z" /><path class="butterfly-wing right" d="M 0 0 C 30 -35, 45 10, 10 15 C 25 35, 15 45, 0 20 Z" /><ellipse cx="0" cy="5" rx="3" ry="12" fill="#fff" opacity="0.8"/></g>
+    </svg>
+  </div>
+</div>
+
+<!-- bf2 引路蝶浮于内容层之上；bf1 追随蝶留在背景层 -->
+<div class="butterfly-layer butterfly-front" id="bf2">
+  <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
+    <g transform="translate(50,50)"><path class="butterfly-wing left" d="M 0 0 C -30 -35, -45 10, -10 15 C -25 35, -15 45, 0 20 Z" /><path class="butterfly-wing right" d="M 0 0 C 30 -35, 45 10, 10 15 C 25 35, 15 45, 0 20 Z" /><ellipse cx="0" cy="5" rx="3" ry="12" fill="#fff" opacity="0.8"/></g>
+  </svg>
+</div>
+
+<!-- 内容排版层 -->
+<div class="content-wrapper">
+  
+  <section class="hero" id="heroSection">
+    <div class="season-effect" id="effectLayer"></div>
+    <div class="hero-center">
+      <h2 class="hero-title" id="heroCN"></h2>
+      <p class="hero-subtitle" id="heroEN"></p>
+      <div class="hero-greeting">
+        <span id="typingText"></span><span class="typing-cursor"></span>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>向下探索</span>
+      <svg viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+    </div>
+  </section>
+
+  <div class="open-section" data-delay="0" id="about">
+    <h2 class="section-title">关于我</h2>
+    <p class="section-en">About Yang Xueqi</p>
+    <p class="section-desc">文字，是我认识世界的第一种方式。从《都柏林人》的文本细读，到毕业设计中那部48页的英文小说，我一直在探索叙事的边界。后来，我带着对“如何让故事被更多人看见”的好奇，从文学的静默书斋走向了鲜活的创意现场。<br><br>我为商场策划过让假人模特“复活”的短片，让一面品牌墙成为人群中的亮点；我也曾为一座城市的反诈宣传，将生硬的标语改写为朗朗上口的歌词。在这些尝试中，我愈发确信：好的内容，应是创意与功能的结合，是美与用的平衡。<br><br>手中的笔，是我与世界对话的触角；眼前的镜头，是我为时间画像的工具。我拍下校园里光的形状，也记录四季在角落留下的痕迹。工作之外，我沉浸在书法、国画、摄影和手作文创的世界里。笔墨纸砚教会我耐心与审美，也让我懂得——真正动人的内容，往往诞生于对生活的敏锐感知和温柔凝视。这些看似“无用”的爱好，恰恰构筑了我审美的底色，也让我在策划与创作时，总能多一份对细节和质感的关照。<br><br>我是杨雪琪，一名持续学习中的内容策划与创作者。我相信，每一个作品都是一个未完成的故事，等待与它的读者相遇。<br><br>槐夏风清，顺颂时祺。浮瓜沉李，静享清欢。欢迎你来到这里，翻阅我用光影和文字写下的篇章。</p>
+  </div>
+
+  
+  <div class="open-section align-right" data-delay="100" id="words" style="max-width: 1050px;">
+    <h2 class="section-title">文以载心</h2>
+    <p class="section-en">Words — the window through which I see</p>
+    
+    <div class="words-grid" id="cardList">
+      <!-- 卡片将由 JS 动态生成 -->
+    </div>
+  </div>
+
+  <div class="open-section" data-delay="100" id="images" style="max-width:1100px;">
+    <h2 class="section-title">流影拾微</h2>
+    <p class="section-en">Visual & Layout — a quiet conversation</p>
+
+    <div class="album-wrapper">
+    <!-- 1. 尺幅之间 -->
+    <div class="album-row">
+      <div class="album-text">
+        <span class="a-tag">LAYOUTS</span>
+        <h3 class="a-title">尺幅之间</h3>
+        <p class="a-desc" id="layoutDescCN"><span class="lead-line">尺幅之间，自有天地。</span>
+我始终相信，每一次编排都是一次克制的取舍。在有限的边界里，如何安放每一个字符、每一块色彩，让它既成为视觉的一部分，又不抢夺阅读的呼吸感——这是设计最本质的功课。<br>
+文字与图像之间，语言承载意义，设计承载理解。二者如溪行山间，各行其道，遇之则相映成趣。字有骨，图有韵，不必争谁是主角，只需在相逢的那一刻，彼此让出半步，便有了余韵。<br>
+飞鸟衔句，诗落成行。古雅有致，草木含香。设计之道，不在繁饰，而于细微处见心意——一色之冷暖，一字之远近，皆是我与观者之间，无声的对谈。<br>
+未尽之意，静候诸君一阅，指教二三。</p>
+<span class="lang-toggle" onclick="toggleLang('layout')">🌐 点击查看英文版 (EN)</span>
+<p class="a-desc" id="layoutDescEN" style="display:none;"><b>Within the frame, a world finds its name.</b><br>
+Design is not to fill, but to refrain—<br>
+to place each word and hue with care,<br>
+and let the reading breathe its own air.<br>
+Text and image, streams apart,<br>
+yet when they meet, they share a heart.<br>
+Words bear bone, pictures rhyme—<br>
+each gives way, and in that giving, chime.<br>
+In warmth of color, nearness of type,<br>
+a silent dialogue is ripe—<br>
+between the maker and the eye,<br>
+a conversation soft and sly.<br>
+What remains unsaid, I leave to you—<br>
+your glance completes, your thoughts renew.</p>
+        <span class="a-hint">Hover to expand the covers, click to view details.</span>
+      </div>
+      <div class="album-photos layout-gallery" onclick="openTheater('layout')">
+        <div class="vis-card layout p1"><div class="vis-inner cover-mode"><img class="cover-fill" src="assets/previews/cuhk.jpg" alt="CUHK留学日记首页"></div><span>公众号排版·CU留学</span></div>
+        <div class="vis-card layout p2"><div class="vis-inner cover-mode"><img class="cover-fill" src="assets/previews/ulysses.png" alt="尤利西斯首页"></div><span>公众号排版·尤利西斯</span></div>
+        <div class="vis-card layout p3"><div class="vis-inner pdf-thumb cover-mode" data-pdf="layout%201.pdf" data-cover="1"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·飞鸟集</span></div>
+        <div class="vis-card layout p4"><div class="vis-inner pdf-thumb cover-mode" data-pdf="layout%202.pdf" data-cover="1"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·诗经</span></div>
+        <div class="vis-card layout p5"><div class="vis-inner pdf-thumb cover-mode" data-pdf="layout%204.pdf" data-cover="1"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·语言学</span></div>
+      </div>
+    </div>
+
+    <!-- 2. 帧频之中 -->
+    <div class="album-row motion-row">
+      <div class="album-text">
+        <span class="a-tag">MOTION & VOICE</span>
+        <h3 class="a-title">帧频之中</h3>
+        <p class="a-desc motion-desc-block" id="motionDescCN"><span class="lead-line">创意先行，万物归宗。</span>画面的流动，并非影像在动，而是思绪在延伸。素材皆在，只待一缕气息贯之，便自成形。删减之难，甚于增添——一段不舍，一段难留，去后回看，反觉圆满。凡踌躇处，即用心处。<br><br>字、画、声、律，四者相揉，不过求一恰如其分之距。近则逼仄，远则疏离，若即若离，乃得从容。设若它们各安其位、各尽其责、彼此成全，便自有风骨；动静之间，不过一念。</p>
+<span class="lang-toggle" onclick="toggleLang('motion')">🌐 点击查看英文版 (EN)</span>
+<p class="a-desc" id="motionDescEN" style="display:none;"><span class="lead-line">Where the idea leads, all things find their way home.</span> Images do not move—thoughts do. The raw material waits; a single breath runs through, and it awakens into form. To subtract is harder than to add—a shot you cannot bear to lose, yet cannot bear to keep; in its absence, the whole feels fuller.<br><br>Words, images, sound, rhythm—their harmony lies in distance. Too close, they crowd; too far, they drift. Let each hold its place and give way to the other; between stillness and motion, just a thought, and everything turns.</p>
+        <span class="a-hint">Hover to fan the previews apart, click to enter the theater.</span>
+      </div>
+      <div class="album-photos motion-gallery" onclick="openTheater('motion')">
+        <div class="vis-card film film-portrait p1"><div class="vis-inner film-cover"><img src="assets/previews/mall.jpg" alt="商场周年庆"></div><span>Commercial Works</span></div>
+        <div class="vis-card film film-portrait p2"><div class="vis-inner film-cover"><img src="assets/previews/dubliners.jpg" alt="都柏林人"></div><span>Dubliners</span></div>
+        <div class="vis-card film film-portrait p3"><div class="vis-inner film-cover"><img src="assets/previews/spring-summer.png" alt="春夏之交"></div><span>Spring/Summer</span></div>
+      </div>
+    </div>
+
+    <!-- 3. 幕布之后 -->
+    <div class="album-row">
+      <div class="album-text">
+        <span class="a-tag">SCRIPTS</span>
+        <h3 class="a-title">幕布之后</h3>
+        <p class="a-desc" id="scriptDescCN"><span class="lead-line">光影未至，文字先行。</span>
+舞台的走位、情绪的起伏、对白的起落、镜头的流转，都在这时被一支笔定下雏形。落笔之时，光尚未抵达，一切却已在想象中铺展。你替镜头试走每一段路，替声音试念每一句词，反复调整，直到它们在纸上找到属于自己的节奏。<br>
+好的脚本从不说尽。它留有余地——让演员的呼吸有处安放，让摄影机的目光有处停驻。你明知永远无法抵达那个想象中的画面，却仍要递出方向，交付信任。<br>
+页面上那些安静的句子，终将穿越时间与光影，成为某个画面里，最动人的那一帧。</p>
+<span class="lang-toggle" onclick="toggleLang('script')">🌐 点击查看英文版 (EN)</span>
+<p class="a-desc" id="scriptDescEN" style="display:none;">Before light arrives, the word steps in.<br>
+The staging, the rise and fall of emotion, the cadence of dialogue, the turning of the lens—all are first traced by a pen. In the moment of writing, light has not yet come, yet everything already unfolds in the mind. You walk every path for the camera, speak every line for the voice, revising again and again, until they find their own rhythm on the page.<br>
+A good script never says all it knows. It leaves room—for the actor's breath to settle, for the lens to find its place. You know you will never fully reach that image in your mind, yet you still offer direction, still offer trust.<br>
+Those quiet sentences on the page will, in time, pass through light and shadow—and become the most moving frame of all.</p>
+        <span class="a-hint">Hover to view scripts, click to read.</span>
+      </div>
+      <div class="album-photos stamp-gallery" onclick="openTheater('script')">
+        <div class="vis-card stamp p1"><div class="stamp-wrap"><div class="vis-inner script-shot-preview"><img src="assets/previews/scripts/huaxin.jpg" alt="华信广告分镜头脚本预览"></div><span>周年庆广告脚本</span></div></div>
+        <div class="vis-card stamp p3"><div class="stamp-wrap"><div class="vis-inner script-shot-preview"><img src="assets/previews/scripts/commendation.jpg" alt="表彰大会脚本预览"></div><span>表彰大会脚本</span></div></div>
+        <div class="vis-card stamp p2"><div class="stamp-wrap"><div class="vis-inner script-shot-preview"><img src="assets/previews/scripts/anti-fraud.jpg" alt="反诈最强音脚本预览"></div><span>反诈宣传片脚本</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="open-section align-right" data-delay="100" id="dh" style="max-width:1120px;">
+    <h2 class="section-title">数境人文</h2>
+    <p class="section-en">Digital Humanities — mountains emerge within data</p>
+    <p class="section-desc">当文学遇见数据，文字便不再只是阅读的对象，而成为观察的窗口。以 R 语言与远读方法，从情感、语义与叙事结构等维度重新审视《都柏林人》。<br><span style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--soft);font-size:0.95rem;display:block;margin-top:0.5rem;font-weight:600;">When literature meets data, the text becomes a lens — not only to be read, but to be seen.</span></p>
+
+    <div class="dh-wrapper">
+      <article class="dh-project">
+        <header class="dh-project-head">
+          <h3 class="dh-project-title">《都柏林人》远读研究</h3>
+          <p class="dh-project-en">Distant Reading of <em>Dubliners</em></p>
+          <p class="dh-tools">R 语言与量化文本分析 · <em>Quantitative Text Analysis</em></p>
+        </header>
+
+        <div class="dh-body">
+          <div class="dh-mindmap" aria-label="研究思路思维导图">
+            <span class="dh-map-label">Research Framework</span>
+            <span class="dh-map-label-cn">论文思路 · 思维导图</span>
+            <svg class="dh-map-svg" viewBox="0 0 420 360" role="img" aria-hidden="true">
+              <defs>
+                <linearGradient id="dhLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.2"/>
+                  <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.75"/>
+                </linearGradient>
+              </defs>
+              <circle cx="210" cy="180" r="52" fill="rgba(255,255,255,0.85)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="210" y="172" text-anchor="middle" font-size="13" font-weight="700">《都柏林人》</text>
+              <text x="210" y="190" text-anchor="middle" class="en">Dubliners</text>
+              <text x="210" y="206" text-anchor="middle" font-size="11" fill="var(--soft)">远读 · Distant Reading</text>
+
+              <line x1="210" y1="128" x2="210" y2="58" stroke="url(#dhLine)" stroke-width="1.5"/>
+              <rect x="148" y="24" width="124" height="42" rx="10" fill="rgba(255,255,255,0.9)"/>
+              <text x="210" y="42" text-anchor="middle" font-size="11" font-weight="700">研究问题</text>
+              <text x="210" y="56" text-anchor="middle" class="en">Research Question</text>
+
+              <line x1="258" y1="148" x2="330" y2="88" stroke="url(#dhLine)" stroke-width="1.5"/>
+              <rect x="292" y="58" width="118" height="48" rx="10" fill="rgba(255,255,255,0.9)"/>
+              <text x="351" y="78" text-anchor="middle" font-size="11" font-weight="700">语料与预处理</text>
+              <text x="351" y="94" text-anchor="middle" class="en">Corpus &amp; Cleaning</text>
+
+              <line x1="290" y1="210" x2="360" y2="210" stroke="url(#dhLine)" stroke-width="1.5"/>
+              <rect x="318" y="188" width="96" height="48" rx="10" fill="rgba(255,255,255,0.9)"/>
+              <text x="366" y="208" text-anchor="middle" font-size="11" font-weight="700">情感分析</text>
+              <text x="366" y="224" text-anchor="middle" class="en">Sentiment</text>
+
+              <line x1="258" y1="212" x2="330" y2="272" stroke="url(#dhLine)" stroke-width="1.5"/>
+              <rect x="292" y="262" width="118" height="48" rx="10" fill="rgba(255,255,255,0.9)"/>
+              <text x="351" y="282" text-anchor="middle" font-size="11" font-weight="700">语义空间</text>
+              <text x="351" y="298" text-anchor="middle" class="en">Semantic Space</text>
+
+              <line x1="162" y1="212" x2="90" y2="272" stroke="url(#dhLine)" stroke-width="1.5"/>
+              <rect x="10" y="262" width="118" height="48" rx="10" fill="rgba(255,255,255,0.9)"/>
+              <text x="69" y="282" text-anchor="middle" font-size="11" font-weight="700">聚类与模式</text>
+              <text x="69" y="298" text-anchor="middle" class="en">Clustering</text>
+
+              <line x1="130" y1="210" x2="60" y2="210" stroke="url(#dhLine)" stroke-width="1.5"/>
+              <rect x="6" y="188" width="108" height="48" rx="10" fill="rgba(255,255,255,0.9)"/>
+              <text x="60" y="208" text-anchor="middle" font-size="11" font-weight="700">叙事弧线</text>
+              <text x="60" y="224" text-anchor="middle" class="en">Narrative Arc</text>
+
+              <line x1="162" y1="148" x2="90" y2="88" stroke="url(#dhLine)" stroke-width="1.5"/>
+              <rect x="10" y="58" width="118" height="48" rx="10" fill="rgba(255,255,255,0.9)"/>
+              <text x="69" y="78" text-anchor="middle" font-size="11" font-weight="700">R 可视化</text>
+              <text x="69" y="94" text-anchor="middle" class="en">Visualization</text>
+            </svg>
+          </div>
+
+          <div class="dh-viz">
+            <p class="dh-viz-label">数据可视化 <span>· Data Visualizations</span></p>
+            <div class="dh-chart-grid">
+              <figure class="dh-chart" onclick="openLightbox('assets/dh/emotions-dubliners.jpeg')">
+                <img src="assets/dh/emotions-dubliners.jpeg" alt="都柏林人情感分布图" loading="lazy">
+                <figcaption>全书情感分布<em>Emotion Distribution</em></figcaption>
+              </figure>
+              <figure class="dh-chart" onclick="openLightbox('assets/dh/avg-sentiment.jpeg')">
+                <img src="assets/dh/avg-sentiment.jpeg" alt="篇目平均情感值" loading="lazy">
+                <figcaption>篇目平均情感<em>Average Sentiment</em></figcaption>
+              </figure>
+              <figure class="dh-chart" onclick="openLightbox('assets/dh/scatter-overall-ending.png')">
+                <img src="assets/dh/scatter-overall-ending.png" alt="整体与结局情感散点图" loading="lazy">
+                <figcaption>整体 vs 结局<em>Overall vs Ending</em></figcaption>
+              </figure>
+              <figure class="dh-chart" onclick="openLightbox('assets/dh/semantic-space.jpeg')">
+                <img src="assets/dh/semantic-space.jpeg" alt="语义空间可视化" loading="lazy">
+                <figcaption>语义向量空间<em>Semantic Space</em></figcaption>
+              </figure>
+              <figure class="dh-chart" onclick="openLightbox('assets/dh/clustering.jpeg')">
+                <img src="assets/dh/clustering.jpeg" alt="篇章聚类分析" loading="lazy">
+                <figcaption>篇章聚类<em>Story Clustering</em></figcaption>
+              </figure>
+              <figure class="dh-chart" onclick="openLightbox('assets/dh/simple-plot.jpeg')">
+                <img src="assets/dh/simple-plot.jpeg" alt="简易趋势图" loading="lazy">
+                <figcaption>趋势简图<em>Simple Plot</em></figcaption>
+              </figure>
+            </div>
+            <div class="dh-report">
+              <a href="assets/dh/dubliners-research.pdf" target="_blank" rel="noopener">
+                阅读研究报告 <em>· Read Research Pamphlet</em>
+              </a>
+            </div>
+            <span class="dh-hint">Click any chart to enlarge · 点击图表可放大查看</span>
+          </div>
+        </div>
+      </article>
+
+      <aside class="dh-vibe">
+        <h4>Vibe Coding</h4>
+        <p class="dh-vibe-tag">AI-assisted Creation · 人机共创</p>
+        <p class="dh-vibe-site">风物有信，四时皆书</p>
+        <p class="dh-vibe-cn">目前唯一的实践成果，便是你正在浏览的这个网站本身。尝试开发新项目，不断学习中，敬请期待……</p>
+        <p class="dh-vibe-en">For now, this portfolio is my sole vibe-coding project — building, learning, and exploring what comes next.</p>
+      </aside>
+    </div>
+  </div>
+
+  <div class="open-section things-v6" data-delay="100" id="things" style="max-width:1080px;">
+    <div class="things-title-row">
+      <div class="things-title-main">
+        <h2 class="section-title">物有灵犀</h2>
+        <span class="things-title-stars" aria-hidden="true">
+          <i class="t-star s1"></i><i class="t-star s2"></i><i class="t-star s3"></i>
+          <i class="t-star s4"></i><i class="t-star s5"></i>
+        </span>
+      </div>
+      <p class="section-en things-title-en">— Welcome to my creative world!!</p>
+    </div>
+
+    <div class="things-hero">
+      <div class="things-welcome">
+        <div class="welcome-birds" aria-hidden="true">
+          <span class="bird b1"></span>
+          <span class="bird b2"></span>
+          <span class="bird b3"></span>
+        </div>
+        <p class="verse">
+          岁月是一首未尽的诗。若你也偏爱袖珍的光影与墨迹，欢迎在此驻足。<br>
+          它们不急着被看完，像窗台上晾着的字，等风，也等一个愿意停下来的你。<br>
+          <span class="verse-note">此处每一缕墨色、每一道纸痕，皆出自我手；愿你在翻阅之间，与我隔空相遇，默然相知。</span>
+        </p>
+      </div>
+
+      <div class="draw-zone" id="thingsDrawZone">
+        <div class="pattern-side pattern-side--left" aria-hidden="true">
+          <img src="assets/things/ui/dark-pattern-half-left.png" alt="">
+        </div>
+        <div class="pattern-side pattern-side--right" aria-hidden="true">
+          <img src="assets/things/ui/dark-pattern-half-right.png" alt="">
+        </div>
+        <div class="lot-scene">
+          <div class="pattern-center" aria-hidden="true">
+            <img src="assets/things/ui/dark-pattern.png" alt="">
+          </div>
+          <div class="lot-bucket" role="button" tabindex="0" aria-label="签筒">
+            <img class="bucket-art" src="assets/things/ui/lot-bucket-2.png" alt="" aria-hidden="true" width="219" height="297">
+          </div>
+        </div>
+        <div class="stick-flyout" aria-hidden="true"></div>
+        <div class="draw-panel">
+          <p class="draw-hint">
+            签筒里收着偶然相遇的小物<br>
+            不贵重，只是恰好想与你分享
+          </p>
+          <button type="button" class="draw-btn"><span class="draw-btn-inner">摇一支签</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="curtain-gallery">
+      <p class="curtain-label">展笺 · 垂幕如许</p>
+      <div class="curtain-stage">
+        <div class="curtain-bar" aria-hidden="true"></div>
+        <div class="curtain-threads"></div>
+      </div>
+    </div>
+
+    <div class="thing-modal"></div>
+  </div>
+
+  
+  <div class="open-section" data-delay="100" id="photography">
+    <div class="photo-section-head">
+      <div class="photo-title-row photo-title-row--plain">
+        <div class="photo-title-center">
+          <h2 class="section-title">四时·流转之境</h2>
+          <p class="section-en">Seasons through the Lens</p>
+        </div>
+      </div>
+      <p class="section-desc">春苔生，夏影长，秋叶落，冬窗寂。光在四季里留下脚印，我替它一一拾起。<br>镜头所及，皆是光阴的具象。四时之景不同，而光影亦无穷也。</p>
+    </div>
+    <div class="photo-gallery-block">
+      <div class="pb-wrap" id="pbRoot">
+        <div class="pb-toolbar">
+          <div class="pb-clothesline" aria-hidden="true"></div>
+          <nav class="pb-seasons" aria-label="四季摄影"></nav>
+        </div>
+        <div class="pb-gallery" aria-live="polite"></div>
+        <p class="pb-hint">悬停轻拨 · 点击展卷 · ← → 切换</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section" id="contactSection">
+    <div class="contact-frame" id="contactFrame">
+      <h3 id="contactTitle">续音</h3>
+      <p class="cn">山高水长，愿有回响。</p>
+      <p class="en">Across mountains and rivers, may words still answer.</p>
+      <div class="contact-details">
+        <p>WeChat : Coriolanus1623</p>
+        <p>Email : <a href="/cdn-cgi/l/email-protection#cffefaf7f9fef8fefaf8f8ff8ffef9fce1aca0a2" style="color:inherit;text-decoration:none;"><span class="__cf_email__" data-cfemail="6554505d5354525450525255255453564b060a08">[email&#160;protected]</span></a></p>
+        <p>Phone : 15861715770</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>一卷四时，未尽之言 · A scroll of seasons, with words still to come.</p>
+    <p>© 杨雪琪 · 2026</p>
+    <div style="margin-top: 1.5rem; position:relative; z-index:10;">
+      <label style="cursor:pointer; text-decoration:none; font-size:0.8rem; color:var(--soft); border-bottom:1px dashed var(--soft); padding-bottom:2px;">
+        载入本地禹卫字体 (Load Custom Font)
+        <input type="file" accept=".ttf,.otf" onchange="loadCustomFont(this.files[0])" style="display:none;">
+      </label>
+    </div>
+  </footer>
+
+</div>
+</main>
+
+<div class="modal" id="modal"><div class="modal-box"><h4>Select Season</h4><div style="margin-top:1rem;"><button onclick="setSeason('spring')">春</button><button onclick="setSeason('summer')">夏</button><button onclick="setSeason('autumn')">秋</button><button onclick="setSeason('winter')">冬</button></div><p style="margin-top:1.5rem;cursor:pointer;color:#999;font-size:0.9rem;" onclick="toggleModal()">Close</p></div></div>
+
+
+<!-- 书籍弹窗 -->
+<div class="book-overlay" id="bookModal" onclick="closeBook(event)">
+  <div class="book-container" onclick="event.stopPropagation()">
+    <div class="book-spine"></div>
+    <div class="close-btn" onclick="closeBook(event)">×</div>
+    
+    <div class="book-page left" id="bookLeft"></div>
+    <div class="book-page right" id="bookRight"></div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ===== 数据 ===== */
+const TERMS={2025:[{m:1,d:5,name:'小寒',poem:'雁北乡兮，鹊始巢兮'},{m:1,d:20,name:'大寒',poem:'瑞雪兆丰，坚冰在户'},{m:2,d:3,name:'立春',poem:'东风解冻，蛰虫始振'},{m:2,d:18,name:'雨水',poem:'獭祭鱼兮，鸿雁来兮'},{m:3,d:5,name:'惊蛰',poem:'桃始华兮，仓庚鸣兮'},{m:3,d:20,name:'春分',poem:'玄鸟至兮，雷乃发声'},{m:4,d:4,name:'清明',poem:'桐始华兮，虹始见兮'},{m:4,d:20,name:'谷雨',poem:'萍始生兮，鸣鸠拂羽'},{m:5,d:5,name:'立夏',poem:'蝼蝈鸣兮，蚯蚓出兮'},{m:5,d:21,name:'小满',poem:'苦菜秀兮，靡草死兮'},{m:6,d:5,name:'芒种',poem:'螳螂生兮，鵙始鸣兮'},{m:6,d:21,name:'夏至',poem:'鹿角解兮，蝉始鸣兮'},{m:7,d:6,name:'小暑',poem:'温风至兮，蟋蟀居壁'},{m:7,d:22,name:'大暑',poem:'腐草为萤，土润溽暑'},{m:8,d:7,name:'立秋',poem:'凉风至兮，白露降兮'},{m:8,d:22,name:'处暑',poem:'鹰乃祭鸟，天地始肃'},{m:9,d:7,name:'白露',poem:'鸿雁来兮，玄鸟归兮'},{m:9,d:22,name:'秋分',poem:'雷始收声，蛰虫坯户'},{m:10,d:8,name:'寒露',poem:'鸿雁来宾，菊有黄华'},{m:10,d:23,name:'霜降',poem:'豺乃祭兽，草木黄落'},{m:11,d:7,name:'立冬',poem:'水始冰兮，地始冻兮'},{m:11,d:22,name:'小雪',poem:'虹藏不见，天气上升'},{m:12,d:7,name:'大雪',poem:'鹖鴠不鸣，虎始交兮'},{m:12,d:21,name:'冬至',poem:'蚯蚓结兮，麋角解兮'}],2026:[{m:1,d:5,name:'小寒',poem:'雁北乡兮，鹊始巢兮'},{m:1,d:20,name:'大寒',poem:'瑞雪兆丰，坚冰在户'},{m:2,d:4,name:'立春',poem:'东风解冻，蛰虫始振'},{m:2,d:18,name:'雨水',poem:'獭祭鱼兮，鸿雁来兮'},{m:3,d:5,name:'惊蛰',poem:'桃始华兮，仓庚鸣兮'},{m:3,d:20,name:'春分',poem:'玄鸟至兮，雷乃发声'},{m:4,d:5,name:'清明',poem:'桐始华兮，虹始见兮'},{m:4,d:20,name:'谷雨',poem:'萍始生兮，鸣鸠拂羽'},{m:5,d:5,name:'立夏',poem:'蝼蝈鸣兮，蚯蚓出兮'},{m:5,d:21,name:'小满',poem:'苦菜秀兮，靡草死兮'},{m:6,d:5,name:'芒种',poem:'螳螂生兮，鵙始鸣兮'},{m:6,d:21,name:'夏至',poem:'鹿角解兮，蝉始鸣兮'},{m:7,d:7,name:'小暑',poem:'温风至兮，蟋蟀居壁'},{m:7,d:22,name:'大暑',poem:'腐草为萤，土润溽暑'},{m:8,d:7,name:'立秋',poem:'凉风至兮，白露降兮'},{m:8,d:23,name:'处暑',poem:'鹰乃祭鸟，天地始肃'},{m:9,d:7,name:'白露',poem:'鸿雁来兮，玄鸟归兮'},{m:9,d:23,name:'秋分',poem:'雷始收声，蛰虫坯户'},{m:10,d:8,name:'寒露',poem:'鸿雁来宾，菊有黄华'},{m:10,d:23,name:'霜降',poem:'豺乃祭兽，草木黄落'},{m:11,d:7,name:'立冬',poem:'水始冰兮，地始冻兮'},{m:11,d:22,name:'小雪',poem:'虹藏不见，天气上升'},{m:12,d:7,name:'大雪',poem:'鹖鴠不鸣，虎始交兮'},{m:12,d:22,name:'冬至',poem:'蚯蚓结兮，麋角解兮'}],2027:[{m:1,d:5,name:'小寒',poem:'雁北乡兮，鹊始巢兮'},{m:1,d:20,name:'大寒',poem:'瑞雪兆丰，坚冰在户'},{m:2,d:4,name:'立春',poem:'东风解冻，蛰虫始振'},{m:2,d:19,name:'雨水',poem:'獭祭鱼兮，鸿雁来兮'},{m:3,d:5,name:'惊蛰',poem:'桃始华兮，仓庚鸣兮'},{m:3,d:20,name:'春分',poem:'玄鸟至兮，雷乃发声'},{m:4,d:5,name:'清明',poem:'桐始华兮，虹始见兮'},{m:4,d:20,name:'谷雨',poem:'萍始生兮，鸣鸠拂羽'},{m:5,d:5,name:'立夏',poem:'蝼蝈鸣兮，蚯蚓出兮'},{m:5,d:21,name:'小满',poem:'苦菜秀兮，靡草死兮'},{m:6,d:5,name:'芒种',poem:'螳螂生兮，鵙始鸣兮'},{m:6,d:21,name:'夏至',poem:'鹿角解兮，蝉始鸣兮'},{m:7,d:7,name:'小暑',poem:'温风至兮，蟋蟀居壁'},{m:7,d:22,name:'大暑',poem:'腐草为萤，土润溽暑'},{m:8,d:7,name:'立秋',poem:'凉风至兮，白露降兮'},{m:8,d:23,name:'处暑',poem:'鹰乃祭鸟，天地始肃'},{m:9,d:7,name:'白露',poem:'鸿雁来兮，玄鸟归兮'},{m:9,d:23,name:'秋分',poem:'雷始收声，蛰虫坯户'},{m:10,d:8,name:'寒露',poem:'鸿雁来宾，菊有黄华'},{m:10,d:23,name:'霜降',poem:'豺乃祭兽，草木黄落'},{m:11,d:7,name:'立冬',poem:'水始冰兮，地始冻兮'},{m:11,d:22,name:'小雪',poem:'虹藏不见，天气上升'},{m:12,d:7,name:'大雪',poem:'鹖鴠不鸣，虎始交兮'},{m:12,d:22,name:'冬至',poem:'蚯蚓结兮，麋角解兮'}]};
+
+const contentData = [
+  {
+    id: 'novel',
+    align: 'left',
+    cnTag: '英文小说',
+    listTitle: 'The Unanswered Call·未接来电',
+    listQuote: 'There was always a tomorrow for small duties, until suddenly there wasn\'t.',
+    tag: 'ENGLISH NOVEL',
+    hoverQuotes: [
+      '对于那些微不足道的日常琐事，总有一个“明天”可供推诿，直到“明天”猝然消逝。',
+      '林毅第一次死去时，没有人注意到，连他自己也没有。'
+    ],
+    bookTitle: 'The Unanswered Call·未接来电',
+    intro: `假如你醒来时，掌心握着一枚冰冷的银币，河面上传来古老的桨声，船夫向你伸出手；<br><br>
+假如你走进一片开满红色彼岸花的迷雾，遇见一个蹒跚而行的老人，他拿着你的旧笔记本，用你未来的嗓音说：“别再等了”；<br><br>
+假如那个你逃避了二十年的电话，在冥河之上突然响了起来……<br><br>
+当生命在键盘的敲击声中戛然而止，现实与虚构的边界开始悄然溶解。这是一个人与自己的幽灵在破碎的冥界尽头相遇的故事。<br><br>
+关于一个未被接起的电话，关于如何接受自己苍老的灵魂和二十年循环的光阴，关于愧疚如何被误当成爱，关于记忆、遗忘、遗憾、时间与永恒。<br><br>
+这部融合了超现实主义与神话元素的短篇小说，以开放式的迷宫叙事，探讨了现代人在城市荒原中的精神放逐。当时间停止，我们究竟是生还是死？世界是真实还是虚幻？时间到底是一条直线，还是一个圆形废墟？<br><br>
+面对希腊的船夫，东方的孟婆，与自己、与岁月、与遗忘和死亡对话。<br><br>
+<b>你准备好过河了吗？</b>`,
+    pdfName: 'The Unanwered Call.pdf',
+    cover: 'assets/previews/words/novel.png'
+  },
+
+  {
+    id: 'thesis',
+    align: 'right',
+    cnTag: '优秀毕业论文',
+    listTitle: '时间绵延理论视域下《尤利西斯》<br>意识流叙事艺术研究',
+    listQuote: 'To live deeply is to live in time—not time as measured, but time as felt.',
+    tag: 'ACADEMIC RESEARCH',
+    hoverQuotes: [
+      '深刻地去活，就是活在时间之中——不是作为度量的时间，而是作为感受的时间。',
+      '在莫莉那一声声急促的“是”之中，时间不再是刻度——它被感受、被活过，并最终，被爱上。'
+    ],
+    bookTitle: '生命之境与时间之流——<br><span style="font-size:1.4rem; color:var(--soft); font-weight:400;">时间绵延理论视域下《尤利西斯》意识流叙事艺术研究</span>',
+    intro: `时间，在詹姆斯·乔伊斯的《尤利西斯》中，从来不是钟表上均匀跳动的刻度。<br><br>
+这部现代主义文学的巅峰之作，将都柏林一个普通的日子——1904年6月16日——延展为一部关于人类意识的浩瀚史诗。但乔伊斯所做的，是用内心独白、自由间接引语和碎片化的叙事结构，让时间如意识本身般流动、重叠、跳跃、回旋。<br><br>
+本文以亨利·柏格森的“时间绵延”（la durée）理论为框架，系统剖析《尤利西斯》中的意识流叙事艺术。乔伊斯将时间重构为<b>连续、多维且高度主观</b>的体验——柠檬皂的气味让布卢姆瞬间回到某个早晨；海边沙砾的嘎吱声让斯蒂芬想起死去的母亲；而全书最后，莫莉·布卢姆躺在床上，用四千多个没有标点的字，让过去、现在和未来混在一起流淌——“yes… yes… yes”——像呼吸一样自然。<br><br>
+更重要的是，这种时间哲学并非纯形式的实验。它关乎现代人在碎片化世界中的身份重构、精神救赎与自主性抗争。通过让时间从外部度量转化为内在的生命节奏，乔伊斯为每一位在机械时间中感到异化的个体，提供了一种重新拥有自我的可能。<br><br>
+本文更是一次关于“我们如何活在时间之中”的哲学追问。如果你曾在现代生活的加速中感到迷失，或曾好奇意识流背后隐藏的思想版图，这篇论文将带你走入《尤利西斯》的时间迷宫，看见那流淌在文字之下的、属于每一个人的生命之境。`,
+    pdfName: '生命之境与时间之流.pdf',
+    cover: 'assets/previews/words/thesis.png',
+    rightQuote: '<div style="text-align:center; font-family:var(--english); font-style:italic; font-size:1.15rem; line-height:1.7; color:#5A4E65;">To exist is to change, to change is to mature, to mature is to go on creating oneself endlessly.</div><div style="text-align:center; font-family:var(--cn-light); font-size:1.1rem; margin-top:0.8rem; color:var(--text); font-weight:600;">存在即变化，变化即成长，成长即是在无尽中不断创造自我。</div>'
+  },
+
+  {
+    id: 'comparative',
+    align: 'left',
+    marginLeft: '5%',
+    cnTag: '比较文学论文',
+    listTitle: '思接千载，气蕴万象<br><span style="font-size:1.3rem;">——从王国维“境界说”解读雪莱《西风颂》</span>',
+    listQuote: '<span style="font-style:italic;">The sublime beauty of "Ode to the West Wind" is, in Wang Guowei’s eyes, the ultimate "self-present realm"—where all things take on the color of the self.</span>',
+    tag: 'COMPARATIVE LITERATURE',
+    hoverQuotes: [
+      '《西风颂》的壮美，在王国维看来，是“有我之境”的极致——万物皆著我之色彩。'
+    ],
+    bookTitle: '思接千载，气蕴万象<br><span style="font-size:1.4rem; color:var(--soft); font-weight:400;">——从王国维“境界说”解读雪莱《西风颂》</span>',
+    intro: `1820年，雪莱在佛罗伦萨的森林里遇见了一场暴风雨。天昏地暗，雷电交加，枯叶被卷上高空，海浪在远处炸裂。他写下了一首后来刻进无数人记忆的诗：<br>
+“如果冬天来了，春天还会远吗？”<br><br>
+但很少有人问：这句诗为什么有如此大的力量？<br><br>
+一百多年后，中国学者王国维用四个字回答了这个问题——<b>“有我之境”</b>。他的“境界说”说，真正动人的诗，不是冷眼旁观自然，而是让万物都染上“我”的情感与血性。《西风颂》里，西风既是毁灭者也是保存者，它扫过大地、劈开天空、掀翻海洋——那是雪莱自己渴望成为的革命者灵魂。<br><br>
+思接千载，气蕴万象。我的论文做了一件有趣的事：从比较文学的视角，<b>用中国古典美学的尺子，去量一首英国浪漫主义的诗</b>。从“隔”与“不隔”看它的语言如何直抵人心，从“写境”与“造境”看它如何虚实相生，从“有我之境”看它如何让自然皆着情感之色彩。`,
+    pdfName: '思接千载，气蕴万象——从王国维“境界说”解读雪莱《西风颂》.pdf',
+    cover: 'assets/previews/words/comparative.png'
+  },
+
+  {
+    id: 'classical',
+    align: 'right',
+    cnTag: '古代文学·女性研究',
+    listTitle: '中国古典文学中“女扮男装”形象对<br>比与研究',
+    listQuote: '<span style="font-style: normal; font-family: var(--cn-light); font-weight:600;">三个女人，三种“僭越”，三种“回归”。这是关于中国古典文学里那些“扮成男人的女人”，如何挣扎、妥协、反抗，以及其中潜藏的女性意识觉醒的故事。</span>',
+    tag: 'CLASSICAL LITERATURE',
+    hoverQuotes: [
+      '而孟丽君一开始进入男性世界看似被动，实则是在女扮男装的过程中一直保持着主动进取的姿态，去争夺男性的权利和世界。何须“着我旧时裳”，“蟒玉威风过一生”才是她的座右铭。'
+    ],
+    bookTitle: '僭越与回归——<br><span style="font-size:1.4rem; color:var(--soft); font-weight:400;">女性主义视角下中国古典文学中“女扮男装”形象对比与研究</span>',
+    intro: `花木兰替父从军，十二年血战归来，她说：“不用尚书郎，送我回故乡。”——脱下战袍，重新做个待嫁的姑娘。<br><br>
+谢小娥女扮男装潜入仇家，手刃杀父杀夫之敌，大仇得报，她说：“我终身不嫁。”——剪去头发，遁入空门。<br><br>
+孟丽君被逼改嫁，一怒之下女扮男装逃出闺阁，考状元、做丞相、权倾朝野。当所有人都逼她脱去官服、认回丈夫时，她吐了血，三天后身亡。<br><br>
+<b>三个女人，三种“僭越”，三种“回归”。这是关于中国古典文学里那些“扮成男人的女人”，如何挣扎、妥协、反抗，以及其中潜藏的、漫长而脆弱的女性意识觉醒的故事。</b><br><br>
+我的论文试图用女性主义批评视角，剖开这三段故事：为什么她们必须穿上男装才能被世界看见？为什么立功之后，社会只想让她们回去做妻子？为什么只有孟丽君选择了“不回去”——哪怕代价是死？`,
+    pdfName: '僭越与回归——女性主义视角下中国古典文学中“女扮男装”形象对比与研究.pdf', 
+    cover: 'assets/previews/words/classical.png'
+  },
+
+  {
+    id: 'editorial',
+    align: 'left',
+    cnTag: '读后感推送',
+    listTitle: '《尤利西斯》读后感',
+    listQuote: 'When the chains of life snap abruptly, the soul catches a glimpse of the deep sea in its weightlessness.',
+    tag: 'EDITORIAL & REFLECTION',
+    hoverQuotes: [
+      '当生活的链条猝然崩断，灵魂却在失重中瞥见深海。',
+      '自由，原来是在破碎的必然性中，依然温柔地、笨拙地、滋滋作响地——活着。'
+    ],
+    bookTitle: '凡人救赎<br><span style="font-size:1.4rem; color:var(--soft); font-weight:400;">《尤利西斯》读后感推送文案</span>',
+    intro: `深夜的都柏林，广告商布鲁姆回到家。空气里有隔夜饭菜的味道，还有一丝异样。他拉开抽屉——妻子情人留下的证据，不容置疑。<br><br>
+没有怒吼，没有碎裂。乔伊斯只给了他一个动作、一句独白：他“感到一种奇异的自由”。<br><br>
+这自由来得不合常理。像伤口上吹过一阵凉风，像溺水者突然松开紧握的手，发现自己竟能浮起。布鲁姆没有砸碎那个冒犯他的抽屉，而是转身走进厨房。炉火点燃，一块猪腰子在铁锅里滋滋作响。他用一个最庸常的动作——煎肉——接住了自己下坠的灵魂。<br><br>
+这篇读后感，写的就是这种“凡人救赎”。不是英雄的凯旋，而是普通人如何在背叛、孤独、职场的挫败、体检报告上的冰冷数字里，为自己煎一个温热的“此刻”。真正的勇气，不是砸碎什么，而是在看清裂痕后，依然能转身，把失恋揉进面团，把挫败泡成一杯茶。`,
+    pdfName: '尤利西斯读后感推送文案.pdf',
+    cover: 'assets/previews/words/editorial.png'
+  },
+
+  {
+    id: 'translation',
+    align: 'right',
+    marginRight: '10%',
+    marginTop: '1rem',
+    cnTag: '翻译作品',
+    listTitle: '翻译作品选辑',
+    listQuote: 'It is the task of the translator to release in his own language that pure language which is under the spell of another.',
+    tag: 'TRANSLATION WORKS',
+    hoverQuotes: [
+      '译者的任务在于，在自身的语言中释放那被另一种语言所施咒的纯粹语言。——瓦尔特·本雅明'
+    ],
+    bookTitle: '翻译实践选辑<br><span style="font-size:1.2rem; color:var(--soft); font-weight:400;">商务 · 文化 · 广告 · 学术 · 时事</span>',
+    intro: `<b># 翻译手记</b><br><br>翻译是什么呢。<br><br>
+不是词语的交换，不是句式的搬迁，不是把一种声音机械地翻录成另一种声音。如果只是这样，机器早就取代了我们。而我们还坐在这里，逐字逐句地，像手艺人抚摸木纹一样抚摸语感，说明翻译里有一种无法被算法收编的东西。<br><br>
+那是呼吸。是节奏。是藏在字缝里的温度。<br><br>
+<hr style="border:none; border-top:1px dashed rgba(0,0,0,0.1); margin:1.5rem 0;">
+一篇好的翻译，读起来不像翻译。这是最朴素也最苛刻的标准。它要让英文读者在读到“chuan'r”时，仿佛能闻到炭火和孜然的气味；要让中文读者在读到“superfood bullshit”时，会心一笑，觉得这个译者懂我。翻译的终极目标，从来不是“像原文”，而是“像自己”——像自己用母语写出了一篇原本不属于母语的文章，却让读者觉得，它本该如此。<br><br>
+钱锺书先生论翻译，拈出一个“化”字。把作品从一国文字转成另一国文字，既不因语文习惯的差异而露出生硬牵强的痕迹，又能完全保存原作的风味，那便是入了“化境”。可他也承认，彻底的“化”是不可能的。所以我们做的，是在不可能中求可能——把一种语言的骨骼，拆解、揉捏，再用另一种语言的血液重新灌注，让它活过来。<br><br>
+翻译是一场以理解为前提的重构。你必须先走进原文的房间里，摸清它的墙壁、窗户、光线从哪个方向来，然后走出来，用另一种材料重新建造一间结构不同、却同样能住人的房子。两间房子看起来不一样，但你走进去，感受到的温度是一样的。<br><br>
+严复说“信达雅”。信是忠实，达是通顺，雅是文采。但我渐渐觉得，这三者之间并非递进，而是一种相互牵制的张力。有时候，为了“达”，你必须对“信”做出让步——不是背叛，而是相信整体的“信”比局部的“信”更重要。就像“高逼格”译成“superfood bullshit”，字面上完全不对等，但语气、态度、说话人的那副神情，全对上了。这算不算“信”？我觉得算。这是对精神层面的忠实。<br><br>
+翻译中还有一层隐形的判断：什么是值得保留的异质，什么是必须消化的陌生。“chuan'r”我留着，因为羊肉串的烟火气不能被“skewer”这个词的冰冷吞掉。但英文的嵌套从句我必须拆开，因为中文不允许那样说话。保留什么，放弃什么，每一次选择都是译者对两种语言的理解——也是一种姿态，一种立场。<br><br>
+本雅明在《译者的任务》里说，翻译不是服务于原作，而是与原文共同指向一种更纯粹的语言。这个说法很玄，但我渐渐读出一点实感：翻译是在两种语言之间开辟一块空地，两种语言在这里彼此靠近、彼此校正。原文因为被翻译而获得了另一种生命，译文因为源起于原文而拥有了一种厚度。两者之间那层微妙的光晕，就是翻译存在的意义。<br><br>
+所以每当完成一篇译文，我会有一种奇怪的感受：仿佛自己刚刚离开了一个住了很久的地方，在新地址安顿下来，却依然记得旧屋里的每一道光线。我回不去了，但我也从未真正离开。翻译的人，永远在两种语言之间流浪，也因此永远拥有两个家。`,
+    pdfName: 'translation.pdf',
+    isTransLayout: true
+  }
+];
+const stackData = [
+  {
+    title: '卡片一 · 译者的立场',
+    en: `If American Vogue editor Anna Wintour has a reputation for being intimidating—then Angelica Cheung should be wholly unapproachable.`,
+    cn: `如果说《Vogue》美国版杂志主编安娜·温图尔以其令人望而生畏而闻名，那么张宇便完全可以说是难以亲近/“生人勿近”了。`,
+    note: `<b>核心策略</b><br>“unapproachable”译作“难以亲近”是交代字面含义，而加上“生人勿近”则是归还文化语感。“生人勿近”本是中文里一句带着距离感与警告意味的告示——冷峻、边界清晰、不容冒犯。用在这里，比任何书面语都更精准地还原了原文的气场。`
+  },
+  {
+    title: '卡片二 · 长难句的重组',
+    en: `In the pre-modern era, political, economic, and social life was governed by a dense web of interlocking relationships inherited from the past and sanctified by religion. Limited personal freedom and material benefits existed alongside a mostly unquestioned social solidarity.`,
+    cn: `在前现代时期，政治、经济和社会生活被编织在一张环环相扣的关系网中——这是一张承袭于过去、并为宗教所神化的网。与有限的个人自由和物质财富并存的，是一种几乎不曾被质疑的社会团结。`,
+    note: `<b>核心策略</b><br>“governed by”不取“受……支配”的生硬，而译为“被编织在……网中”——把抽象的政治关系还原为有触感的意象。翻译社科文本，有时要敢于让概念“回到地面上”。`
+  },
+  {
+    title: '卡片三 · 叙事中的情绪把握',
+    en: `I was quickly impressed by her excitement, and sat before the computer with her to expect the arrival of the Singles' Day. We waited all the time until zero o'clock, only to find the payment page was unexpectedly down. We could only see a cartoon picture on the page. The cashier in this picture was terribly busy, with a queue of people waiting in front of him.`,
+    cn: `我很快就被她的血拼热情感染了，于是和她一起坐在电脑前等着零点到来。……可好不容易等到零点，支付网页却无情地崩溃了。页面上只能看到一张卡通图片。图片里的收银员忙得焦头烂额，前面排了一队人。`,
+    note: `<b>核心策略</b><br>“可好不容易等到……却……”的失落，以“only to find”的猝不及防来承接；“忙得焦头烂额”不直译，而以“terribly busy”和“a queue of people”还原画面。中文的叹息，在英文里找到了它的回声。`
+  },
+  {
+    title: '卡片四 · 品牌文案的“精简”与“升维”',
+    en: `Founded in 1761, Graf von Faber-Castell has already epitomised German quality and precision for 250 years. Faber-Castell remains a family-owned company, now run by the eighth generation. Graf von Faber-Castell is one of the most important German luxury brands.`,
+    cn: `自1761年成立以来的250年，辉柏嘉一直是德国完美制造与精湛工艺的典范。辉柏嘉始终延续着家族企业的传统，目前已传至第八代，是德国顶流奢侈品牌中璀璨的一颗明珠。`,
+    note: `<b>核心策略</b><br>“one of the most important”译作“顶流奢侈品牌中璀璨的一颗明珠”——原文朴素，译文多走了一步。品牌翻译有时需要“升维”：把信息转化为一种值得被仰望的姿态。`
+  },
+  {
+    title: '卡片五 · 文化语境与感受',
+    en: `Skewers and alcohol is a combination that has been charming Beijingers since the invention of skewers and alcohol, which, come to think of it, were probably some of the first things ever invented. Really, meat+sticks+fire—it must have been a Neolithic Era invention. It's easy to be impressed by some, say, champagne foie-gras superfood bullshit. It's harder to impress someone with chuan'r.`,
+    cn: `烤串和酒的搭配一直深受北京人的喜爱，因为你想想看，它们可能是人类最早发明的东西了吧。确实，肉+棍子+火——这一定是新石器时代的发明。一些香槟、鹅肝之类的高逼格食物很容易俘获食客们的心，但要用“串”来打动他们就比较难了。`,
+    note: `<b>核心策略</b><br>“高逼格”译为“superfood bullshit”，字面不对等，但语气、态度、说话人的那副神情，全对上了。翻译的忠诚有时需要以“不忠”来实现。`
+  },
+  {
+    title: '卡片六 · 社科术语的“去陌生化”',
+    en: `Left to itself, capitalism produced long-term aggregate benefits along with great volatility and inequality. This combination resulted in what Polanyi called a "double movement," a progressive expansion of both market society and reactions against it.`,
+    cn: `就其本身来说，资本主义产生了长期的诸多利益，同时也带来了巨大的不稳定与不公。这两方面的融合形成了波兰尼所谓的“双重运动”，即自由市场社会的逐步扩张，以及对此的反抗。`,
+    note: `<b>核心策略</b><br>“double movement”译为“双重运动”后，用“即……以及……”将术语展开为可感知的历史进程。学术翻译的使命是让陌生概念在母语中找到“落脚处”。`
+  }
+];
+
+// 动态渲染主页列表
+window.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('cardList');
+  if(!container) return;
+  
+  contentData.forEach(data => {
+    let hoversHtml = data.hoverQuotes.map(q => `<p class="hover-text">${q}</p>`).join('');
+    
+    const featherSvg = `<svg class="feather-icon" viewBox="0 0 24 24"><path d="M20.24,3.76C19,2.5 16.5,2 13.5,3c-3.13,1.04-6.44,3.8-8.8,7.11c-1.39,1.96-2.48,4.1-3.15,6.33c-0.12,0.4-0.17,0.81-0.17,1.22c0,0.61,0.22,1.2,0.62,1.66l0.29,0.32l2.36-2.36c0.39-0.39,1.02-0.39,1.41,0c0.39,0.39,0.39,1.02,0,1.41l-2.36,2.36l0.32,0.29c0.46,0.4,1.05,0.62,1.66,0.62c0.4,0,0.82-0.05,1.22-0.17c2.23-0.67,4.37-1.76,6.33-3.15c3.31-2.36,6.07-5.67,7.11-8.8C22,7.5,21.5,5,20.24,3.76z M16.5,8.5c-0.55,0-1-0.45-1-1s0.45-1,1-1s1,0.45,1,1S17.05,8.5,16.5,8.5z"/></svg>`;
+
+    const extraStyle = `${data.marginLeft ? `margin-left:${data.marginLeft};` : ''} ${data.marginRight ? `margin-right:${data.marginRight};` : ''} ${data.marginTop ? `margin-top:${data.marginTop};` : ''}`;
+
+    const binderHoles = `
+      <div class="binder-holes">
+        <div class="hole"></div>
+        <div class="hole"></div>
+        <div class="hole"></div>
+      </div>
+    `;
+
+    const html = `
+      <div class="word-card align-${data.align}" style="${extraStyle}" onclick="openBook('${data.id}')">
+        ${binderHoles}
+        <div class="card-ribbon">
+          ${featherSvg}
+          <span>${data.cnTag}</span>
+        </div>
+        <h3 class="card-title">${data.listTitle}</h3>
+        <div class="card-quote-box">
+          <span class="quote-mark">“</span>
+          <p class="card-quote">${data.listQuote}</p>
+        </div>
+        <div class="card-tag">${data.tag}</div>
+        
+        <div class="hover-panel ${data.align === 'left' ? 'left-panel' : ''}">
+          <div class="hover-content">
+            ${hoversHtml}
+            <div class="hover-hint"><span>Read More</span><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
+          </div>
+        </div>
+      </div>
+    `;
+    container.innerHTML += html;
+  });
+});
+
+let stackIndex = 0;
+
+function renderStack() {
+  const container = document.getElementById('transStack');
+  if(!container) return;
+  container.innerHTML = '';
+  
+  for(let i=0; i<Math.min(3, stackData.length); i++) {
+    let dataIdx = (stackIndex + i) % stackData.length;
+    let card = stackData[dataIdx];
+    let el = document.createElement('div');
+    el.className = `stack-card pos-${i}`;
+    el.onclick = () => nextStackCard();
+    el.innerHTML = `
+       <div class="st-title">${card.title}</div>
+       <div class="st-src">${card.en}</div>
+       <div class="st-tgt">${card.cn}</div>
+       <div class="st-note">${card.note}</div>
+       <div class="st-hint">[点击卡片翻阅下一页]</div>
+    `;
+    container.appendChild(el);
+  }
+}
+
+function nextStackCard() {
+  const topCard = document.querySelector('.stack-card.pos-0');
+  if(topCard) {
+    topCard.classList.add('swipe-out');
+    setTimeout(() => {
+      stackIndex = (stackIndex + 1) % stackData.length;
+      renderStack();
+    }, 400); 
+  }
+}
+
+function openBook(id) {
+  const data = contentData.find(d => d.id === id);
+  if(!data) return;
+
+  const left = document.getElementById('bookLeft');
+  const right = document.getElementById('bookRight');
+
+  left.innerHTML = `
+    <h3 class="b-full-title">${data.bookTitle}</h3>
+    <div class="b-intro-title">导读 / Introduction</div>
+    <div class="b-text">${data.intro}</div>
+  `;
+
+  if (data.isTransLayout) {
+    right.innerHTML = `
+      <div class="b-right-content" style="height: 100%; display: flex; flex-direction: column; padding: 0.5rem 1rem 0 1rem; width: 100%;">
+        <div class="stack-container" id="transStack" style="flex: 1; width: 100%;"></div>
+        ${data.pdfName ? `<a href="${encodeURI(data.pdfName)}" target="_blank" class="pdf-btn-tiny">查看完整 PDF 原件</a>` : ''}
+      </div>
+    `;
+    stackIndex = 0;
+    setTimeout(renderStack, 50); 
+  } else {
+    right.innerHTML = `
+      <div class="b-right-content">
+        ${data.cover ? `<img src="${data.cover}" class="b-cover" alt="Cover" onclick="openLightbox(this.src)" title="点击放大图片" onerror="console.error('Image load failed:', this.src)">` : ''}
+        ${data.rightQuote ? `<div class="b-quote-right">${data.rightQuote}</div>` : ''}
+        ${data.pdfName ? `<a href="${encodeURI(data.pdfName)}" target="_blank" class="pdf-btn-tiny">查看完整 PDF 原件</a>` : ''}
+      </div>
+    `;
+  }
+
+  document.getElementById('bookModal').classList.add('active');
+}
+
+function closeBook(e) {
+  if(e.target.id === 'bookModal' || e.target.classList.contains('close-btn')) {
+    document.getElementById('bookModal').classList.remove('active');
+  }
+}
+
+function getSolarTerm(y,m,d){const t=TERMS[y]||TERMS[2026];const cur=m*100+d;for(let i=t.length-1;i>=0;i--)if(cur>=t[i].m*100+t[i].d)return t[i];return(TERMS[y-1]||TERMS[2026]).slice(-1)[0];}
+const lunarMonths=["端月","杏月","桃月","槐月","榴月","荷月","兰月","桂月","菊月","阳月","葭月","腊月"];
+const seasonByMonth={1:{s:'spring',t:'孟春'},2:{s:'spring',t:'仲春'},3:{s:'spring',t:'暮春'},4:{s:'summer',t:'孟夏'},5:{s:'summer',t:'仲夏'},6:{s:'summer',t:'季夏'},7:{s:'autumn',t:'孟秋'},8:{s:'autumn',t:'仲秋'},9:{s:'autumn',t:'暮秋'},10:{s:'winter',t:'孟冬'},11:{s:'winter',t:'仲冬'},12:{s:'winter',t:'季冬'}};
+/** 农历月初一公历对照（约 2024.12—2028.01） */
+const LUNAR_MONTH_STARTS=[
+  [2024,12,30,12],[2025,1,29,1],[2025,2,28,2],[2025,3,29,3],[2025,4,28,4],[2025,5,27,5],[2025,6,25,6],
+  [2025,7,25,6],[2025,8,23,7],[2025,9,22,8],[2025,10,21,9],[2025,11,20,10],[2025,12,20,11],[2026,1,18,12],
+  [2026,2,17,1],[2026,3,19,2],[2026,4,17,3],[2026,5,16,4],[2026,6,14,5],[2026,7,14,6],[2026,8,12,7],
+  [2026,9,10,8],[2026,10,10,9],[2026,11,8,10],[2026,12,8,11],[2027,1,6,12],[2027,2,6,1],[2027,3,8,2],
+  [2027,4,6,3],[2027,5,6,4],[2027,6,4,5],[2027,7,4,6],[2027,8,2,7],[2027,8,31,8],[2027,9,30,9],
+  [2027,10,29,10],[2027,11,28,11],[2027,12,27,12],[2028,1,26,1]
+];
+function getLunarMonth(y,m,d){
+  const cur=Date.UTC(y,m-1,d);
+  let lunar=1;
+  for(const [by,bm,bd,lm] of LUNAR_MONTH_STARTS){
+    if(cur>=Date.UTC(by,bm-1,bd)) lunar=lm;
+  }
+  return lunar;
+}
+
+// 唯美大标题
+const seasonMap={
+  spring:{cn:"风传花信，雨濯春尘。",en:"The wind carries word of blossoms; spring washes the world anew."},
+  summer:{cn:"碧海生光，长风度夏。",en:"Light glimmers on the sea; the long wind carries the summer through."},
+  autumn:{cn:"暮色含金，木叶将辞。",en:"Dusk gilds the world in gold; the leaves prepare to leave."},
+  winter:{cn:"一夜雪深，万物归藏。",en:"The night deepens with snow; all things return to stillness."}
+};
+
+// 纯净诗句，无出处
+const treePoems = {
+  spring: [
+    "春水碧于天，画船听雨眠 · 草长莺飞二月天，拂堤杨柳醉春烟 · 竹外桃花三两枝，春江水暖鸭先知 · 沾衣欲湿杏花雨，吹面不寒杨柳风 · 人间四月芳菲尽，山寺桃花始盛开 · 等闲识得东风面，万紫千红总是春 · 春风又绿江南岸，明月何时照我还 · 夜来风雨声，花落知多少 · 好雨知时节，当春乃发生 · 天街小雨润如酥，草色遥看近却无 · 几处早莺争暖树，谁家新燕啄春泥 · 乱花渐欲迷人眼，浅草才能没马蹄 · 最是一年春好处，绝胜烟柳满皇都 · 国破山河在，城春草木深 · 黄四娘家花满蹊，千朵万朵压枝低 · 桃之夭夭，灼灼其华 · 燕草如碧丝，秦桑低绿枝 · 春风不相识，何事入罗帏 · 红豆生南国，春来发几枝 · 春色满园关不住，一枝红杏出墙来 · 杨柳丝丝弄轻柔，烟缕织成愁 · 海棠未雨，梨花先雪，一半春休 · 试上超然台上看，半壕春水一城花",
+    "When daisies pied and violets blue · The soft south wind, the sweet spring showers · April is the cruellest month, breeding lilacs out of the dead land · And all the woods are alive with the murmur of spring · The world is charged with the grandeur of God · Spring, the sweet spring, is the year's pleasant king · Loveliest of trees, the cherry now is hung with bloom · Come live with me and be my love · I wandered lonely as a cloud that floats on high o'er vales and hills · A host of golden daffodils · If winter comes, can spring be far behind · Now the bright morning star, day's harbinger · Season of mists and mellow fruitfulness · Thou art more lovely and more temperate · Rough winds do shake the darling buds of May · And summer's lease hath all too short a date"
+  ],
+  summer: [
+    "风老莺雏，雨肥梅子，午阴嘉树清圆 · 绿树阴浓夏日长，楼台倒影入池塘 · 接天莲叶无穷碧，映日荷花别样红 · 稻花香里说丰年，听取蛙声一片 · 小荷才露尖尖角，早有蜻蜓立上头 · 明月别枝惊鹊，清风半夜鸣蝉 · 兴尽晚回舟，误入藕花深处 · 水光潋滟晴方好，山色空蒙雨亦奇 · 连雨不知春去，一晴方觉夏深 · 梅子黄时日日晴，小溪泛尽却山行 · 荷风送香气，竹露滴清响 · 山光忽西落，池月渐东上 · 蝉噪林逾静，鸟鸣山更幽 · 晴日暖风生麦气，绿阴幽草胜花时 · 夜合花开香满庭，夜深微雨醉初醒 · 毕竟西湖六月中，风光不与四时同 · 黑云翻墨未遮山，白雨跳珠乱入船 · 卷地风来忽吹散，望湖楼下水如天",
+    "Green leaves, and silence, and a dreamy shade · Summer set lip to earth's bosom bare · Shall I compare thee to a summer's day · The poetry of earth is never dead · From fairest creatures we desire increase · Full many a glorious morning have I seen · Rough winds do shake the darling buds of May · Under the greenwood tree who loves to lie with me · In the long hot days of summer · The dragonflies are stitching the air · All summer long the sun blazed down · Heat shimmering over the fields · Long days and short nights · The hum of bees among the clover · A midsummer night's dream · Season of ripening and of rest · The languid air and the golden haze"
+  ],
+  autumn: [
+    "秋阴不散霜飞晚，留得枯荷听雨声 · 停车坐爱枫林晚，霜叶红于二月花 · 落霞与孤鹜齐飞，秋水共长天一色 · 满地黄花堆积，憔悴损，如今有谁堪摘 · 自古逢秋悲寂寥，我言秋日胜春朝 · 晴空一鹤排云上，便引诗情到碧霄 · 银烛秋光冷画屏，轻罗小扇扑流萤 · 天阶夜色凉如水，卧看牵牛织女星 · 月落乌啼霜满天，江枫渔火对愁眠 · 姑苏城外寒山寺，夜半钟声到客船 · 空山新雨后，天气晚来秋 · 明月松间照，清泉石上流 · 无边落木萧萧下，不尽长江滚滚来 · 万里悲秋常作客，百年多病独登台 · 洛阳城里见秋风，欲作家书意万重 · 复恐匆匆说不尽，行人临发又开封 · 采菊东篱下，悠然见南山 · 山气日夕佳，飞鸟相与还 · 枯藤老树昏鸦，小桥流水人家 · 古道西风瘦马 · 夕阳西下，断肠人在天涯",
+    "A touch of cold in the Autumn night · The leaves are falling, falling as if from far up · Season of mists and mellow fruitfulness · Listen! the wind is rising, and the air is wild with leaves · Thou hast thy music too · While barred clouds bloom the soft-dying day · And touch the stubble-plains with rosy hue · Ode to the West Wind · If Winter comes, can Spring be far behind · The year's at the spring and day's at the morn · November days are still and drear · The hazy autumn sun shines weakly · Harvest moon and the smell of apples · The yellow leaves are falling, falling · And all the trees are bare · Frost on the window at dawn"
+  ],
+  winter: [
+    "寒灰飘落雪，邃宇落琼花 · 晚来天欲雪，能饮一杯无 · 忽如一夜春风来，千树万树梨花开 · 柴门闻犬吠，风雪夜归人 · 孤舟蓑笠翁，独钓寒江雪 · 窗含西岭千秋雪，门泊东吴万里船 · 北国风光，千里冰封，万里雪飘 · 山舞银蛇，原驰蜡象 · 欲与天公试比高 · 梅须逊雪三分白，雪却输梅一段香 · 墙角数枝梅，凌寒独自开 · 遥知不是雪，为有暗香来 · 千山鸟飞绝，万径人踪灭 · 日暮苍山远，天寒白屋贫 · 绿蚁新醅酒，红泥小火炉 · 晚来天欲雪，能饮一杯无 · 六出飞花入户时，坐看青竹变琼枝 · 已讶衾枕冷，复见窗户明 · 夜深知雪重，时闻折竹声 · 燕山雪花大如席，片片吹落轩辕台 · 浮生只合尊前老，雪满长安道",
+    "The snow whispers down in the hush of the night · Whose woods these are I think I know · His house is in the village though · Miles to go before I sleep · Announced by all the trumpets of the sky, arrives the snow · The frost is on the pumpkin and the fodder's in the shock · In the bleak midwinter · Frosty wind made moan · Earth stood hard as iron, water like a stone · Snow had fallen, snow on snow · Snow on snow · In the deep midwinter · Stopping by Woods on a Snowy Evening · The darkest evening of the year · The woods are lovely, dark and deep · Winter kept us warm, covering earth in forgetful snow · The cold comes on apace · Ice and fire and the turning year"
+  ]
+};
+
+const greetings={
+  spring:'你好，感谢你循着春光来到这里。\n一笺一卷，皆是与你相遇的伏笔。',
+  summer:'你好，愿这片绿荫为你驻足。\n文字如水，静静流过你我之间。',
+  autumn:'你好，恰逢这一季金色的相遇。\n每一片落叶，都是未寄出的信。',
+  winter:'你好，在这场安静的雪里遇见你。\n炉火尚温，且坐，且听。'
+};
+
+/* ===== 修复 Typing Residue 问题 ===== */
+let typingTimeout;
+function typeText(el, text, speed=60){
+  clearTimeout(typingTimeout);
+  el.innerHTML = ''; 
+  let i=0;
+  function type(){
+    if(i<text.length){
+      let char = text[i];
+      if(char === '\n') el.innerHTML += '<br>'; 
+      else el.innerHTML += char;
+      i++; 
+      typingTimeout = setTimeout(type, char === '\n' ? 400 : speed + Math.random()*40);
+    }
+  }
+  typingTimeout = setTimeout(type, 1500); 
+}
+
+function loadCustomFont(file) {
+  if(!file) return;
+  const url = URL.createObjectURL(file);
+  const style = document.createElement('style');
+  style.textContent = `
+    @font-face { font-family: 'YuweiFanti'; src: url('${url}') format('truetype'); font-display: swap; }
+    @font-face { font-family: 'YuweiJianti'; src: url('${url}') format('truetype'); font-display: swap; }
+  `;
+  document.head.appendChild(style);
+  setTimeout(drawVineTree, 500); 
+}
+
+/* ===== 导航栏平滑跳转修复 ===== */
+document.querySelectorAll('.nav-item a').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    const target = document.querySelector(targetId);
+    if(target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+
+/* ===== 使用随机曲线重写柔和藤蔓 ===== */
+let currentRandomPhase = Math.random() * Math.PI * 2; 
+
+function drawVineTree() {
+  const container = document.getElementById('treeVineClip');
+  if(!container) return;
+  container.innerHTML = '';
+
+  const mainEl = document.getElementById('main');
+  const mainRect = mainEl.getBoundingClientRect();
+  const heroRect = document.getElementById('heroSection').getBoundingClientRect();
+  const w = mainRect.width;
+  const h = mainRect.height;
+  if(w < 100 || h < 200) return;
+
+  const avoidZones = [];
+  const photoLanes = [];
+
+  const pushAvoid = (rect, isRight, pull = 1) => {
+    if(!rect || rect.height < 4) return;
+    avoidZones.push({
+      y: rect.top + window.scrollY - mainRect.top + rect.height / 2,
+      isRight: !!isRight,
+      pull
+    });
+  };
+
+  const sections = ['about', 'words', 'images', 'things', 'dh', 'photography'];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    const sectionRight = el.classList.contains('align-right');
+
+    if(id === 'words') {
+      el.querySelectorAll('.word-card').forEach(card => {
+        pushAvoid(card.getBoundingClientRect(), card.classList.contains('align-right'), 1);
+      });
+    } else if(id === 'images') {
+      const desc = el.querySelector('.section-desc');
+      if(desc) pushAvoid(desc.getBoundingClientRect(), sectionRight, 0.6);
+      el.querySelectorAll('.album-row').forEach(row => {
+        const text = row.querySelector('.album-text');
+        if(text) pushAvoid(text.getBoundingClientRect(), row.classList.contains('motion-row') || sectionRight, 0.75);
+        const photos = row.querySelector('.album-photos');
+        if(!photos) return;
+        const r = photos.getBoundingClientRect();
+        if(r.height < 4) return;
+        photoLanes.push({
+          yTop: r.top + window.scrollY - mainRect.top - 30,
+          height: r.height + 60,
+          targetX: r.left + r.width / 2 - mainRect.left
+        });
+      });
+    } else if(id === 'things') {
+      const welcome = el.querySelector('.things-welcome');
+      const drawZone = el.querySelector('.draw-zone');
+      if(welcome) pushAvoid(welcome.getBoundingClientRect(), true, 0.75);
+      if(drawZone) pushAvoid(drawZone.getBoundingClientRect(), true, 0.55);
+    } else {
+      const box = el.querySelector('.open-content') || el.querySelector('.section-desc') || el;
+      pushAvoid(box.getBoundingClientRect(), sectionRight, 1);
+    }
+  });
+
+  let svgHTML = `<svg id="treeCanvas" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:100%;position:absolute;top:0;left:0">`;
+
+  let trunkStartX = w * 0.75;
+  let trunkStartY = heroRect.height * 0.6;
+  let tX = trunkStartX, tY = trunkStartY;
+  let trunkD = `M ${tX} ${tY}`;
+  while(tY < h) {
+    const nextY = tY + 200;
+    const nextX = w / 2 + Math.sin(nextY / 200 + currentRandomPhase) * 90;
+    trunkD += ` C ${tX - 50} ${tY + 100}, ${nextX + 50} ${nextY - 100}, ${nextX} ${nextY}`;
+    tX = nextX; tY = nextY;
+  }
+  svgHTML += `<path class="tree-trunk-outline" d="${trunkD}"/>`;
+
+  const s = document.body.className.split(' ')[0] || 'spring';
+  const texts = treePoems[s];
+  const classNames = ['tree-text', 'tree-text en'];
+  let guidePath = '';
+  const bottomLimit = h - 40;
+  window._vineGuideStartY = trunkStartY;
+  window._vineGuideEndY = bottomLimit;
+
+  for(let i = 0; i < 2; i++) {
+    const points = [];
+    const phase = i * 2.2 + currentRandomPhase;
+    const amp = 95 + i * 35;
+
+    for(let y = trunkStartY + i * 28; y < bottomLimit; y += 40) {
+      let pull = 0;
+      avoidZones.forEach(z => {
+        const dist = y - z.y;
+        const strength = Math.exp(-(dist * dist) / 50000) * (z.pull || 1);
+        pull += (z.isRight ? -120 : 120) * strength;
+      });
+      pull = Math.max(-95, Math.min(95, pull));
+
+      let x = w / 2 + Math.sin(y / 160 + phase) * amp + pull;
+
+      photoLanes.forEach(lane => {
+        if(y < lane.yTop || y > lane.yTop + lane.height) return;
+        const t = (y - lane.yTop) / lane.height;
+        x += (lane.targetX - x) * Math.sin(t * Math.PI) * 0.12;
+      });
+
+      if(y < heroRect.height) {
+        const progress = (y - trunkStartY) / Math.max(heroRect.height - trunkStartY, 1);
+        const startTrunkX = trunkStartX - (heroRect.height - y) * 0.4;
+        x = startTrunkX * (1 - progress) + x * progress;
+      }
+      points.push({ x: Math.max(80, Math.min(w - 80, x)), y });
+    }
+
+    if(points.length < 2) continue;
+
+    let d = `M ${points[0].x} ${points[0].y}`;
+    for(let j = 0; j < points.length - 1; j++) {
+      const p0 = points[j], p1 = points[j + 1];
+      const mx = (p0.x + p1.x) / 2, my = (p0.y + p1.y) / 2;
+      d += j === 0 ? ` L ${mx} ${my}` : ` Q ${p0.x} ${p0.y}, ${mx} ${my}`;
+    }
+    d += ` L ${points[points.length - 1].x} ${points[points.length - 1].y}`;
+    if(i === 0) guidePath = d;
+
+    const pathId = `vine_${i}`;
+    let tStr = texts[i] + ' · ';
+    tStr = tStr.repeat(8);
+    svgHTML += `<path id="${pathId}" d="${d}" fill="none"/>`;
+    svgHTML += `<text class="${classNames[i]}"><textPath href="#${pathId}" startOffset="0%" spacing="auto">${tStr}</textPath></text>`;
+  }
+
+  svgHTML += `</svg>`;
+  const div = document.createElement('div');
+  div.innerHTML = svgHTML;
+  container.appendChild(div.firstChild);
+
+  const cssPath = guidePath ? `path('${guidePath.replace(/'/g, "\\'")}')` : '';
+  if(cssPath) {
+    const bfLead = document.getElementById('bf2');
+    const bfFollow = document.getElementById('bf1');
+    if(bfLead) { bfLead.style.offsetPath = cssPath; bfLead.style.offsetRotate = 'auto 90deg'; }
+    if(bfFollow) { bfFollow.style.offsetPath = cssPath; bfFollow.style.offsetRotate = 'auto 90deg'; }
+  }
+  updateScrollReveal();
+}
+
+function updateScrollReveal() {
+  const vineClip = document.getElementById('treeVineClip');
+  const main = document.getElementById('main');
+  if(!vineClip || !main) return;
+
+  const scrollY = window.scrollY;
+  const viewH = window.innerHeight;
+  const mainTop = main.offsetTop;
+  const mainHeight = Math.max(main.offsetHeight, 1);
+
+  // 藤蔓前沿随滚动 1:1 延伸，停留在视口约 70% 高度
+  const tipY = scrollY + viewH * 0.70 - mainTop;
+  const visibleH = Math.max(0, Math.min(mainHeight, tipY));
+  vineClip.style.clipPath = `inset(0 0 ${mainHeight - visibleH}px 0)`;
+
+  const pathStart = window._vineGuideStartY ?? 0;
+  const pathEnd = window._vineGuideEndY ?? mainHeight;
+  const pathSpan = Math.max(pathEnd - pathStart, 1);
+  const pathPercent = Math.max(0, Math.min(100, ((tipY - pathStart) / pathSpan) * 100));
+
+  const bfLead = document.getElementById('bf2');
+  const bfFollow = document.getElementById('bf1');
+  if(bfLead) {
+    bfLead.style.offsetDistance = pathPercent + '%';
+    bfLead.style.opacity = pathPercent > 0.5 ? '0.8' : '0';
+  }
+  if(bfFollow) {
+    bfFollow.style.offsetDistance = Math.max(0, pathPercent - 2.5) + '%';
+    bfFollow.style.opacity = pathPercent > 1 ? '0.74' : '0';
+  }
+}
+
+window.addEventListener('scroll', updateScrollReveal, { passive: true });
+let vineDrawTimer;
+function scheduleDrawVineTree(){
+  clearTimeout(vineDrawTimer);
+  vineDrawTimer=setTimeout(drawVineTree,150);
+}
+window.addEventListener('resize', scheduleDrawVineTree);
+
+/* ===== 初始化与季节 ===== */
+function initTime(){
+  const now=new Date(),y=now.getFullYear(),m=now.getMonth()+1,d=now.getDate();
+  document.getElementById('solarDate').textContent=`${y}.${String(m).padStart(2,'0')}.${String(d).padStart(2,'0')}`;
+  const term=getSolarTerm(y,m,d);
+  document.getElementById('termName').textContent=term.name;
+  document.getElementById('termPoem').textContent=term.poem;
+  const lunarM=getLunarMonth(y,m,d);
+  const info=seasonByMonth[lunarM];
+  document.getElementById('lunarLine').textContent=`时维${lunarMonths[lunarM-1]}，序属${info.t}`;
+  applySeason(info.s);
+  initOverlayTitle();
+}
+
+function applySeason(s){
+  document.body.className=s;
+  
+  // 主页大标题单排，使用禹卫简体
+  const hCN = document.getElementById('heroCN');
+  hCN.innerHTML = '';
+  const fullText = seasonMap[s].cn;
+  for(let i=0; i<fullText.length; i++) {
+     let charSpan = document.createElement('span');
+     charSpan.className = 'hero-title-char';
+     charSpan.textContent = fullText[i];
+     charSpan.style.animationDelay = (0.5 + i*0.1) + 's';
+     hCN.appendChild(charSpan);
+  }
+
+  const hEN = document.getElementById('heroEN');
+  hEN.textContent = seasonMap[s].en;
+  hEN.style.animation = 'none';
+  void hEN.offsetWidth;
+  hEN.style.animation = 'slideUp 1.2s ease forwards 0.8s';
+
+  typeText(document.getElementById('typingText'), greetings[s]);
+  
+  const layer = document.getElementById('effectLayer');
+  if(layer) generateEffect(s, layer);
+  
+  const ov=document.getElementById('overlay');
+  ov.classList.remove('spring-bg','summer-bg','autumn-bg','winter-bg');
+  ov.classList.add(s+'-bg');
+  
+  const ovLayer = document.getElementById('overlayEffectLayer');
+  if(ovLayer) generateEffect(s, ovLayer);
+  
+  generatePoemBg(s);
+  updateOverlayDecos(s);
+  
+  currentRandomPhase = Math.random() * Math.PI * 2; // 切换季节时也重制一条新随机线路
+  setTimeout(drawVineTree, 150);
+}
+
+function setSeason(s){applySeason(s);if(document.getElementById('modal').classList.contains('show'))toggleModal();}
+
+const sectionObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const delay=parseInt(e.target.dataset.delay)||0;
+      setTimeout(()=>{
+        e.target.classList.add('visible');
+        sectionObserver.unobserve(e.target);
+      },delay);
+    }
+  });
+},{threshold:0.04,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.open-section').forEach(n=>sectionObserver.observe(n));
+
+function revealSectionsInView(){
+  document.querySelectorAll('.open-section:not(.visible)').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<window.innerHeight*0.92&&r.bottom>40){
+      const delay=parseInt(el.dataset.delay)||0;
+      setTimeout(()=>el.classList.add('visible'),delay);
+    }
+  });
+}
+requestAnimationFrame(revealSectionsInView);
+window.addEventListener('load',()=>setTimeout(revealSectionsInView,80));
+
+/* ==================
+   真正被无损还原的底层 CSS 下落动画逻辑！
+   通过纯粹为每个元素单独指派动画名称，彻底隔离和避免被阻断
+   ================== */
+function generateEffect(s, layer) {
+  layer.innerHTML = '';
+  
+  const w = window.innerWidth || document.documentElement.clientWidth || 1000;
+  const count = (s === 'summer' || s === 'winter') ? 70 : 45;
+  const anims = ['fallStraight', 'fallLeft', 'fallRight'];
+
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    let startX = 20 + Math.random() * (w - 40); 
+    
+    if(s === 'spring'){
+      el.className = 'fall-particle';
+      const sz = 8 + Math.floor(Math.random() * 8);
+      const cs = ['#F5DDEB','#E5A9C0','#DCE8F5'];
+      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:${cs[Math.floor(Math.random()*cs.length)]};border-radius:50% 0;opacity:0.9;"></div>`;
+      el.style.left = startX + 'px';
+      
+      const anim = anims[Math.floor(Math.random()*anims.length)];
+      const dur = 8 + Math.random() * 10;
+      const delay = -(Math.random() * 15);
+      el.style.animation = `${anim} ${dur}s linear infinite ${delay}s`;
+      
+      layer.appendChild(el);
+    }
+    else if(s === 'summer'){
+      el.className = 'rain-container';
+      el.style.left = startX + 'px';
+      
+      const dur = 0.6 + Math.random() * 0.5;
+      const delay = -(Math.random() * 5);
+      
+      const drop = document.createElement('div'); drop.className='raindrop';
+      drop.style.animation = `dropFall ${dur}s linear infinite ${delay}s`;
+      
+      const ripple = document.createElement('div'); ripple.className='rain-ripple-floor';
+      ripple.style.animation = `dropSplash ${dur}s ease-out infinite ${delay}s`;
+      
+      el.appendChild(drop); el.appendChild(ripple);
+      layer.appendChild(el);
+    }
+    else if(s === 'autumn'){
+      el.className = 'fall-particle';
+      const cs = ['#D08040','#F6D3B6','#E8C59B'];
+      const c = cs[Math.floor(Math.random() * cs.length)];
+      const sz = 12 + Math.floor(Math.random() * 10);
+      el.innerHTML = `<svg viewBox="0 0 24 24" width="${sz}" height="${sz}"><path d="M12,2 C13,5 15,6 18,4 C16,8 18,10 21,9 C19,12 20,15 18,17 C15,15 13,17 12,20 L12,23 L12,20 C11,17 9,15 6,17 C4,15 5,12 3,9 C6,10 8,8 6,4 C9,6 11,5 12,2Z" fill="${c}" opacity="0.85"/></svg>`;
+      
+      el.style.left = startX + 'px';
+      const anim = anims[Math.floor(Math.random()*anims.length)];
+      const dur = 8 + Math.random() * 12;
+      const delay = -(Math.random() * 15);
+      el.style.animation = `${anim} ${dur}s linear infinite ${delay}s`;
+      
+      layer.appendChild(el);
+    }
+    else {
+      el.className = 'fall-particle';
+      const sz = 3 + Math.floor(Math.random() * 5);
+      const op = 0.6 + Math.random() * 0.4;
+      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:#fff;border-radius:50%;box-shadow:0 0 8px #fff;opacity:${op};"></div>`;
+      
+      el.style.left = startX + 'px';
+      const anim = anims[Math.floor(Math.random()*anims.length)];
+      const dur = 10 + Math.random() * 14;
+      const delay = -(Math.random() * 15);
+      el.style.animation = `${anim} ${dur}s linear infinite ${delay}s`;
+      
+      layer.appendChild(el);
+    }
+  }
+}
+
+function initOverlayTitle(){
+  const t='風物有信',b='四時皆書';
+  const rT=document.getElementById('rowTop'),rB=document.getElementById('rowBottom');
+  rT.innerHTML='';rB.innerHTML='';
+  t.split('').forEach((ch,i)=>{const s=document.createElement('span');s.className='title-char';s.textContent=ch;s.style.animationDelay=(i*0.35)+'s';rT.appendChild(s);});
+  b.split('').forEach((ch,i)=>{const s=document.createElement('span');s.className='title-char';s.textContent=ch;s.style.animationDelay=((i+4)*0.35)+'s';rB.appendChild(s);});
+}
+
+const poemFragments={spring:['桃之夭夭','灼灼其华','春眠不觉晓','人面桃花','惠风和畅','杂花生树','草长莺飞','春江水暖','花落知多少','燕燕于飞','东风夜放花千树','春风又绿江南岸','杏花春雨','竹外桃花三两枝','沾衣欲湿杏花雨','乱花渐欲迷人眼','春色满园关不住','二月春风似剪刀','千里莺啼绿映红','春水碧于天',{en:'April is the cruellest month'},{en:'A host of golden daffodils'},{en:'Spring, the sweet spring'},{en:'The world is charged with grandeur'}],summer:['绿树阴浓','水面清圆','风荷举','清风徐来','蝉鸣空山','接天莲叶','映日荷花','长夏江村','小荷才露尖尖角','稻花香里说丰年','黄梅时节家家雨','水光潋滟晴方好','荷风送香气','夏木阴阴正可人','懒摇白羽扇','月明船笛参差起',{en:'Shall I compare thee to a summer\'s day'},{en:'Summer afternoon'},{en:'Rough winds do shake'},{en:'And summer\'s lease hath all too short a date'}],autumn:['落木萧萧','枫林晚照','碧云黄叶','空山新雨','秋水长天','明月松间','白露为霜','一叶知秋','天阶夜色凉如水','月落乌啼霜满天','独立寒秋','万山红遍','停车坐爱枫林晚','霜叶红于二月花','长风万里送秋雁','晴空一鹤排云上',{en:'Season of mists and mellow fruitfulness'},{en:'The yellow leaves are falling'},{en:'Listen! the wind is rising'},{en:'And all the trees are bare'}],winter:['千秋雪','孤舟蓑笠','寒梅着花','千树万树','独钓寒江','风雪夜归','岁寒三友','梅花香自苦寒来','窗含西岭','忽如一夜春风来','大雪满弓刀','柴门闻犬吠','日暮苍山远','晚来天欲雪','绿蚁新醅酒','北风卷地白草折',{en:'Whose woods these are I think I know'},{en:'Miles to go before I sleep'},{en:'Frost on the window'},{en:'The snow doesn\'t give a soft white damn'}]};
+function generatePoemBg(season){
+  const bg=document.getElementById('poemBg');if(!bg)return;bg.innerHTML='';
+  const poems=poemFragments[season],zones=[];
+  const cols=6,rows=5,cw=100/cols,rh=100/rows;
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const cx=c*cw+cw/2,cy=r*rh+rh/2;if(cx>22&&cx<78&&cy>25&&cy<75)continue;zones.push({top:[r*rh+1,r*rh+rh-2],left:[c*cw+1,c*cw+cw-3]});}
+  const sz=[...zones].sort(()=>Math.random()-0.5),sp=[...poems].sort(()=>Math.random()-0.5);
+  const deps=['depth-near','depth-mid','depth-far'];
+  const sizes={'depth-near':[1.4,2.0],'depth-mid':[1.0,1.4],'depth-far':[0.75,1.0]};
+  sp.forEach((p,i)=>{if(i>=sz.length)return;const el=document.createElement('div');const isEn=typeof p==='object';const dep=deps[i%3];el.className='poem-fragment '+dep+(isEn?' en':'');el.textContent=isEn?p.en:p;el.style.color=isEn?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.28)';const z=sz[i];el.style.fontSize=(sizes[dep][0]+Math.random()*(sizes[dep][1]-sizes[dep][0]))+'rem';el.style.top=(z.top[0]+Math.random()*(z.top[1]-z.top[0]))+'%';el.style.left=(z.left[0]+Math.random()*(z.left[1]-z.left[0]))+'%';const rot=(Math.random()-0.5)*15;el.style.transform=`rotate(${rot}deg)`;el.dataset.baseRotate=rot;bg.appendChild(el);});
+}
+const decorations={spring:['<ellipse cx="50" cy="50" rx="40" ry="32" fill="#E5A9C0" opacity="0.3"/>','<path d="M50,15 C70,25 75,55 60,75 C45,85 25,70 25,50 C25,30 35,15 50,15Z" fill="#F5DDEB" opacity="0.4"/>','<ellipse cx="50" cy="50" rx="38" ry="28" fill="#DCE8F5" opacity="0.4"/>','<path d="M50,20 Q75,35 70,55 Q60,80 40,70 Q20,55 30,35Z" fill="#E2DDF2" opacity="0.4"/>'],summer:['<path d="M5,55 Q25,40 45,55 T85,55" stroke="#C8E2D5" stroke-width="4" fill="none" opacity="0.5"/>','<ellipse cx="50" cy="55" rx="42" ry="30" fill="#E2F0EA" opacity="0.4"/>','<path d="M50,25 Q65,40 60,60 Q55,80 40,70 Q30,55 35,40Z" fill="#DCECE0" opacity="0.5"/>','<path d="M10,60 Q30,45 50,60 Q70,75 90,60" stroke="#90B0A0" stroke-width="3" fill="none" opacity="0.4"/>'],autumn:['<defs><filter id="af1"><feGaussianBlur stdDeviation="1.5"/></filter></defs><g filter="url(#af1)" opacity="0.5"><path d="M50,10 C53,18 58,20 65,15 C62,25 68,30 75,28 C70,35 72,42 68,48 C62,45 56,48 52,55 L50,90 L48,55 C44,48 38,45 32,48 C28,42 30,35 25,28 C32,30 38,25 35,15 C42,20 47,18 50,10Z" fill="#E8C59B"/></g>','<defs><filter id="af2"><feGaussianBlur stdDeviation="2.5"/></filter></defs><g filter="url(#af2)" opacity="0.4"><path d="M50,8 C54,16 60,18 68,12 C64,24 70,30 78,27 C72,36 74,44 70,50 C63,46 56,50 52,58 L50,92 L48,58 C44,50 37,46 30,50 C26,44 28,36 22,27 C30,30 36,24 32,12 C40,18 46,16 50,8Z" fill="#F6D3B6"/></g>','<defs><filter id="af3"><feGaussianBlur stdDeviation="2"/></filter></defs><path d="M50,15 C65,20 75,35 72,50 C68,65 55,72 45,68 C30,62 22,45 28,32Z" fill="#F3E2CE" opacity="0.5" filter="url(#af3)"/>','<defs><filter id="af4"><feGaussianBlur stdDeviation="1"/></filter></defs><g filter="url(#af4)" opacity="0.55"><path d="M50,15 C52,20 56,22 62,18 C59,26 63,30 68,28 C64,34 66,38 63,42 C58,40 54,42 52,47 L50,75 L48,47 C46,42 42,40 37,42 C34,38 36,34 32,28 C37,30 41,26 38,18Z" fill="#D08040"/></g>'],winter:['<defs><filter id="wf1"><feGaussianBlur stdDeviation="6"/></filter></defs><ellipse cx="50" cy="50" rx="38" ry="32" fill="#DCE4EC" opacity="0.5" filter="url(#wf1)"/>','<defs><filter id="wf2"><feGaussianBlur stdDeviation="4"/></filter></defs><g filter="url(#wf2)" opacity="0.4"><polygon points="50,15 58,35 78,35 62,48 68,68 50,55 32,68 38,48 22,35 42,35" fill="#E6E8F0"/></g>','<defs><filter id="wf3"><feGaussianBlur stdDeviation="5"/></filter></defs><ellipse cx="50" cy="55" rx="35" ry="28" fill="#C8D6E8" opacity="0.4" filter="url(#wf3)"/>','<defs><filter id="wf4"><feGaussianBlur stdDeviation="3"/></filter></defs><g filter="url(#wf4)" opacity="0.4"><polygon points="50,20 55,32 68,32 58,42 62,55 50,47 38,55 42,42 32,32 45,32" fill="#A8B8D0"/></g>']};
+function updateOverlayDecos(s){for(let i=0;i<4;i++){const el=document.getElementById('deco'+(i+1));if(el)el.innerHTML=decorations[s][i];}}
+
+document.querySelectorAll('.season-mini-btn').forEach(btn=>{btn.addEventListener('click',e=>{e.stopPropagation();setSeason(btn.dataset.season);});});
+
+let lastInk=0;
+function makeMaple(sz){const cs=['#D08040','#F6D3B6','#E8C59B'];const c=cs[Math.floor(Math.random()*cs.length)];return `<svg viewBox="0 0 24 24" width="${sz}" height="${sz}" style="transform:rotate(${Math.floor(Math.random()*360)}deg)"><path d="M12,1 C13.5,4 15.5,5 19,3 C17,7.5 19,10 22,9 C19.5,12 20.5,15.5 18,18 C15,15.5 13,17.5 12,21 C11,17.5 9,15.5 6,18 C3.5,15.5 4.5,12 2,9 C5,10 7,7.5 5,3 C8.5,5 10.5,4 12,1Z" fill="${c}" opacity="0.85"/></svg>`;}
+function createInk(x,y){const now=Date.now();if(now-lastInk<100)return;lastInk=now;const ink=document.createElement('div');ink.className='ink-trail';ink.style.left=(x-5)+'px';ink.style.top=(y-5)+'px';document.body.appendChild(ink);setTimeout(()=>ink.remove(),1800);}
+function createClick(x,y){const s=document.body.className,el=document.createElement('div');el.className='click-effect';if(s==='spring'){el.classList.add('click-petal');el.style.left=(x-8)+'px';el.style.top=(y-8)+'px';}else if(s==='summer'){el.classList.add('click-ripple');el.style.left=(x-15)+'px';el.style.top=(y-15)+'px';}else if(s==='autumn'){el.classList.add('click-leaf');el.style.left=(x-12)+'px';el.style.top=(y-12)+'px';el.innerHTML=makeMaple(24);}else{el.classList.add('click-snow');el.style.left=(x-10)+'px';el.style.top=(y-10)+'px';el.innerHTML='<svg viewBox="0 0 20 20" width="20" height="20"><g stroke="#A8B8D0" stroke-width="1.5" fill="none" opacity="0.85"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></g></svg>';}document.body.appendChild(el);setTimeout(()=>el.remove(),3500);}
+
+const ov=document.getElementById('overlay');
+ov.addEventListener('mousemove',e=>{const frags=document.querySelectorAll('#poemBg .poem-fragment');const mx=(e.clientX/window.innerWidth-0.5)*30,my=(e.clientY/window.innerHeight-0.5)*30;frags.forEach((f,i)=>{const factor=(i%3+1)*0.4;f.style.transform=`rotate(${f.dataset.baseRotate||0}deg) translate(${mx*factor}px,${my*factor}px)`;});createInk(e.clientX,e.clientY);});
+ov.addEventListener('click',e=>{if(e.target.closest('.unfold-btn,.main-title,.season-mini-btn'))return;createClick(e.clientX,e.clientY);});
+
+document.addEventListener('mousemove',e=>{if(!document.getElementById('main').classList.contains('visible'))return;createInk(e.clientX,e.clientY);});
+document.addEventListener('click',e=>{if(!document.getElementById('main').classList.contains('visible'))return;if(e.target.closest('a,button,nav,.modal,label,input'))return;createClick(e.clientX,e.clientY);});
+
+document.getElementById('unfold').addEventListener('click',()=>{
+  document.getElementById('overlay').style.opacity=0;
+  setTimeout(()=>{
+    document.getElementById('overlay').style.display='none';
+    document.getElementById('main').classList.add('visible');
+    drawVineTree(); 
+  },1800);
+});
+
+function toggleModal(){document.getElementById('modal').classList.toggle('show');}
+document.getElementById('sundialBtn').addEventListener('click',toggleModal);
+
+initTime();
+
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+}
+
+</script>
+
+<div class="theater-modal" id="theaterModal">
+  <div class="season-effects" id="seasonEffects"></div>
+  <div class="close-theater" onclick="closeTheater()">×</div>
+  <div class="theater-content">
+    <div class="theater-left" id="theaterVisual"></div>
+    <div class="theater-right">
+      <div id="theaterText"></div>
+      <div class="sub-items" id="subItemsList"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="assets/visual-section.js"></script>
+<script src="assets/things-section.js?v=17"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const thingsRoot = document.getElementById('things');
+    if (!thingsRoot || typeof initThingsSection !== 'function') return;
+    const bootThings = async () => {
+      try {
+        const res = await fetch('assets/things/ui/curtain-sprites.json');
+        if (res.ok) window.CURTAIN_SPRITES = await res.json();
+      } catch (_) {}
+      initThingsSection('things');
+    };
+    const thingsObs = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      bootThings();
+      thingsObs.disconnect();
+    }, { rootMargin: '240px' });
+    thingsObs.observe(thingsRoot);
+  });
+</script>
+
+
+<script src="assets/photography-manifest.generated.js?v=3"></script>
+<script src="assets/photography-data.js?v=10"></script>
+<script src="assets/photography-breeze.js?v=5"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const photoRoot = document.getElementById('pbRoot');
+    if (!photoRoot || typeof initPhotoBreeze !== 'function') return;
+    const photoObs = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      initPhotoBreeze('pbRoot');
+      photoObs.disconnect();
+    }, { rootMargin: '240px' });
+    photoObs.observe(photoRoot);
+  });
+</script>
+
+<div class="image-lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="Zoomed">
+</div>
+
+</body>
+</html>

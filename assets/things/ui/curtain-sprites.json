@@ -1,0 +1,20 @@
+[
+  {
+    "file": "assets/things/ui/curtain/crane-master.png",
+    "w": 120,
+    "h": 120,
+    "kind": "crane"
+  },
+  {
+    "file": "assets/things/ui/curtain/chime-01.png",
+    "w": 72,
+    "h": 72,
+    "kind": "chime"
+  },
+  {
+    "file": "assets/things/ui/curtain/chime-02.png",
+    "w": 68,
+    "h": 72,
+    "kind": "chime"
+  }
+]
