@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/visual-section.css">
 <link rel="stylesheet" href="assets/dh-section.css">
-<link rel="stylesheet" href="assets/things-section.css?v=21">
+<link rel="stylesheet" href="assets/things-section.css?v=22">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=8">
 <style>
@@ -1185,7 +1185,7 @@ Those quiet sentences on the page will, in time, pass through light and shadow�
     </div>
   </div>
 
-  <div class="open-section things-v6" data-delay="100" id="things" style="max-width:1080px;">
+  <div class="open-section things-v6" data-delay="100" id="things" style="max-width:1180px;">
     <div class="things-title-row">
       <div class="things-title-main">
         <h2 class="section-title">物有灵犀</h2>
@@ -1665,49 +1665,6 @@ const greetings={
 
 /* ===== 修复 Typing Residue 问题 ===== */
 let typingTimeout;
-let _typeAudioCtx = null;
-function playTypeKey() {
-  try {
-    const Ctx = window.AudioContext || window.webkitAudioContext;
-    if (!Ctx) return;
-    if (!_typeAudioCtx) _typeAudioCtx = new Ctx();
-    if (_typeAudioCtx.state === 'suspended') _typeAudioCtx.resume();
-    const ctx = _typeAudioCtx;
-    const t = ctx.currentTime;
-    const pentatonic = [293.66, 329.63, 369.99, 440, 493.88, 523.25];
-    const base = pentatonic[Math.floor(Math.random() * pentatonic.length)];
-    const partials = [1, 2, 3, 4.5];
-    partials.forEach((ratio, i) => {
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
-      o.type = i === 0 ? 'triangle' : 'sine';
-      o.frequency.setValueAtTime(base * ratio, t);
-      o.frequency.exponentialRampToValueAtTime(base * ratio * 0.998, t + 0.35);
-      const peak = 0.022 / (i + 1);
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(peak, t + 0.004 + i * 0.002);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.28 + i * 0.04);
-      o.connect(g).connect(ctx.destination);
-      o.start(t);
-      o.stop(t + 0.45);
-    });
-    const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.03), ctx.sampleRate);
-    const data = buf.getChannelData(0);
-    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
-    const noise = ctx.createBufferSource();
-    noise.buffer = buf;
-    const bp = ctx.createBiquadFilter();
-    bp.type = 'bandpass';
-    bp.frequency.value = base * 1.2;
-    bp.Q.value = 8;
-    const ng = ctx.createGain();
-    ng.gain.setValueAtTime(0.012, t);
-    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.04);
-    noise.connect(bp).connect(ng).connect(ctx.destination);
-    noise.start(t);
-    noise.stop(t + 0.05);
-  } catch (_) {}
-}
 function startHeroTyping(s) {
   const el = document.getElementById('typingText');
   if (!el || !greetings[s]) return;
@@ -1731,7 +1688,6 @@ function typeText(el, text, speed=72){
       if (char === '\n') el.innerHTML += '<br>';
       else {
         el.innerHTML += char;
-        playTypeKey();
       }
       i++;
       typingTimeout = setTimeout(type, char === '\n' ? 520 : speed + Math.random() * 48);
@@ -2228,7 +2184,7 @@ function closeLightbox() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="assets/visual-section.js"></script>
 <script src="assets/things/things-data.js?v=4"></script>
-<script src="assets/things-section.js?v=21"></script>
+<script src="assets/things-section.js?v=22"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const thingsRoot = document.getElementById('things');

@@ -508,78 +508,77 @@ function buildRopeLayout(items) {
 
 const THREAD_POSITIONS = [3.5, 11, 19, 28, 37, 46, 55, 64, 73, 82, 91];
 const THREAD_COUNT = THREAD_POSITIONS.length;
-const TAG_GAP_BASE = 62;
+const SLOT_GAP = 86;
 
 function slotHeight(slot) {
-  if (slot.type === 'tag') return 70 * (slot.scale || 1);
-  if (slot.type === 'crane') return 56 * (slot.scale || 0.58);
-  if (slot.type === 'chime') return 88 * (slot.scale || 1.1);
-  return 60;
-}
-
-function resolveOverlaps(slots) {
-  const sorted = [...slots].sort((a, b) => a.y - b.y);
-  for (let i = 1; i < sorted.length; i++) {
-    const prev = sorted[i - 1];
-    const cur = sorted[i];
-    const minY = prev.y + slotHeight(prev) * 0.42 + 18;
-    if (cur.y < minY) cur.y = Math.round(minY + ((cur.y % 7) - 3));
-  }
-  return sorted;
+  if (slot.type === 'tag') return 96 * (slot.scale || 1);
+  if (slot.type === 'crane') return 62 * (slot.scale || 0.48);
+  if (slot.type === 'chime') return 108 * (slot.scale || 1.3);
+  return 64;
 }
 
 function buildThreadLayout(threadIdx, items) {
   const n = items.length;
-  const tagGap = TAG_GAP_BASE + (threadIdx % 4) * 10;
-  const slots = [];
-  let y = 44;
+  const plan = [];
+  const craneBudget = n >= 5 ? 2 : (n >= 3 ? 1 : 0);
+  let cranesLeft = craneBudget;
+  const midChimeAt = n >= 4 && threadIdx % 2 === 0 ? Math.floor(n / 2) : -1;
 
-  items.forEach((item, i) => {
-    const scale = 0.84 + ((threadIdx * 9 + i * 13) % 26) / 100;
-    const jitter = ((threadIdx * 19 + i * 29) % 15) - 7;
-    slots.push({
-      type: 'tag',
-      item,
-      y: Math.round(y + jitter),
-      z: 2 + (i % 4),
-      scale,
-      rot: ((threadIdx + i) % 5) - 2
-    });
-    y += tagGap + (i % 3) * 8;
-  });
-
-  const tagSlots = slots.filter((s) => s.type === 'tag');
-  const craneN = n >= 4 ? 2 : (n >= 2 ? 1 : 0);
-  for (let c = 0; c < craneN; c++) {
-    const anchor = tagSlots[Math.min(tagSlots.length - 1, Math.floor(((c + 1) / (craneN + 1)) * tagSlots.length))];
-    slots.push({
-      type: 'crane',
-      y: Math.round((anchor?.y || 80) + 34 + c * 48),
-      z: 4 + c,
-      scale: 0.5 + (threadIdx % 3) * 0.05,
-      rot: (threadIdx * 5 + c * 11) % 14 - 7,
-      spriteId: `crane-${(threadIdx + c) % 6 + 1}`
-    });
+  for (let i = 0; i < n; i++) {
+    plan.push({ type: 'tag', item: items[i], tagIdx: i });
+    if (i === midChimeAt) {
+      plan.push({ type: 'chime', placement: 'mid' });
+    } else if (cranesLeft > 0 && i < n - 1 && (i + threadIdx) % 2 === 1) {
+      plan.push({ type: 'crane', craneIdx: craneBudget - cranesLeft });
+      cranesLeft -= 1;
+    }
   }
+  plan.push({ type: 'chime', placement: 'end' });
 
-  const lastTagY = tagSlots.length ? tagSlots[tagSlots.length - 1].y : 80;
-  slots.push({
-    type: 'chime',
-    y: Math.round(lastTagY + tagGap + 28),
-    z: 6,
-    scale: 1.12 + (threadIdx % 3) * 0.07,
-    rot: (threadIdx % 5) * 2 - 4,
-    spriteId: `chime-${(threadIdx % 5) + 1}`
+  const slots = [];
+  let y = 36;
+
+  plan.forEach((entry, idx) => {
+    if (idx > 0) {
+      const prev = slots[slots.length - 1];
+      y += Math.max(SLOT_GAP, slotHeight(prev) * 0.48 + 28);
+    }
+
+    let scale;
+    if (entry.type === 'tag') {
+      scale = 0.8 + ((threadIdx * 11 + entry.tagIdx * 17) % 24) / 100;
+    } else if (entry.type === 'crane') {
+      scale = 0.44 + (threadIdx % 3) * 0.03;
+    } else {
+      scale = entry.placement === 'end'
+        ? 1.42 + (threadIdx % 3) * 0.08
+        : 1.18 + (threadIdx % 2) * 0.06;
+    }
+
+    const slot = {
+      type: entry.type,
+      y: Math.round(y + ((threadIdx * 3 + idx * 5) % 9) - 4),
+      z: entry.type === 'chime' ? 6 : entry.type === 'crane' ? 4 : 2 + (idx % 3),
+      scale,
+      rot: ((threadIdx * 4 + idx * 6) % 13) - 6
+    };
+    if (entry.item) slot.item = entry.item;
+    if (entry.type === 'crane') slot.spriteId = `crane-${(threadIdx + entry.craneIdx) % 6 + 1}`;
+    if (entry.type === 'chime') {
+      slot.spriteId = `chime-${(threadIdx + (entry.placement === 'mid' ? 2 : 0)) % 5 + 1}`;
+    }
+    slots.push(slot);
   });
 
-  const resolved = resolveOverlaps(slots);
-  const threadH = Math.max(460, resolved[resolved.length - 1].y + slotHeight(resolved[resolved.length - 1]) + 48);
-  return { slots: resolved, threadH };
+  const threadH = slots[slots.length - 1].y + slotHeight(slots[slots.length - 1]) + 64;
+  return { slots, threadH };
 }
 
 function renderDecorSlot(slot, threadIdx, slotIdx) {
   const sprite = pickSprite(slot.type, threadIdx + slotIdx, slot.spriteId);
-  const w = Math.round((sprite?.w || 48) * slot.scale);
+  let w = Math.round((sprite?.w || 48) * slot.scale);
+  if (slot.type === 'chime') w = Math.max(w, Math.round(64 * slot.scale));
+  if (slot.type === 'crane') w = Math.min(w, Math.round(58 * slot.scale));
   const delay = ((threadIdx * 0.28 + slotIdx * 0.16) % 2.4).toFixed(2);
   return (
     `<img class="thread-sprite thread-sprite--${slot.type}" src="${sprite.file}" alt="" aria-hidden="true" ` +
@@ -606,29 +605,60 @@ function pickSprite(kind, seed, spriteId) {
   return pool[seed % pool.length] || pool[0];
 }
 
-let _chimeCtx = null;
-let _chimeLast = 0;
-function playChime() {
+let _audioCtx = null;
+let _audioLast = 0;
+
+function getAudioCtx() {
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if (!Ctx) return null;
+  if (!_audioCtx) _audioCtx = new Ctx();
+  if (_audioCtx.state === 'suspended') _audioCtx.resume();
+  return _audioCtx;
+}
+
+function playDrawSound() {
   const now = Date.now();
-  if (now - _chimeLast < 700) return;
-  _chimeLast = now;
+  if (now - _audioLast < 500) return;
+  _audioLast = now;
   try {
-    const Ctx = window.AudioContext || window.webkitAudioContext;
-    if (!Ctx) return;
-    if (!_chimeCtx) _chimeCtx = new Ctx();
-    if (_chimeCtx.state === 'suspended') _chimeCtx.resume();
-    const t = _chimeCtx.currentTime;
-    [1046, 1318, 1568].forEach((freq, i) => {
-      const o = _chimeCtx.createOscillator();
-      const g = _chimeCtx.createGain();
-      o.type = i === 0 ? 'triangle' : 'sine';
+    const ctx = getAudioCtx();
+    if (!ctx) return;
+    const t = ctx.currentTime;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = 'triangle';
+    o.frequency.setValueAtTime(180, t);
+    o.frequency.exponentialRampToValueAtTime(95, t + 0.12);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.07, t + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+    o.connect(g).connect(ctx.destination);
+    o.start(t);
+    o.stop(t + 0.2);
+  } catch (_) { /* optional audio */ }
+}
+
+function playTagChime() {
+  const now = Date.now();
+  if (now - _audioLast < 320) return;
+  _audioLast = now;
+  try {
+    const ctx = getAudioCtx();
+    if (!ctx) return;
+    const t = ctx.currentTime;
+    const freqs = [1568, 1976, 2349, 2794];
+    const pick = freqs[Math.floor(Math.random() * freqs.length)];
+    [pick, pick * 1.5, pick * 2.01].forEach((freq, i) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = 'sine';
       o.frequency.value = freq;
       g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.055 - i * 0.012, t + 0.015 + i * 0.008);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.45 + i * 0.06);
-      o.connect(g).connect(_chimeCtx.destination);
-      o.start(t + i * 0.02);
-      o.stop(t + 0.65);
+      g.gain.exponentialRampToValueAtTime(0.045 - i * 0.01, t + 0.008 + i * 0.004);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.55 + i * 0.08);
+      o.connect(g).connect(ctx.destination);
+      o.start(t + i * 0.018);
+      o.stop(t + 0.75);
     });
   } catch (_) { /* optional audio */ }
 }
@@ -772,7 +802,7 @@ function initThingsV6(root) {
         lastDrawId = item.id;
         markCurtainDrawn(item.id);
         openBookmarkModal(item);
-        playChime();
+        playDrawSound();
         if (drawBtn) {
           drawBtn.disabled = false;
           const inner = drawBtn.querySelector('.draw-btn-inner');
@@ -793,7 +823,7 @@ function initThingsV6(root) {
   curtainThreads?.addEventListener('click', e => {
     const tag = e.target.closest('.curtain-tag:not(.is-drawn)');
     if (!tag || drawing) return;
-    playChime();
+    playTagChime();
     const item = getThingsData().find(t => t.id === tag.dataset.id);
     if (item) {
       lastDrawId = item.id;
