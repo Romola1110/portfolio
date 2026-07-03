@@ -1,7 +1,7 @@
 # 匣中签 · 新素材文案草稿（待过目）
 
-> 共 **47** 张图片，按编号排列。确认修改后再写入 `THINGS_DATA` 并接入垂帘。
-> 字段：`name` · `signLabel` · `glyph` · `note` · `story` · `verse` · `blessing` · `signature`
+> 共 **47** 张图片。文案已同步至 `assets/things/things-data.js`。
+> 字段：`name` · `signLabel` · `glyph` · `note` · `story` · `verse` · `blessing`
 
 ---
 
