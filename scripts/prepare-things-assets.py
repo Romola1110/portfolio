@@ -119,13 +119,36 @@ def process_curtain_vectors() -> list[dict]:
     CURTAIN_OUT.mkdir(parents=True, exist_ok=True)
     for p in CURTAIN_OUT.glob('*.png'):
         p.unlink()
-    meta = []
-    crane = process_vector_sprite(SRC_CRANE, CURTAIN_OUT / 'crane-master.png', 120)
-    crane['kind'] = 'crane'
-    meta.append(crane)
-    for i, src in enumerate([SRC_CHIME1, SRC_CHIME2], 1):
-        ch = process_vector_sprite(src, CURTAIN_OUT / f'chime-{i:02d}.png', 72)
+    meta: list[dict] = []
+    for i in range(1, 7):
+        src = ROOT / f'千纸鹤{i}.png'
+        if not src.exists():
+            continue
+        crane = process_vector_sprite(src, CURTAIN_OUT / f'crane-{i:02d}.png', 128)
+        crane['kind'] = 'crane'
+        crane['id'] = f'crane-{i}'
+        meta.append(crane)
+    if not any(m.get('kind') == 'crane' for m in meta) and SRC_CRANE.exists():
+        crane = process_vector_sprite(SRC_CRANE, CURTAIN_OUT / 'crane-01.png', 128)
+        crane['kind'] = 'crane'
+        crane['id'] = 'crane-1'
+        meta.append(crane)
+    for i in range(1, 6):
+        src = ROOT / f'风铃{i}.png'
+        if not src.exists():
+            continue
+        ch = process_vector_sprite(src, CURTAIN_OUT / f'chime-{i:02d}.png', 80)
         ch['kind'] = 'chime'
+        ch['id'] = f'chime-{i}'
+        meta.append(ch)
+    for i, src in enumerate([SRC_CHIME1, SRC_CHIME2], 1):
+        if any(m.get('id') == f'chime-{i}' for m in meta):
+            continue
+        if not src.exists():
+            continue
+        ch = process_vector_sprite(src, CURTAIN_OUT / f'chime-{i:02d}.png', 80)
+        ch['kind'] = 'chime'
+        ch['id'] = f'chime-{i}'
         meta.append(ch)
     (OUT / 'curtain-sprites.json').write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding='utf-8')
     return meta

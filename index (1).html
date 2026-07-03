@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/visual-section.css">
 <link rel="stylesheet" href="assets/dh-section.css">
-<link rel="stylesheet" href="assets/things-section.css?v=17">
+<link rel="stylesheet" href="assets/things-section.css?v=18">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=8">
 <style>
@@ -326,37 +326,60 @@ nav{
 .hero-greeting{
   font-family:var(--cn-light);font-size:1.15rem;color:var(--text);
   letter-spacing:0.08em;line-height:2;min-height:3.5em;
-  opacity:0;animation:fadeIn 1s ease forwards 1.5s;
+  opacity:0;
   display:inline-block;max-width:min(520px,92vw);margin:0 auto;
   padding:1.15rem 1.65rem 1.05rem;
   background:
-    linear-gradient(165deg, rgba(255,252,246,0.72), rgba(255,255,255,0.28));
-  border:1px solid rgba(180,155,120,0.38);
-  border-radius:14px;
+    radial-gradient(ellipse 120% 80% at 18% 12%, rgba(210,235,220,0.22), transparent 58%),
+    radial-gradient(ellipse 90% 70% at 82% 88%, rgba(255,228,200,0.18), transparent 55%),
+    linear-gradient(165deg, rgba(255,252,248,0.28), rgba(255,255,255,0.08));
+  border:none;
+  border-radius:16px;
   box-shadow:
-    0 6px 22px rgba(100,80,55,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.85);
+    0 8px 28px rgba(90,110,95,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.42);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
   position:relative;
+  transition:opacity 0.7s ease;
+}
+.hero-greeting.is-typing,
+.hero-greeting.is-done{
+  opacity:1;
 }
 .hero-greeting::before,
 .hero-greeting::after{
-  content:'';position:absolute;pointer-events:none;border-radius:12px;
+  content:'';position:absolute;pointer-events:none;border-radius:16px;
 }
 .hero-greeting::before{
-  inset:5px;
-  border:1px solid rgba(200,175,140,0.28);
+  inset:0;padding:1px;border-radius:16px;
+  background:linear-gradient(135deg,
+    rgba(190,220,205,0.55) 0%,
+    rgba(255,245,225,0.28) 32%,
+    rgba(200,215,240,0.38) 68%,
+    rgba(255,252,248,0.12) 100%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  opacity:0.72;
 }
 .hero-greeting::after{
-  inset:0;border-radius:14px;
+  inset:-6px;border-radius:20px;
   background:
-    linear-gradient(135deg, rgba(255,255,255,0.35) 0%, transparent 42%),
-    linear-gradient(315deg, rgba(255,255,255,0.2) 0%, transparent 38%);
+    radial-gradient(ellipse 70% 55% at 12% 18%, rgba(180,220,200,0.16), transparent 62%),
+    radial-gradient(ellipse 60% 50% at 88% 78%, rgba(255,220,190,0.14), transparent 58%);
+  z-index:-1;
+  filter:blur(8px);
 }
 .hero-greeting .typing-cursor{
   display:inline-block;width:2px;height:1.1em;
   background:var(--text);margin-left:2px;
+  opacity:0;
   animation:blink 0.8s step-end infinite;vertical-align:text-bottom;
 }
+.hero-greeting.is-typing .typing-cursor{opacity:1;}
+.hero-greeting.is-done .typing-cursor{opacity:0;}
 .scroll-hint{
   position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:0.4rem;
@@ -1612,23 +1635,34 @@ function playTypeKey() {
     o.stop(t + 0.05);
   } catch (_) {}
 }
-function typeText(el, text, speed=60){
+function typeText(el, text, speed=72){
   clearTimeout(typingTimeout);
-  el.innerHTML = ''; 
-  let i=0;
+  el.innerHTML = '';
+  const box = el.closest('.hero-greeting');
+  if (box) {
+    box.classList.remove('is-done');
+    box.classList.add('is-typing');
+    box.style.opacity = '0';
+    void box.offsetWidth;
+    box.style.opacity = '1';
+  }
+  let i = 0;
   function type(){
-    if(i<text.length){
-      let char = text[i];
-      if(char === '\n') el.innerHTML += '<br>'; 
+    if (i < text.length) {
+      const char = text[i];
+      if (char === '\n') el.innerHTML += '<br>';
       else {
         el.innerHTML += char;
         playTypeKey();
       }
-      i++; 
-      typingTimeout = setTimeout(type, char === '\n' ? 400 : speed + Math.random()*40);
+      i++;
+      typingTimeout = setTimeout(type, char === '\n' ? 520 : speed + Math.random() * 48);
+    } else if (box) {
+      box.classList.remove('is-typing');
+      box.classList.add('is-done');
     }
   }
-  typingTimeout = setTimeout(type, 1500); 
+  typingTimeout = setTimeout(type, 1200);
 }
 
 function loadCustomFont(file) {
@@ -1656,19 +1690,30 @@ document.querySelectorAll('.nav-item a').forEach(a => {
 });
 
 /* ===== 使用随机曲线重写柔和藤蔓 ===== */
-let currentRandomPhase = Math.random() * Math.PI * 2; 
+let currentRandomPhase = Math.random() * Math.PI * 2;
+let _vineGeom = null;
 
-function drawVineTree() {
+function drawVineTree(forceRemeasure) {
   const container = document.getElementById('treeVineClip');
   if(!container) return;
-  container.innerHTML = '';
 
   const mainEl = document.getElementById('main');
   const mainRect = mainEl.getBoundingClientRect();
+  const liveW = mainRect.width;
+  const liveH = mainRect.height;
+  if (liveW < 100 || liveH < 200) return;
+
+  if (forceRemeasure || !_vineGeom) {
+    _vineGeom = { w: liveW, h: liveH };
+  } else if (Math.abs(liveW - _vineGeom.w) > 14) {
+    _vineGeom = { w: liveW, h: liveH };
+  }
+
+  const w = _vineGeom.w;
+  const h = _vineGeom.h;
+  container.innerHTML = '';
+
   const heroRect = document.getElementById('heroSection').getBoundingClientRect();
-  const w = mainRect.width;
-  const h = mainRect.height;
-  if(w < 100 || h < 200) return;
 
   const avoidZones = [];
   const photoLanes = [];
@@ -1838,11 +1883,19 @@ function updateScrollReveal() {
 
 window.addEventListener('scroll', updateScrollReveal, { passive: true });
 let vineDrawTimer;
-function scheduleDrawVineTree(){
+function scheduleDrawVineTree(forceRemeasure){
   clearTimeout(vineDrawTimer);
-  vineDrawTimer=setTimeout(drawVineTree,150);
+  vineDrawTimer=setTimeout(() => drawVineTree(!!forceRemeasure), 150);
 }
-window.addEventListener('resize', scheduleDrawVineTree);
+window.scheduleDrawVineTree = scheduleDrawVineTree;
+window.addEventListener('resize', () => {
+  if (!_vineGeom) {
+    scheduleDrawVineTree(true);
+    return;
+  }
+  const w = document.getElementById('main')?.getBoundingClientRect().width ?? 0;
+  if (Math.abs(w - _vineGeom.w) > 14) scheduleDrawVineTree(true);
+});
 
 /* ===== 初始化与季节 ===== */
 function initTime(){
@@ -2076,7 +2129,7 @@ function closeLightbox() {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="assets/visual-section.js"></script>
-<script src="assets/things-section.js?v=17"></script>
+<script src="assets/things-section.js?v=18"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const thingsRoot = document.getElementById('things');
