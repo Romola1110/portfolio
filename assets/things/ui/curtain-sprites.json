@@ -1,20 +1,79 @@
 [
   {
-    "file": "assets/things/ui/curtain/crane-master.png",
-    "w": 120,
-    "h": 120,
-    "kind": "crane"
+    "file": "assets/things/ui/curtain/crane-01.png",
+    "w": 128,
+    "h": 94,
+    "kind": "crane",
+    "id": "crane-1"
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-02.png",
+    "w": 128,
+    "h": 110,
+    "kind": "crane",
+    "id": "crane-2"
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-03.png",
+    "w": 128,
+    "h": 118,
+    "kind": "crane",
+    "id": "crane-3"
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-04.png",
+    "w": 128,
+    "h": 88,
+    "kind": "crane",
+    "id": "crane-4"
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-05.png",
+    "w": 128,
+    "h": 117,
+    "kind": "crane",
+    "id": "crane-5"
+  },
+  {
+    "file": "assets/things/ui/curtain/crane-06.png",
+    "w": 127,
+    "h": 108,
+    "kind": "crane",
+    "id": "crane-6"
   },
   {
     "file": "assets/things/ui/curtain/chime-01.png",
-    "w": 72,
-    "h": 72,
-    "kind": "chime"
+    "w": 29,
+    "h": 80,
+    "kind": "chime",
+    "id": "chime-1"
   },
   {
     "file": "assets/things/ui/curtain/chime-02.png",
-    "w": 68,
-    "h": 72,
-    "kind": "chime"
+    "w": 30,
+    "h": 80,
+    "kind": "chime",
+    "id": "chime-2"
+  },
+  {
+    "file": "assets/things/ui/curtain/chime-03.png",
+    "w": 23,
+    "h": 80,
+    "kind": "chime",
+    "id": "chime-3"
+  },
+  {
+    "file": "assets/things/ui/curtain/chime-04.png",
+    "w": 23,
+    "h": 80,
+    "kind": "chime",
+    "id": "chime-4"
+  },
+  {
+    "file": "assets/things/ui/curtain/chime-05.png",
+    "w": 51,
+    "h": 80,
+    "kind": "chime",
+    "id": "chime-5"
   }
 ]

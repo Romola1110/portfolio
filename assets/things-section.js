@@ -518,73 +518,87 @@ function buildRopeLayout(items) {
 const THREAD_POSITIONS = [6, 17, 29, 44, 58, 73, 88];
 
 const CURTAIN_SPRITES = [
-  { file: 'assets/things/ui/curtain/crane-master.png', kind: 'crane', w: 120, h: 120 },
-  { file: 'assets/things/ui/curtain/chime-01.png', kind: 'chime', w: 72, h: 72 },
-  { file: 'assets/things/ui/curtain/chime-02.png', kind: 'chime', w: 72, h: 72 },
+  { file: 'assets/things/ui/curtain/crane-01.png', kind: 'crane', w: 120, h: 120, id: 'crane-1' },
+  { file: 'assets/things/ui/curtain/chime-01.png', kind: 'chime', w: 72, h: 72, id: 'chime-1' },
+  { file: 'assets/things/ui/curtain/chime-02.png', kind: 'chime', w: 72, h: 72, id: 'chime-2' },
 ];
 
 function getCurtainSprites() {
   return (typeof window !== 'undefined' && window.CURTAIN_SPRITES) || CURTAIN_SPRITES;
 }
 
-function pickSprite(kind, seed) {
+function pickSprite(kind, seed, spriteId) {
   const pool = getCurtainSprites().filter(s => s.kind === kind);
+  if (spriteId) {
+    const hit = pool.find(s => s.id === spriteId || s.file?.includes(spriteId));
+    if (hit) return hit;
+  }
   return pool[seed % pool.length] || pool[0];
 }
 
-/** 每根垂线上逐个悬挂的抠图精灵（参考垂帘效果图，非整串叠放） */
+/** 每根垂线：千纸鹤/风铃/签交错悬挂，间距与景深不一（参照垂帘效果图） */
 const THREAD_DECOR_LAYOUT = [
   [
-    { kind: 'crane', y: 14, scale: 0.78, rot: -7 },
-    { kind: 'chime', chimeIdx: 0, y: 46, scale: 0.82, rot: 5 },
-    { kind: 'chime', chimeIdx: 1, y: 72, scale: 0.76, rot: -4 }
+    { kind: 'crane', spriteId: 'crane-1', y: 8, scale: 0.92, rot: -8, z: 4, blur: 0 },
+    { kind: 'chime', spriteId: 'chime-2', y: 58, scale: 0.7, rot: 6, z: 2, blur: 0.6 },
+    { kind: 'crane', spriteId: 'crane-3', y: 118, scale: 0.58, rot: 5, z: 1, blur: 1.4 }
   ],
   [
-    { kind: 'chime', chimeIdx: 1, y: 18, scale: 0.8, rot: 6 },
-    { kind: 'crane', y: 50, scale: 0.72, rot: -5 },
-    { kind: 'chime', chimeIdx: 0, y: 78, scale: 0.74, rot: 3 }
+    { kind: 'chime', spriteId: 'chime-1', y: 22, scale: 0.78, rot: -5, z: 3, blur: 0.3 },
+    { kind: 'crane', spriteId: 'crane-2', y: 88, scale: 0.66, rot: 7, z: 2, blur: 0.8 },
+    { kind: 'chime', spriteId: 'chime-4', y: 156, scale: 0.52, rot: -3, z: 1, blur: 1.6 }
   ],
   [
-    { kind: 'crane', y: 16, scale: 0.74, rot: 8 },
-    { kind: 'chime', chimeIdx: 0, y: 44, scale: 0.78, rot: -6 },
-    { kind: 'crane', y: 70, scale: 0.66, rot: -3 }
+    { kind: 'crane', spriteId: 'crane-4', y: 14, scale: 0.84, rot: 6, z: 4, blur: 0 },
+    { kind: 'chime', spriteId: 'chime-3', y: 72, scale: 0.74, rot: -6, z: 2, blur: 0.5 },
+    { kind: 'crane', spriteId: 'crane-5', y: 142, scale: 0.5, rot: -4, z: 1, blur: 1.8 }
   ],
   [
-    { kind: 'chime', chimeIdx: 0, y: 20, scale: 0.77, rot: -4 },
-    { kind: 'crane', y: 48, scale: 0.7, rot: 6 },
-    { kind: 'chime', chimeIdx: 1, y: 74, scale: 0.72, rot: 5 }
+    { kind: 'chime', spriteId: 'chime-5', y: 10, scale: 0.8, rot: 4, z: 3, blur: 0.2 },
+    { kind: 'crane', spriteId: 'crane-6', y: 64, scale: 0.72, rot: -7, z: 2, blur: 0.7 },
+    { kind: 'chime', spriteId: 'chime-2', y: 128, scale: 0.56, rot: 5, z: 1, blur: 1.5 }
   ],
   [
-    { kind: 'crane', y: 12, scale: 0.8, rot: -6 },
-    { kind: 'chime', chimeIdx: 1, y: 42, scale: 0.8, rot: 4 },
-    { kind: 'chime', chimeIdx: 0, y: 68, scale: 0.75, rot: -5 }
+    { kind: 'crane', spriteId: 'crane-2', y: 18, scale: 0.88, rot: -5, z: 4, blur: 0 },
+    { kind: 'chime', spriteId: 'chime-1', y: 96, scale: 0.68, rot: 8, z: 2, blur: 0.9 },
+    { kind: 'crane', spriteId: 'crane-1', y: 168, scale: 0.48, rot: 3, z: 1, blur: 2 }
   ],
   [
-    { kind: 'chime', chimeIdx: 0, y: 16, scale: 0.76, rot: 5 },
-    { kind: 'crane', y: 46, scale: 0.68, rot: -8 },
-    { kind: 'chime', chimeIdx: 1, y: 76, scale: 0.73, rot: 2 }
+    { kind: 'chime', spriteId: 'chime-3', y: 26, scale: 0.76, rot: -4, z: 3, blur: 0.4 },
+    { kind: 'crane', spriteId: 'crane-3', y: 78, scale: 0.64, rot: 6, z: 2, blur: 0.8 },
+    { kind: 'chime', spriteId: 'chime-4', y: 148, scale: 0.54, rot: -2, z: 1, blur: 1.7 }
   ],
   [
-    { kind: 'crane', y: 18, scale: 0.76, rot: 7 },
-    { kind: 'chime', chimeIdx: 1, y: 48, scale: 0.79, rot: -3 },
-    { kind: 'crane', y: 74, scale: 0.64, rot: -6 }
+    { kind: 'crane', spriteId: 'crane-5', y: 12, scale: 0.86, rot: 7, z: 4, blur: 0 },
+    { kind: 'chime', spriteId: 'chime-2', y: 68, scale: 0.72, rot: -5, z: 2, blur: 0.6 },
+    { kind: 'crane', spriteId: 'crane-4', y: 134, scale: 0.55, rot: -6, z: 1, blur: 1.6 }
   ]
 ];
 
+/** 每根线上的签牌悬挂高度（与装饰交错，非等距） */
+const THREAD_TAG_OFFSETS = [
+  [132, 248],
+  [168, 286],
+  [118, 224],
+  [152, 262],
+  [142, 238],
+  [176, 294],
+  [126, 256]
+];
+
 function renderThreadDecor(threadIndex) {
-  const sprites = getCurtainSprites();
-  const crane = sprites.find((s) => s.kind === 'crane') || sprites[0];
-  const chimes = sprites.filter((s) => s.kind === 'chime');
   const layout = THREAD_DECOR_LAYOUT[threadIndex % THREAD_DECOR_LAYOUT.length];
   return layout.map((slot, si) => {
-    const sprite = slot.kind === 'crane'
-      ? crane
-      : chimes[slot.chimeIdx % Math.max(chimes.length, 1)] || crane;
+    const sprite = pickSprite(slot.kind, threadIndex + si, slot.spriteId);
     const w = Math.round((sprite?.w || 48) * slot.scale);
     const delay = ((threadIndex * 0.32 + si * 0.18) % 2.4).toFixed(2);
+    const blur = slot.blur || 0;
+    const z = slot.z || 1;
+    const opacity = blur > 1 ? 0.55 : blur > 0.5 ? 0.72 : 0.94;
     return (
       `<img class="thread-sprite thread-sprite--${slot.kind}" src="${sprite.file}" alt="" aria-hidden="true" ` +
-      `style="--sprite-y:${slot.y}px;--sprite-w:${w}px;--sprite-rot:${slot.rot}deg;--sprite-delay:${delay}s">`
+      `style="--sprite-y:${slot.y}px;--sprite-w:${w}px;--sprite-rot:${slot.rot}deg;--sprite-delay:${delay}s;` +
+      `--sprite-z:${z};--sprite-blur:${blur}px;opacity:${opacity}">`
     );
   }).join('');
 }
@@ -634,11 +648,11 @@ function initThingsV6(root) {
     return `<div class="ph ${item.ph}">${item.glyph}</div>`;
   }
 
-  function renderCurtainTag(item, hangTop, delay, isChimeThread) {
+  function renderCurtainTag(item, hangTop, delay, zLayer) {
     const drawn = drawnIds.has(item.id);
     return `
-      <button type="button" class="curtain-tag${drawn ? ' is-drawn' : ''}${isChimeThread ? ' curtain-tag--chime' : ''}" data-id="${item.id}"
-        style="--hang-top:${hangTop}px;--swing-delay:${delay}s" ${drawn ? 'disabled' : ''}>
+      <button type="button" class="curtain-tag${drawn ? ' is-drawn' : ''}" data-id="${item.id}"
+        style="--hang-top:${hangTop}px;--swing-delay:${delay}s;--tag-z:${zLayer}" ${drawn ? 'disabled' : ''}>
         <span class="curtain-clip" aria-hidden="true"></span>
         <span class="curtain-card">
           <span class="curtain-glyph">${item.glyph}</span>
@@ -653,12 +667,12 @@ function initThingsV6(root) {
     THINGS_DATA.forEach((item, i) => buckets[i % THREAD_COUNT].push(item));
     curtainThreads.innerHTML = buckets.map((items, ti) => {
       const tx = THREAD_POSITIONS[ti];
-      const decorBase = 108;
+      const tagOffsets = THREAD_TAG_OFFSETS[ti % THREAD_TAG_OFFSETS.length];
       const hangs = items.map((item, hi) => {
-        const hangTop = decorBase + hi * 112 + (ti % 3) * 16 + (hi % 2) * 20;
-        const delay = (ti * 0.38 + hi * 0.22) % 2.8;
-        const isChime = ti % 2 === 1;
-        return renderCurtainTag(item, hangTop, delay, isChime);
+        const hangTop = tagOffsets[hi % tagOffsets.length] + (hi > 1 ? (hi - 1) * 38 : 0);
+        const delay = (ti * 0.41 + hi * 0.27 + (hangTop % 17) * 0.01) % 2.8;
+        const zLayer = hi % 2 === 0 ? 3 : 2;
+        return renderCurtainTag(item, hangTop, delay, zLayer);
       }).join('');
       return `
         <div class="curtain-thread" style="--tx:${tx}%">
