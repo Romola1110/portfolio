@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/visual-section.css">
 <link rel="stylesheet" href="assets/dh-section.css">
-<link rel="stylesheet" href="assets/things-section.css?v=19">
+<link rel="stylesheet" href="assets/things-section.css?v=20">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=8">
 <style>
@@ -233,14 +233,14 @@ body::after {
 }
 
 .raindrop {
-  position: absolute; left: 0; width: 2px; height: 35px;
-  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.9));
-  box-shadow: 0 0 4px rgba(255,255,255,0.4);
+  position: absolute; left: 0; width: 3px; height: 52px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.95));
+  box-shadow: 0 0 6px rgba(255,255,255,0.55);
   animation: dropFall var(--dur) linear infinite;
   animation-delay: inherit;
 }
 .rain-ripple-floor {
-  position: absolute; bottom: 0; left: -19px; width: 40px; height: 10px;
+  position: absolute; bottom: 0; left: -24px; width: 52px; height: 14px;
   border: 1.5px solid rgba(255,255,255,0.7);
   border-radius: 50%; opacity: 0;
   animation: dropSplash var(--dur) ease-out infinite;
@@ -2051,23 +2051,23 @@ function generateEffect(s, layer) {
   layer.innerHTML = '';
   
   const w = window.innerWidth || document.documentElement.clientWidth || 1000;
-  const count = (s === 'summer' || s === 'winter') ? 70 : 45;
+  const count = (s === 'summer' || s === 'winter') ? 115 : (s === 'autumn' ? 88 : 82);
   const anims = ['fallStraight', 'fallLeft', 'fallRight'];
 
   for (let i = 0; i < count; i++) {
     const el = document.createElement('div');
-    let startX = 20 + Math.random() * (w - 40); 
+    let startX = 10 + Math.random() * (w - 20); 
     
     if(s === 'spring'){
       el.className = 'fall-particle';
-      const sz = 8 + Math.floor(Math.random() * 8);
-      const cs = ['#F5DDEB','#E5A9C0','#DCE8F5'];
-      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:${cs[Math.floor(Math.random()*cs.length)]};border-radius:50% 0;opacity:0.9;"></div>`;
+      const sz = 14 + Math.floor(Math.random() * 16);
+      const cs = ['#F5DDEB','#E5A9C0','#DCE8F5','#FFD6E8'];
+      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:${cs[Math.floor(Math.random()*cs.length)]};border-radius:50% 0;opacity:0.92;box-shadow:0 0 ${Math.round(sz*0.35)}px rgba(229,169,192,0.35);"></div>`;
       el.style.left = startX + 'px';
       
       const anim = anims[Math.floor(Math.random()*anims.length)];
-      const dur = 8 + Math.random() * 10;
-      const delay = -(Math.random() * 15);
+      const dur = 7 + Math.random() * 9;
+      const delay = -(Math.random() * 18);
       el.style.animation = `${anim} ${dur}s linear infinite ${delay}s`;
       
       layer.appendChild(el);
@@ -2076,13 +2076,20 @@ function generateEffect(s, layer) {
       el.className = 'rain-container';
       el.style.left = startX + 'px';
       
-      const dur = 0.6 + Math.random() * 0.5;
-      const delay = -(Math.random() * 5);
+      const dur = 0.45 + Math.random() * 0.45;
+      const delay = -(Math.random() * 6);
+      const dropH = 48 + Math.floor(Math.random() * 28);
+      const dropW = 2 + (Math.random() > 0.55 ? 1 : 0);
       
       const drop = document.createElement('div'); drop.className='raindrop';
+      drop.style.width = dropW + 'px';
+      drop.style.height = dropH + 'px';
       drop.style.animation = `dropFall ${dur}s linear infinite ${delay}s`;
       
       const ripple = document.createElement('div'); ripple.className='rain-ripple-floor';
+      ripple.style.width = '52px';
+      ripple.style.height = '14px';
+      ripple.style.left = '-24px';
       ripple.style.animation = `dropSplash ${dur}s ease-out infinite ${delay}s`;
       
       el.appendChild(drop); el.appendChild(ripple);
@@ -2090,29 +2097,29 @@ function generateEffect(s, layer) {
     }
     else if(s === 'autumn'){
       el.className = 'fall-particle';
-      const cs = ['#D08040','#F6D3B6','#E8C59B'];
+      const cs = ['#D08040','#F6D3B6','#E8C59B','#C86828'];
       const c = cs[Math.floor(Math.random() * cs.length)];
-      const sz = 12 + Math.floor(Math.random() * 10);
-      el.innerHTML = `<svg viewBox="0 0 24 24" width="${sz}" height="${sz}"><path d="M12,2 C13,5 15,6 18,4 C16,8 18,10 21,9 C19,12 20,15 18,17 C15,15 13,17 12,20 L12,23 L12,20 C11,17 9,15 6,17 C4,15 5,12 3,9 C6,10 8,8 6,4 C9,6 11,5 12,2Z" fill="${c}" opacity="0.85"/></svg>`;
+      const sz = 20 + Math.floor(Math.random() * 18);
+      el.innerHTML = `<svg viewBox="0 0 24 24" width="${sz}" height="${sz}" style="filter:drop-shadow(0 1px 3px rgba(120,70,30,0.25));"><path d="M12,2 C13,5 15,6 18,4 C16,8 18,10 21,9 C19,12 20,15 18,17 C15,15 13,17 12,20 L12,23 L12,20 C11,17 9,15 6,17 C4,15 5,12 3,9 C6,10 8,8 6,4 C9,6 11,5 12,2Z" fill="${c}" opacity="0.9"/></svg>`;
       
       el.style.left = startX + 'px';
       const anim = anims[Math.floor(Math.random()*anims.length)];
-      const dur = 8 + Math.random() * 12;
-      const delay = -(Math.random() * 15);
+      const dur = 7 + Math.random() * 10;
+      const delay = -(Math.random() * 18);
       el.style.animation = `${anim} ${dur}s linear infinite ${delay}s`;
       
       layer.appendChild(el);
     }
     else {
       el.className = 'fall-particle';
-      const sz = 3 + Math.floor(Math.random() * 5);
-      const op = 0.6 + Math.random() * 0.4;
-      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:#fff;border-radius:50%;box-shadow:0 0 8px #fff;opacity:${op};"></div>`;
+      const sz = 6 + Math.floor(Math.random() * 10);
+      const op = 0.65 + Math.random() * 0.35;
+      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:#fff;border-radius:50%;box-shadow:0 0 ${Math.max(6,sz)}px rgba(255,255,255,0.85);opacity:${op};"></div>`;
       
       el.style.left = startX + 'px';
       const anim = anims[Math.floor(Math.random()*anims.length)];
-      const dur = 10 + Math.random() * 14;
-      const delay = -(Math.random() * 15);
+      const dur = 8 + Math.random() * 12;
+      const delay = -(Math.random() * 18);
       el.style.animation = `${anim} ${dur}s linear infinite ${delay}s`;
       
       layer.appendChild(el);
@@ -2196,8 +2203,8 @@ function closeLightbox() {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="assets/visual-section.js"></script>
-<script src="assets/things/things-data.js?v=1"></script>
-<script src="assets/things-section.js?v=19"></script>
+<script src="assets/things/things-data.js?v=2"></script>
+<script src="assets/things-section.js?v=20"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const thingsRoot = document.getElementById('things');
