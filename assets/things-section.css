@@ -2395,6 +2395,42 @@
   border: none;
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.03);
   margin-bottom: 1.75rem;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 0.8s ease, box-shadow 0.8s ease;
+}
+
+body.spring #things.open-section.things-v6 .things-welcome {
+  background:
+    radial-gradient(ellipse 80% 58% at 18% 16%, rgba(255, 195, 215, 0.34), transparent 68%),
+    radial-gradient(ellipse 72% 52% at 84% 80%, rgba(205, 180, 235, 0.22), transparent 62%),
+    linear-gradient(165deg, rgba(255, 248, 252, 0.48), rgba(255, 255, 255, 0.14));
+  box-shadow: 0 8px 28px rgba(200, 140, 170, 0.07);
+}
+
+body.summer #things.open-section.things-v6 .things-welcome {
+  background:
+    radial-gradient(ellipse 80% 58% at 20% 14%, rgba(165, 215, 190, 0.32), transparent 68%),
+    radial-gradient(ellipse 72% 52% at 82% 78%, rgba(190, 230, 205, 0.2), transparent 62%),
+    linear-gradient(165deg, rgba(246, 255, 250, 0.46), rgba(255, 255, 255, 0.12));
+  box-shadow: 0 8px 28px rgba(100, 150, 120, 0.07);
+}
+
+body.autumn #things.open-section.things-v6 .things-welcome {
+  background:
+    radial-gradient(ellipse 80% 58% at 16% 18%, rgba(255, 205, 155, 0.32), transparent 68%),
+    radial-gradient(ellipse 72% 52% at 86% 76%, rgba(215, 150, 95, 0.22), transparent 62%),
+    linear-gradient(165deg, rgba(255, 250, 240, 0.46), rgba(255, 255, 255, 0.12));
+  box-shadow: 0 8px 28px rgba(180, 120, 70, 0.07);
+}
+
+body.winter #things.open-section.things-v6 .things-welcome {
+  background:
+    radial-gradient(ellipse 80% 58% at 18% 16%, rgba(185, 205, 235, 0.3), transparent 68%),
+    radial-gradient(ellipse 72% 52% at 84% 78%, rgba(205, 215, 245, 0.2), transparent 62%),
+    linear-gradient(165deg, rgba(248, 250, 255, 0.44), rgba(255, 255, 255, 0.12));
+  box-shadow: 0 8px 28px rgba(120, 140, 180, 0.07);
 }
 
 #things.open-section.things-v6 .things-welcome::before {
@@ -2418,12 +2454,12 @@
 #things.open-section.things-v6 .pattern-side {
   position: absolute;
   top: 50%;
-  width: min(220px, 28vw);
-  height: min(260px, 34vw);
+  width: min(240px, 30vw);
+  height: min(280px, 36vw);
   transform: translateY(-52%);
   pointer-events: none;
   z-index: 1;
-  opacity: 0.62;
+  opacity: 0.78;
 }
 
 #things.open-section.things-v6 .pattern-side img {
@@ -2455,9 +2491,9 @@
 
 #things.open-section.things-v6 .pattern-center {
   position: absolute;
-  inset: -24px -36px;
+  inset: -32px -48px;
   z-index: 0;
-  opacity: 0.52;
+  opacity: 0.76;
   pointer-events: none;
 }
 
@@ -2466,15 +2502,6 @@
   height: 100%;
   object-fit: contain;
   transition: transform 0.2s linear;
-}
-
-#things.open-section.things-v6 .draw-zone.is-drawing .bucket-art {
-  animation: bucketSpinDraw 2.8s ease-in-out forwards;
-}
-
-@keyframes bucketSpinDraw {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(180deg); }
 }
 
 #things.open-section.things-v6 .draw-zone.is-drawing .pattern-center img {
@@ -2749,7 +2776,7 @@
 
 #things.open-section.things-v6 .curtain-threads {
   position: relative;
-  min-height: 620px;
+  min-height: 560px;
   margin-top: 6px;
   z-index: 2;
 }
@@ -2757,7 +2784,7 @@
 #things.open-section.things-v6 .curtain-thread {
   position: absolute;
   top: 0;
-  bottom: 0;
+  height: var(--thread-h, 560px);
   left: var(--tx);
   width: 0;
   transform: translateX(-50%);
@@ -2768,7 +2795,7 @@
   left: 0;
   top: 0;
   width: 1px;
-  height: 100%;
+  height: var(--thread-h, 100%);
   background: linear-gradient(180deg, rgba(118, 98, 72, 0.5), rgba(118, 98, 72, 0.12) 85%, transparent);
   animation: threadSway 4.5s ease-in-out infinite;
   transform-origin: top center;
@@ -2800,7 +2827,8 @@
   left: 50%;
   top: var(--hang-top);
   z-index: var(--tag-z, 2);
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(var(--tag-scale, 1));
+  filter: blur(var(--tag-blur, 0px));
   padding: 0;
   border: none;
   background: transparent;
@@ -2818,8 +2846,8 @@
 }
 
 @keyframes tagSwing {
-  0%, 100% { transform: translateX(-50%) rotate(-1.5deg); }
-  50% { transform: translateX(-50%) rotate(1.5deg); }
+  0%, 100% { transform: translateX(-50%) scale(var(--tag-scale, 1)) rotate(-1.5deg); }
+  50% { transform: translateX(-50%) scale(var(--tag-scale, 1)) rotate(1.5deg); }
 }
 
 #things.open-section.things-v6 .curtain-clip {

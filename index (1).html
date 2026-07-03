@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/visual-section.css">
 <link rel="stylesheet" href="assets/dh-section.css">
-<link rel="stylesheet" href="assets/things-section.css?v=18">
+<link rel="stylesheet" href="assets/things-section.css?v=19">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=8">
 <style>
@@ -380,6 +380,62 @@ nav{
 }
 .hero-greeting.is-typing .typing-cursor{opacity:1;}
 .hero-greeting.is-done .typing-cursor{opacity:0;}
+body.spring .hero-greeting{
+  background:
+    radial-gradient(ellipse 110% 75% at 16% 14%, rgba(255, 198, 218, 0.28), transparent 58%),
+    radial-gradient(ellipse 85% 65% at 84% 86%, rgba(210, 185, 235, 0.2), transparent 55%),
+    linear-gradient(165deg, rgba(255, 248, 252, 0.32), rgba(255, 255, 255, 0.08));
+}
+body.spring .hero-greeting::before{
+  background:linear-gradient(135deg,rgba(230, 160, 190, 0.42),rgba(255, 230, 240, 0.22),rgba(190, 170, 230, 0.32),rgba(255, 250, 252, 0.1));
+}
+body.spring .hero-greeting::after{
+  background:
+    radial-gradient(ellipse 65% 50% at 14% 20%, rgba(230, 150, 185, 0.14), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 86% 80%, rgba(200, 175, 235, 0.12), transparent 58%);
+}
+body.summer .hero-greeting{
+  background:
+    radial-gradient(ellipse 110% 75% at 18% 12%, rgba(170, 220, 195, 0.26), transparent 58%),
+    radial-gradient(ellipse 85% 65% at 82% 88%, rgba(200, 235, 210, 0.18), transparent 55%),
+    linear-gradient(165deg, rgba(248, 255, 250, 0.3), rgba(255, 255, 255, 0.08));
+}
+body.summer .hero-greeting::before{
+  background:linear-gradient(135deg,rgba(120, 195, 160, 0.4),rgba(220, 245, 230, 0.24),rgba(150, 210, 185, 0.3),rgba(255, 252, 248, 0.1));
+}
+body.summer .hero-greeting::after{
+  background:
+    radial-gradient(ellipse 65% 50% at 12% 18%, rgba(130, 200, 165, 0.14), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 88% 78%, rgba(180, 230, 200, 0.12), transparent 58%);
+}
+body.autumn .hero-greeting{
+  background:
+    radial-gradient(ellipse 110% 75% at 16% 14%, rgba(255, 210, 165, 0.26), transparent 58%),
+    radial-gradient(ellipse 85% 65% at 84% 86%, rgba(220, 160, 110, 0.2), transparent 55%),
+    linear-gradient(165deg, rgba(255, 250, 242, 0.32), rgba(255, 255, 255, 0.08));
+}
+body.autumn .hero-greeting::before{
+  background:linear-gradient(135deg,rgba(210, 140, 70, 0.38),rgba(255, 235, 200, 0.22),rgba(195, 120, 60, 0.28),rgba(255, 250, 245, 0.1));
+}
+body.autumn .hero-greeting::after{
+  background:
+    radial-gradient(ellipse 65% 50% at 14% 20%, rgba(210, 130, 70, 0.14), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 86% 80%, rgba(230, 170, 100, 0.12), transparent 58%);
+}
+body.winter .hero-greeting{
+  background:
+    radial-gradient(ellipse 110% 75% at 18% 12%, rgba(190, 210, 235, 0.24), transparent 58%),
+    radial-gradient(ellipse 85% 65% at 82% 88%, rgba(210, 220, 245, 0.18), transparent 55%),
+    linear-gradient(165deg, rgba(248, 250, 255, 0.3), rgba(255, 255, 255, 0.08));
+}
+body.winter .hero-greeting::before{
+  background:linear-gradient(135deg,rgba(140, 165, 210, 0.38),rgba(230, 238, 252, 0.22),rgba(160, 180, 220, 0.3),rgba(252, 253, 255, 0.1));
+}
+body.winter .hero-greeting::after{
+  background:
+    radial-gradient(ellipse 65% 50% at 12% 18%, rgba(150, 175, 215, 0.14), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 88% 78%, rgba(190, 205, 235, 0.12), transparent 58%);
+}
 .scroll-hint{
   position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:0.4rem;
@@ -1625,15 +1681,22 @@ function playTypeKey() {
     const t = _typeAudioCtx.currentTime;
     const o = _typeAudioCtx.createOscillator();
     const g = _typeAudioCtx.createGain();
-    o.type = 'square';
-    o.frequency.value = 920 + Math.random() * 180;
+    o.type = 'sine';
+    const base = 523 + Math.random() * 28;
+    o.frequency.setValueAtTime(base, t);
+    o.frequency.exponentialRampToValueAtTime(base * 0.82, t + 0.07);
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.028, t + 0.004);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.045);
+    g.gain.exponentialRampToValueAtTime(0.018, t + 0.006);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.11);
     o.connect(g).connect(_typeAudioCtx.destination);
     o.start(t);
-    o.stop(t + 0.05);
+    o.stop(t + 0.12);
   } catch (_) {}
+}
+function startHeroTyping(s) {
+  const el = document.getElementById('typingText');
+  if (!el || !greetings[s]) return;
+  typeText(el, greetings[s]);
 }
 function typeText(el, text, speed=72){
   clearTimeout(typingTimeout);
@@ -1932,7 +1995,9 @@ function applySeason(s){
   void hEN.offsetWidth;
   hEN.style.animation = 'slideUp 1.2s ease forwards 0.8s';
 
-  typeText(document.getElementById('typingText'), greetings[s]);
+  if (document.getElementById('main')?.classList.contains('visible')) {
+    startHeroTyping(s);
+  }
   
   const layer = document.getElementById('effectLayer');
   if(layer) generateEffect(s, layer);
@@ -2096,7 +2161,9 @@ document.getElementById('unfold').addEventListener('click',()=>{
   setTimeout(()=>{
     document.getElementById('overlay').style.display='none';
     document.getElementById('main').classList.add('visible');
-    drawVineTree(); 
+    drawVineTree(true);
+    const s = document.body.className.split(' ')[0] || 'summer';
+    startHeroTyping(s);
   },1800);
 });
 
@@ -2129,7 +2196,8 @@ function closeLightbox() {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="assets/visual-section.js"></script>
-<script src="assets/things-section.js?v=18"></script>
+<script src="assets/things/things-data.js?v=1"></script>
+<script src="assets/things-section.js?v=19"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const thingsRoot = document.getElementById('things');

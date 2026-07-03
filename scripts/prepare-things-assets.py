@@ -91,15 +91,18 @@ def process_bucket() -> None:
 
 
 def process_patterns() -> None:
-    ref = resize_longest(Image.open(SRC_PATTERN_REF).convert('RGBA'), PATTERN_MAX)
-    pat = resize_longest(Image.open(SRC_PATTERN).convert('RGBA'), PATTERN_MAX)
-    center = alpha_from_paper(ref, white_thresh=232.0)
-    save_png(center, OUT / 'dark-pattern.png')
+    """中心暗纹：直接抠图用户上传的圆形暗纹素材。"""
+    src = SRC_PATTERN if SRC_PATTERN.exists() else SRC_PATTERN_REF
+    img = ImageOps.exif_transpose(Image.open(src).convert('RGBA'))
+    cut = cutout_soft(img, feather=3)
+    cut = trim_alpha(cut, pad=6)
+    cut = resize_longest(cut, 340)
+    save_png(cut, OUT / 'dark-pattern.png')
 
-    p = alpha_from_paper(pat, white_thresh=234.0)
-    w, h = p.size
-    left = p.crop((0, 0, w // 2, h))
-    right = p.crop((w // 2, 0, w, h))
+    # 两侧暗纹：由中心图左右裁切并渐隐
+    w, h = cut.size
+    left = cut.crop((0, 0, w // 2 + 8, h))
+    right = cut.crop((w // 2 - 8, 0, w, h))
     save_png(fade_half(left, 'left'), OUT / 'dark-pattern-half-left.png')
     save_png(fade_half(right, 'right'), OUT / 'dark-pattern-half-right.png')
 

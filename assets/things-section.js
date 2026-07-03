@@ -3,20 +3,11 @@
  * v3: 主站 #things.things-v3（签筒）
  * v4: Demo #things-demo.things-v4（信封直抽）
  */
-const THINGS_DATA = [
-  { id: 'c1', name: '秋风归舟笺', signLabel: '秋风签', signature: '—— 雪琪手书', note: '长条行草，墨势如风。', story: '纸上是“怎耐秋风凄凉”的旧句，笔锋起落像船过江心。它不是悲声，更像把心事写给晚风。', verse: '秋声落纸，归意满舟。', blessing: '愿君逢风不惊，归途自明。', ph: 'ph-calligraphy', glyph: '秋', image: 'assets/things/ui/processed/original/01-045cb3d0cec8f28e23eb81e01be066de.jpg' },
-  { id: 'c2', name: '和光同尘双签', signLabel: '和光签', signature: '—— 枕书人', note: '双流苏书签，字在水彩上开花。', story: '左签写“和光同尘”，右签落“腹有诗书”，像把温柔与锋芒并排系在书页里。', verse: '心有诗书，步履生光。', blessing: '愿君藏锋而不藏志，温润亦有锋芒。', ph: 'ph-calligraphy', glyph: '和', image: 'assets/things/ui/processed/original/02-07ace9576db66c0b16db23c12fe3ee4e.jpg' },
-  { id: 'd1', name: '金龙红福笺', signLabel: '金福签', signature: '—— 染香斋', note: '朱红底上金字与龙纹相映。', story: '“逢”字落在正中，像把热烈的新年气压进纸纤维，抬眼就有喜气扑面。', verse: '一纸金红，万事逢春。', blessing: '愿君所逢皆吉，所愿皆成。', ph: 'ph-dye', glyph: '福', image: 'assets/things/ui/processed/original/03-228ca3a499cf924d100e4a3bec82abc7.jpg' },
-  { id: 'd2', name: '港城迎新明信片', signLabel: '港城签', signature: '—— 听潮客', note: '手写 welcome 与贴纸并置，像旅程起点。', story: '“下一站，CUHK!!”写得很大，像一口气把勇气写满卡片，寄给还未抵达的自己。', verse: '山海未远，前路可期。', blessing: '愿君远行有光，初见即欢。', ph: 'ph-dye', glyph: '港', image: 'assets/things/ui/processed/original/04-2568c6df2a6c63cd721067ee7102ff70.jpg' },
-  { id: 'b1', name: '月吻花笺', signLabel: '花吻签', signature: '—— 拾叶人', note: '粉色半透便笺，英诗与花贴重叠。', story: '“sunlight、moonbeams、sea breeze”三句被剪贴在一起，像把轻柔的爱意分行收藏。', verse: '月色轻吻，花影成诗。', blessing: '愿君被温柔轻轻环抱，被爱悄悄应答。', ph: 'ph-bookmark', glyph: '月', image: 'assets/things/ui/processed/original/05-2743242f6133414515bbe88127c9f880.jpg' },
-  { id: 'b2', name: '蓝夜万圣小卡', signLabel: '夜蓝签', signature: '—— 手作人', note: '幽蓝底色与小幽灵，节日气息轻灵。', story: '“圣诞还没开始，月光先把季节照亮”，一张卡把万圣夜写成温柔的夜航。', verse: '月光微寒，心火仍暖。', blessing: '愿君夜行有灯，怪可爱而梦不惊。', ph: 'ph-bookmark', glyph: '夜', image: 'assets/things/ui/processed/original/06-2a0ff0f29195957ed52d1ccd86a95189.jpg' },
-  { id: 'p1', name: '愿愿兼得双签', signLabel: '愿成签', signature: '—— 雪琪', note: '两枚手作书签并列，粉紫晕染。', story: '“绝对幸运”与“愿愿兼得”并排，像是给生活的双重注脚：既盼好运，也盼心愿落地。', verse: '愿望有声，幸运有形。', blessing: '愿君所念皆有回响，所愿皆能兼得。', ph: 'ph-paper', glyph: '愿', image: 'assets/things/ui/processed/original/07-3342d23334b32db5fc096dc62d3e79da.jpg' },
-  { id: 'p2', name: '樱桃芭蕉笺', signLabel: '樱蕉签', signature: '—— 远行人', note: '纯白长签，墨字简净。', story: '“念了樱桃红，芭蕉浅”这句写得克制，像春夏交界时一口很轻的叹息。', verse: '樱红初醒，蕉影微凉。', blessing: '愿君心中常有四时，眼底常有新色。', ph: 'ph-paper', glyph: '樱', image: 'assets/things/ui/processed/original/08-382474fe42c4d93735d4dd0675de3d18.jpg' },
-  { id: 'p3', name: '晨铃粉珠签', signLabel: '晨铃签', signature: '—— 雪琪', note: '横向签纸与粉珠手链相映。', story: '“晨钟催鸿门”旁缀一圈粉珠，像在利落笔触外，多加了一层柔软的回音。', verse: '铃声一动，晨意先来。', blessing: '愿君清晨有好消息，黄昏有好心情。', ph: 'ph-paper', glyph: '铃', image: 'assets/things/ui/processed/original/09-39e3893ea792f14056d35ef163eaefef.jpg' },
-  { id: 'c3', name: '蓝雾情书碎片', signLabel: '夜语签', signature: '—— 雪琪', note: '撕边蓝纸，白墨英文像雾。', story: '“The night is moist...”被写在一片蓝雾里，右上角纸鹤像一封尚未寄出的晚安。', verse: '夜色微湿，情话无声。', blessing: '愿君有人可念，有夜可安。', ph: 'ph-calligraphy', glyph: '爱', image: 'assets/things/ui/processed/original/10-4a204e9a96f5a80f4c7c2570a668e837.jpg' },
-  { id: 'd3', name: '逢考必过红笺', signLabel: '必过签', signature: '—— 染秋人', note: '红底金字，手持拍摄更显热烈。', story: '“逢考必过!!”写得直白又可爱，是把焦虑化成祝福的最有效咒语。', verse: '金字一落，心定笔稳。', blessing: '愿君落笔生花，逢考必过。', ph: 'ph-dye', glyph: '考', image: 'assets/things/ui/processed/original/11-594b42125f596fc8a1fdf642929c210f.jpg' },
-  { id: 'b3', name: '绝对幸运流苏签', signLabel: '幸运签', signature: '—— 雪琪', note: '红流苏与珐琅耳饰，吉意明亮。', story: '“绝对幸运”落在粉绿晕染中央，像把好运具体地系在指尖，一看就想带走。', verse: '流苏轻摆，福意自来。', blessing: '愿君今日有小确幸，明日有大如愿。', ph: 'ph-bookmark', glyph: '运', image: 'assets/things/ui/processed/original/12-649013fd915f7db5f073405b1d623abd.jpg' }
-];
+function getThingsData() {
+  return (typeof window !== 'undefined' && Array.isArray(window.THINGS_DATA) && window.THINGS_DATA.length)
+    ? window.THINGS_DATA
+    : [];
+}
 
 const TREE_SLOTS = [
   { x: 76, y: 6, rot: -4, str: 36, delay: '0s' },
@@ -119,13 +110,13 @@ function initThingsV5(root) {
 
   function renderWishTree() {
     if (!treeTags) return;
-    treeTags.innerHTML = THINGS_DATA.map((item, i) =>
+    treeTags.innerHTML = getThingsData().map((item, i) =>
       renderTreeTag(item, TREE_SLOTS[i % TREE_SLOTS.length], i)
     ).join('');
   }
 
   function pickItem() {
-    let pool = [...THINGS_DATA];
+    let pool = [...getThingsData()];
     if (pool.length > 1 && lastDrawId) pool = pool.filter(t => t.id !== lastDrawId);
     const item = pool[Math.floor(Math.random() * pool.length)];
     lastDrawId = item.id;
@@ -227,7 +218,7 @@ function initThingsV5(root) {
   treeTags?.addEventListener('click', e => {
     const tag = e.target.closest('.tree-tag');
     if (!tag) return;
-    const item = THINGS_DATA.find(t => t.id === tag.dataset.id);
+    const item = getThingsData().find(t => t.id === tag.dataset.id);
     if (item) openModal(item);
   });
 
@@ -301,7 +292,7 @@ function initThingsV4(root) {
 
   function renderWishTree() {
     if (!treeTags) return;
-    treeTags.innerHTML = THINGS_DATA.map((item, i) =>
+    treeTags.innerHTML = getThingsData().map((item, i) =>
       renderTreeTag(item, TREE_SLOTS[i % TREE_SLOTS.length], i)
     ).join('');
   }
@@ -322,7 +313,7 @@ function initThingsV4(root) {
   }
 
   function pickItem() {
-    let pool = [...THINGS_DATA];
+    let pool = [...getThingsData()];
     if (pool.length > 1 && lastDrawId) pool = pool.filter(t => t.id !== lastDrawId);
     const item = pool[Math.floor(Math.random() * pool.length)];
     lastDrawId = item.id;
@@ -418,7 +409,7 @@ function initThingsV4(root) {
     e.stopPropagation();
     if (!envelope?.classList.contains('is-open')) return;
     const id = letterCard.getAttribute('data-id');
-    const item = THINGS_DATA.find(t => t.id === id);
+    const item = getThingsData().find(t => t.id === id);
     if (item) openModal(item);
   });
 
@@ -438,7 +429,7 @@ function initThingsV4(root) {
   treeTags?.addEventListener('click', e => {
     const tag = e.target.closest('.tree-tag');
     if (!tag) return;
-    const item = THINGS_DATA.find(t => t.id === tag.dataset.id);
+    const item = getThingsData().find(t => t.id === tag.dataset.id);
     if (item) openModal(item);
   });
 
@@ -515,8 +506,68 @@ function buildRopeLayout(items) {
   return { slots, totalWidth: cursor + 56 };
 }
 
-const THREAD_POSITIONS = [6, 17, 29, 44, 58, 73, 88];
+const THREAD_POSITIONS = [3.5, 11, 19, 28, 37, 46, 55, 64, 73, 82, 91];
+const THREAD_COUNT = THREAD_POSITIONS.length;
 
+function buildThreadLayout(threadIdx, items) {
+  const n = items.length;
+  const threadH = Math.max(440, 88 + n * 82);
+  const slots = [];
+
+  for (let i = 0; i < n; i++) {
+    const spread = (threadH - 130) / Math.max(n, 1);
+    const y = Math.round(52 + i * spread + ((threadIdx * 13 + i * 19) % 24) - 12);
+    const z = 2 + (i % 3);
+    const blur = (i + threadIdx) % 5 === 0 ? 1.2 : (i % 3 === 0 ? 0.5 : 0);
+    slots.push({ type: 'tag', item: items[i], y, z, blur, scale: 1 - blur * 0.06 });
+  }
+
+  const tagYs = slots.filter((s) => s.type === 'tag').map((s) => s.y);
+  const minY = Math.min(...tagYs);
+  const maxY = Math.max(...tagYs);
+  const craneN = n >= 3 ? 2 : 1;
+
+  for (let c = 0; c < craneN; c++) {
+    const y = c === 0
+      ? Math.round(minY * 0.42 + 10)
+      : Math.round((minY + maxY) * 0.52 + ((threadIdx % 4) - 2) * 14);
+    const blur = c === 0 ? 0 : 0.45 + (threadIdx % 2) * 0.3;
+    slots.push({
+      type: 'crane',
+      y,
+      z: 3 + c,
+      blur,
+      scale: 0.78 - c * 0.12 - (threadIdx % 3) * 0.04,
+      rot: (threadIdx * 5 + c * 11) % 18 - 9,
+      spriteId: `crane-${(threadIdx + c) % 6 + 1}`
+    });
+  }
+
+  slots.push({
+    type: 'chime',
+    y: threadH - 32,
+    z: 5,
+    blur: 0,
+    scale: 0.62 + (threadIdx % 4) * 0.05,
+    rot: (threadIdx % 5) * 2.5 - 5,
+    spriteId: `chime-${(threadIdx % 5) + 1}`
+  });
+
+  return { slots, threadH };
+}
+
+function renderDecorSlot(slot, threadIdx, slotIdx) {
+  const sprite = pickSprite(slot.type, threadIdx + slotIdx, slot.spriteId);
+  const w = Math.round((sprite?.w || 48) * slot.scale);
+  const delay = ((threadIdx * 0.28 + slotIdx * 0.16) % 2.4).toFixed(2);
+  const blur = slot.blur || 0;
+  const opacity = blur > 1 ? 0.5 : blur > 0.4 ? 0.72 : 0.94;
+  return (
+    `<img class="thread-sprite thread-sprite--${slot.type}" src="${sprite.file}" alt="" aria-hidden="true" ` +
+    `style="--sprite-y:${slot.y}px;--sprite-w:${w}px;--sprite-rot:${slot.rot || 0}deg;--sprite-delay:${delay}s;` +
+    `--sprite-z:${slot.z};--sprite-blur:${blur}px;opacity:${opacity}">`
+  );
+}
 const CURTAIN_SPRITES = [
   { file: 'assets/things/ui/curtain/crane-01.png', kind: 'crane', w: 120, h: 120, id: 'crane-1' },
   { file: 'assets/things/ui/curtain/chime-01.png', kind: 'chime', w: 72, h: 72, id: 'chime-1' },
@@ -534,73 +585,6 @@ function pickSprite(kind, seed, spriteId) {
     if (hit) return hit;
   }
   return pool[seed % pool.length] || pool[0];
-}
-
-/** 每根垂线：千纸鹤/风铃/签交错悬挂，间距与景深不一（参照垂帘效果图） */
-const THREAD_DECOR_LAYOUT = [
-  [
-    { kind: 'crane', spriteId: 'crane-1', y: 8, scale: 0.92, rot: -8, z: 4, blur: 0 },
-    { kind: 'chime', spriteId: 'chime-2', y: 58, scale: 0.7, rot: 6, z: 2, blur: 0.6 },
-    { kind: 'crane', spriteId: 'crane-3', y: 118, scale: 0.58, rot: 5, z: 1, blur: 1.4 }
-  ],
-  [
-    { kind: 'chime', spriteId: 'chime-1', y: 22, scale: 0.78, rot: -5, z: 3, blur: 0.3 },
-    { kind: 'crane', spriteId: 'crane-2', y: 88, scale: 0.66, rot: 7, z: 2, blur: 0.8 },
-    { kind: 'chime', spriteId: 'chime-4', y: 156, scale: 0.52, rot: -3, z: 1, blur: 1.6 }
-  ],
-  [
-    { kind: 'crane', spriteId: 'crane-4', y: 14, scale: 0.84, rot: 6, z: 4, blur: 0 },
-    { kind: 'chime', spriteId: 'chime-3', y: 72, scale: 0.74, rot: -6, z: 2, blur: 0.5 },
-    { kind: 'crane', spriteId: 'crane-5', y: 142, scale: 0.5, rot: -4, z: 1, blur: 1.8 }
-  ],
-  [
-    { kind: 'chime', spriteId: 'chime-5', y: 10, scale: 0.8, rot: 4, z: 3, blur: 0.2 },
-    { kind: 'crane', spriteId: 'crane-6', y: 64, scale: 0.72, rot: -7, z: 2, blur: 0.7 },
-    { kind: 'chime', spriteId: 'chime-2', y: 128, scale: 0.56, rot: 5, z: 1, blur: 1.5 }
-  ],
-  [
-    { kind: 'crane', spriteId: 'crane-2', y: 18, scale: 0.88, rot: -5, z: 4, blur: 0 },
-    { kind: 'chime', spriteId: 'chime-1', y: 96, scale: 0.68, rot: 8, z: 2, blur: 0.9 },
-    { kind: 'crane', spriteId: 'crane-1', y: 168, scale: 0.48, rot: 3, z: 1, blur: 2 }
-  ],
-  [
-    { kind: 'chime', spriteId: 'chime-3', y: 26, scale: 0.76, rot: -4, z: 3, blur: 0.4 },
-    { kind: 'crane', spriteId: 'crane-3', y: 78, scale: 0.64, rot: 6, z: 2, blur: 0.8 },
-    { kind: 'chime', spriteId: 'chime-4', y: 148, scale: 0.54, rot: -2, z: 1, blur: 1.7 }
-  ],
-  [
-    { kind: 'crane', spriteId: 'crane-5', y: 12, scale: 0.86, rot: 7, z: 4, blur: 0 },
-    { kind: 'chime', spriteId: 'chime-2', y: 68, scale: 0.72, rot: -5, z: 2, blur: 0.6 },
-    { kind: 'crane', spriteId: 'crane-4', y: 134, scale: 0.55, rot: -6, z: 1, blur: 1.6 }
-  ]
-];
-
-/** 每根线上的签牌悬挂高度（与装饰交错，非等距） */
-const THREAD_TAG_OFFSETS = [
-  [132, 248],
-  [168, 286],
-  [118, 224],
-  [152, 262],
-  [142, 238],
-  [176, 294],
-  [126, 256]
-];
-
-function renderThreadDecor(threadIndex) {
-  const layout = THREAD_DECOR_LAYOUT[threadIndex % THREAD_DECOR_LAYOUT.length];
-  return layout.map((slot, si) => {
-    const sprite = pickSprite(slot.kind, threadIndex + si, slot.spriteId);
-    const w = Math.round((sprite?.w || 48) * slot.scale);
-    const delay = ((threadIndex * 0.32 + si * 0.18) % 2.4).toFixed(2);
-    const blur = slot.blur || 0;
-    const z = slot.z || 1;
-    const opacity = blur > 1 ? 0.55 : blur > 0.5 ? 0.72 : 0.94;
-    return (
-      `<img class="thread-sprite thread-sprite--${slot.kind}" src="${sprite.file}" alt="" aria-hidden="true" ` +
-      `style="--sprite-y:${slot.y}px;--sprite-w:${w}px;--sprite-rot:${slot.rot}deg;--sprite-delay:${delay}s;` +
-      `--sprite-z:${z};--sprite-blur:${blur}px;opacity:${opacity}">`
-    );
-  }).join('');
 }
 
 let _chimeCtx = null;
@@ -648,11 +632,12 @@ function initThingsV6(root) {
     return `<div class="ph ${item.ph}">${item.glyph}</div>`;
   }
 
-  function renderCurtainTag(item, hangTop, delay, zLayer) {
+  function renderCurtainTag(item, hangTop, delay, zLayer, blur) {
     const drawn = drawnIds.has(item.id);
+    const scale = 1 - (blur || 0) * 0.05;
     return `
       <button type="button" class="curtain-tag${drawn ? ' is-drawn' : ''}" data-id="${item.id}"
-        style="--hang-top:${hangTop}px;--swing-delay:${delay}s;--tag-z:${zLayer}" ${drawn ? 'disabled' : ''}>
+        style="--hang-top:${hangTop}px;--swing-delay:${delay}s;--tag-z:${zLayer};--tag-scale:${scale};--tag-blur:${blur || 0}px" ${drawn ? 'disabled' : ''}>
         <span class="curtain-clip" aria-hidden="true"></span>
         <span class="curtain-card">
           <span class="curtain-glyph">${item.glyph}</span>
@@ -663,24 +648,35 @@ function initThingsV6(root) {
 
   function renderCurtain() {
     if (!curtainThreads) return;
+    const data = getThingsData();
+    if (!data.length) return;
     const buckets = Array.from({ length: THREAD_COUNT }, () => []);
-    THINGS_DATA.forEach((item, i) => buckets[i % THREAD_COUNT].push(item));
-    curtainThreads.innerHTML = buckets.map((items, ti) => {
+    data.forEach((item, i) => buckets[i % THREAD_COUNT].push(item));
+    let maxH = 520;
+    const threads = buckets.map((items, ti) => {
+      const { slots, threadH } = buildThreadLayout(ti, items);
+      maxH = Math.max(maxH, threadH);
       const tx = THREAD_POSITIONS[ti];
-      const tagOffsets = THREAD_TAG_OFFSETS[ti % THREAD_TAG_OFFSETS.length];
-      const hangs = items.map((item, hi) => {
-        const hangTop = tagOffsets[hi % tagOffsets.length] + (hi > 1 ? (hi - 1) * 38 : 0);
-        const delay = (ti * 0.41 + hi * 0.27 + (hangTop % 17) * 0.01) % 2.8;
-        const zLayer = hi % 2 === 0 ? 3 : 2;
-        return renderCurtainTag(item, hangTop, delay, zLayer);
-      }).join('');
+      const decor = slots
+        .filter((s) => s.type !== 'tag')
+        .map((s, si) => renderDecorSlot(s, ti, si))
+        .join('');
+      const hangs = slots
+        .filter((s) => s.type === 'tag')
+        .map((s, hi) => {
+          const delay = (ti * 0.37 + hi * 0.23 + (s.y % 13) * 0.01) % 2.8;
+          return renderCurtainTag(s.item, s.y, delay, s.z, s.blur);
+        })
+        .join('');
       return `
-        <div class="curtain-thread" style="--tx:${tx}%">
+        <div class="curtain-thread" style="--tx:${tx}%;--thread-h:${threadH}px">
           <span class="thread-line" aria-hidden="true"></span>
-          <div class="thread-decor">${renderThreadDecor(ti)}</div>
+          <div class="thread-decor">${decor}</div>
           <div class="thread-hangs">${hangs}</div>
         </div>`;
     }).join('');
+    curtainThreads.style.minHeight = `${maxH + 40}px`;
+    curtainThreads.innerHTML = threads;
   }
 
   function markCurtainDrawn(id) {
@@ -693,11 +689,11 @@ function initThingsV6(root) {
   }
 
   function pickItem() {
-    let pool = THINGS_DATA.filter(t => !drawnIds.has(t.id));
+    let pool = getThingsData().filter(t => !drawnIds.has(t.id));
     if (!pool.length) {
       drawnIds.clear();
       renderCurtain();
-      pool = [...THINGS_DATA];
+      pool = [...getThingsData()];
     }
     if (pool.length > 1 && lastDrawId) pool = pool.filter(t => t.id !== lastDrawId);
     return pool[Math.floor(Math.random() * pool.length)];
@@ -717,7 +713,6 @@ function initThingsV6(root) {
           <p class="letter-verse">「${item.verse}」</p>
           ${item.blessing ? `<p class="letter-blessing">${item.blessing}</p>` : ''}
           <p class="modal-story">${item.story}</p>
-          ${item.signature ? `<p class="letter-signature">${item.signature}</p>` : ''}
           <div class="bookmark-modal-actions">
             <button type="button" class="bm-btn bm-fold">收起</button>
             <button type="button" class="bm-btn bm-again">再摇一支</button>
@@ -781,7 +776,7 @@ function initThingsV6(root) {
     const tag = e.target.closest('.curtain-tag:not(.is-drawn)');
     if (!tag || drawing) return;
     playChime();
-    const item = THINGS_DATA.find(t => t.id === tag.dataset.id);
+    const item = getThingsData().find(t => t.id === tag.dataset.id);
     if (item) {
       lastDrawId = item.id;
       markCurtainDrawn(item.id);
@@ -837,13 +832,13 @@ function initThingsV3(root) {
 
   function renderWishTree() {
     if (!treeTags) return;
-    treeTags.innerHTML = THINGS_DATA.map((item, i) =>
+    treeTags.innerHTML = getThingsData().map((item, i) =>
       renderTreeTag(item, TREE_SLOTS[i % TREE_SLOTS.length], i)
     ).join('');
   }
 
   function pickItem() {
-    let pool = [...THINGS_DATA];
+    let pool = [...getThingsData()];
     if (pool.length > 1 && lastDrawId) pool = pool.filter(t => t.id !== lastDrawId);
     const item = pool[Math.floor(Math.random() * pool.length)];
     lastDrawId = item.id;
@@ -941,7 +936,7 @@ function initThingsV3(root) {
   treeTags?.addEventListener('click', e => {
     const tag = e.target.closest('.tree-tag');
     if (!tag) return;
-    const item = THINGS_DATA.find(t => t.id === tag.dataset.id);
+    const item = getThingsData().find(t => t.id === tag.dataset.id);
     if (item) openModal(item);
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
@@ -949,5 +944,4 @@ function initThingsV3(root) {
 
 if (typeof window !== 'undefined') {
   window.initThingsSection = initThingsSection;
-  window.THINGS_DATA = THINGS_DATA;
 }
