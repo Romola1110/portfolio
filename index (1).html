@@ -327,7 +327,30 @@ nav{
   font-family:var(--cn-light);font-size:1.15rem;color:var(--text);
   letter-spacing:0.08em;line-height:2;min-height:3.5em;
   opacity:0;animation:fadeIn 1s ease forwards 1.5s;
-  background: transparent; padding: 0; border: none; box-shadow: none;
+  display:inline-block;max-width:min(520px,92vw);margin:0 auto;
+  padding:1.15rem 1.65rem 1.05rem;
+  background:
+    linear-gradient(165deg, rgba(255,252,246,0.72), rgba(255,255,255,0.28));
+  border:1px solid rgba(180,155,120,0.38);
+  border-radius:14px;
+  box-shadow:
+    0 6px 22px rgba(100,80,55,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.85);
+  position:relative;
+}
+.hero-greeting::before,
+.hero-greeting::after{
+  content:'';position:absolute;pointer-events:none;border-radius:12px;
+}
+.hero-greeting::before{
+  inset:5px;
+  border:1px solid rgba(200,175,140,0.28);
+}
+.hero-greeting::after{
+  inset:0;border-radius:14px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.35) 0%, transparent 42%),
+    linear-gradient(315deg, rgba(255,255,255,0.2) 0%, transparent 38%);
 }
 .hero-greeting .typing-cursor{
   display:inline-block;width:2px;height:1.1em;
@@ -1569,6 +1592,26 @@ const greetings={
 
 /* ===== 修复 Typing Residue 问题 ===== */
 let typingTimeout;
+let _typeAudioCtx = null;
+function playTypeKey() {
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    if (!_typeAudioCtx) _typeAudioCtx = new Ctx();
+    if (_typeAudioCtx.state === 'suspended') _typeAudioCtx.resume();
+    const t = _typeAudioCtx.currentTime;
+    const o = _typeAudioCtx.createOscillator();
+    const g = _typeAudioCtx.createGain();
+    o.type = 'square';
+    o.frequency.value = 920 + Math.random() * 180;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.028, t + 0.004);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.045);
+    o.connect(g).connect(_typeAudioCtx.destination);
+    o.start(t);
+    o.stop(t + 0.05);
+  } catch (_) {}
+}
 function typeText(el, text, speed=60){
   clearTimeout(typingTimeout);
   el.innerHTML = ''; 
@@ -1577,7 +1620,10 @@ function typeText(el, text, speed=60){
     if(i<text.length){
       let char = text[i];
       if(char === '\n') el.innerHTML += '<br>'; 
-      else el.innerHTML += char;
+      else {
+        el.innerHTML += char;
+        playTypeKey();
+      }
       i++; 
       typingTimeout = setTimeout(type, char === '\n' ? 400 : speed + Math.random()*40);
     }

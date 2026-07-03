@@ -532,33 +532,61 @@ function pickSprite(kind, seed) {
   return pool[seed % pool.length] || pool[0];
 }
 
-function renderChainMarkup(threadIndex) {
+/** 每根垂线上逐个悬挂的抠图精灵（参考垂帘效果图，非整串叠放） */
+const THREAD_DECOR_LAYOUT = [
+  [
+    { kind: 'crane', y: 14, scale: 0.78, rot: -7 },
+    { kind: 'chime', chimeIdx: 0, y: 46, scale: 0.82, rot: 5 },
+    { kind: 'chime', chimeIdx: 1, y: 72, scale: 0.76, rot: -4 }
+  ],
+  [
+    { kind: 'chime', chimeIdx: 1, y: 18, scale: 0.8, rot: 6 },
+    { kind: 'crane', y: 50, scale: 0.72, rot: -5 },
+    { kind: 'chime', chimeIdx: 0, y: 78, scale: 0.74, rot: 3 }
+  ],
+  [
+    { kind: 'crane', y: 16, scale: 0.74, rot: 8 },
+    { kind: 'chime', chimeIdx: 0, y: 44, scale: 0.78, rot: -6 },
+    { kind: 'crane', y: 70, scale: 0.66, rot: -3 }
+  ],
+  [
+    { kind: 'chime', chimeIdx: 0, y: 20, scale: 0.77, rot: -4 },
+    { kind: 'crane', y: 48, scale: 0.7, rot: 6 },
+    { kind: 'chime', chimeIdx: 1, y: 74, scale: 0.72, rot: 5 }
+  ],
+  [
+    { kind: 'crane', y: 12, scale: 0.8, rot: -6 },
+    { kind: 'chime', chimeIdx: 1, y: 42, scale: 0.8, rot: 4 },
+    { kind: 'chime', chimeIdx: 0, y: 68, scale: 0.75, rot: -5 }
+  ],
+  [
+    { kind: 'chime', chimeIdx: 0, y: 16, scale: 0.76, rot: 5 },
+    { kind: 'crane', y: 46, scale: 0.68, rot: -8 },
+    { kind: 'chime', chimeIdx: 1, y: 76, scale: 0.73, rot: 2 }
+  ],
+  [
+    { kind: 'crane', y: 18, scale: 0.76, rot: 7 },
+    { kind: 'chime', chimeIdx: 1, y: 48, scale: 0.79, rot: -3 },
+    { kind: 'crane', y: 74, scale: 0.64, rot: -6 }
+  ]
+];
+
+function renderThreadDecor(threadIndex) {
   const sprites = getCurtainSprites();
   const crane = sprites.find((s) => s.kind === 'crane') || sprites[0];
   const chimes = sprites.filter((s) => s.kind === 'chime');
-  const chime = chimes[threadIndex % Math.max(chimes.length, 1)] || crane;
-  const parts = [];
-  const craneW = Math.round((crane?.w || 56) * (0.72 + (threadIndex % 4) * 0.08));
-  const craneW2 = Math.round(craneW * (0.8 + (threadIndex % 3) * 0.04));
-  const chimeW = Math.round((chime?.w || 36) * (0.78 + (threadIndex % 2) * 0.08));
-  const craneRot = (threadIndex % 2 === 0 ? -8 : 7) + (threadIndex % 3);
-  const delay = ((threadIndex * 0.35) % 2.2).toFixed(2);
-
-  parts.push(
-    `<img class="chain-sprite chain-sprite--crane" src="${crane.file}" alt="" aria-hidden="true" ` +
-    `style="--sprite-w:${craneW}px;--sprite-rot:${craneRot}deg;--chain-delay:${delay}s">`
-  );
-  parts.push('<span class="chain-connector" style="--link-h:10px"></span>');
-  parts.push(
-    `<img class="chain-sprite chain-sprite--chime" src="${chime.file}" alt="" aria-hidden="true" ` +
-    `style="--sprite-w:${chimeW}px;--sprite-rot:${-craneRot * 0.5}deg;--chain-delay:${(Number(delay) + 0.4).toFixed(2)}s">`
-  );
-  parts.push('<span class="chain-connector" style="--link-h:12px"></span>');
-  parts.push(
-    `<img class="chain-sprite chain-sprite--crane" src="${crane.file}" alt="" aria-hidden="true" ` +
-    `style="--sprite-w:${craneW2}px;--sprite-rot:${-craneRot * 0.7}deg;--chain-delay:${(Number(delay) + 0.8).toFixed(2)}s">`
-  );
-  return `<div class="curtain-chain">${parts.join('')}</div>`;
+  const layout = THREAD_DECOR_LAYOUT[threadIndex % THREAD_DECOR_LAYOUT.length];
+  return layout.map((slot, si) => {
+    const sprite = slot.kind === 'crane'
+      ? crane
+      : chimes[slot.chimeIdx % Math.max(chimes.length, 1)] || crane;
+    const w = Math.round((sprite?.w || 48) * slot.scale);
+    const delay = ((threadIndex * 0.32 + si * 0.18) % 2.4).toFixed(2);
+    return (
+      `<img class="thread-sprite thread-sprite--${slot.kind}" src="${sprite.file}" alt="" aria-hidden="true" ` +
+      `style="--sprite-y:${slot.y}px;--sprite-w:${w}px;--sprite-rot:${slot.rot}deg;--sprite-delay:${delay}s">`
+    );
+  }).join('');
 }
 
 let _chimeCtx = null;
@@ -625,9 +653,9 @@ function initThingsV6(root) {
     THINGS_DATA.forEach((item, i) => buckets[i % THREAD_COUNT].push(item));
     curtainThreads.innerHTML = buckets.map((items, ti) => {
       const tx = THREAD_POSITIONS[ti];
-      const chainHeight = 96;
+      const decorBase = 108;
       const hangs = items.map((item, hi) => {
-        const hangTop = 8 + chainHeight + hi * 112 + (ti % 3) * 16 + (hi % 2) * 20;
+        const hangTop = decorBase + hi * 112 + (ti % 3) * 16 + (hi % 2) * 20;
         const delay = (ti * 0.38 + hi * 0.22) % 2.8;
         const isChime = ti % 2 === 1;
         return renderCurtainTag(item, hangTop, delay, isChime);
@@ -635,7 +663,7 @@ function initThingsV6(root) {
       return `
         <div class="curtain-thread" style="--tx:${tx}%">
           <span class="thread-line" aria-hidden="true"></span>
-          ${renderChainMarkup(ti)}
+          <div class="thread-decor">${renderThreadDecor(ti)}</div>
           <div class="thread-hangs">${hangs}</div>
         </div>`;
     }).join('');
@@ -663,7 +691,6 @@ function initThingsV6(root) {
 
   function openBookmarkModal(item) {
     if (!modal) return;
-    window.scheduleDrawVineTree?.();
     const hasPhoto = Boolean(item.image);
     modal.innerHTML = `
       <div class="thing-modal-box modal-bookmark-only${hasPhoto ? ' modal-has-photo' : ''}">
@@ -695,7 +722,6 @@ function initThingsV6(root) {
   function closeModal() {
     modal?.classList.remove('open');
     if (modal) modal.onclick = null;
-    window.scheduleDrawVineTree?.();
   }
 
   function drawLot() {
@@ -751,7 +777,6 @@ function initThingsV6(root) {
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   renderCurtain();
-  window.scheduleDrawVineTree?.();
 }
 
 /* ---------- v3 主站（保留签筒逻辑）---------- */
