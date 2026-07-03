@@ -33,8 +33,16 @@ shopt -u dotglob
 
 rm -rf \
   "$OUT/assets/uploads" \
+  "$OUT/assets/things/incoming" \
+  "$OUT/assets/things/ui/processed" \
   "$OUT/assets/decor-src-"*.jpg \
   "$OUT/assets/decor-src-"*.png
+
+find "$OUT/assets/things/ui/items" -maxdepth 1 -type f -name '*-soft.png' -delete 2>/dev/null || true
+rm -f \
+  "$OUT/assets/things/THINGS_COPY_DRAFT.md" \
+  "$OUT/assets/things/THINGS_COPY.md" \
+  "$OUT/assets/things/DESIGN.md"
 
 du -sh "$OUT"
 find "$OUT" -type f | wc -l

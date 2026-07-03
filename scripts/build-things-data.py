@@ -4,12 +4,19 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import re
 import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+_SCRIPTS = Path(__file__).resolve().parent
+_spec = importlib.util.spec_from_file_location('optimize_things_items', _SCRIPTS / 'optimize-things-items.py')
+_mod = importlib.util.module_from_spec(_spec)
+assert _spec and _spec.loader
+_spec.loader.exec_module(_mod)
+_optimize_item_image = _mod.optimize_file
 INCOMING = ROOT / 'assets/things/incoming'
 DRAFT = ROOT / 'assets/things/THINGS_COPY_DRAFT.md'
 OUT_ITEMS = ROOT / 'assets/things/ui/items'
@@ -95,6 +102,7 @@ def main() -> None:
         dest = OUT_ITEMS / out_name
         if not dest.exists() or dest.stat().st_size != img.stat().st_size:
             shutil.copy2(img, dest)
+            _optimize_item_image(dest)
 
         rel = str(dest.relative_to(ROOT)).replace('\\', '/')
         data.append({
