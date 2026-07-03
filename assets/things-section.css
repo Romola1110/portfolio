@@ -2457,8 +2457,8 @@ body.winter #things.open-section.things-v6 .things-welcome {
 
 #things.open-section.things-v6 .lot-scene {
   position: relative;
-  width: min(320px, 78vw);
-  height: min(340px, 82vw);
+  width: min(400px, 92vw);
+  height: min(400px, 92vw);
   margin: 0 auto;
   z-index: 2;
 }
@@ -2466,12 +2466,12 @@ body.winter #things.open-section.things-v6 .things-welcome {
 #things.open-section.things-v6 .pattern-center {
   position: absolute;
   left: 50%;
-  top: 54%;
-  width: min(300px, 92vw);
-  height: min(300px, 92vw);
+  top: 50%;
+  width: min(440px, 118%);
+  height: min(440px, 118%);
   transform: translate(-50%, -50%);
   z-index: 0;
-  opacity: 0.82;
+  opacity: 0.88;
   pointer-events: none;
 }
 
@@ -2479,7 +2479,8 @@ body.winter #things.open-section.things-v6 .things-welcome {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: transform 0.2s linear;
+  transform-origin: center center;
+  transition: none;
 }
 
 #things.open-section.things-v6 .draw-zone.is-drawing .pattern-center img {
@@ -2607,6 +2608,7 @@ body.winter #things.open-section.things-v6 .things-welcome {
 
 #things.open-section.things-v6 .curtain-gallery {
   margin-top: 0.5rem;
+  overflow: visible;
 }
 
 #things.open-section.things-v6 .curtain-label {
@@ -2621,14 +2623,14 @@ body.winter #things.open-section.things-v6 .things-welcome {
 #things.open-section.things-v6 .curtain-stage {
   position: relative;
   min-height: 580px;
-  padding: 0 1.5rem 2.5rem;
+  padding: 0 0.5rem 2.5rem;
   background:
     radial-gradient(ellipse 70% 55% at 18% 22%, rgba(210, 225, 215, 0.22), transparent 68%),
     radial-gradient(ellipse 60% 50% at 82% 30%, rgba(230, 220, 200, 0.18), transparent 70%),
     radial-gradient(ellipse 90% 40% at 50% 0%, rgba(255, 255, 255, 0.35), transparent 70%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(248, 244, 236, 0.04) 40%, transparent 75%);
   border-radius: 16px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 #things.open-section.things-v6 .curtain-stage::before {
@@ -2675,8 +2677,9 @@ body.winter #things.open-section.things-v6 .things-welcome {
 }
 
 #things.open-section.things-v6 .thread-sprite--chime {
-  opacity: 0.96;
-  filter: drop-shadow(0 3px 8px rgba(120, 100, 70, 0.18));
+  opacity: 1;
+  filter: drop-shadow(0 2px 5px rgba(80, 70, 55, 0.12)) contrast(1.06) saturate(1.08);
+  z-index: 6;
 }
 
 @keyframes threadSpriteFloat {
