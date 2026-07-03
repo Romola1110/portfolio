@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""从 incoming 图片 + THINGS_COPY_DRAFT.md 生成 things-data.js"""
+"""从 incoming 图片 + THINGS_COPY_DRAFT.md 生成 things-data.js（按草稿文件字段精确匹配）"""
 
 from __future__ import annotations
 
@@ -25,22 +25,43 @@ OUT_JS = ROOT / 'assets/things/things-data.js'
 PH_CATEGORIES = ['ph-calligraphy', 'ph-bookmark', 'ph-paper', 'ph-dye']
 
 
-def list_incoming_images() -> list[Path]:
-    files: list[Path] = []
-    for p in sorted(INCOMING.rglob('*')):
+def _norm_name(name: str) -> str:
+    return re.sub(r'[\s_]+', '', name.lower())
+
+
+def _index_incoming() -> dict[str, list[Path]]:
+    idx: dict[str, list[Path]] = {}
+    for p in INCOMING.rglob('*'):
         if not p.is_file():
             continue
         if '__MACOSX' in p.parts or p.name.startswith('.'):
             continue
         if p.suffix.lower() not in {'.png', '.jpg', '.jpeg'}:
             continue
-        files.append(p)
-    # stable order: by folder number then name
-    def sort_key(p: Path) -> tuple:
-        m = re.search(r'图片素材(\d*)', str(p))
-        num = int(m.group(1) or '1') if m else 99
-        return (num, p.name)
-    return sorted(files, key=sort_key)
+        idx.setdefault(_norm_name(p.name), []).append(p)
+    return idx
+
+
+def resolve_image(file_hint: str, incoming_idx: dict[str, list[Path]]) -> Path:
+    hint = file_hint.strip().strip('`')
+    if not hint:
+        raise ValueError('empty file hint')
+    basename = Path(hint).name
+    key = _norm_name(basename)
+    hits = incoming_idx.get(key, [])
+    if len(hits) == 1:
+        return hits[0]
+    if not hits:
+        hits = [
+            p for k, paths in incoming_idx.items()
+            for p in paths
+            if key in k or k in key
+        ]
+    if len(hits) == 1:
+        return hits[0]
+    if not hits:
+        raise FileNotFoundError(f'no incoming file for {basename!r}')
+    raise ValueError(f'ambiguous match for {basename!r}: {[p.name for p in hits]}')
 
 
 def parse_draft() -> list[dict]:
@@ -85,24 +106,22 @@ def guess_ph(name: str, note: str) -> str:
 
 
 def main() -> None:
-    images = list_incoming_images()
+    incoming_idx = _index_incoming()
     meta = parse_draft()
-    if len(images) != len(meta):
-        print(f'warn: {len(images)} images vs {len(meta)} draft entries')
-
     OUT_ITEMS.mkdir(parents=True, exist_ok=True)
     data: list[dict] = []
 
-    for i, (img, entry) in enumerate(zip(images, meta), 1):
+    for entry in meta:
+        i = entry['num']
+        img = resolve_image(entry['file_hint'], incoming_idx)
         ext = img.suffix.lower()
         if ext == '.jpeg':
             ext = '.jpg'
         digest = hashlib.md5(img.read_bytes()).hexdigest()[:12]
         out_name = f'{i:02d}-{digest}{ext}'
         dest = OUT_ITEMS / out_name
-        if not dest.exists() or dest.stat().st_size != img.stat().st_size:
-            shutil.copy2(img, dest)
-            _optimize_item_image(dest)
+        shutil.copy2(img, dest)
+        _optimize_item_image(dest)
 
         rel = str(dest.relative_to(ROOT)).replace('\\', '/')
         data.append({

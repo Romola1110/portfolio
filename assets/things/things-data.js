@@ -10,7 +10,7 @@ window.THINGS_DATA = [
     "blessing": "愿你把寻常日子里的光亮，也一一收藏。",
     "ph": "ph-dye",
     "glyph": "叶",
-    "image": "assets/things/ui/items/01-f95b92e10eef.png"
+    "image": "assets/things/ui/items/01-7e9a04c3cf14.jpg"
   },
   {
     "id": "n02",
@@ -22,7 +22,7 @@ window.THINGS_DATA = [
     "blessing": "愿你在长夜里，也始终被温柔照亮。",
     "ph": "ph-calligraphy",
     "glyph": "星",
-    "image": "assets/things/ui/items/02-b100d1e37049.png"
+    "image": "assets/things/ui/items/02-ca8b48bb9445.jpg"
   },
   {
     "id": "n03",
@@ -34,7 +34,7 @@ window.THINGS_DATA = [
     "blessing": "愿你过尽千帆，依然能寻到生活中的诗意。",
     "ph": "ph-paper",
     "glyph": "浣",
-    "image": "assets/things/ui/items/03-9a4accdaa415.png"
+    "image": "assets/things/ui/items/03-8f7b374c8f1c.jpg"
   },
   {
     "id": "n04",
@@ -46,7 +46,7 @@ window.THINGS_DATA = [
     "blessing": "愿你在世事纷扰中，不忘这一份优雅与从容。",
     "ph": "ph-dye",
     "glyph": "蝶",
-    "image": "assets/things/ui/items/04-bbbb867d4e34.png"
+    "image": "assets/things/ui/items/04-7b9a4afde2f0.png"
   },
   {
     "id": "n05",
@@ -58,7 +58,7 @@ window.THINGS_DATA = [
     "blessing": "愿你不失锋芒，亦不失温度。",
     "ph": "ph-bookmark",
     "glyph": "签",
-    "image": "assets/things/ui/items/05-35b3d8893d06.png"
+    "image": "assets/things/ui/items/05-dcade575de76.png"
   },
   {
     "id": "n06",
@@ -70,7 +70,7 @@ window.THINGS_DATA = [
     "blessing": "愿你所行之处，皆有祥云相伴。",
     "ph": "ph-dye",
     "glyph": "云",
-    "image": "assets/things/ui/items/06-41a832330d67.png"
+    "image": "assets/things/ui/items/06-b9ab69f29acb.png"
   },
   {
     "id": "n07",
@@ -82,7 +82,7 @@ window.THINGS_DATA = [
     "blessing": "愿你在奔波之后，终有可归之处。",
     "ph": "ph-dye",
     "glyph": "鹤",
-    "image": "assets/things/ui/items/07-55dedcf59316.png"
+    "image": "assets/things/ui/items/07-4114c9b771df.png"
   },
   {
     "id": "n08",
@@ -94,7 +94,7 @@ window.THINGS_DATA = [
     "blessing": "愿你把美好片刻，都留住形状与颜色。",
     "ph": "ph-paper",
     "glyph": "花",
-    "image": "assets/things/ui/items/08-b2feba0a9403.png"
+    "image": "assets/things/ui/items/08-c471cfe9b906.png"
   },
   {
     "id": "n09",
@@ -106,7 +106,7 @@ window.THINGS_DATA = [
     "blessing": "愿总有一签，恰好接住你此刻的心情。",
     "ph": "ph-bookmark",
     "glyph": "集",
-    "image": "assets/things/ui/items/09-25b703b7b0c7.png"
+    "image": "assets/things/ui/items/09-35930b87b37d.png"
   },
   {
     "id": "n10",
@@ -118,7 +118,7 @@ window.THINGS_DATA = [
     "blessing": "愿夜行有灯，梦里有糖。",
     "ph": "ph-paper",
     "glyph": "夜",
-    "image": "assets/things/ui/items/10-ab29c046c73c.png"
+    "image": "assets/things/ui/items/10-4f808c6110e4.png"
   },
   {
     "id": "n11",
@@ -130,7 +130,7 @@ window.THINGS_DATA = [
     "blessing": "愿爱来时丰盈，去时亦无憾。",
     "ph": "ph-paper",
     "glyph": "玫",
-    "image": "assets/things/ui/items/11-8815e5c6b1ab.png"
+    "image": "assets/things/ui/items/11-f95b92e10eef.png"
   },
   {
     "id": "n12",
@@ -142,7 +142,7 @@ window.THINGS_DATA = [
     "blessing": "愿你在季节更替里，看见静美而非萧瑟。",
     "ph": "ph-paper",
     "glyph": "秋",
-    "image": "assets/things/ui/items/12-b9ab69f29acb.png"
+    "image": "assets/things/ui/items/12-b100d1e37049.png"
   },
   {
     "id": "n13",
@@ -154,7 +154,7 @@ window.THINGS_DATA = [
     "blessing": "愿寒夜有茶、有火、有人可念。",
     "ph": "ph-paper",
     "glyph": "寒",
-    "image": "assets/things/ui/items/13-4114c9b771df.png"
+    "image": "assets/things/ui/items/13-9a4accdaa415.png"
   },
   {
     "id": "n14",
@@ -166,7 +166,7 @@ window.THINGS_DATA = [
     "blessing": "愿远行有光，初见即欢。",
     "ph": "ph-paper",
     "glyph": "港",
-    "image": "assets/things/ui/items/14-c471cfe9b906.png"
+    "image": "assets/things/ui/items/14-bbbb867d4e34.png"
   },
   {
     "id": "n15",
@@ -178,7 +178,7 @@ window.THINGS_DATA = [
     "blessing": "愿你在尘世喧嚣外，仍保有一片清幽。",
     "ph": "ph-paper",
     "glyph": "竹",
-    "image": "assets/things/ui/items/15-35930b87b37d.png"
+    "image": "assets/things/ui/items/15-35b3d8893d06.png"
   },
   {
     "id": "n16",
@@ -190,7 +190,7 @@ window.THINGS_DATA = [
     "blessing": "愿有人可念，有夜可安。",
     "ph": "ph-calligraphy",
     "glyph": "爱",
-    "image": "assets/things/ui/items/16-4f808c6110e4.png"
+    "image": "assets/things/ui/items/16-41a832330d67.png"
   },
   {
     "id": "n17",
@@ -202,7 +202,7 @@ window.THINGS_DATA = [
     "blessing": "愿所念之人，隔山隔水亦觉温热。",
     "ph": "ph-dye",
     "glyph": "枫",
-    "image": "assets/things/ui/items/17-0c651facb210.jpg"
+    "image": "assets/things/ui/items/17-55dedcf59316.png"
   },
   {
     "id": "n18",
@@ -214,7 +214,7 @@ window.THINGS_DATA = [
     "blessing": "愿你不惧长昼，步步生风。",
     "ph": "ph-calligraphy",
     "glyph": "蝉",
-    "image": "assets/things/ui/items/18-43e3c04ce2e3.png"
+    "image": "assets/things/ui/items/18-b2feba0a9403.png"
   },
   {
     "id": "n19",
@@ -226,7 +226,7 @@ window.THINGS_DATA = [
     "blessing": "愿胸中有海，眼底有光。",
     "ph": "ph-bookmark",
     "glyph": "海",
-    "image": "assets/things/ui/items/19-6ee7ed7dd4b8.png"
+    "image": "assets/things/ui/items/19-25b703b7b0c7.png"
   },
   {
     "id": "n20",
@@ -238,7 +238,7 @@ window.THINGS_DATA = [
     "blessing": "愿酷暑有凉，奔波有歇。",
     "ph": "ph-calligraphy",
     "glyph": "瓜",
-    "image": "assets/things/ui/items/20-2c591b836226.png"
+    "image": "assets/things/ui/items/20-ab29c046c73c.png"
   },
   {
     "id": "n21",
@@ -250,7 +250,7 @@ window.THINGS_DATA = [
     "blessing": "愿你在孤独处，也能听见自己的回响。",
     "ph": "ph-dye",
     "glyph": "山",
-    "image": "assets/things/ui/items/21-ca3ace0b4017.png"
+    "image": "assets/things/ui/items/21-8815e5c6b1ab.png"
   },
   {
     "id": "n22",
@@ -262,7 +262,7 @@ window.THINGS_DATA = [
     "blessing": "愿你所见天色，皆成好风景。",
     "ph": "ph-paper",
     "glyph": "山",
-    "image": "assets/things/ui/items/22-ba721e760d65.png"
+    "image": "assets/things/ui/items/22-a25c0a8bbeff.png"
   },
   {
     "id": "n23",
@@ -274,7 +274,7 @@ window.THINGS_DATA = [
     "blessing": "愿迷途时有星，暗夜时有灯。",
     "ph": "ph-bookmark",
     "glyph": "星",
-    "image": "assets/things/ui/items/23-11163d99e4e6.jpg"
+    "image": "assets/things/ui/items/23-7a8e5882c84e.png"
   },
   {
     "id": "n24",
@@ -286,7 +286,7 @@ window.THINGS_DATA = [
     "blessing": "愿所遇皆吉，所愿皆成。",
     "ph": "ph-dye",
     "glyph": "福",
-    "image": "assets/things/ui/items/24-9f77c548a64a.jpg"
+    "image": "assets/things/ui/items/24-c4a70114e679.png"
   },
   {
     "id": "n25",
@@ -298,7 +298,7 @@ window.THINGS_DATA = [
     "blessing": "愿身轻如燕，心闲似云。",
     "ph": "ph-calligraphy",
     "glyph": "燕",
-    "image": "assets/things/ui/items/25-4bde1aa76c61.jpg"
+    "image": "assets/things/ui/items/25-46fb65a82763.png"
   },
   {
     "id": "n26",
@@ -310,7 +310,7 @@ window.THINGS_DATA = [
     "blessing": "愿珍惜当下，不负樱桃与芭蕉之色。",
     "ph": "ph-bookmark",
     "glyph": "梅",
-    "image": "assets/things/ui/items/26-84543a760d79.png"
+    "image": "assets/things/ui/items/26-99b026c10710.png"
   },
   {
     "id": "n27",
@@ -322,7 +322,7 @@ window.THINGS_DATA = [
     "blessing": "愿吉兆在侧，百事顺遂。",
     "ph": "ph-dye",
     "glyph": "鹤",
-    "image": "assets/things/ui/items/27-0a2e788e388d.png"
+    "image": "assets/things/ui/items/27-dedaef5737e2.jpg"
   },
   {
     "id": "n28",
@@ -334,7 +334,7 @@ window.THINGS_DATA = [
     "blessing": "愿你也敢在春光里，安然小憩。",
     "ph": "ph-bookmark",
     "glyph": "梦",
-    "image": "assets/things/ui/items/28-e27724c21409.png"
+    "image": "assets/things/ui/items/28-11163d99e4e6.jpg"
   },
   {
     "id": "n29",
@@ -346,7 +346,7 @@ window.THINGS_DATA = [
     "blessing": "愿总有一句诗，替你说出说不出口的话。",
     "ph": "ph-paper",
     "glyph": "诗",
-    "image": "assets/things/ui/items/29-7e9a04c3cf14.jpg"
+    "image": "assets/things/ui/items/29-9f77c548a64a.jpg"
   },
   {
     "id": "n30",
@@ -358,7 +358,7 @@ window.THINGS_DATA = [
     "blessing": "愿春尽时不怅，因有诗相伴。",
     "ph": "ph-paper",
     "glyph": "梨",
-    "image": "assets/things/ui/items/30-ca8b48bb9445.jpg"
+    "image": "assets/things/ui/items/30-4bde1aa76c61.jpg"
   },
   {
     "id": "n31",
@@ -370,7 +370,7 @@ window.THINGS_DATA = [
     "blessing": "愿与世间美好，两相照拂。",
     "ph": "ph-bookmark",
     "glyph": "青",
-    "image": "assets/things/ui/items/31-8f7b374c8f1c.jpg"
+    "image": "assets/things/ui/items/31-84543a760d79.png"
   },
   {
     "id": "n32",
@@ -382,7 +382,7 @@ window.THINGS_DATA = [
     "blessing": "愿真心永活，不必以凋零为代价。",
     "ph": "ph-paper",
     "glyph": "玫",
-    "image": "assets/things/ui/items/32-7b9a4afde2f0.png"
+    "image": "assets/things/ui/items/32-0a2e788e388d.png"
   },
   {
     "id": "n33",
@@ -394,7 +394,7 @@ window.THINGS_DATA = [
     "blessing": "愿你在尘世荣枯外，仍保有一渠清澈。",
     "ph": "ph-paper",
     "glyph": "芳",
-    "image": "assets/things/ui/items/33-dcade575de76.png"
+    "image": "assets/things/ui/items/33-e27724c21409.png"
   },
   {
     "id": "n34",
@@ -406,7 +406,7 @@ window.THINGS_DATA = [
     "blessing": "愿日日有喜，页页生光。",
     "ph": "ph-bookmark",
     "glyph": "喜",
-    "image": "assets/things/ui/items/34-288f6e4e43bb.jpg"
+    "image": "assets/things/ui/items/34-0c651facb210.jpg"
   },
   {
     "id": "n35",
@@ -418,7 +418,7 @@ window.THINGS_DATA = [
     "blessing": "愿你所行化坦途，所见皆明朗。",
     "ph": "ph-dye",
     "glyph": "忧",
-    "image": "assets/things/ui/items/35-7664773c68b2.png"
+    "image": "assets/things/ui/items/35-43e3c04ce2e3.png"
   },
   {
     "id": "n36",
@@ -430,7 +430,7 @@ window.THINGS_DATA = [
     "blessing": "愿新岁禧福双至，所见皆是美好。",
     "ph": "ph-dye",
     "glyph": "喜",
-    "image": "assets/things/ui/items/36-08a1bf574cde.png"
+    "image": "assets/things/ui/items/36-6ee7ed7dd4b8.png"
   },
   {
     "id": "n37",
@@ -442,7 +442,7 @@ window.THINGS_DATA = [
     "blessing": "愿心想之事，皆能如意。",
     "ph": "ph-dye",
     "glyph": "意",
-    "image": "assets/things/ui/items/37-f27b34f0f6d9.png"
+    "image": "assets/things/ui/items/37-2c591b836226.png"
   },
   {
     "id": "n38",
@@ -454,7 +454,7 @@ window.THINGS_DATA = [
     "blessing": "愿财源广进，亦愿心安富足。",
     "ph": "ph-calligraphy",
     "glyph": "财",
-    "image": "assets/things/ui/items/38-1835cbf82315.png"
+    "image": "assets/things/ui/items/38-ca3ace0b4017.png"
   },
   {
     "id": "n39",
@@ -466,7 +466,7 @@ window.THINGS_DATA = [
     "blessing": "愿好运到账，欢喜也常到账。",
     "ph": "ph-dye",
     "glyph": "账",
-    "image": "assets/things/ui/items/39-7da53cfb996d.png"
+    "image": "assets/things/ui/items/39-ba721e760d65.png"
   },
   {
     "id": "n40",
@@ -478,7 +478,7 @@ window.THINGS_DATA = [
     "blessing": "愿你在寂寥处，也能听见美的回响。",
     "ph": "ph-paper",
     "glyph": "荷",
-    "image": "assets/things/ui/items/40-d07c7ad35b21.png"
+    "image": "assets/things/ui/items/40-288f6e4e43bb.jpg"
   },
   {
     "id": "n41",
@@ -490,7 +490,7 @@ window.THINGS_DATA = [
     "blessing": "愿瑞气随身，所行皆逢吉。",
     "ph": "ph-bookmark",
     "glyph": "龙",
-    "image": "assets/things/ui/items/41-4108ad70b97b.png"
+    "image": "assets/things/ui/items/41-7664773c68b2.png"
   },
   {
     "id": "n42",
@@ -502,7 +502,7 @@ window.THINGS_DATA = [
     "blessing": "愿步步高升，前程似锦。",
     "ph": "ph-calligraphy",
     "glyph": "云",
-    "image": "assets/things/ui/items/42-a25c0a8bbeff.png"
+    "image": "assets/things/ui/items/42-08a1bf574cde.png"
   },
   {
     "id": "n43",
@@ -514,7 +514,7 @@ window.THINGS_DATA = [
     "blessing": "愿你此生万事顺遂，不落遗憾。",
     "ph": "ph-calligraphy",
     "glyph": "金",
-    "image": "assets/things/ui/items/43-7a8e5882c84e.png"
+    "image": "assets/things/ui/items/43-f27b34f0f6d9.png"
   },
   {
     "id": "n44",
@@ -526,7 +526,7 @@ window.THINGS_DATA = [
     "blessing": "愿清明于心，谷雨于行。",
     "ph": "ph-paper",
     "glyph": "雨",
-    "image": "assets/things/ui/items/44-c4a70114e679.png"
+    "image": "assets/things/ui/items/44-1835cbf82315.png"
   },
   {
     "id": "n45",
@@ -538,7 +538,7 @@ window.THINGS_DATA = [
     "blessing": "愿岁岁常安，花月长好。",
     "ph": "ph-calligraphy",
     "glyph": "春",
-    "image": "assets/things/ui/items/45-46fb65a82763.png"
+    "image": "assets/things/ui/items/45-7da53cfb996d.png"
   },
   {
     "id": "n46",
@@ -550,7 +550,7 @@ window.THINGS_DATA = [
     "blessing": "愿旧忧随月落，新喜随钟来。",
     "ph": "ph-bookmark",
     "glyph": "月",
-    "image": "assets/things/ui/items/46-99b026c10710.png"
+    "image": "assets/things/ui/items/46-d07c7ad35b21.png"
   },
   {
     "id": "n47",
@@ -562,6 +562,6 @@ window.THINGS_DATA = [
     "blessing": "愿知世故而不世故，存天真亦存深情。",
     "ph": "ph-bookmark",
     "glyph": "钗",
-    "image": "assets/things/ui/items/47-dedaef5737e2.jpg"
+    "image": "assets/things/ui/items/47-4108ad70b97b.png"
   }
 ];

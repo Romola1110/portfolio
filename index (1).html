@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/visual-section.css">
 <link rel="stylesheet" href="assets/dh-section.css">
-<link rel="stylesheet" href="assets/things-section.css?v=20">
+<link rel="stylesheet" href="assets/things-section.css?v=21">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=8">
 <style>
@@ -1212,12 +1212,6 @@ Those quiet sentences on the page will, in time, pass through light and shadow�
       </div>
 
       <div class="draw-zone" id="thingsDrawZone">
-        <div class="pattern-side pattern-side--left" aria-hidden="true">
-          <img src="assets/things/ui/dark-pattern-half-left.png" alt="">
-        </div>
-        <div class="pattern-side pattern-side--right" aria-hidden="true">
-          <img src="assets/things/ui/dark-pattern-half-right.png" alt="">
-        </div>
         <div class="lot-scene">
           <div class="pattern-center" aria-hidden="true">
             <img src="assets/things/ui/dark-pattern.png" alt="">
@@ -1678,19 +1672,40 @@ function playTypeKey() {
     if (!Ctx) return;
     if (!_typeAudioCtx) _typeAudioCtx = new Ctx();
     if (_typeAudioCtx.state === 'suspended') _typeAudioCtx.resume();
-    const t = _typeAudioCtx.currentTime;
-    const o = _typeAudioCtx.createOscillator();
-    const g = _typeAudioCtx.createGain();
-    o.type = 'sine';
-    const base = 523 + Math.random() * 28;
-    o.frequency.setValueAtTime(base, t);
-    o.frequency.exponentialRampToValueAtTime(base * 0.82, t + 0.07);
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.018, t + 0.006);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.11);
-    o.connect(g).connect(_typeAudioCtx.destination);
-    o.start(t);
-    o.stop(t + 0.12);
+    const ctx = _typeAudioCtx;
+    const t = ctx.currentTime;
+    const pentatonic = [293.66, 329.63, 369.99, 440, 493.88, 523.25];
+    const base = pentatonic[Math.floor(Math.random() * pentatonic.length)];
+    const partials = [1, 2, 3, 4.5];
+    partials.forEach((ratio, i) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = i === 0 ? 'triangle' : 'sine';
+      o.frequency.setValueAtTime(base * ratio, t);
+      o.frequency.exponentialRampToValueAtTime(base * ratio * 0.998, t + 0.35);
+      const peak = 0.022 / (i + 1);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(peak, t + 0.004 + i * 0.002);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.28 + i * 0.04);
+      o.connect(g).connect(ctx.destination);
+      o.start(t);
+      o.stop(t + 0.45);
+    });
+    const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.03), ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
+    const noise = ctx.createBufferSource();
+    noise.buffer = buf;
+    const bp = ctx.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.frequency.value = base * 1.2;
+    bp.Q.value = 8;
+    const ng = ctx.createGain();
+    ng.gain.setValueAtTime(0.012, t);
+    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.04);
+    noise.connect(bp).connect(ng).connect(ctx.destination);
+    noise.start(t);
+    noise.stop(t + 0.05);
   } catch (_) {}
 }
 function startHeroTyping(s) {
@@ -1755,6 +1770,7 @@ document.querySelectorAll('.nav-item a').forEach(a => {
 /* ===== 使用随机曲线重写柔和藤蔓 ===== */
 let currentRandomPhase = Math.random() * Math.PI * 2;
 let _vineGeom = null;
+let _vineLockedH = null;
 
 function drawVineTree(forceRemeasure) {
   const container = document.getElementById('treeVineClip');
@@ -1768,12 +1784,17 @@ function drawVineTree(forceRemeasure) {
 
   if (forceRemeasure || !_vineGeom) {
     _vineGeom = { w: liveW, h: liveH };
+    _vineLockedH = liveH;
   } else if (Math.abs(liveW - _vineGeom.w) > 14) {
     _vineGeom = { w: liveW, h: liveH };
+    _vineLockedH = liveH;
   }
 
   const w = _vineGeom.w;
   const h = _vineGeom.h;
+  const treeContainer = document.getElementById('treeContainer');
+  if (treeContainer) treeContainer.style.height = `${h}px`;
+  container.style.height = `${h}px`;
   container.innerHTML = '';
 
   const heroRect = document.getElementById('heroSection').getBoundingClientRect();
@@ -1827,7 +1848,7 @@ function drawVineTree(forceRemeasure) {
     }
   });
 
-  let svgHTML = `<svg id="treeCanvas" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:100%;position:absolute;top:0;left:0">`;
+  let svgHTML = `<svg id="treeCanvas" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMin meet" style="width:100%;height:${h}px;position:absolute;top:0;left:0">`;
 
   let trunkStartX = w * 0.75;
   let trunkStartY = heroRect.height * 0.6;
@@ -1920,7 +1941,7 @@ function updateScrollReveal() {
   const scrollY = window.scrollY;
   const viewH = window.innerHeight;
   const mainTop = main.offsetTop;
-  const mainHeight = Math.max(main.offsetHeight, 1);
+  const mainHeight = _vineLockedH ?? Math.max(main.offsetHeight, 1);
 
   // 藤蔓前沿随滚动 1:1 延伸，停留在视口约 70% 高度
   const tipY = scrollY + viewH * 0.70 - mainTop;
@@ -2051,7 +2072,7 @@ function generateEffect(s, layer) {
   layer.innerHTML = '';
   
   const w = window.innerWidth || document.documentElement.clientWidth || 1000;
-  const count = (s === 'summer' || s === 'winter') ? 115 : (s === 'autumn' ? 88 : 82);
+  const count = (s === 'summer' || s === 'winter') ? 72 : (s === 'autumn' ? 52 : 46);
   const anims = ['fallStraight', 'fallLeft', 'fallRight'];
 
   for (let i = 0; i < count; i++) {
@@ -2060,9 +2081,11 @@ function generateEffect(s, layer) {
     
     if(s === 'spring'){
       el.className = 'fall-particle';
-      const sz = 14 + Math.floor(Math.random() * 16);
-      const cs = ['#F5DDEB','#E5A9C0','#DCE8F5','#FFD6E8'];
-      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:${cs[Math.floor(Math.random()*cs.length)]};border-radius:50% 0;opacity:0.92;box-shadow:0 0 ${Math.round(sz*0.35)}px rgba(229,169,192,0.35);"></div>`;
+      const sz = 10 + Math.floor(Math.random() * 12);
+      const cs = ['#FCE8F0','#F5C6D8','#FFD9E8','#FAD4E2'];
+      const c = cs[Math.floor(Math.random()*cs.length)];
+      const op = 0.5 + Math.random() * 0.22;
+      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:${c};border-radius:50% 0;opacity:${op};box-shadow:0 0 ${Math.round(sz*0.25)}px rgba(245,198,216,0.22);"></div>`;
       el.style.left = startX + 'px';
       
       const anim = anims[Math.floor(Math.random()*anims.length)];
@@ -2078,7 +2101,7 @@ function generateEffect(s, layer) {
       
       const dur = 0.45 + Math.random() * 0.45;
       const delay = -(Math.random() * 6);
-      const dropH = 48 + Math.floor(Math.random() * 28);
+      const dropH = 36 + Math.floor(Math.random() * 20);
       const dropW = 2 + (Math.random() > 0.55 ? 1 : 0);
       
       const drop = document.createElement('div'); drop.className='raindrop';
@@ -2097,10 +2120,11 @@ function generateEffect(s, layer) {
     }
     else if(s === 'autumn'){
       el.className = 'fall-particle';
-      const cs = ['#D08040','#F6D3B6','#E8C59B','#C86828'];
+      const cs = ['#E8B888','#F3DCC4','#EFD4B0','#D89868'];
       const c = cs[Math.floor(Math.random() * cs.length)];
-      const sz = 20 + Math.floor(Math.random() * 18);
-      el.innerHTML = `<svg viewBox="0 0 24 24" width="${sz}" height="${sz}" style="filter:drop-shadow(0 1px 3px rgba(120,70,30,0.25));"><path d="M12,2 C13,5 15,6 18,4 C16,8 18,10 21,9 C19,12 20,15 18,17 C15,15 13,17 12,20 L12,23 L12,20 C11,17 9,15 6,17 C4,15 5,12 3,9 C6,10 8,8 6,4 C9,6 11,5 12,2Z" fill="${c}" opacity="0.9"/></svg>`;
+      const sz = 14 + Math.floor(Math.random() * 12);
+      const op = 0.48 + Math.random() * 0.25;
+      el.innerHTML = `<svg viewBox="0 0 24 24" width="${sz}" height="${sz}" style="opacity:${op};"><path d="M12,2 C13,5 15,6 18,4 C16,8 18,10 21,9 C19,12 20,15 18,17 C15,15 13,17 12,20 L12,23 L12,20 C11,17 9,15 6,17 C4,15 5,12 3,9 C6,10 8,8 6,4 C9,6 11,5 12,2Z" fill="${c}"/></svg>`;
       
       el.style.left = startX + 'px';
       const anim = anims[Math.floor(Math.random()*anims.length)];
@@ -2112,9 +2136,9 @@ function generateEffect(s, layer) {
     }
     else {
       el.className = 'fall-particle';
-      const sz = 6 + Math.floor(Math.random() * 10);
-      const op = 0.65 + Math.random() * 0.35;
-      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:#fff;border-radius:50%;box-shadow:0 0 ${Math.max(6,sz)}px rgba(255,255,255,0.85);opacity:${op};"></div>`;
+      const sz = 4 + Math.floor(Math.random() * 7);
+      const op = 0.42 + Math.random() * 0.28;
+      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:#fff;border-radius:50%;box-shadow:0 0 ${Math.max(4,sz)}px rgba(255,255,255,0.55);opacity:${op};"></div>`;
       
       el.style.left = startX + 'px';
       const anim = anims[Math.floor(Math.random()*anims.length)];
@@ -2203,8 +2227,8 @@ function closeLightbox() {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="assets/visual-section.js"></script>
-<script src="assets/things/things-data.js?v=3"></script>
-<script src="assets/things-section.js?v=20"></script>
+<script src="assets/things/things-data.js?v=4"></script>
+<script src="assets/things-section.js?v=21"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const thingsRoot = document.getElementById('things');

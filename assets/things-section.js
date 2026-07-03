@@ -508,64 +508,83 @@ function buildRopeLayout(items) {
 
 const THREAD_POSITIONS = [3.5, 11, 19, 28, 37, 46, 55, 64, 73, 82, 91];
 const THREAD_COUNT = THREAD_POSITIONS.length;
+const TAG_GAP_BASE = 62;
+
+function slotHeight(slot) {
+  if (slot.type === 'tag') return 70 * (slot.scale || 1);
+  if (slot.type === 'crane') return 56 * (slot.scale || 0.58);
+  if (slot.type === 'chime') return 88 * (slot.scale || 1.1);
+  return 60;
+}
+
+function resolveOverlaps(slots) {
+  const sorted = [...slots].sort((a, b) => a.y - b.y);
+  for (let i = 1; i < sorted.length; i++) {
+    const prev = sorted[i - 1];
+    const cur = sorted[i];
+    const minY = prev.y + slotHeight(prev) * 0.42 + 18;
+    if (cur.y < minY) cur.y = Math.round(minY + ((cur.y % 7) - 3));
+  }
+  return sorted;
+}
 
 function buildThreadLayout(threadIdx, items) {
   const n = items.length;
-  const threadH = Math.max(440, 88 + n * 82);
+  const tagGap = TAG_GAP_BASE + (threadIdx % 4) * 10;
   const slots = [];
+  let y = 44;
 
-  for (let i = 0; i < n; i++) {
-    const spread = (threadH - 130) / Math.max(n, 1);
-    const y = Math.round(52 + i * spread + ((threadIdx * 13 + i * 19) % 24) - 12);
-    const z = 2 + (i % 3);
-    const blur = (i + threadIdx) % 5 === 0 ? 1.2 : (i % 3 === 0 ? 0.5 : 0);
-    slots.push({ type: 'tag', item: items[i], y, z, blur, scale: 1 - blur * 0.06 });
-  }
+  items.forEach((item, i) => {
+    const scale = 0.84 + ((threadIdx * 9 + i * 13) % 26) / 100;
+    const jitter = ((threadIdx * 19 + i * 29) % 15) - 7;
+    slots.push({
+      type: 'tag',
+      item,
+      y: Math.round(y + jitter),
+      z: 2 + (i % 4),
+      scale,
+      rot: ((threadIdx + i) % 5) - 2
+    });
+    y += tagGap + (i % 3) * 8;
+  });
 
-  const tagYs = slots.filter((s) => s.type === 'tag').map((s) => s.y);
-  const minY = Math.min(...tagYs);
-  const maxY = Math.max(...tagYs);
-  const craneN = n >= 3 ? 2 : 1;
-
+  const tagSlots = slots.filter((s) => s.type === 'tag');
+  const craneN = n >= 4 ? 2 : (n >= 2 ? 1 : 0);
   for (let c = 0; c < craneN; c++) {
-    const y = c === 0
-      ? Math.round(minY * 0.42 + 10)
-      : Math.round((minY + maxY) * 0.52 + ((threadIdx % 4) - 2) * 14);
-    const blur = c === 0 ? 0 : 0.45 + (threadIdx % 2) * 0.3;
+    const anchor = tagSlots[Math.min(tagSlots.length - 1, Math.floor(((c + 1) / (craneN + 1)) * tagSlots.length))];
     slots.push({
       type: 'crane',
-      y,
-      z: 3 + c,
-      blur,
-      scale: 0.78 - c * 0.12 - (threadIdx % 3) * 0.04,
-      rot: (threadIdx * 5 + c * 11) % 18 - 9,
+      y: Math.round((anchor?.y || 80) + 34 + c * 48),
+      z: 4 + c,
+      scale: 0.5 + (threadIdx % 3) * 0.05,
+      rot: (threadIdx * 5 + c * 11) % 14 - 7,
       spriteId: `crane-${(threadIdx + c) % 6 + 1}`
     });
   }
 
+  const lastTagY = tagSlots.length ? tagSlots[tagSlots.length - 1].y : 80;
   slots.push({
     type: 'chime',
-    y: threadH - 32,
-    z: 5,
-    blur: 0,
-    scale: 0.62 + (threadIdx % 4) * 0.05,
-    rot: (threadIdx % 5) * 2.5 - 5,
+    y: Math.round(lastTagY + tagGap + 28),
+    z: 6,
+    scale: 1.12 + (threadIdx % 3) * 0.07,
+    rot: (threadIdx % 5) * 2 - 4,
     spriteId: `chime-${(threadIdx % 5) + 1}`
   });
 
-  return { slots, threadH };
+  const resolved = resolveOverlaps(slots);
+  const threadH = Math.max(460, resolved[resolved.length - 1].y + slotHeight(resolved[resolved.length - 1]) + 48);
+  return { slots: resolved, threadH };
 }
 
 function renderDecorSlot(slot, threadIdx, slotIdx) {
   const sprite = pickSprite(slot.type, threadIdx + slotIdx, slot.spriteId);
   const w = Math.round((sprite?.w || 48) * slot.scale);
   const delay = ((threadIdx * 0.28 + slotIdx * 0.16) % 2.4).toFixed(2);
-  const blur = slot.blur || 0;
-  const opacity = blur > 1 ? 0.5 : blur > 0.4 ? 0.72 : 0.94;
   return (
     `<img class="thread-sprite thread-sprite--${slot.type}" src="${sprite.file}" alt="" aria-hidden="true" ` +
     `style="--sprite-y:${slot.y}px;--sprite-w:${w}px;--sprite-rot:${slot.rot || 0}deg;--sprite-delay:${delay}s;` +
-    `--sprite-z:${slot.z};--sprite-blur:${blur}px;opacity:${opacity}">`
+    `--sprite-z:${slot.z}">`
   );
 }
 const CURTAIN_SPRITES = [
@@ -632,18 +651,26 @@ function initThingsV6(root) {
     return `<div class="ph ${item.ph}">${item.glyph}</div>`;
   }
 
-  function renderCurtainTag(item, hangTop, delay, zLayer, blur) {
+  function renderCurtainTag(item, hangTop, delay, zLayer, scale) {
     const drawn = drawnIds.has(item.id);
-    const scale = 1 - (blur || 0) * 0.05;
+    const tagScale = scale || 1;
     return `
       <button type="button" class="curtain-tag${drawn ? ' is-drawn' : ''}" data-id="${item.id}"
-        style="--hang-top:${hangTop}px;--swing-delay:${delay}s;--tag-z:${zLayer};--tag-scale:${scale};--tag-blur:${blur || 0}px" ${drawn ? 'disabled' : ''}>
+        style="--hang-top:${hangTop}px;--swing-delay:${delay}s;--tag-z:${zLayer};--tag-scale:${tagScale}" ${drawn ? 'disabled' : ''}>
         <span class="curtain-clip" aria-hidden="true"></span>
         <span class="curtain-card">
           <span class="curtain-glyph">${item.glyph}</span>
           <span class="curtain-name">${item.name}</span>
         </span>
       </button>`;
+  }
+
+  function renderThreadSlot(slot, threadIdx, slotIdx) {
+    const delay = (threadIdx * 0.37 + slotIdx * 0.23 + (slot.y % 13) * 0.01) % 2.8;
+    if (slot.type === 'tag') {
+      return renderCurtainTag(slot.item, slot.y, delay, slot.z, slot.scale);
+    }
+    return renderDecorSlot(slot, threadIdx, slotIdx);
   }
 
   function renderCurtain() {
@@ -657,22 +684,13 @@ function initThingsV6(root) {
       const { slots, threadH } = buildThreadLayout(ti, items);
       maxH = Math.max(maxH, threadH);
       const tx = THREAD_POSITIONS[ti];
-      const decor = slots
-        .filter((s) => s.type !== 'tag')
-        .map((s, si) => renderDecorSlot(s, ti, si))
-        .join('');
-      const hangs = slots
-        .filter((s) => s.type === 'tag')
-        .map((s, hi) => {
-          const delay = (ti * 0.37 + hi * 0.23 + (s.y % 13) * 0.01) % 2.8;
-          return renderCurtainTag(s.item, s.y, delay, s.z, s.blur);
-        })
+      const markup = slots
+        .map((s, si) => renderThreadSlot(s, ti, si))
         .join('');
       return `
         <div class="curtain-thread" style="--tx:${tx}%;--thread-h:${threadH}px">
           <span class="thread-line" aria-hidden="true"></span>
-          <div class="thread-decor">${decor}</div>
-          <div class="thread-hangs">${hangs}</div>
+          <div class="thread-hangs">${markup}</div>
         </div>`;
     }).join('');
     curtainThreads.style.minHeight = `${maxH + 40}px`;
