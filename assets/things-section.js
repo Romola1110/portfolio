@@ -523,13 +523,10 @@ function buildThreadLayout(threadIdx, items) {
   const plan = [];
   const craneBudget = n >= 5 ? 2 : (n >= 3 ? 1 : 0);
   let cranesLeft = craneBudget;
-  const midChimeAt = n >= 4 && threadIdx % 2 === 0 ? Math.floor(n / 2) : -1;
 
   for (let i = 0; i < n; i++) {
     plan.push({ type: 'tag', item: items[i], tagIdx: i });
-    if (i === midChimeAt) {
-      plan.push({ type: 'chime', placement: 'mid' });
-    } else if (cranesLeft > 0 && i < n - 1 && (i + threadIdx) % 2 === 1) {
+    if (cranesLeft > 0 && i < n - 1 && (i + threadIdx) % 2 === 1) {
       plan.push({ type: 'crane', craneIdx: craneBudget - cranesLeft });
       cranesLeft -= 1;
     }
@@ -568,11 +565,13 @@ function buildThreadLayout(threadIdx, items) {
 
 function renderDecorSlot(slot, threadIdx, slotIdx) {
   const sprite = pickSprite(slot.type, threadIdx + slotIdx, slot.spriteId);
-  const w = Math.round(56 * (slot.scale || 1));
+  const scale = slot.scale || 1;
+  const targetH = Math.round(54 * scale);
+  const w = Math.round((sprite.w / Math.max(sprite.h, 1)) * targetH);
   const delay = ((threadIdx * 0.28 + slotIdx * 0.16) % 2.4).toFixed(2);
   return (
     `<img class="thread-sprite thread-sprite--${slot.type}" src="${sprite.file}" alt="" aria-hidden="true" ` +
-    `style="--sprite-y:${slot.y}px;--sprite-w:${w}px;--sprite-rot:${slot.rot || 0}deg;--sprite-delay:${delay}s;` +
+    `style="--sprite-y:${slot.y}px;--sprite-w:${w}px;--sprite-h:${targetH}px;--sprite-rot:${slot.rot || 0}deg;--sprite-delay:${delay}s;` +
     `--sprite-z:${slot.z}">`
   );
 }
@@ -735,6 +734,7 @@ function initThingsV6(root) {
     }).join('');
     curtainThreads.style.minHeight = `${maxH + 40}px`;
     curtainThreads.innerHTML = threads;
+    if (window.scheduleDrawVineTree) window.scheduleDrawVineTree(true);
   }
 
   function markCurtainDrawn(id) {

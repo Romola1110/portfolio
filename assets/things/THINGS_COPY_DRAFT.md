@@ -136,7 +136,7 @@
 - **name**：雪莱玫瑰诗笺
 - **signLabel**：玫瑰签
 - **glyph**：玫
-- **story**：*When love dies the heart is but a living grave*——被写在雾面纸上，像把易碎的心事，也温柔封存。
+- **story**：What are all these kissings worth if thou kiss not me.——被写在雾面纸上，像把易碎的心事，也温柔封存。
 - **verse**：Love is a rose, and you its only seed.
 - **blessing**：愿爱来时丰盈，去时亦无憾。
 
@@ -168,11 +168,11 @@
 
 ---
 
-## 14 · 港城迎新明信片
+## 14 · CUHK明信片
 
 - **文件**：`assets/things/incoming/图片素材/图片素材/替换枝叶装饰为水墨枝叶 copy 8.png`
-- **name**：港城迎新明信片
-- **signLabel**：港城签
+- **name**：CUHK明信片
+- **signLabel**：大学签
 - **glyph**：港
 - **note**：手写 welcome，下一站 CUHK，沙田风物满卡。
 - **story**：「你食咗饭未呀？」写在最上头——港式问候，也是异乡里最暖的开场白。
@@ -521,8 +521,8 @@
 - **name**：龙形瑞藤御题
 - **signLabel**：瑞藤签
 - **glyph**：龙
-- **note**：白字黑底，乾隆御题藤蔓如龙诗。
-- **story**：蜿蜒若龙，云凝水润——一笔一画，都是瑞气凝结。
+- **note**：宋徽宗瘦金体，白字黑底，藤蔓如龙御题。
+- **story**：蜿蜒若龙，云凝水润——瘦金笔意如宋徽宗御题，一笔一画都是瑞气凝结。
 - **verse**：彼美蜿蜒势，若龙挺状，为瑞独称雄。
 - **blessing**：愿瑞气随身，所行皆逢吉。
 
