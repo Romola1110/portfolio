@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/visual-section.css">
 <link rel="stylesheet" href="assets/dh-section.css">
-<link rel="stylesheet" href="assets/things-section.css?v=31">
+<link rel="stylesheet" href="assets/things-section.css?v=32">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=10">
 <style>
@@ -45,17 +45,17 @@ body.spring{
   --branch:#6A5F7A;--branch-light:#A49DB0;
 }
 body.summer{
-  --bg:#EDF5F3;--text:#1D2B22;--soft:#6A9488;--accent:#58A080;
-  --g1:#C8E0E8;--g2:#DCECE0;--g3:#B8D4DC;
-  --branch:#4A7268;--branch-light:#7AA898;
+  --bg:#EEF4F0;--text:#1D2B22;--soft:#7A9A8A;--accent:#68A888;
+  --g1:#DCECE0;--g2:#E2F0EA;--g3:#C8E2D5;
+  --branch:#5A7A6A;--branch-light:#8AA89A;
 }
 body.summer::before {
   background:
-    radial-gradient(circle at 12% 18%, #C8E0E8 0%, transparent 58%),
-    radial-gradient(circle at 82% 28%, #E0EBC8 0%, transparent 55%),
-    radial-gradient(circle at 48% 82%, #B8D4DC 0%, transparent 58%),
-    radial-gradient(circle at 90% 85%, #C8E2D5 0%, transparent 60%),
-    radial-gradient(circle at 20% 70%, #DCE8E5 0%, transparent 60%),
+    radial-gradient(ellipse 70% 55% at 14% 22%, #DCECE0 0%, transparent 62%),
+    radial-gradient(ellipse 60% 50% at 78% 18%, #E2F0EA 0%, transparent 58%),
+    radial-gradient(ellipse 65% 58% at 52% 88%, #C8E2D5 0%, transparent 60%),
+    radial-gradient(ellipse 50% 45% at 88% 72%, #D8EBE2 0%, transparent 55%),
+    radial-gradient(ellipse 55% 48% at 22% 68%, #E8F4EE 0%, transparent 58%),
     var(--bg);
 }
 body.autumn{
@@ -2091,15 +2091,61 @@ function initAboutReveal() {
         if (pi < paragraphs.length) setTimeout(typeLine, 420);
         return;
       }
+      const ch = text[ci];
       el.textContent = text.slice(0, ci + 1);
       ci++;
-      const ch = text[ci - 1];
+      if (ch.trim()) playTypeKeySound(ch);
       const pause = /[，。；：！？、]/.test(ch) ? 320 : (/[\s]/.test(ch) ? 55 : 88);
       setTimeout(tick, pause);
     };
     tick();
   };
   typeLine();
+}
+
+let _typeAudioCtx = null;
+function getTypeAudioCtx() {
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if (!_typeAudioCtx && Ctx) _typeAudioCtx = new Ctx();
+  if (_typeAudioCtx?.state === 'suspended') _typeAudioCtx.resume();
+  return _typeAudioCtx;
+}
+
+function playTypeKeySound(ch) {
+  try {
+    const ctx = getTypeAudioCtx();
+    if (!ctx) return;
+    const t = ctx.currentTime;
+    const isPunct = /[，。；：！？、]/.test(ch);
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = 'triangle';
+    const base = isPunct ? 480 : (620 + Math.random() * 80);
+    o.frequency.setValueAtTime(base, t);
+    o.frequency.exponentialRampToValueAtTime(base * 0.62, t + 0.038);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(isPunct ? 0.032 : 0.026, t + 0.003);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.048);
+    o.connect(g).connect(ctx.destination);
+    o.start(t);
+    o.stop(t + 0.05);
+    const len = Math.floor(ctx.sampleRate * 0.018);
+    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+    const noise = ctx.createBufferSource();
+    noise.buffer = buf;
+    const bp = ctx.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.frequency.value = isPunct ? 900 : 1200;
+    bp.Q.value = 1.1;
+    const ng = ctx.createGain();
+    ng.gain.setValueAtTime(isPunct ? 0.022 : 0.016, t);
+    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.035);
+    noise.connect(bp).connect(ng).connect(ctx.destination);
+    noise.start(t);
+    noise.stop(t + 0.04);
+  } catch (_) { /* optional audio */ }
 }
 
 function revealSectionsInView(){
@@ -2125,7 +2171,7 @@ function generateEffect(s, layer) {
   layer.innerHTML = '';
   
   const w = window.innerWidth || document.documentElement.clientWidth || 1000;
-  const count = s === 'winter' ? 96 : (s === 'summer' ? 84 : (s === 'autumn' ? 44 : 38));
+  const count = s === 'winter' ? 96 : (s === 'summer' ? 84 : (s === 'autumn' ? 44 : 54));
   const anims = ['fallStraight', 'fallLeft', 'fallRight'];
 
   for (let i = 0; i < count; i++) {
@@ -2145,7 +2191,7 @@ function generateEffect(s, layer) {
         el.style.filter = 'drop-shadow(0 0 5px rgba(180,230,190,0.5))';
       } else {
         const kind = Math.random();
-        el.innerHTML = kind < 0.55 ? makeFlower(sz, c, op, rot) : makePetal(sz, c, op, rot);
+        el.innerHTML = kind < 0.78 ? makeSakura(sz, c, op, rot) : makePetal(sz, c, op, rot);
         el.style.filter = 'drop-shadow(0 0 8px rgba(255,200,220,0.5)) blur(0.15px)';
       }
       el.style.left = startX + 'px';
@@ -2240,6 +2286,22 @@ function updateOverlayDecos(s){for(let i=0;i<4;i++){const el=document.getElement
 document.querySelectorAll('.season-mini-btn').forEach(btn=>{btn.addEventListener('click',e=>{e.stopPropagation();setSeason(btn.dataset.season);});});
 
 let lastInk=0;
+function makeSakura(sz, c, op, rot){
+  const h = Math.round(sz * 1.08);
+  const fid = 'sk' + Math.floor(Math.random() * 1e6);
+  const petal = (angle) => {
+    const notch = Math.random() > 0.5 ? ' M12,4 Q12,7 12,9' : '';
+    return `<path d="M12,3 C13.8,5.5 15.2,7.2 12,10.5 C8.8,7.2 10.2,5.5 12,3${notch}Z" fill="${c}" opacity="0.9" transform="rotate(${angle} 12 12)"/>`;
+  };
+  const petals = [0, 72, 144, 216, 288].map(a => petal(a)).join('');
+  const stamens = `<circle cx="11.2" cy="12.3" r="0.55" fill="#E8C858" opacity="0.92"/>
+    <circle cx="12.6" cy="11.8" r="0.5" fill="#F0D868" opacity="0.88"/>
+    <circle cx="12.1" cy="12.9" r="0.48" fill="#E0B848" opacity="0.9"/>
+    <circle cx="11.5" cy="11.5" r="0.42" fill="#F5E080" opacity="0.85"/>
+    <line x1="12" y1="11.2" x2="12" y2="10.2" stroke="#D8A840" stroke-width="0.35" stroke-linecap="round" opacity="0.7"/>`;
+  return `<svg viewBox="0 0 24 24" width="${sz}" height="${h}" style="opacity:${op};transform:rotate(${rot}deg)"><defs><filter id="${fid}"><feGaussianBlur stdDeviation="0.25"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#${fid})">${petals}${stamens}</g></svg>`;
+}
+
 function makeFlower(sz, c, op, rot){
   const h = Math.round(sz * 1.05);
   const fid = 'fl' + Math.floor(Math.random() * 1e6);
