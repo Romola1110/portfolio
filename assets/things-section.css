@@ -2466,9 +2466,9 @@ body.winter #things.open-section.things-v6 .things-welcome {
 #things.open-section.things-v6 .pattern-center {
   position: absolute;
   left: 50%;
-  top: 78%;
-  width: min(560px, 158%);
-  height: min(560px, 158%);
+  top: 62%;
+  width: min(720px, 200%);
+  height: min(720px, 200%);
   transform: translate(-50%, -50%);
   z-index: 0;
   opacity: 1;
@@ -2481,8 +2481,7 @@ body.winter #things.open-section.things-v6 .things-welcome {
   object-fit: contain;
   object-position: center center;
   transform-origin: 50% 50%;
-  mix-blend-mode: multiply;
-  opacity: 0.88;
+  opacity: 0.82;
   transition: none;
 }
 
@@ -2668,14 +2667,27 @@ body.winter #things.open-section.things-v6 .things-welcome {
   position: absolute;
   left: 50%;
   top: var(--sprite-y, 16px);
-  width: var(--sprite-w, 42px);
-  height: auto;
+  width: auto;
+  height: var(--sprite-h, 54px);
   z-index: var(--sprite-z, 1);
   transform: translateX(-50%) rotate(var(--sprite-rot, 0deg));
   transform-origin: top center;
   filter: drop-shadow(0 2px 6px rgba(120, 100, 70, 0.14));
   animation: threadSpriteFloat 5.2s ease-in-out infinite;
   animation-delay: var(--sprite-delay, 0s);
+  pointer-events: none;
+}
+
+#things.open-section.things-v6 .thread-sprite::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 5px;
+  height: 14px;
+  transform: translateX(-50%);
+  background: var(--bg, #f8f4ec);
+  z-index: -1;
   pointer-events: none;
 }
 
@@ -2772,6 +2784,7 @@ body.winter #things.open-section.things-v6 .things-welcome {
   background: linear-gradient(180deg, rgba(118, 98, 72, 0.5), rgba(118, 98, 72, 0.12) 85%, transparent);
   animation: threadSway 4.5s ease-in-out infinite;
   transform-origin: top center;
+  z-index: 0;
 }
 
 @keyframes threadSway {
@@ -2786,6 +2799,7 @@ body.winter #things.open-section.things-v6 .things-welcome {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
 }
 
 #things.open-section.things-v6 .tag-link {
@@ -2811,9 +2825,25 @@ body.winter #things.open-section.things-v6 .things-welcome {
   margin-bottom: var(--tag-gap, 0);
 }
 
-#things.open-section.things-v6 .curtain-tag.is-drawn {
-  opacity: 0.28;
+#things.open-section.things-v6 .curtain-tag::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 5px;
+  height: 16px;
+  transform: translateX(-50%);
+  background: var(--bg, #f8f4ec);
+  z-index: 0;
   pointer-events: none;
+}
+
+#things.open-section.things-v6 .curtain-tag.is-drawn {
+  pointer-events: none;
+}
+
+#things.open-section.things-v6 .curtain-tag.is-drawn .curtain-card {
+  opacity: 0.28;
   filter: grayscale(0.6);
 }
 
@@ -2906,26 +2936,30 @@ body.winter #things.open-section.things-v6 .things-welcome {
   overflow: hidden;
 }
 
+#things.open-section.things-v6 {
+  position: relative;
+}
+
 #things.open-section.things-v6 .thing-modal.open {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 6.5rem 1.25rem 1.5rem;
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
 #things.open-section.things-v6 .thing-modal {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 2000;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: rgba(248, 244, 236, 0.42);
   backdrop-filter: blur(14px);
-  padding: 1.5rem;
+  padding: 6.5rem 1.25rem 1.5rem;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
