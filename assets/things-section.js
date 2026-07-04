@@ -508,16 +508,16 @@ function buildRopeLayout(items) {
 
 const THREAD_POSITIONS = [3.5, 11, 19, 28, 37, 46, 55, 64, 73, 82, 91];
 const THREAD_COUNT = THREAD_POSITIONS.length;
-const SLOT_GAP = 96;
+const SLOT_GAP = 90;
 
 function slotHeight(slot) {
-  if (slot.type === 'chime') return 68 * (slot.scale || 1);
+  if (slot.type === 'chime') return 72 * (slot.scale || 1);
   return 88 * (slot.scale || 1);
 }
 
 function threadSlotGap(threadIdx, prev, entry) {
-  const stride = SLOT_GAP + ((threadIdx * 11 + (prev?.y || 0)) % 6) * 14;
-  if (prev?.type === 'tag' && entry.type === 'tag') return stride + 10;
+  const stride = SLOT_GAP + ((threadIdx * 11 + (prev?.y || 0)) % 6) * 12;
+  if (prev?.type === 'tag' && entry.type === 'tag') return stride + 6;
   return stride;
 }
 
@@ -569,14 +569,14 @@ function buildThreadLayout(threadIdx, items) {
   });
 
   const last = slots[slots.length - 1];
-  const threadH = last.type === 'chime' ? last.y + 2 : last.y + slotHeight(last) + 24;
+  const threadH = last.type === 'chime' ? last.y : last.y + slotHeight(last) + 24;
   return { slots, threadH };
 }
 
 function renderDecorSlot(slot, threadIdx, slotIdx) {
   const sprite = pickSprite(slot.type, threadIdx + slotIdx, slot.spriteId);
   const scale = slot.scale || 1;
-  const baseH = slot.type === 'chime' ? 64 : 54;
+  const baseH = slot.type === 'chime' ? 68 : 54;
   const targetH = Math.round(baseH * (slot.type === 'chime' ? 1 : scale));
   const w = Math.round((sprite.w / Math.max(sprite.h, 1)) * targetH);
   const delay = ((threadIdx * 0.28 + slotIdx * 0.16) % 2.4).toFixed(2);
@@ -689,6 +689,7 @@ function initThingsV6(root) {
   const stickFly = root.querySelector('.stick-flyout');
   const drawZone = root.querySelector('.draw-zone');
   const curtainThreads = root.querySelector('.curtain-threads');
+  const curtainGallery = root.querySelector('.curtain-gallery');
   const modal = root.querySelector('.thing-modal');
 
   let lastDrawId = null;
@@ -737,10 +738,13 @@ function initThingsV6(root) {
       const markup = slots
         .map((s, si) => renderThreadSlot(s, ti, si))
         .join('');
+      const swayDelay = ((ti * 0.37) % 2.8).toFixed(2);
       return `
         <div class="curtain-thread" style="--tx:${tx}%;--thread-h:${threadH}px">
-          <span class="thread-line" aria-hidden="true"></span>
-          <div class="thread-hangs">${markup}</div>
+          <div class="thread-swing" style="--sway-delay:${swayDelay}s">
+            <span class="thread-line" aria-hidden="true"></span>
+            <div class="thread-hangs">${markup}</div>
+          </div>
         </div>`;
     }).join('');
     curtainThreads.style.minHeight = `${maxH + 40}px`;
@@ -768,8 +772,22 @@ function initThingsV6(root) {
     return pool[Math.floor(Math.random() * pool.length)];
   }
 
-  function openBookmarkModal(item) {
+  function setModalAnchor(anchor) {
     if (!modal) return;
+    modal.classList.remove('modal-at-draw', 'modal-at-curtain');
+    modal.classList.add(anchor === 'curtain' ? 'modal-at-curtain' : 'modal-at-draw');
+    if (anchor === 'curtain' && curtainGallery) {
+      const rootRect = root.getBoundingClientRect();
+      const galleryRect = curtainGallery.getBoundingClientRect();
+      modal.style.setProperty('--modal-top', `${Math.max(0, galleryRect.top - rootRect.top)}px`);
+    } else {
+      modal.style.removeProperty('--modal-top');
+    }
+  }
+
+  function openBookmarkModal(item, anchor = 'draw') {
+    if (!modal) return;
+    setModalAnchor(anchor);
     const hasPhoto = Boolean(item.image);
     modal.innerHTML = `
       <div class="thing-modal-box modal-bookmark-only${hasPhoto ? ' modal-has-photo' : ''}">
@@ -799,7 +817,11 @@ function initThingsV6(root) {
 
   function closeModal() {
     modal?.classList.remove('open');
-    if (modal) modal.onclick = null;
+    modal?.classList.remove('modal-at-draw', 'modal-at-curtain');
+    if (modal) {
+      modal.onclick = null;
+      modal.style.removeProperty('--modal-top');
+    }
   }
 
   function drawLot() {
@@ -849,7 +871,7 @@ function initThingsV6(root) {
     if (item) {
       lastDrawId = item.id;
       markCurtainDrawn(item.id);
-      openBookmarkModal(item);
+      openBookmarkModal(item, 'curtain');
     }
   });
 
