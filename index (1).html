@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>楊雪琪 · 時光小集</title>
+<title>Romola · Creative Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Italiana&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&family=Ma+Shan+Zheng&family=Zhi+Mang+Xing&family=LXGW+WenKai:wght@300;400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
@@ -969,7 +969,7 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
 <!-- ========== 主页 ========== -->
 <main id="main">
 <nav>
-  <div class="logo">YANG XUEQI · STUDIO</div>
+  <div class="logo">ROMOLA · CREATIVE PORTFOLIO</div>
   <ul class="nav-items">
     <li class="nav-item">
       <a href="#words">
@@ -1338,17 +1338,15 @@ Those quiet sentences on the page will, in time, pass through light and shadow�
       <p class="cn">山高水长，愿有回响。</p>
       <p class="en">Across mountains and rivers, may words still answer.</p>
       <div class="contact-details">
-        <p>WeChat : Coriolanus1623</p>
         <p>Email : <a id="contactEmail" href="#" style="color:inherit;text-decoration:none;"></a></p>
-        <p>Phone : <span id="contactPhone"></span></p>
-        <p>Xiaohongshu : 839643110</p>
+        <p>Xiaohongshu : <span id="contactXhs"></span></p>
       </div>
     </div>
   </div>
 
   <footer>
     <p>一卷四时，未尽之言 · A scroll of seasons, with words still to come.</p>
-    <p>© 杨雪琪 · 2026</p>
+    <p>© Romola · 2026</p>
   </footer>
 
 </div>
@@ -1764,11 +1762,11 @@ function typeText(el, text, speed=72){
 function initContactInfo() {
   const em = [49,53,56,54,49,55,49,53,55,55,48].map(c => String.fromCharCode(c)).join('') + '@' +
     [49,54,51].map(c => String.fromCharCode(c)).join('') + '.' + 'com';
-  const ph = [49,53,56,54,49,55,49,53,55,55,48].map(c => String.fromCharCode(c)).join('');
+  const xhs = [56,51,57,54,52,51,49,49,48].map(c => String.fromCharCode(c)).join('');
   const emEl = document.getElementById('contactEmail');
-  const phEl = document.getElementById('contactPhone');
+  const xhsEl = document.getElementById('contactXhs');
   if (emEl) { emEl.textContent = em; emEl.href = 'mailto:' + em; }
-  if (phEl) phEl.textContent = ph;
+  if (xhsEl) xhsEl.textContent = xhs;
 }
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initContactInfo);
