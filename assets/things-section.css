@@ -2467,10 +2467,10 @@ body.winter #things.open-section.things-v6 .things-welcome {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(520px, 148%);
-  height: min(520px, 148%);
-  margin-left: min(-260px, -74%);
-  margin-top: min(-260px, -74%);
+  width: min(620px, 172%);
+  height: min(620px, 172%);
+  margin-left: min(-310px, -86%);
+  margin-top: min(-310px, -86%);
   z-index: 0;
   opacity: 1;
   pointer-events: none;

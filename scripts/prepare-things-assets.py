@@ -23,7 +23,7 @@ SRC_CRANE = ROOT / '千纸鹤.png'
 SRC_CHIME1 = ROOT / '风铃1.png'
 SRC_CHIME2 = ROOT / '风铃2.png'
 PHOTO_DIR = ROOT / 'assets/things/ui/processed/original'
-PATTERN_MAX = 560
+PATTERN_MAX = 620
 
 
 def save_png(img: Image.Image, path: Path) -> None:
@@ -90,13 +90,81 @@ def process_bucket() -> None:
     save_png(cut, OUT / 'lot-bucket-2.png')
 
 
+def center_square_crop(img: Image.Image, pad: int = 8) -> Image.Image:
+    img = trim_alpha(img, pad=pad)
+    alpha = img.split()[-1]
+    bbox = alpha.getbbox()
+    if not bbox:
+        return img
+    x0, y0, x1, y1 = bbox
+    side = max(x1 - x0, y1 - y0)
+    cx = (x0 + x1) / 2
+    cy = (y0 + y1) / 2
+    left = int(round(cx - side / 2))
+    top = int(round(cy - side / 2))
+    square = Image.new('RGBA', (side, side), (0, 0, 0, 0))
+    square.paste(img, (-left, -top), img)
+    return square
+
+
+def recenter_alpha(img: Image.Image) -> Image.Image:
+    arr = np.array(img)
+    alpha = arr[:, :, 3]
+    ys, xs = np.where(alpha > 20)
+    if len(xs) == 0:
+        return img
+    cx = (xs.min() + xs.max()) / 2
+    cy = (ys.min() + ys.max()) / 2
+    w, h = img.size
+    shifted = Image.new('RGBA', (w, h), (0, 0, 0, 0))
+    shifted.paste(img, (int(round(w / 2 - cx)), int(round(h / 2 - cy))), img)
+    return shifted
+
+
+def hollow_lace(img: Image.Image) -> Image.Image:
+    arr = np.array(img).astype(np.float32)
+    r, g, b, a = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2], arr[:, :, 3]
+    lum = 0.299 * r + 0.587 * g + 0.114 * b
+    sat = np.sqrt(((arr[:, :, :3] - arr[:, :, :3].mean(axis=2, keepdims=True)) ** 2).sum(axis=2))
+    white = (lum > 228) & (sat < 34)
+    arr[:, :, 3] = np.where(white, 0, a)
+    h, w = arr.shape[:2]
+    yy, xx = np.ogrid[:h, :w]
+    dist = np.sqrt((xx - (w - 1) / 2) ** 2 + (yy - (h - 1) / 2) ** 2) / (min(w, h) / 2)
+    inner = dist < 0.48
+    arr[:, :, 3] = np.where(inner & (lum > 210) & (sat < 42), np.minimum(arr[:, :, 3], 45), arr[:, :, 3])
+    out = Image.fromarray(arr.astype(np.uint8))
+    out.putalpha(out.split()[-1].filter(ImageFilter.GaussianBlur(1)))
+    return out
+
+
+def recenter_hook(img: Image.Image, max_px: int) -> Image.Image:
+    img = resize_longest(img, max_px)
+    px = img.load()
+    w, h = img.size
+    hook_x = None
+    for y in range(h):
+        cols = [x for x in range(w) if px[x, y][3] > 30]
+        if cols:
+            hook_x = sum(cols) / len(cols)
+            break
+    if hook_x is None:
+        return img
+    shifted = Image.new('RGBA', (w, h), (0, 0, 0, 0))
+    shifted.paste(img, (int(round(w / 2 - hook_x)), 0), img)
+    shifted = trim_alpha(shifted, pad=4)
+    return resize_longest(shifted, max_px)
+
+
 def process_patterns() -> None:
-    """中心暗纹：直接抠图用户上传的圆形暗纹素材。"""
+    """中心暗纹：正方形裁切、镂空、居中，避免矩形空白导致偏移。"""
     src = SRC_PATTERN if SRC_PATTERN.exists() else SRC_PATTERN_REF
     img = ImageOps.exif_transpose(Image.open(src).convert('RGBA'))
     cut = cutout_soft(img, feather=3)
-    cut = trim_alpha(cut, pad=6)
-    cut = resize_longest(cut, 340)
+    cut = center_square_crop(cut, pad=10)
+    cut = hollow_lace(cut)
+    cut = recenter_alpha(cut)
+    cut = resize_longest(cut, PATTERN_MAX)
     save_png(cut, OUT / 'dark-pattern.png')
 
     # 两侧暗纹：由中心图左右裁切并渐隐
@@ -105,6 +173,17 @@ def process_patterns() -> None:
     right = cut.crop((w // 2 - 8, 0, w, h))
     save_png(fade_half(left, 'left'), OUT / 'dark-pattern-half-left.png')
     save_png(fade_half(right, 'right'), OUT / 'dark-pattern-half-right.png')
+
+
+def process_chime_sprite(src: Path, out: Path, max_px: int = 80) -> dict:
+    img = ImageOps.exif_transpose(Image.open(src).convert('RGBA'))
+    cut = remove(img)
+    if isinstance(cut, bytes):
+        cut = Image.open(BytesIO(cut)).convert('RGBA')
+    cut = trim_alpha(cut, pad=4)
+    cut = recenter_hook(cut, max_px)
+    save_png(cut, out)
+    return {'file': str(out.relative_to(ROOT)).replace('\\', '/'), 'w': cut.size[0], 'h': cut.size[1]}
 
 
 def process_vector_sprite(src: Path, out: Path, max_px: int = 220) -> dict:
@@ -140,7 +219,7 @@ def process_curtain_vectors() -> list[dict]:
         src = ROOT / f'风铃{i}.png'
         if not src.exists():
             continue
-        ch = process_vector_sprite(src, CURTAIN_OUT / f'chime-{i:02d}.png', 80)
+        ch = process_chime_sprite(src, CURTAIN_OUT / f'chime-{i:02d}.png', 80)
         ch['kind'] = 'chime'
         ch['id'] = f'chime-{i}'
         meta.append(ch)
@@ -149,7 +228,7 @@ def process_curtain_vectors() -> list[dict]:
             continue
         if not src.exists():
             continue
-        ch = process_vector_sprite(src, CURTAIN_OUT / f'chime-{i:02d}.png', 80)
+        ch = process_chime_sprite(src, CURTAIN_OUT / f'chime-{i:02d}.png', 80)
         ch['kind'] = 'chime'
         ch['id'] = f'chime-{i}'
         meta.append(ch)
