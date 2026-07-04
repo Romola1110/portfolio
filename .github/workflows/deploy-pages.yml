@@ -14,6 +14,7 @@ on:
       - 'assets/visual-section.*'
       - 'assets/photography-*'
       - 'assets/photo/**'
+      - 'assets/fonts/**'
       - '.github/workflows/deploy-pages.yml'
       - 'scripts/prepare-pages-bundle.sh'
   workflow_dispatch:
@@ -44,3 +45,8 @@ jobs:
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - name: Retry Pages deployment
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        id: deployment_retry

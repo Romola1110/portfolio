@@ -38,6 +38,9 @@ rm -rf \
   "$OUT/assets/decor-src-"*.jpg \
   "$OUT/assets/decor-src-"*.png
 
+find "$OUT/assets/fonts" -maxdepth 1 -type f \( -iname '*.ttf' -o -iname '*.TTF' -o -iname '*.otf' \) -delete 2>/dev/null || true
+find "$OUT/assets" -maxdepth 1 -type f -iname 'IMG_*.JPG' -delete 2>/dev/null || true
+
 find "$OUT/assets/things/ui/items" -maxdepth 1 -type f -name '*-soft.png' -delete 2>/dev/null || true
 rm -f \
   "$OUT/assets/things/THINGS_COPY_DRAFT.md" \

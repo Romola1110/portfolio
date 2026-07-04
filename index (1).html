@@ -17,10 +17,10 @@
 /* ===== 字体 ===== */
 @font-face{font-family:'YuweiFanti';src:url('yuweifanti.ttf') format('truetype');font-display:swap;}
 @font-face{font-family:'YuweiJianti';src:url('yuwei.ttf') format('truetype');font-display:swap;}
-@font-face{font-family:'FZ-QKBY';src:url('assets/fonts/FZQKBYSJW.TTF') format('truetype');font-display:swap;}
-@font-face{font-family:'FZ-WuYT';src:url('assets/fonts/FZWuYTJW.TTF') format('truetype');font-display:swap;}
-@font-face{font-family:'FZ-BangSX';src:url('assets/fonts/FZBangSXJW.TTF') format('truetype');font-display:swap;}
-@font-face{font-family:'FZ-LiuGQ';src:url('assets/fonts/FZLiuGQKSJF.TTF') format('truetype');font-display:swap;}
+@font-face{font-family:'FZ-QKBY';src:url('assets/fonts/FZQKBYSJW.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'FZ-WuYT';src:url('assets/fonts/FZWuYTJW.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'FZ-BangSX';src:url('assets/fonts/FZBangSXJW.woff2') format('woff2');font-display:swap;}
+@font-face{font-family:'FZ-LiuGQ';src:url('assets/fonts/FZLiuGQKSJF.woff2') format('woff2');font-display:swap;}
 
 :root{
   --bg:#F8F4EC;--soft:#B6AFA4;--accent:#E9D6A5;
@@ -1271,7 +1271,6 @@ Those quiet sentences on the page will, in time, pass through light and shadow�
           <nav class="pb-seasons" aria-label="四季摄影"></nav>
         </div>
         <div class="pb-gallery" aria-live="polite"></div>
-        <p class="pb-hint">悬停轻拨 · 点击展卷 · ← → 切换</p>
       </div>
     </div>
   </div>
@@ -1283,8 +1282,9 @@ Those quiet sentences on the page will, in time, pass through light and shadow�
       <p class="en">Across mountains and rivers, may words still answer.</p>
       <div class="contact-details">
         <p>WeChat : Coriolanus1623</p>
-        <p>Email : <a href="/cdn-cgi/l/email-protection#cffefaf7f9fef8fefaf8f8ff8ffef9fce1aca0a2" style="color:inherit;text-decoration:none;"><span class="__cf_email__" data-cfemail="6554505d5354525450525255255453564b060a08">[email&#160;protected]</span></a></p>
-        <p>Phone : 15861715770</p>
+        <p>Email : <a id="contactEmail" href="#" style="color:inherit;text-decoration:none;"></a></p>
+        <p>Phone : <span id="contactPhone"></span></p>
+        <p>Xiaohongshu : 839643110</p>
       </div>
     </div>
   </div>
@@ -1292,12 +1292,6 @@ Those quiet sentences on the page will, in time, pass through light and shadow�
   <footer>
     <p>一卷四时，未尽之言 · A scroll of seasons, with words still to come.</p>
     <p>© 杨雪琪 · 2026</p>
-    <div style="margin-top: 1.5rem; position:relative; z-index:10;">
-      <label style="cursor:pointer; text-decoration:none; font-size:0.8rem; color:var(--soft); border-bottom:1px dashed var(--soft); padding-bottom:2px;">
-        载入本地禹卫字体 (Load Custom Font)
-        <input type="file" accept=".ttf,.otf" onchange="loadCustomFont(this.files[0])" style="display:none;">
-      </label>
-    </div>
   </footer>
 
 </div>
@@ -1317,7 +1311,7 @@ Those quiet sentences on the page will, in time, pass through light and shadow�
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 /* ===== 数据 ===== */
 const TERMS={2025:[{m:1,d:5,name:'小寒',poem:'雁北乡兮，鹊始巢兮'},{m:1,d:20,name:'大寒',poem:'瑞雪兆丰，坚冰在户'},{m:2,d:3,name:'立春',poem:'东风解冻，蛰虫始振'},{m:2,d:18,name:'雨水',poem:'獭祭鱼兮，鸿雁来兮'},{m:3,d:5,name:'惊蛰',poem:'桃始华兮，仓庚鸣兮'},{m:3,d:20,name:'春分',poem:'玄鸟至兮，雷乃发声'},{m:4,d:4,name:'清明',poem:'桐始华兮，虹始见兮'},{m:4,d:20,name:'谷雨',poem:'萍始生兮，鸣鸠拂羽'},{m:5,d:5,name:'立夏',poem:'蝼蝈鸣兮，蚯蚓出兮'},{m:5,d:21,name:'小满',poem:'苦菜秀兮，靡草死兮'},{m:6,d:5,name:'芒种',poem:'螳螂生兮，鵙始鸣兮'},{m:6,d:21,name:'夏至',poem:'鹿角解兮，蝉始鸣兮'},{m:7,d:6,name:'小暑',poem:'温风至兮，蟋蟀居壁'},{m:7,d:22,name:'大暑',poem:'腐草为萤，土润溽暑'},{m:8,d:7,name:'立秋',poem:'凉风至兮，白露降兮'},{m:8,d:22,name:'处暑',poem:'鹰乃祭鸟，天地始肃'},{m:9,d:7,name:'白露',poem:'鸿雁来兮，玄鸟归兮'},{m:9,d:22,name:'秋分',poem:'雷始收声，蛰虫坯户'},{m:10,d:8,name:'寒露',poem:'鸿雁来宾，菊有黄华'},{m:10,d:23,name:'霜降',poem:'豺乃祭兽，草木黄落'},{m:11,d:7,name:'立冬',poem:'水始冰兮，地始冻兮'},{m:11,d:22,name:'小雪',poem:'虹藏不见，天气上升'},{m:12,d:7,name:'大雪',poem:'鹖鴠不鸣，虎始交兮'},{m:12,d:21,name:'冬至',poem:'蚯蚓结兮，麋角解兮'}],2026:[{m:1,d:5,name:'小寒',poem:'雁北乡兮，鹊始巢兮'},{m:1,d:20,name:'大寒',poem:'瑞雪兆丰，坚冰在户'},{m:2,d:4,name:'立春',poem:'东风解冻，蛰虫始振'},{m:2,d:18,name:'雨水',poem:'獭祭鱼兮，鸿雁来兮'},{m:3,d:5,name:'惊蛰',poem:'桃始华兮，仓庚鸣兮'},{m:3,d:20,name:'春分',poem:'玄鸟至兮，雷乃发声'},{m:4,d:5,name:'清明',poem:'桐始华兮，虹始见兮'},{m:4,d:20,name:'谷雨',poem:'萍始生兮，鸣鸠拂羽'},{m:5,d:5,name:'立夏',poem:'蝼蝈鸣兮，蚯蚓出兮'},{m:5,d:21,name:'小满',poem:'苦菜秀兮，靡草死兮'},{m:6,d:5,name:'芒种',poem:'螳螂生兮，鵙始鸣兮'},{m:6,d:21,name:'夏至',poem:'鹿角解兮，蝉始鸣兮'},{m:7,d:7,name:'小暑',poem:'温风至兮，蟋蟀居壁'},{m:7,d:22,name:'大暑',poem:'腐草为萤，土润溽暑'},{m:8,d:7,name:'立秋',poem:'凉风至兮，白露降兮'},{m:8,d:23,name:'处暑',poem:'鹰乃祭鸟，天地始肃'},{m:9,d:7,name:'白露',poem:'鸿雁来兮，玄鸟归兮'},{m:9,d:23,name:'秋分',poem:'雷始收声，蛰虫坯户'},{m:10,d:8,name:'寒露',poem:'鸿雁来宾，菊有黄华'},{m:10,d:23,name:'霜降',poem:'豺乃祭兽，草木黄落'},{m:11,d:7,name:'立冬',poem:'水始冰兮，地始冻兮'},{m:11,d:22,name:'小雪',poem:'虹藏不见，天气上升'},{m:12,d:7,name:'大雪',poem:'鹖鴠不鸣，虎始交兮'},{m:12,d:22,name:'冬至',poem:'蚯蚓结兮，麋角解兮'}],2027:[{m:1,d:5,name:'小寒',poem:'雁北乡兮，鹊始巢兮'},{m:1,d:20,name:'大寒',poem:'瑞雪兆丰，坚冰在户'},{m:2,d:4,name:'立春',poem:'东风解冻，蛰虫始振'},{m:2,d:19,name:'雨水',poem:'獭祭鱼兮，鸿雁来兮'},{m:3,d:5,name:'惊蛰',poem:'桃始华兮，仓庚鸣兮'},{m:3,d:20,name:'春分',poem:'玄鸟至兮，雷乃发声'},{m:4,d:5,name:'清明',poem:'桐始华兮，虹始见兮'},{m:4,d:20,name:'谷雨',poem:'萍始生兮，鸣鸠拂羽'},{m:5,d:5,name:'立夏',poem:'蝼蝈鸣兮，蚯蚓出兮'},{m:5,d:21,name:'小满',poem:'苦菜秀兮，靡草死兮'},{m:6,d:5,name:'芒种',poem:'螳螂生兮，鵙始鸣兮'},{m:6,d:21,name:'夏至',poem:'鹿角解兮，蝉始鸣兮'},{m:7,d:7,name:'小暑',poem:'温风至兮，蟋蟀居壁'},{m:7,d:22,name:'大暑',poem:'腐草为萤，土润溽暑'},{m:8,d:7,name:'立秋',poem:'凉风至兮，白露降兮'},{m:8,d:23,name:'处暑',poem:'鹰乃祭鸟，天地始肃'},{m:9,d:7,name:'白露',poem:'鸿雁来兮，玄鸟归兮'},{m:9,d:23,name:'秋分',poem:'雷始收声，蛰虫坯户'},{m:10,d:8,name:'寒露',poem:'鸿雁来宾，菊有黄华'},{m:10,d:23,name:'霜降',poem:'豺乃祭兽，草木黄落'},{m:11,d:7,name:'立冬',poem:'水始冰兮，地始冻兮'},{m:11,d:22,name:'小雪',poem:'虹藏不见，天气上升'},{m:12,d:7,name:'大雪',poem:'鹖鴠不鸣，虎始交兮'},{m:12,d:22,name:'冬至',poem:'蚯蚓结兮，麋角解兮'}]};
 
@@ -1710,16 +1704,19 @@ function typeText(el, text, speed=72){
   typingTimeout = setTimeout(type, 1200);
 }
 
-function loadCustomFont(file) {
-  if(!file) return;
-  const url = URL.createObjectURL(file);
-  const style = document.createElement('style');
-  style.textContent = `
-    @font-face { font-family: 'YuweiFanti'; src: url('${url}') format('truetype'); font-display: swap; }
-    @font-face { font-family: 'YuweiJianti'; src: url('${url}') format('truetype'); font-display: swap; }
-  `;
-  document.head.appendChild(style);
-  setTimeout(drawVineTree, 500); 
+function initContactInfo() {
+  const em = [49,53,56,54,49,55,49,53,55,55,48].map(c => String.fromCharCode(c)).join('') + '@' +
+    [49,54,51].map(c => String.fromCharCode(c)).join('') + '.' + 'com';
+  const ph = [49,53,56,54,49,55,49,53,55,55,48].map(c => String.fromCharCode(c)).join('');
+  const emEl = document.getElementById('contactEmail');
+  const phEl = document.getElementById('contactPhone');
+  if (emEl) { emEl.textContent = em; emEl.href = 'mailto:' + em; }
+  if (phEl) phEl.textContent = ph;
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initContactInfo);
+} else {
+  initContactInfo();
 }
 
 /* ===== 导航栏平滑跳转修复 ===== */
@@ -2041,7 +2038,7 @@ function generateEffect(s, layer) {
   layer.innerHTML = '';
   
   const w = window.innerWidth || document.documentElement.clientWidth || 1000;
-  const count = (s === 'summer' || s === 'winter') ? 72 : (s === 'autumn' ? 52 : 46);
+  const count = (s === 'summer' || s === 'winter') ? 84 : (s === 'autumn' ? 62 : 54);
   const anims = ['fallStraight', 'fallLeft', 'fallRight'];
 
   for (let i = 0; i < count; i++) {
@@ -2050,10 +2047,10 @@ function generateEffect(s, layer) {
     
     if(s === 'spring'){
       el.className = 'fall-particle';
-      const sz = 10 + Math.floor(Math.random() * 12);
-      const cs = ['#FCE8F0','#F5C6D8','#FFD9E8','#FAD4E2'];
+      const sz = 13 + Math.floor(Math.random() * 14);
+      const cs = ['#F0A8C0','#E890B0','#F5C0D0','#D87898','#FFD0E0'];
       const c = cs[Math.floor(Math.random()*cs.length)];
-      const op = 0.5 + Math.random() * 0.22;
+      const op = 0.58 + Math.random() * 0.28;
       el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:${c};border-radius:50% 0;opacity:${op};box-shadow:0 0 ${Math.round(sz*0.25)}px rgba(245,198,216,0.22);"></div>`;
       el.style.left = startX + 'px';
       
@@ -2089,11 +2086,11 @@ function generateEffect(s, layer) {
     }
     else if(s === 'autumn'){
       el.className = 'fall-particle';
-      const cs = ['#E8B888','#F3DCC4','#EFD4B0','#D89868'];
+      const cs = ['#C87840','#D89050','#E0A868','#B86030','#F0C898'];
       const c = cs[Math.floor(Math.random() * cs.length)];
-      const sz = 14 + Math.floor(Math.random() * 12);
-      const op = 0.48 + Math.random() * 0.25;
-      el.innerHTML = `<svg viewBox="0 0 24 24" width="${sz}" height="${sz}" style="opacity:${op};"><path d="M12,2 C13,5 15,6 18,4 C16,8 18,10 21,9 C19,12 20,15 18,17 C15,15 13,17 12,20 L12,23 L12,20 C11,17 9,15 6,17 C4,15 5,12 3,9 C6,10 8,8 6,4 C9,6 11,5 12,2Z" fill="${c}"/></svg>`;
+      const sz = 18 + Math.floor(Math.random() * 14);
+      const op = 0.58 + Math.random() * 0.3;
+      el.innerHTML = makeMaple(sz, c, op);
       
       el.style.left = startX + 'px';
       const anim = anims[Math.floor(Math.random()*anims.length)];
@@ -2105,9 +2102,10 @@ function generateEffect(s, layer) {
     }
     else {
       el.className = 'fall-particle';
-      const sz = 4 + Math.floor(Math.random() * 7);
-      const op = 0.42 + Math.random() * 0.28;
-      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:#fff;border-radius:50%;box-shadow:0 0 ${Math.max(4,sz)}px rgba(255,255,255,0.55);opacity:${op};"></div>`;
+      const sz = 5 + Math.floor(Math.random() * 8);
+      const op = 0.52 + Math.random() * 0.32;
+      const shade = 210 + Math.floor(Math.random() * 35);
+      el.innerHTML = `<div style="width:${sz}px;height:${sz}px;background:rgb(${shade},${shade},${shade + 8});border-radius:50%;box-shadow:0 0 ${Math.max(4,sz)}px rgba(255,255,255,0.62);opacity:${op};"></div>`;
       
       el.style.left = startX + 'px';
       const anim = anims[Math.floor(Math.random()*anims.length)];
@@ -2145,9 +2143,12 @@ function updateOverlayDecos(s){for(let i=0;i<4;i++){const el=document.getElement
 document.querySelectorAll('.season-mini-btn').forEach(btn=>{btn.addEventListener('click',e=>{e.stopPropagation();setSeason(btn.dataset.season);});});
 
 let lastInk=0;
-function makeMaple(sz){const cs=['#D08040','#F6D3B6','#E8C59B'];const c=cs[Math.floor(Math.random()*cs.length)];return `<svg viewBox="0 0 24 24" width="${sz}" height="${sz}" style="transform:rotate(${Math.floor(Math.random()*360)}deg)"><path d="M12,1 C13.5,4 15.5,5 19,3 C17,7.5 19,10 22,9 C19.5,12 20.5,15.5 18,18 C15,15.5 13,17.5 12,21 C11,17.5 9,15.5 6,18 C3.5,15.5 4.5,12 2,9 C5,10 7,7.5 5,3 C8.5,5 10.5,4 12,1Z" fill="${c}" opacity="0.85"/></svg>`;}
+function makeMaple(sz, c, op){
+  const h = Math.round(sz * 1.12);
+  return `<svg viewBox="0 0 24 28" width="${sz}" height="${h}" style="opacity:${op};transform:rotate(${Math.floor(Math.random()*360)}deg)"><path d="M12,1 C13.5,4 15.5,5 19,3 C17,7.5 19,10 22,9 C19.5,12 20.5,15.5 18,18 C15,15.5 13,17.5 12,21 C11,17.5 9,15.5 6,18 C3.5,15.5 4.5,12 2,9 C5,10 7,7.5 5,3 C8.5,5 10.5,4 12,1Z" fill="${c}"/><line x1="12" y1="20.5" x2="12" y2="25.5" stroke="${c}" stroke-width="1.1" stroke-linecap="round" opacity="0.92"/></svg>`;
+}
 function createInk(x,y){const now=Date.now();if(now-lastInk<100)return;lastInk=now;const ink=document.createElement('div');ink.className='ink-trail';ink.style.left=(x-5)+'px';ink.style.top=(y-5)+'px';document.body.appendChild(ink);setTimeout(()=>ink.remove(),1800);}
-function createClick(x,y){const s=document.body.className,el=document.createElement('div');el.className='click-effect';if(s==='spring'){el.classList.add('click-petal');el.style.left=(x-8)+'px';el.style.top=(y-8)+'px';}else if(s==='summer'){el.classList.add('click-ripple');el.style.left=(x-15)+'px';el.style.top=(y-15)+'px';}else if(s==='autumn'){el.classList.add('click-leaf');el.style.left=(x-12)+'px';el.style.top=(y-12)+'px';el.innerHTML=makeMaple(24);}else{el.classList.add('click-snow');el.style.left=(x-10)+'px';el.style.top=(y-10)+'px';el.innerHTML='<svg viewBox="0 0 20 20" width="20" height="20"><g stroke="#A8B8D0" stroke-width="1.5" fill="none" opacity="0.85"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></g></svg>';}document.body.appendChild(el);setTimeout(()=>el.remove(),3500);}
+function createClick(x,y){const s=document.body.className,el=document.createElement('div');el.className='click-effect';if(s==='spring'){el.classList.add('click-petal');el.style.left=(x-8)+'px';el.style.top=(y-8)+'px';}else if(s==='summer'){el.classList.add('click-ripple');el.style.left=(x-15)+'px';el.style.top=(y-15)+'px';}else if(s==='autumn'){el.classList.add('click-leaf');el.style.left=(x-12)+'px';el.style.top=(y-12)+'px';el.innerHTML=makeMaple(26,'#C87840',0.85);}else{el.classList.add('click-snow');el.style.left=(x-10)+'px';el.style.top=(y-10)+'px';el.innerHTML='<svg viewBox="0 0 20 20" width="20" height="20"><g stroke="#A8B8D0" stroke-width="1.5" fill="none" opacity="0.85"><line x1="10" y1="2" x2="10" y2="18"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></g></svg>';}document.body.appendChild(el);setTimeout(()=>el.remove(),3500);}
 
 const ov=document.getElementById('overlay');
 ov.addEventListener('mousemove',e=>{const frags=document.querySelectorAll('#poemBg .poem-fragment');const mx=(e.clientX/window.innerWidth-0.5)*30,my=(e.clientY/window.innerHeight-0.5)*30;frags.forEach((f,i)=>{const factor=(i%3+1)*0.4;f.style.transform=`rotate(${f.dataset.baseRotate||0}deg) translate(${mx*factor}px,${my*factor}px)`;});createInk(e.clientX,e.clientY);});
