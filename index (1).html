@@ -4,13 +4,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Romola · Creative Portfolio</title>
+<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+<script src="assets/font-fallback.js?v=1"></script>
 <link rel="stylesheet" href="assets/visual-section.css">
 <link rel="stylesheet" href="assets/dh-section.css">
 <link rel="stylesheet" href="assets/things-section.css?v=38">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=12">
-<link rel="stylesheet" href="assets/mobile.css?v=1">
-<script src="assets/cdn-fallback.js?v=1"></script>
+<link rel="stylesheet" href="assets/mobile.css?v=2">
+<script src="assets/cdn-fallback.js?v=2"></script>
 <style>
 /* ===== 字体 ===== */
 @font-face{font-family:'YuweiFanti';src:url('yuweifanti.ttf') format('truetype');font-display:swap;}
@@ -22,19 +24,18 @@
 
 :root{
   --bg:#F8F4EC;--soft:#B6AFA4;--accent:#E9D6A5;
-  --cn-system:'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Source Han Serif SC','Noto Serif SC',serif;
-  --serif:var(--cn-system);
-  --english:'Georgia','Times New Roman',serif;
-  --cn-title:'YuweiFanti','FZ-QKBY',var(--cn-system);
-  --cn-title-s:'YuweiJianti','FZ-WuYT',var(--cn-system);
-  --cn-poem:'FZ-WuYT',var(--cn-system);
-  --cn-nav:'FZ-BangSX','KaiTi','STKaiti',var(--cn-system);
-  --cn-light:'FZ-WuYT',var(--cn-system);
-  --cn-art:'FZ-LiuGQ','KaiTi','STKaiti',cursive;
-  --font-1:'FZ-QKBY','YuweiFanti',var(--cn-system);
-  --font-2:'FZ-WuYT','YuweiJianti',var(--cn-system);
-  --font-3:'FZ-BangSX','YuweiFanti',var(--cn-system);
-  --font-4:'FZ-LiuGQ','FZ-BangSX',var(--cn-system);
+  --serif:'Noto Serif SC',serif;
+  --english:'Cormorant Garamond','Georgia',serif;
+  --cn-title:'YuweiFanti','Noto Serif SC',serif;
+  --cn-title-s:'YuweiJianti','Noto Serif SC',serif;
+  --cn-poem:'LXGW WenKai','Noto Serif SC',serif;
+  --cn-nav:'Ma Shan Zheng','Noto Serif SC',cursive;
+  --cn-light:'LXGW WenKai','Noto Serif SC',serif;
+  --cn-art:'Zhi Mang Xing', cursive;
+  --font-1:'FZ-QKBY','YuweiFanti','Noto Serif SC',serif;
+  --font-2:'FZ-WuYT','LXGW WenKai','Noto Serif SC',serif;
+  --font-3:'FZ-BangSX','YuweiFanti','Noto Serif SC',serif;
+  --font-4:'FZ-LiuGQ','ZCOOL XiaoWei','Noto Serif SC',serif;
   --transition:1.2s ease;
 }
 
@@ -271,12 +272,36 @@ main.visible{opacity:1;visibility:visible;}
 /* === 导航 === */
 nav{
   position:fixed;top:0;left:0;right:0;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:0.6rem 2rem;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:0.5rem 1rem;
+  padding:0.6rem 1.25rem;
   background:rgba(255,255,255,.45);backdrop-filter:blur(16px);z-index:50;
   border-bottom:1px solid rgba(0,0,0,0.03);
 }
-.logo{font-family:var(--english);letter-spacing:.18em;font-size:1rem;color:var(--soft);}
+nav .logo{
+  grid-column:1;
+  justify-self:start;
+  font-family:'Italiana',serif;
+  letter-spacing:.18em;
+  font-size:1rem;
+  color:var(--soft);
+}
+nav .nav-items{
+  grid-column:2;
+  justify-self:center;
+  display:flex;
+  list-style:none;
+  align-items:center;
+  gap:1.5rem;
+  margin:0;
+}
+nav .sundial-wrap{
+  grid-column:3;
+  justify-self:end;
+}
+.logo{font-family:'Italiana',serif;letter-spacing:.18em;font-size:1rem;color:var(--soft);}
 .nav-items{display:flex;list-style:none;align-items:center;gap:1.5rem;}
 .nav-item a{
   display: flex; flex-direction: column; align-items: center; justify-content: center;
