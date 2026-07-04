@@ -2474,7 +2474,7 @@ body.winter #things.open-section.things-v6 .things-welcome {
 
 #things.open-section.things-v6 .pattern-center {
   position: absolute;
-  left: 65%;
+  left: 62%;
   top: 95%;
   width: min(456px, 129%);
   height: min(456px, 129%);
@@ -2544,6 +2544,7 @@ body.winter #things.open-section.things-v6 .things-welcome {
 
 body.autumn #things.open-section.things-v6 .bucket-art {
   transform: translateX(-8px);
+  filter: drop-shadow(0 12px 20px rgba(80, 60, 40, 0.14)) sepia(0.24) saturate(1.08) hue-rotate(-10deg) brightness(1.1);
 }
 
 body.winter #things.open-section.things-v6 .bucket-art {
@@ -3075,22 +3076,22 @@ body.winter #things.open-section.things-v6 .bucket-art {
 }
 
 /* 四时暗纹深浅与色调 */
-body.spring #things.open-section.things-v6 .pattern-center { opacity: 0.76; }
+body.spring #things.open-section.things-v6 .pattern-center { opacity: 0.68; }
 body.spring #things.open-section.things-v6 .pattern-rotor img {
-  opacity: 0.84;
-  filter: sepia(0.42) hue-rotate(285deg) saturate(1.35) brightness(0.9) contrast(1.05);
+  opacity: 0.72;
+  filter: sepia(0.32) hue-rotate(285deg) saturate(1.1) brightness(1.02) contrast(0.96);
 }
 
-body.summer #things.open-section.things-v6 .pattern-center { opacity: 0.72; }
+body.summer #things.open-section.things-v6 .pattern-center { opacity: 0.64; }
 body.summer #things.open-section.things-v6 .pattern-rotor img {
-  opacity: 0.84;
-  filter: sepia(0.28) hue-rotate(88deg) saturate(1.15) brightness(0.88) contrast(1.02);
+  opacity: 0.72;
+  filter: sepia(0.2) hue-rotate(88deg) saturate(0.95) brightness(1.0) contrast(0.94);
 }
 
-body.autumn #things.open-section.things-v6 .pattern-center { opacity: 0.78; }
+body.autumn #things.open-section.things-v6 .pattern-center { opacity: 0.7; }
 body.autumn #things.open-section.things-v6 .pattern-rotor img {
-  opacity: 0.86;
-  filter: sepia(0.55) hue-rotate(8deg) saturate(1.45) brightness(0.84) contrast(1.08);
+  opacity: 0.74;
+  filter: sepia(0.42) hue-rotate(8deg) saturate(1.2) brightness(0.96) contrast(1.0);
 }
 
 body.winter #things.open-section.things-v6 .pattern-center { opacity: 0.7; }

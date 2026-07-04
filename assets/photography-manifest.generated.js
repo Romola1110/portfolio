@@ -434,6 +434,14 @@ const PHOTO_MANIFEST_GENERATED = {
       "caption": "檐下写着做你自己，阳光已铺到路的尽头。",
       "diary": "今天选择了一条不同的路，去寻找无尽的夏天。",
       "exif": "1707×1279"
+    },
+    {
+      "file": "ec3bd8c6af35c67431c8037f25493708.jpg",
+      "title": "毕业",
+      "orient": "portrait",
+      "caption": "旋转楼梯之上，是我回不去的青春。心事像绿意一样蔓延。",
+      "diary": "旋转楼梯之上，是我回不去的青春。心事像绿意一样蔓延。",
+      "exif": "1440×1920"
     }
   ],
   "autumn": [

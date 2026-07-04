@@ -619,46 +619,44 @@ function getAudioCtx() {
 
 function playDrawSound() {
   const now = Date.now();
-  if (now - _drawAudioLast < 380) return;
+  if (now - _drawAudioLast < 520) return;
   _drawAudioLast = now;
   try {
     const ctx = getAudioCtx();
     if (!ctx) return;
     const t = ctx.currentTime;
-    const hits = [0, 0.078, 0.162];
-    hits.forEach((off, i) => {
-      const base = 880 + Math.random() * 140 - i * 45;
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
-      const hp = ctx.createBiquadFilter();
-      hp.type = 'highpass';
-      hp.frequency.value = 480;
-      o.type = 'triangle';
-      o.frequency.setValueAtTime(base, t + off);
-      o.frequency.exponentialRampToValueAtTime(base * 0.68, t + off + 0.04);
-      g.gain.setValueAtTime(0.0001, t + off);
-      g.gain.exponentialRampToValueAtTime(0.11 - i * 0.016, t + off + 0.004);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + off + 0.09);
-      o.connect(hp).connect(g).connect(ctx.destination);
-      o.start(t + off);
-      o.stop(t + off + 0.11);
-      const len = Math.floor(ctx.sampleRate * 0.022);
-      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
-      const data = buf.getChannelData(0);
-      for (let j = 0; j < len; j++) data[j] = (Math.random() * 2 - 1) * (1 - j / len) ** 1.5;
-      const noise = ctx.createBufferSource();
-      noise.buffer = buf;
-      const bp = ctx.createBiquadFilter();
-      bp.type = 'bandpass';
-      bp.frequency.value = 1950 + i * 90;
-      bp.Q.value = 2.1;
-      const ng = ctx.createGain();
-      ng.gain.setValueAtTime(0.09 - i * 0.012, t + off);
-      ng.gain.exponentialRampToValueAtTime(0.0001, t + off + 0.05);
-      noise.connect(bp).connect(ng).connect(ctx.destination);
-      noise.start(t + off);
-      noise.stop(t + off + 0.06);
-    });
+    const base = 480 + Math.random() * 80;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    const lp = ctx.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.value = 1200;
+    lp.Q.value = 0.65;
+    o.type = 'sine';
+    o.frequency.setValueAtTime(base, t);
+    o.frequency.exponentialRampToValueAtTime(base * 0.58, t + 0.14);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.075, t + 0.018);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.26);
+    o.connect(lp).connect(g).connect(ctx.destination);
+    o.start(t);
+    o.stop(t + 0.3);
+    const len = Math.floor(ctx.sampleRate * 0.028);
+    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let j = 0; j < len; j++) data[j] = (Math.random() * 2 - 1) * (1 - j / len) ** 2.2;
+    const noise = ctx.createBufferSource();
+    noise.buffer = buf;
+    const bp = ctx.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.frequency.value = 640;
+    bp.Q.value = 0.75;
+    const ng = ctx.createGain();
+    ng.gain.setValueAtTime(0.032, t);
+    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.1);
+    noise.connect(bp).connect(ng).connect(ctx.destination);
+    noise.start(t);
+    noise.stop(t + 0.12);
   } catch (_) { /* optional audio */ }
 }
 
