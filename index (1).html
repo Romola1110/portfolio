@@ -10,13 +10,17 @@
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/visual-section.css">
 <link rel="stylesheet" href="assets/dh-section.css">
-<link rel="stylesheet" href="assets/things-section.css?v=28">
+<link rel="stylesheet" href="assets/things-section.css?v=29">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
-<link rel="stylesheet" href="assets/photography-main.css?v=8">
+<link rel="stylesheet" href="assets/photography-main.css?v=9">
 <style>
 /* ===== 字体 ===== */
 @font-face{font-family:'YuweiFanti';src:url('yuweifanti.ttf') format('truetype');font-display:swap;}
 @font-face{font-family:'YuweiJianti';src:url('yuwei.ttf') format('truetype');font-display:swap;}
+@font-face{font-family:'FZ-QKBY';src:url('assets/fonts/FZQKBYSJW.TTF') format('truetype');font-display:swap;}
+@font-face{font-family:'FZ-WuYT';src:url('assets/fonts/FZWuYTJW.TTF') format('truetype');font-display:swap;}
+@font-face{font-family:'FZ-BangSX';src:url('assets/fonts/FZBangSXJW.TTF') format('truetype');font-display:swap;}
+@font-face{font-family:'FZ-LiuGQ';src:url('assets/fonts/FZLiuGQKSJF.TTF') format('truetype');font-display:swap;}
 
 :root{
   --bg:#F8F4EC;--soft:#B6AFA4;--accent:#E9D6A5;
@@ -27,7 +31,11 @@
   --cn-poem:'LXGW WenKai','Noto Serif SC',serif;
   --cn-nav:'Ma Shan Zheng','Noto Serif SC',cursive;
   --cn-light:'LXGW WenKai','Noto Serif SC',serif;
-  --cn-art:'Zhi Mang Xing', cursive; 
+  --cn-art:'Zhi Mang Xing', cursive;
+  --font-1:'FZ-QKBY','YuweiFanti','Noto Serif SC',serif;
+  --font-2:'FZ-WuYT','LXGW WenKai','Noto Serif SC',serif;
+  --font-3:'FZ-BangSX','YuweiFanti','Noto Serif SC',serif;
+  --font-4:'FZ-LiuGQ','ZCOOL XiaoWei','Noto Serif SC',serif; 
   --transition:1.2s ease;
 }
 
@@ -324,7 +332,7 @@ nav{
   text-shadow: 0 0 5px rgba(255,255,255,0.8);
 }
 .hero-greeting{
-  font-family:var(--cn-light);font-size:1.15rem;color:var(--text);
+  font-family:var(--font-1);font-size:1.15rem;color:var(--text);
   letter-spacing:0.08em;line-height:2;min-height:3.5em;
   opacity:0;
   display:inline-block;max-width:min(520px,92vw);margin:0 auto;
@@ -485,6 +493,7 @@ body.winter .hero-greeting::after{
 #about .section-desc{
   max-width: min(1100px, 96%);
   margin-left: clamp(-18px, -1.8vw, -8px);
+  font-family: var(--font-2);
 }
 
 .open-content {

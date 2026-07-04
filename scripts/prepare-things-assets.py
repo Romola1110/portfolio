@@ -23,7 +23,7 @@ SRC_CRANE = ROOT / '千纸鹤.png'
 SRC_CHIME1 = ROOT / '风铃1.png'
 SRC_CHIME2 = ROOT / '风铃2.png'
 PHOTO_DIR = ROOT / 'assets/things/ui/processed/original'
-PATTERN_MAX = 620
+PATTERN_MAX = 680
 
 
 def save_png(img: Image.Image, path: Path) -> None:
@@ -157,14 +157,19 @@ def recenter_hook(img: Image.Image, max_px: int) -> Image.Image:
 
 
 def process_patterns() -> None:
-    """中心暗纹：正方形裁切、镂空、居中，避免矩形空白导致偏移。"""
+    """中心暗纹：贴圆裁正方、镂空、居中，避免矩形空白与边缘过抠。"""
     src = SRC_PATTERN if SRC_PATTERN.exists() else SRC_PATTERN_REF
     img = ImageOps.exif_transpose(Image.open(src).convert('RGBA'))
-    cut = cutout_soft(img, feather=3)
-    cut = center_square_crop(cut, pad=10)
+    sq = square_crop_content(img)
+    cut = remove(sq)
+    if isinstance(cut, bytes):
+        cut = Image.open(BytesIO(cut)).convert('RGBA')
+    cut = canvas_square(cut)
     cut = hollow_lace(cut)
     cut = recenter_alpha(cut)
     cut = resize_longest(cut, PATTERN_MAX)
+    a = cut.split()[-1].filter(ImageFilter.GaussianBlur(1))
+    cut.putalpha(a)
     save_png(cut, OUT / 'dark-pattern.png')
 
     # 两侧暗纹：由中心图左右裁切并渐隐
