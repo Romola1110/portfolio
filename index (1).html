@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/visual-section.css">
 <link rel="stylesheet" href="assets/dh-section.css">
-<link rel="stylesheet" href="assets/things-section.css?v=33">
+<link rel="stylesheet" href="assets/things-section.css?v=34">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=10">
 <style>
@@ -2134,7 +2134,7 @@ function generateEffect(s, layer) {
   layer.innerHTML = '';
   
   const w = window.innerWidth || document.documentElement.clientWidth || 1000;
-  const count = s === 'winter' ? 96 : (s === 'summer' ? 84 : (s === 'autumn' ? 44 : 66));
+  const count = s === 'winter' ? 96 : (s === 'summer' ? 84 : (s === 'autumn' ? 44 : 94));
   const anims = ['fallStraight', 'fallLeft', 'fallRight'];
 
   for (let i = 0; i < count; i++) {
@@ -2143,7 +2143,7 @@ function generateEffect(s, layer) {
     
     if(s === 'spring'){
       el.className = 'fall-particle';
-      const isSprout = Math.random() < 0.12;
+      const isSprout = Math.random() < 0.07;
       const sz = isSprout ? (10 + Math.floor(Math.random() * 8)) : (18 + Math.floor(Math.random() * 14));
       const cs = ['#F8B8D0','#F0A0C0','#FFD0E8','#E888B0','#FFE0F0','#F5C0D8'];
       const c = cs[Math.floor(Math.random()*cs.length)];
@@ -2154,7 +2154,7 @@ function generateEffect(s, layer) {
         el.style.filter = 'drop-shadow(0 0 5px rgba(180,230,190,0.5))';
       } else {
         const kind = Math.random();
-        el.innerHTML = kind < 0.82 ? makeSakura(sz, c, op, rot) : makePetal(sz, c, op, rot);
+        el.innerHTML = kind < 0.68 ? makeSakura(sz, c, op, rot) : makePetal(sz, c, op, rot);
         el.style.filter = 'drop-shadow(0 0 8px rgba(255,200,220,0.5)) blur(0.15px)';
       }
       el.style.left = startX + 'px';
@@ -2347,7 +2347,7 @@ function closeLightbox() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="assets/visual-section.js"></script>
 <script src="assets/things/things-data.js?v=7"></script>
-<script src="assets/things-section.js?v=28"></script>
+<script src="assets/things-section.js?v=29"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const thingsRoot = document.getElementById('things');
