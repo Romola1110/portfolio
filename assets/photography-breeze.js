@@ -4,6 +4,21 @@ const PB_MAX_TILT = 10;
 const PB_ACTIVE = new Set();
 const PB_MOTIF_GAP = 6;
 
+const PB_SHISI_FILE = '9c5bda91ad9ed1462a3c75ee06750004.jpg';
+const PB_GRAD_FILE = 'ec3bd8c6af35c67431c8037f25493708.jpg';
+
+function pbOrderItems(items) {
+  const grad = items.find(i => i.file === PB_GRAD_FILE);
+  if (!grad) return items;
+  const rest = items.filter(i => i.file !== PB_GRAD_FILE);
+  const shisiIdx = rest.findIndex(i => i.file === PB_SHISI_FILE);
+  if (shisiIdx >= 0) {
+    rest.splice(shisiIdx + 1, 0, grad);
+    return rest;
+  }
+  return [...rest, grad];
+}
+
 function pbShuffle(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -266,9 +281,9 @@ function initPhotoBreeze(rootId = 'pbRoot') {
   function render(s) {
     season = s;
     PB_ACTIVE.clear();
-    const items = s === 'all'
+    const items = pbOrderItems(s === 'all'
       ? pbShuffle(PHOTO_GALLERY_DATA.all || [])
-      : (PHOTO_GALLERY_DATA[s] || []);
+      : (PHOTO_GALLERY_DATA[s] || []));
     gallery.innerHTML = pbRenderGallery(items, s);
     pbBindImages(root);
     pbSetupReveal(root);

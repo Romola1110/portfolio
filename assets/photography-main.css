@@ -275,23 +275,3 @@
   #photography .photo-butterflies { width: 56px; max-height: 72px; }
   #photography .photo-title-row { gap: 0.25rem; }
 }
-
-/* 毕业照：落位时靠左列对齐 */
-#photography .pb-gallery .pb-card[data-file="ec3bd8c6af35c67431c8037f25493708.jpg"] {
-  column-span: all;
-  display: block;
-  width: calc((100% - 32px) / 5);
-  margin: 0 auto 8px 0;
-}
-
-@media (max-width: 900px) {
-  #photography .pb-gallery .pb-card[data-file="ec3bd8c6af35c67431c8037f25493708.jpg"] {
-    width: calc((100% - 24px) / 4);
-  }
-}
-
-@media (max-width: 560px) {
-  #photography .pb-gallery .pb-card[data-file="ec3bd8c6af35c67431c8037f25493708.jpg"] {
-    width: calc((100% - 16px) / 3);
-  }
-}
