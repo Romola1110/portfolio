@@ -1607,17 +1607,21 @@
   position: relative;
   z-index: 3;
   font-family: var(--font-2);
-  font-size: 1.1rem;
-  line-height: 2.05;
+  font-size: 1.08rem;
+  line-height: 2.1;
+  letter-spacing: 0.02em;
   color: color-mix(in srgb, var(--text) 82%, var(--soft));
 }
 
 #things.open-section.things-v6 .things-welcome .verse-note {
   display: block;
-  margin-top: 0.85rem;
-  font-size: 0.92rem;
-  font-family: var(--font-2);
-  color: color-mix(in srgb, var(--text) 68%, var(--soft));
+  margin-top: 0;
+  padding-top: 0;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
 }
 
 #things.open-section.things-v6 .draw-zone {
@@ -2470,8 +2474,8 @@ body.winter #things.open-section.things-v6 .things-welcome {
 
 #things.open-section.things-v6 .pattern-center {
   position: absolute;
-  left: 58.5%;
-  top: 71%;
+  left: 65%;
+  top: 95%;
   width: min(456px, 129%);
   height: min(456px, 129%);
   margin-left: min(-228px, -64.5%);
@@ -2536,6 +2540,14 @@ body.winter #things.open-section.things-v6 .things-welcome {
   object-position: center bottom;
   overflow: visible;
   filter: drop-shadow(0 12px 20px rgba(80, 60, 40, 0.14));
+}
+
+body.autumn #things.open-section.things-v6 .bucket-art {
+  transform: translateX(-8px);
+}
+
+body.winter #things.open-section.things-v6 .bucket-art {
+  transform: translateX(8px);
 }
 
 #things.open-section.things-v6 .stick-flyout {
@@ -3062,18 +3074,30 @@ body.winter #things.open-section.things-v6 .things-welcome {
   #things.open-section.things-v6 .curtain-name { font-size: 0.58rem; }
 }
 
-/* 四时暗纹深浅 */
-body.spring #things.open-section.things-v6 .pattern-center { opacity: 0.72; }
-body.spring #things.open-section.things-v6 .pattern-rotor img { filter: sepia(0.06) brightness(1.06); opacity: 0.82; }
+/* 四时暗纹深浅与色调 */
+body.spring #things.open-section.things-v6 .pattern-center { opacity: 0.76; }
+body.spring #things.open-section.things-v6 .pattern-rotor img {
+  opacity: 0.84;
+  filter: sepia(0.42) hue-rotate(285deg) saturate(1.35) brightness(0.9) contrast(1.05);
+}
 
-body.summer #things.open-section.things-v6 .pattern-center { opacity: 0.68; }
-body.summer #things.open-section.things-v6 .pattern-rotor img { filter: hue-rotate(-4deg) brightness(1.02) saturate(0.92); opacity: 0.82; }
+body.summer #things.open-section.things-v6 .pattern-center { opacity: 0.72; }
+body.summer #things.open-section.things-v6 .pattern-rotor img {
+  opacity: 0.84;
+  filter: sepia(0.28) hue-rotate(88deg) saturate(1.15) brightness(0.88) contrast(1.02);
+}
 
-body.autumn #things.open-section.things-v6 .pattern-center { opacity: 0.74; }
-body.autumn #things.open-section.things-v6 .pattern-rotor img { filter: sepia(0.14) brightness(0.98); opacity: 0.82; }
+body.autumn #things.open-section.things-v6 .pattern-center { opacity: 0.78; }
+body.autumn #things.open-section.things-v6 .pattern-rotor img {
+  opacity: 0.86;
+  filter: sepia(0.55) hue-rotate(8deg) saturate(1.45) brightness(0.84) contrast(1.08);
+}
 
-body.winter #things.open-section.things-v6 .pattern-center { opacity: 0.66; }
-body.winter #things.open-section.things-v6 .pattern-rotor img { filter: grayscale(0.08) brightness(1.06); opacity: 0.82; }
+body.winter #things.open-section.things-v6 .pattern-center { opacity: 0.7; }
+body.winter #things.open-section.things-v6 .pattern-rotor img {
+  opacity: 0.82;
+  filter: sepia(0.18) hue-rotate(198deg) saturate(0.75) brightness(1.02) contrast(0.98);
+}
 
 /* 签纸展开：大图 + 柔边 + 粗糙纸感 */
 #things.open-section.things-v6 .modal-has-photo .modal-visual-tall {

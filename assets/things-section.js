@@ -619,45 +619,45 @@ function getAudioCtx() {
 
 function playDrawSound() {
   const now = Date.now();
-  if (now - _drawAudioLast < 280) return;
+  if (now - _drawAudioLast < 380) return;
   _drawAudioLast = now;
   try {
     const ctx = getAudioCtx();
     if (!ctx) return;
     const t = ctx.currentTime;
-    const hits = [0, 0.042, 0.088, 0.134];
+    const hits = [0, 0.078, 0.162];
     hits.forEach((off, i) => {
-      const base = 920 + Math.random() * 180 - i * 55;
+      const base = 880 + Math.random() * 140 - i * 45;
       const o = ctx.createOscillator();
       const g = ctx.createGain();
       const hp = ctx.createBiquadFilter();
       hp.type = 'highpass';
-      hp.frequency.value = 520;
+      hp.frequency.value = 480;
       o.type = 'triangle';
       o.frequency.setValueAtTime(base, t + off);
-      o.frequency.exponentialRampToValueAtTime(base * 0.62, t + off + 0.028);
+      o.frequency.exponentialRampToValueAtTime(base * 0.68, t + off + 0.04);
       g.gain.setValueAtTime(0.0001, t + off);
-      g.gain.exponentialRampToValueAtTime(0.13 - i * 0.018, t + off + 0.002);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + off + 0.065);
+      g.gain.exponentialRampToValueAtTime(0.11 - i * 0.016, t + off + 0.004);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + off + 0.09);
       o.connect(hp).connect(g).connect(ctx.destination);
       o.start(t + off);
-      o.stop(t + off + 0.08);
-      const len = Math.floor(ctx.sampleRate * 0.018);
+      o.stop(t + off + 0.11);
+      const len = Math.floor(ctx.sampleRate * 0.022);
       const buf = ctx.createBuffer(1, len, ctx.sampleRate);
       const data = buf.getChannelData(0);
-      for (let j = 0; j < len; j++) data[j] = (Math.random() * 2 - 1) * (1 - j / len) ** 1.6;
+      for (let j = 0; j < len; j++) data[j] = (Math.random() * 2 - 1) * (1 - j / len) ** 1.5;
       const noise = ctx.createBufferSource();
       noise.buffer = buf;
       const bp = ctx.createBiquadFilter();
       bp.type = 'bandpass';
-      bp.frequency.value = 2100 + i * 120;
-      bp.Q.value = 2.4;
+      bp.frequency.value = 1950 + i * 90;
+      bp.Q.value = 2.1;
       const ng = ctx.createGain();
-      ng.gain.setValueAtTime(0.11 - i * 0.014, t + off);
-      ng.gain.exponentialRampToValueAtTime(0.0001, t + off + 0.035);
+      ng.gain.setValueAtTime(0.09 - i * 0.012, t + off);
+      ng.gain.exponentialRampToValueAtTime(0.0001, t + off + 0.05);
       noise.connect(bp).connect(ng).connect(ctx.destination);
       noise.start(t + off);
-      noise.stop(t + off + 0.045);
+      noise.stop(t + off + 0.06);
     });
   } catch (_) { /* optional audio */ }
 }

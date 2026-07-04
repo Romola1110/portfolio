@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/visual-section.css">
 <link rel="stylesheet" href="assets/dh-section.css">
-<link rel="stylesheet" href="assets/things-section.css?v=34">
+<link rel="stylesheet" href="assets/things-section.css?v=35">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=10">
 <style>
@@ -524,16 +524,33 @@ body.winter .hero-greeting::after{
   text-indent: 2em;
   min-height: 1.6em;
 }
-#about .about-type-line strong {
-  font-weight: 700;
+#about .about-fall-line {
+  text-indent: 2em;
+  min-height: 1.6em;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: aboutPetalFall 0.92s cubic-bezier(0.24, 0.82, 0.34, 1) forwards;
 }
-#about .about-type-line.typing::after {
-  content: '｜';
-  display: inline-block;
-  margin-left: 1px;
-  opacity: 0.65;
-  animation: blink 0.75s step-end infinite;
-  font-weight: 300;
+@keyframes aboutPetalFall {
+  0% {
+    opacity: 0;
+    transform: translateY(-24px) translateX(var(--petal-drift, 6px)) rotate(-2.8deg);
+    filter: blur(0.35px);
+  }
+  58% {
+    opacity: 0.94;
+    transform: translateY(4px) translateX(calc(var(--petal-drift, 6px) * -0.15)) rotate(0.5deg);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0);
+    filter: blur(0);
+  }
+}
+#about .about-type-line strong,
+#about .about-fall-line strong {
+  font-weight: 700;
 }
 
 .open-content {
@@ -2078,37 +2095,15 @@ function initAboutReveal() {
   );
   const paragraphs = desc.innerHTML.split(/<br\s*\/?>\s*<br\s*\/?>/i).map(p => strip(p).trim()).filter(Boolean);
   desc.innerHTML = '';
-  paragraphs.forEach((_, i) => {
+  paragraphs.forEach((text, i) => {
     const line = document.createElement('div');
-    line.className = 'about-type-line';
+    line.className = 'about-fall-line';
+    line.style.setProperty('--petal-drift', `${(Math.random() * 14 - 7).toFixed(1)}px`);
+    line.style.animationDelay = `${i * 0.78}s`;
     if (i > 0) line.style.marginTop = '1.15em';
+    line.innerHTML = boldify(text);
     desc.appendChild(line);
   });
-  const lines = desc.querySelectorAll('.about-type-line');
-  let pi = 0;
-  const typeLine = () => {
-    if (pi >= paragraphs.length) return;
-    const el = lines[pi];
-    const text = paragraphs[pi];
-    let ci = 0;
-    el.classList.add('typing');
-    const tick = () => {
-      if (ci >= text.length) {
-        el.classList.remove('typing');
-        el.innerHTML = boldify(text);
-        pi++;
-        if (pi < paragraphs.length) setTimeout(typeLine, 420);
-        return;
-      }
-      const ch = text[ci];
-      el.textContent = text.slice(0, ci + 1);
-      ci++;
-      const pause = /[，。；：！？、]/.test(ch) ? 320 : (/[\s]/.test(ch) ? 55 : 88);
-      setTimeout(tick, pause);
-    };
-    tick();
-  };
-  typeLine();
 }
 
 function revealSectionsInView(){
@@ -2347,7 +2342,7 @@ function closeLightbox() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="assets/visual-section.js"></script>
 <script src="assets/things/things-data.js?v=7"></script>
-<script src="assets/things-section.js?v=29"></script>
+<script src="assets/things-section.js?v=30"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const thingsRoot = document.getElementById('things');
