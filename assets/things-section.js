@@ -625,36 +625,40 @@ function playDrawSound() {
     const ctx = getAudioCtx();
     if (!ctx) return;
     const t = ctx.currentTime;
-    const hits = [0, 0.05, 0.11, 0.17];
+    const hits = [0, 0.042, 0.088, 0.134];
     hits.forEach((off, i) => {
+      const base = 920 + Math.random() * 180 - i * 55;
       const o = ctx.createOscillator();
       const g = ctx.createGain();
-      o.type = i % 2 ? 'triangle' : 'sine';
-      o.frequency.setValueAtTime(220 - i * 18, t + off);
-      o.frequency.exponentialRampToValueAtTime(110, t + off + 0.09);
+      const hp = ctx.createBiquadFilter();
+      hp.type = 'highpass';
+      hp.frequency.value = 520;
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(base, t + off);
+      o.frequency.exponentialRampToValueAtTime(base * 0.62, t + off + 0.028);
       g.gain.setValueAtTime(0.0001, t + off);
-      g.gain.exponentialRampToValueAtTime(0.11 - i * 0.015, t + off + 0.006);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + off + 0.14);
-      o.connect(g).connect(ctx.destination);
+      g.gain.exponentialRampToValueAtTime(0.13 - i * 0.018, t + off + 0.002);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + off + 0.065);
+      o.connect(hp).connect(g).connect(ctx.destination);
       o.start(t + off);
-      o.stop(t + off + 0.16);
+      o.stop(t + off + 0.08);
+      const len = Math.floor(ctx.sampleRate * 0.018);
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let j = 0; j < len; j++) data[j] = (Math.random() * 2 - 1) * (1 - j / len) ** 1.6;
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+      const bp = ctx.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.value = 2100 + i * 120;
+      bp.Q.value = 2.4;
+      const ng = ctx.createGain();
+      ng.gain.setValueAtTime(0.11 - i * 0.014, t + off);
+      ng.gain.exponentialRampToValueAtTime(0.0001, t + off + 0.035);
+      noise.connect(bp).connect(ng).connect(ctx.destination);
+      noise.start(t + off);
+      noise.stop(t + off + 0.045);
     });
-    const len = Math.floor(ctx.sampleRate * 0.04);
-    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
-    const data = buf.getChannelData(0);
-    for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
-    const noise = ctx.createBufferSource();
-    noise.buffer = buf;
-    const bp = ctx.createBiquadFilter();
-    bp.type = 'bandpass';
-    bp.frequency.value = 380;
-    bp.Q.value = 0.8;
-    const ng = ctx.createGain();
-    ng.gain.setValueAtTime(0.09, t);
-    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.07);
-    noise.connect(bp).connect(ng).connect(ctx.destination);
-    noise.start(t);
-    noise.stop(t + 0.08);
   } catch (_) { /* optional audio */ }
 }
 
@@ -666,19 +670,25 @@ function playTagChime() {
     const ctx = getAudioCtx();
     if (!ctx) return;
     const t = ctx.currentTime;
-    const freqs = [1568, 1976, 2349, 2794];
-    const pick = freqs[Math.floor(Math.random() * freqs.length)];
-    [pick, pick * 1.5, pick * 2.01].forEach((freq, i) => {
+    const pentatonic = [392, 440, 494, 587, 659, 784, 880, 988];
+    const root = pentatonic[Math.floor(Math.random() * pentatonic.length)];
+    const notes = [root, root * 1.25, root * 1.5].map((f) => f * (0.97 + Math.random() * 0.06));
+    notes.forEach((freq, i) => {
       const o = ctx.createOscillator();
       const g = ctx.createGain();
-      o.type = 'sine';
-      o.frequency.value = freq;
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.045 - i * 0.01, t + 0.008 + i * 0.004);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.55 + i * 0.08);
-      o.connect(g).connect(ctx.destination);
-      o.start(t + i * 0.018);
-      o.stop(t + 0.75);
+      const lp = ctx.createBiquadFilter();
+      lp.type = 'lowpass';
+      lp.frequency.value = 1800 - i * 180;
+      lp.Q.value = 0.6;
+      o.type = i === 0 ? 'triangle' : 'sine';
+      o.frequency.setValueAtTime(freq, t + i * 0.03);
+      o.frequency.exponentialRampToValueAtTime(freq * 0.998, t + i * 0.03 + 0.4);
+      g.gain.setValueAtTime(0.0001, t + i * 0.03);
+      g.gain.exponentialRampToValueAtTime(0.028 - i * 0.006, t + i * 0.03 + 0.035);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + i * 0.03 + 0.72 + i * 0.12);
+      o.connect(lp).connect(g).connect(ctx.destination);
+      o.start(t + i * 0.03);
+      o.stop(t + i * 0.03 + 0.95);
     });
   } catch (_) { /* optional audio */ }
 }
