@@ -3073,6 +3073,63 @@ body.winter #things.open-section.things-v6 .bucket-art {
 @media (max-width: 760px) {
   #things.open-section.things-v6 .curtain-stage { min-height: 360px; }
   #things.open-section.things-v6 .curtain-name { font-size: 0.58rem; }
+
+  /* 签筒/垂帘弹层：改为全屏固定，可滚动，避免堆叠裁切 */
+  #things.open-section.things-v6 .thing-modal,
+  #things.open-section.things-v6 .thing-modal.open,
+  #things.open-section.things-v6 .thing-modal.modal-at-draw,
+  #things.open-section.things-v6 .thing-modal.modal-at-draw.open,
+  #things.open-section.things-v6 .thing-modal.modal-at-curtain,
+  #things.open-section.things-v6 .thing-modal.modal-at-curtain.open {
+    position: fixed !important;
+    inset: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    z-index: 10050;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding: max(4.25rem, calc(env(safe-area-inset-top) + 3.5rem)) 0.65rem 1.5rem !important;
+  }
+
+  #things.open-section.things-v6 .thing-modal-box,
+  #things.open-section.things-v6 .modal-bookmark-only {
+    width: min(100%, 22.5rem);
+    max-width: min(100%, 22.5rem);
+    margin: 0 auto 1rem;
+  }
+
+  #things.open-section.things-v6 .bookmark-sheet--modal {
+    padding: 1.15rem 1rem 1rem;
+  }
+
+  #things.open-section.things-v6 .bookmark-sheet--modal .letter-sign-label {
+    font-size: 1.05rem;
+  }
+
+  #things.open-section.things-v6 .modal-has-photo .modal-visual-tall .thing-photo {
+    max-height: min(42dvh, 360px);
+  }
+
+  #things.open-section.things-v6 .things-welcome .verse {
+    font-size: 0.98rem;
+    line-height: 1.95;
+  }
+
+  #things.open-section.things-v6 .things-hero {
+    gap: 1rem;
+  }
+
+  #things.open-section.things-v6 .things-welcome {
+    padding: 1.15rem 0.95rem;
+  }
 }
 
 /* 四时暗纹深浅与色调 */
