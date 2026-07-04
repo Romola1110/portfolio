@@ -2470,8 +2470,8 @@ body.winter #things.open-section.things-v6 .things-welcome {
 
 #things.open-section.things-v6 .pattern-center {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 54%;
+  top: 56%;
   width: min(456px, 129%);
   height: min(456px, 129%);
   margin-left: min(-228px, -64.5%);
@@ -3133,4 +3133,48 @@ body.winter #things.open-section.things-v6 .pattern-rotor img { filter: grayscal
 #things.open-section.things-v6 .curtain-tag--chime .curtain-card {
   min-width: 58px;
   padding: 0.42rem 0.45rem 0.5rem;
+}
+
+/* v6 垂帘/抽签弹层字体 */
+#things.open-section.things-v6 .bookmark-sheet--modal .letter-sign-label {
+  font-family: var(--font-3);
+  font-size: 1.38rem;
+  letter-spacing: 0.24em;
+  color: color-mix(in srgb, var(--accent) 85%, var(--text));
+  margin-bottom: 0.7rem;
+}
+
+#things.open-section.things-v6 .bookmark-sheet--modal .letter-item-name {
+  font-family: var(--font-1);
+  font-size: 1.08rem;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  margin-top: 0.55rem;
+  margin-bottom: 0.2rem;
+}
+
+#things.open-section.things-v6 .bookmark-sheet--modal .letter-note,
+#things.open-section.things-v6 .bookmark-sheet--modal .letter-verse,
+#things.open-section.things-v6 .bookmark-sheet--modal .letter-blessing,
+#things.open-section.things-v6 .bookmark-sheet--modal .modal-story {
+  font-family: var(--font-2);
+  line-height: 1.85;
+}
+
+#things.open-section.things-v6 .modal-has-photo .bookmark-sheet--modal .letter-sign-label {
+  font-size: 1.28rem;
+}
+
+#things.open-section.things-v6 .modal-has-photo .bookmark-sheet--modal .letter-item-name {
+  font-size: 1rem;
+}
+
+#things.open-section.things-v6 .modal-has-photo .letter-note,
+#things.open-section.things-v6 .modal-has-photo .modal-story {
+  font-size: 0.82rem;
+  line-height: 1.72;
+}
+
+#things.open-section.things-v6 .modal-has-photo .letter-verse {
+  font-size: 0.88rem;
 }
