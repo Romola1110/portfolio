@@ -2467,28 +2467,31 @@ body.winter #things.open-section.things-v6 .things-welcome {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(720px, 200%);
-  height: min(720px, 200%);
-  margin: 0;
-  transform: translate(-50%, -50%);
+  width: min(520px, 148%);
+  height: min(520px, 148%);
+  margin-left: min(-260px, -74%);
+  margin-top: min(-260px, -74%);
   z-index: 0;
   opacity: 1;
   pointer-events: none;
 }
 
-#things.open-section.things-v6 .pattern-center img {
+#things.open-section.things-v6 .pattern-rotor {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+}
+
+#things.open-section.things-v6 .pattern-rotor img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center center;
-  transform: rotate(0deg);
-  transform-origin: 50% 50%;
-  opacity: 0.82;
-  transition: none;
+  pointer-events: none;
 }
 
-#things.open-section.things-v6 .draw-zone.is-drawing .pattern-center img {
+#things.open-section.things-v6 .draw-zone.is-drawing .pattern-rotor {
   animation: patternSpinCW 2.8s ease-in-out forwards;
 }
 
@@ -2698,13 +2701,9 @@ body.winter #things.open-section.things-v6 .things-welcome {
 #things.open-section.things-v6 .thread-sprite--chime {
   opacity: 1;
   filter: drop-shadow(0 2px 5px rgba(80, 70, 55, 0.14));
-  animation: threadChimeFloat 5.2s ease-in-out infinite;
+  animation: none;
   transform: translateX(-50%) rotate(0deg);
-}
-
-@keyframes threadChimeFloat {
-  0%, 100% { transform: translateX(-50%) translateY(0) rotate(0deg); }
-  50% { transform: translateX(-50%) translateY(-3px) rotate(0deg); }
+  margin-top: -2px;
 }
 
 @keyframes threadSpriteFloat {
@@ -2786,6 +2785,15 @@ body.winter #things.open-section.things-v6 .things-welcome {
   transform: translateX(-50%);
 }
 
+#things.open-section.things-v6 .thread-swing {
+  position: relative;
+  width: 0;
+  height: var(--thread-h, 100%);
+  transform-origin: top center;
+  animation: threadSway 4.5s ease-in-out infinite;
+  animation-delay: var(--sway-delay, 0s);
+}
+
 #things.open-section.things-v6 .thread-line {
   position: absolute;
   left: 0;
@@ -2793,7 +2801,6 @@ body.winter #things.open-section.things-v6 .things-welcome {
   width: 1px;
   height: var(--thread-h, 100%);
   background: linear-gradient(180deg, rgba(118, 98, 72, 0.5), rgba(118, 98, 72, 0.16) 90%, rgba(118, 98, 72, 0.1));
-  animation: threadSway 4.5s ease-in-out infinite;
   transform-origin: top center;
   z-index: 0;
 }
@@ -2954,12 +2961,26 @@ body.winter #things.open-section.things-v6 .things-welcome {
 
 #things.open-section.things-v6 .thing-modal.open {
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 6.5rem 1.25rem 1.5rem;
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+
+#things.open-section.things-v6 .thing-modal.modal-at-draw.open,
+#things.open-section.things-v6 .thing-modal.modal-at-draw {
+  align-items: flex-start;
+  justify-content: center;
+  padding: 6.5rem 1.25rem 1.5rem;
+}
+
+#things.open-section.things-v6 .thing-modal.modal-at-curtain.open,
+#things.open-section.things-v6 .thing-modal.modal-at-curtain {
+  align-items: flex-start;
+  justify-content: center;
+  top: var(--modal-top, 48%);
+  bottom: 0;
+  height: auto;
+  padding: 1.5rem 1.25rem 2rem;
 }
 
 #things.open-section.things-v6 .thing-modal {
@@ -3038,16 +3059,16 @@ body.winter #things.open-section.things-v6 .things-welcome {
 
 /* 四时暗纹深浅 */
 body.spring #things.open-section.things-v6 .pattern-center { opacity: 0.72; }
-body.spring #things.open-section.things-v6 .pattern-center img { filter: sepia(0.06) brightness(1.06); }
+body.spring #things.open-section.things-v6 .pattern-rotor img { filter: sepia(0.06) brightness(1.06); opacity: 0.82; }
 
 body.summer #things.open-section.things-v6 .pattern-center { opacity: 0.68; }
-body.summer #things.open-section.things-v6 .pattern-center img { filter: hue-rotate(-4deg) brightness(1.02) saturate(0.92); }
+body.summer #things.open-section.things-v6 .pattern-rotor img { filter: hue-rotate(-4deg) brightness(1.02) saturate(0.92); opacity: 0.82; }
 
 body.autumn #things.open-section.things-v6 .pattern-center { opacity: 0.74; }
-body.autumn #things.open-section.things-v6 .pattern-center img { filter: sepia(0.14) brightness(0.98); }
+body.autumn #things.open-section.things-v6 .pattern-rotor img { filter: sepia(0.14) brightness(0.98); opacity: 0.82; }
 
 body.winter #things.open-section.things-v6 .pattern-center { opacity: 0.66; }
-body.winter #things.open-section.things-v6 .pattern-center img { filter: grayscale(0.08) brightness(1.06); }
+body.winter #things.open-section.things-v6 .pattern-rotor img { filter: grayscale(0.08) brightness(1.06); opacity: 0.82; }
 
 /* 签纸展开：大图 + 柔边 + 粗糙纸感 */
 #things.open-section.things-v6 .modal-has-photo .modal-visual-tall {
