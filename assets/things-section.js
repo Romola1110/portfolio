@@ -508,10 +508,17 @@ function buildRopeLayout(items) {
 
 const THREAD_POSITIONS = [3.5, 11, 19, 28, 37, 46, 55, 64, 73, 82, 91];
 const THREAD_COUNT = THREAD_POSITIONS.length;
-const SLOT_GAP = 86;
+const SLOT_GAP = 96;
 
 function slotHeight(slot) {
+  if (slot.type === 'chime') return 68 * (slot.scale || 1);
   return 88 * (slot.scale || 1);
+}
+
+function threadSlotGap(threadIdx, prev, entry) {
+  const stride = SLOT_GAP + ((threadIdx * 11 + (prev?.y || 0)) % 6) * 14;
+  if (prev?.type === 'tag' && entry.type === 'tag') return stride + 10;
+  return stride;
 }
 
 function uniformScale(threadIdx, idx) {
@@ -534,39 +541,43 @@ function buildThreadLayout(threadIdx, items) {
   plan.push({ type: 'chime', placement: 'end' });
 
   const slots = [];
-  let y = 36;
+  let y = 36 + ((threadIdx * 9) % 5) * 8;
 
   plan.forEach((entry, idx) => {
     if (idx > 0) {
       const prev = slots[slots.length - 1];
-      y += Math.max(SLOT_GAP, slotHeight(prev) * 0.48 + 28);
+      y += Math.max(threadSlotGap(threadIdx, prev, entry), slotHeight(prev) * 0.5 + 30);
     }
 
-    const scale = uniformScale(threadIdx, idx);
+    const scale = entry.type === 'chime'
+      ? 1.04
+      : uniformScale(threadIdx, idx);
 
     const slot = {
       type: entry.type,
-      y: Math.round(y + ((threadIdx * 3 + idx * 5) % 9) - 4),
+      y: Math.round(y + ((threadIdx * 3 + idx * 5) % 7) - 3),
       z: entry.type === 'chime' ? 6 : entry.type === 'crane' ? 4 : 2 + (idx % 3),
       scale,
-      rot: ((threadIdx * 4 + idx * 6) % 13) - 6
+      rot: entry.type === 'chime' ? 0 : ((threadIdx * 4 + idx * 6) % 13) - 6
     };
     if (entry.item) slot.item = entry.item;
     if (entry.type === 'crane') slot.spriteId = `crane-${(threadIdx + entry.craneIdx) % 6 + 1}`;
     if (entry.type === 'chime') {
-      slot.spriteId = `chime-${(threadIdx + (entry.placement === 'mid' ? 2 : 0)) % 5 + 1}`;
+      slot.spriteId = `chime-${(threadIdx % 5) + 1}`;
     }
     slots.push(slot);
   });
 
-  const threadH = slots[slots.length - 1].y + slotHeight(slots[slots.length - 1]) + 64;
+  const last = slots[slots.length - 1];
+  const threadH = last.type === 'chime' ? last.y + 2 : last.y + slotHeight(last) + 24;
   return { slots, threadH };
 }
 
 function renderDecorSlot(slot, threadIdx, slotIdx) {
   const sprite = pickSprite(slot.type, threadIdx + slotIdx, slot.spriteId);
   const scale = slot.scale || 1;
-  const targetH = Math.round(54 * scale);
+  const baseH = slot.type === 'chime' ? 64 : 54;
+  const targetH = Math.round(baseH * (slot.type === 'chime' ? 1 : scale));
   const w = Math.round((sprite.w / Math.max(sprite.h, 1)) * targetH);
   const delay = ((threadIdx * 0.28 + slotIdx * 0.16) % 2.4).toFixed(2);
   return (
