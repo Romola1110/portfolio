@@ -2544,7 +2544,7 @@ body.winter #things.open-section.things-v6 .things-welcome {
 
 body.autumn #things.open-section.things-v6 .bucket-art {
   transform: translateX(-8px);
-  filter: drop-shadow(0 12px 20px rgba(80, 60, 40, 0.14)) sepia(0.24) saturate(1.08) hue-rotate(-10deg) brightness(1.1);
+  filter: drop-shadow(0 12px 20px rgba(80, 60, 40, 0.14)) sepia(0.18) saturate(1.06) hue-rotate(-14deg);
 }
 
 body.winter #things.open-section.things-v6 .bucket-art {
