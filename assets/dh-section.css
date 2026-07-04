@@ -1,6 +1,11 @@
 /* 数境人文 — scoped to #dh */
 #dh.open-section { max-width: 1120px; margin-bottom: 5rem; }
-#dh .section-desc { max-width: 640px; }
+#dh .section-desc {
+  max-width: 640px;
+  font-family: var(--font-2), 'LXGW WenKai', 'Noto Serif SC', serif;
+  font-size: 1.12rem;
+  line-height: 2;
+}
 
 #dh .dh-wrapper {
   margin-top: 1.5rem;

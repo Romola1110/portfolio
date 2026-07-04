@@ -8,8 +8,8 @@
 #images .album-text { flex: 1; text-align: left; }
 #images .album-row:nth-child(even) .album-text { text-align: right; }
 #images .a-tag { font-family: var(--english); font-size: 0.95rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; display: block; font-weight: 600; }
-#images .a-title { font-family: 'ZCOOL XiaoWei', var(--cn-title), var(--serif); font-size: 2.8rem; font-weight: 400; margin: 0 0 1.5rem; line-height: 1.3; letter-spacing: 0.08em; color: var(--text); }
-#images .a-desc { font-family: var(--cn-light); font-size: 1.05rem; color: color-mix(in srgb, var(--text) 70%, var(--soft)); line-height: 2; margin-bottom: 2rem; max-width: 540px; }
+#images .a-title { font-family: var(--font-3), 'YuweiFanti', var(--serif); font-size: 2.8rem; font-weight: 400; margin: 0 0 1.5rem; line-height: 1.3; letter-spacing: 0.08em; color: var(--text); }
+#images .a-desc { font-family: var(--font-2), 'LXGW WenKai', var(--serif); font-size: 1.05rem; color: color-mix(in srgb, var(--text) 70%, var(--soft)); line-height: 2; margin-bottom: 2rem; max-width: 540px; }
 #images .a-desc b, #images .a-desc .lead-line { color: var(--text); font-weight: 700; }
 #images .a-desc .lead-line { display: block; margin-bottom: 1rem; }
 #images .a-hint { font-family: var(--english); font-style: italic; font-size: 0.95rem; color: var(--soft); opacity: 0.85; }

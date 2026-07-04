@@ -1607,7 +1607,7 @@
   position: relative;
   z-index: 3;
   font-family: var(--font-2);
-  font-size: 1.02rem;
+  font-size: 1.1rem;
   line-height: 2.05;
   color: color-mix(in srgb, var(--text) 82%, var(--soft));
 }
@@ -2470,12 +2470,12 @@ body.winter #things.open-section.things-v6 .things-welcome {
 
 #things.open-section.things-v6 .pattern-center {
   position: absolute;
-  left: 53%;
-  top: 62%;
-  width: min(760px, 215%);
-  height: min(760px, 215%);
-  margin-left: min(-380px, -107.5%);
-  margin-top: min(-380px, -107.5%);
+  left: 50%;
+  top: 50%;
+  width: min(456px, 129%);
+  height: min(456px, 129%);
+  margin-left: min(-228px, -64.5%);
+  margin-top: min(-228px, -64.5%);
   z-index: 0;
   opacity: 1;
   pointer-events: none;
@@ -2579,7 +2579,7 @@ body.winter #things.open-section.things-v6 .things-welcome {
 #things.open-section.things-v6 .draw-btn {
   position: relative;
   font-family: var(--font-4);
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   letter-spacing: 0.28em;
   padding: 0;
   border: none;
