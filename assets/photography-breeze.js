@@ -87,10 +87,18 @@ function pbBindImages(root) {
     const fb = card.dataset.fallback;
     if (!img || !fb) return;
     img.addEventListener('error', () => {
-      if (img.dataset.fb) return;
-      img.dataset.fb = '1';
-      img.src = fb;
-    }, { once: true });
+      if (img.dataset.gaveUp === '1') return;
+      if (img.dataset.cdnRetry !== '1' && typeof window.sitePhotoCdnUrl === 'function') {
+        img.dataset.cdnRetry = '1';
+        img.src = window.sitePhotoCdnUrl(card.dataset.season, card.dataset.file);
+        return;
+      }
+      if (img.getAttribute('src') !== fb) {
+        img.src = fb;
+        return;
+      }
+      img.dataset.gaveUp = '1';
+    });
   });
 }
 

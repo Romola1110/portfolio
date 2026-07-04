@@ -41,9 +41,11 @@ function photoLocalSrc(season, file) {
   return `assets/photos/${season}/${file}`;
 }
 
-function photoFallbackSrc(season, seed, orient) {
-  if (orient === 'portrait') return `https://picsum.photos/seed/${season}-${seed}/400/520`;
-  return `https://picsum.photos/seed/${season}-${seed}/520/400`;
+function photoFallbackSrc(season, file) {
+  const cdn = (typeof window !== 'undefined' && window.sitePhotoCdnUrl)
+    ? window.sitePhotoCdnUrl(season, file)
+    : `https://cdn.jsdelivr.net/gh/Romola1110/portfolio@main/assets/photos/${season}/${file}`;
+  return cdn;
 }
 
 function titleFromFilename(file) {
@@ -66,7 +68,7 @@ function normalizeManifestEntry(entry, i, season) {
     orient,
     aspect,
     src: photoLocalSrc(season, file),
-    fallback: photoFallbackSrc(season, `${file}-${i}`, orient)
+    fallback: photoFallbackSrc(season, file)
   };
 }
 
