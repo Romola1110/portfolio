@@ -796,10 +796,10 @@ function initThingsV6(root) {
           <p class="letter-sign-label">${item.signLabel}</p>
           <div class="modal-visual modal-visual-tall">${renderThumb(item)}</div>
           <p class="letter-item-name">${item.name}</p>
-          <p class="letter-note">${item.note}</p>
-          <p class="letter-verse">「${item.verse}」</p>
+          ${item.note ? `<p class="letter-note">${item.note}</p>` : ''}
+          ${item.verse ? `<p class="letter-verse">「${item.verse}」</p>` : ''}
           ${item.blessing ? `<p class="letter-blessing">${item.blessing}</p>` : ''}
-          <p class="modal-story">${item.story}</p>
+          ${item.story ? `<p class="modal-story">${item.story}</p>` : ''}
           <div class="bookmark-modal-actions">
             <button type="button" class="bm-btn bm-fold">收起</button>
             <button type="button" class="bm-btn bm-again">再摇一支</button>
