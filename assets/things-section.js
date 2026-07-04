@@ -511,10 +511,11 @@ const THREAD_COUNT = THREAD_POSITIONS.length;
 const SLOT_GAP = 86;
 
 function slotHeight(slot) {
-  if (slot.type === 'tag') return 96 * (slot.scale || 1);
-  if (slot.type === 'crane') return 62 * (slot.scale || 0.48);
-  if (slot.type === 'chime') return 108 * (slot.scale || 1.3);
-  return 64;
+  return 88 * (slot.scale || 1);
+}
+
+function uniformScale(threadIdx, idx) {
+  return 0.94 + ((threadIdx * 5 + idx * 7) % 7) / 100;
 }
 
 function buildThreadLayout(threadIdx, items) {
@@ -544,16 +545,7 @@ function buildThreadLayout(threadIdx, items) {
       y += Math.max(SLOT_GAP, slotHeight(prev) * 0.48 + 28);
     }
 
-    let scale;
-    if (entry.type === 'tag') {
-      scale = 0.8 + ((threadIdx * 11 + entry.tagIdx * 17) % 24) / 100;
-    } else if (entry.type === 'crane') {
-      scale = 0.44 + (threadIdx % 3) * 0.03;
-    } else {
-      scale = entry.placement === 'end'
-        ? 1.42 + (threadIdx % 3) * 0.08
-        : 1.18 + (threadIdx % 2) * 0.06;
-    }
+    const scale = uniformScale(threadIdx, idx);
 
     const slot = {
       type: entry.type,
@@ -576,9 +568,7 @@ function buildThreadLayout(threadIdx, items) {
 
 function renderDecorSlot(slot, threadIdx, slotIdx) {
   const sprite = pickSprite(slot.type, threadIdx + slotIdx, slot.spriteId);
-  let w = Math.round((sprite?.w || 48) * slot.scale);
-  if (slot.type === 'chime') w = Math.max(w, Math.round(64 * slot.scale));
-  if (slot.type === 'crane') w = Math.min(w, Math.round(58 * slot.scale));
+  const w = Math.round(56 * (slot.scale || 1));
   const delay = ((threadIdx * 0.28 + slotIdx * 0.16) % 2.4).toFixed(2);
   return (
     `<img class="thread-sprite thread-sprite--${slot.type}" src="${sprite.file}" alt="" aria-hidden="true" ` +
@@ -606,7 +596,8 @@ function pickSprite(kind, seed, spriteId) {
 }
 
 let _audioCtx = null;
-let _audioLast = 0;
+let _drawAudioLast = 0;
+let _tagAudioLast = 0;
 
 function getAudioCtx() {
   const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -618,30 +609,49 @@ function getAudioCtx() {
 
 function playDrawSound() {
   const now = Date.now();
-  if (now - _audioLast < 500) return;
-  _audioLast = now;
+  if (now - _drawAudioLast < 280) return;
+  _drawAudioLast = now;
   try {
     const ctx = getAudioCtx();
     if (!ctx) return;
     const t = ctx.currentTime;
-    const o = ctx.createOscillator();
-    const g = ctx.createGain();
-    o.type = 'triangle';
-    o.frequency.setValueAtTime(180, t);
-    o.frequency.exponentialRampToValueAtTime(95, t + 0.12);
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.07, t + 0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
-    o.connect(g).connect(ctx.destination);
-    o.start(t);
-    o.stop(t + 0.2);
+    const hits = [0, 0.05, 0.11, 0.17];
+    hits.forEach((off, i) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = i % 2 ? 'triangle' : 'sine';
+      o.frequency.setValueAtTime(220 - i * 18, t + off);
+      o.frequency.exponentialRampToValueAtTime(110, t + off + 0.09);
+      g.gain.setValueAtTime(0.0001, t + off);
+      g.gain.exponentialRampToValueAtTime(0.11 - i * 0.015, t + off + 0.006);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + off + 0.14);
+      o.connect(g).connect(ctx.destination);
+      o.start(t + off);
+      o.stop(t + off + 0.16);
+    });
+    const len = Math.floor(ctx.sampleRate * 0.04);
+    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+    const noise = ctx.createBufferSource();
+    noise.buffer = buf;
+    const bp = ctx.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.frequency.value = 380;
+    bp.Q.value = 0.8;
+    const ng = ctx.createGain();
+    ng.gain.setValueAtTime(0.09, t);
+    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.07);
+    noise.connect(bp).connect(ng).connect(ctx.destination);
+    noise.start(t);
+    noise.stop(t + 0.08);
   } catch (_) { /* optional audio */ }
 }
 
 function playTagChime() {
   const now = Date.now();
-  if (now - _audioLast < 320) return;
-  _audioLast = now;
+  if (now - _tagAudioLast < 320) return;
+  _tagAudioLast = now;
   try {
     const ctx = getAudioCtx();
     if (!ctx) return;
@@ -784,6 +794,7 @@ function initThingsV6(root) {
   function drawLot() {
     if (drawing) return;
     drawing = true;
+    playDrawSound();
     drawZone?.classList.add('is-drawing');
     if (drawBtn) {
       drawBtn.disabled = true;
@@ -802,7 +813,6 @@ function initThingsV6(root) {
         lastDrawId = item.id;
         markCurtainDrawn(item.id);
         openBookmarkModal(item);
-        playDrawSound();
         if (drawBtn) {
           drawBtn.disabled = false;
           const inner = drawBtn.querySelector('.draw-btn-inner');
