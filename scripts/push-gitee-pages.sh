@@ -5,7 +5,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 GITEE_USER="${GITEE_USER:-}"
-REPO_NAME="${GITEE_REPO:-portfolio}"
+REPO_NAME="${GITEE_REPO:-portfolio2}"
 
 if [ -z "$GITEE_USER" ]; then
   echo "请先设置码云用户名，例如："

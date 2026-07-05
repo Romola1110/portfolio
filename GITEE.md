@@ -1,4 +1,4 @@
-# 码云 Gitee Pages 部署指南（portfolio 作品集）
+# 码云 Gitee Pages 部署指南（portfolio → 码云仓库 portfolio2）
 
 内地访问比 GitHub Pages 更稳定。本项目是纯静态网页（html/css/js/图片），一键部署到码云。
 
@@ -14,17 +14,17 @@ GITEE_USER=romola1110 GITEE_TOKEN=你的私人令牌 ./scripts/deploy-gitee-port
 脚本会自动：
 1. 构建约 240MB 静态站包（`_site`）
 2. 校验 `index.html` 与资源相对路径
-3. 查询/创建码云开源仓库 `portfolio`
+3. 查询/创建码云开源仓库 `portfolio2`
 4. 推送到 **`master`** 分支
 5. 尝试触发 Pages 部署
 
-**公开访问链接：** https://romola1110.gitee.io/portfolio/
+**公开访问链接：** https://romola1110.gitee.io/portfolio2/
 
 ## 首次需手动开启 Pages（仅一次）
 
 码云免费版 API 通常无法自动「启动」Pages，第一次请：
 
-1. 打开 https://gitee.com/romola1110/portfolio/pages
+1. 打开 https://gitee.com/romola1110/portfolio2/pages
 2. **部署分支**：`master`
 3. **部署目录**：`/`（根目录）
 4. **强制 HTTPS**：开启
@@ -53,7 +53,7 @@ Pages 设置里分支改选 `gh-pages` 即可。
 
 ## 简历里用码云链接
 
-- **内地 HR / 朋友**：`https://romola1110.gitee.io/portfolio/`
+- **内地 HR / 朋友**：`https://romola1110.gitee.io/portfolio2/`
 - **GitHub** 继续保留，海外访问用 `github.io`
 
 ## 常见问题
