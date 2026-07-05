@@ -38,14 +38,18 @@ const PHOTO_DIARY = [
 ];
 
 function photoLocalSrc(season, file) {
-  return `assets/photos/${season}/${file}`;
+  const local = `assets/photos/${season}/${file}`;
+  if (typeof window !== 'undefined' && typeof window.sitePickAssetSrc === 'function') {
+    return window.sitePickAssetSrc(local);
+  }
+  return local;
 }
 
 function photoFallbackSrc(season, file) {
-  const cdn = (typeof window !== 'undefined' && window.sitePhotoCdnUrl)
-    ? window.sitePhotoCdnUrl(season, file)
-    : `https://cdn.jsdelivr.net/gh/Romola1110/portfolio@main/assets/photos/${season}/${file}`;
-  return cdn;
+  if (typeof window !== 'undefined' && typeof window.sitePhotoCdnUrl === 'function') {
+    return window.sitePhotoCdnUrl(season, file);
+  }
+  return `https://fastly.jsdelivr.net/gh/Romola1110/portfolio@gh-pages/assets/photos/${season}/${file}`;
 }
 
 function titleFromFilename(file) {
