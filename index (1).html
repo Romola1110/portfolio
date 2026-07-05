@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=12">
 <link rel="stylesheet" href="assets/mobile.css?v=2">
-<script src="assets/cdn-fallback.js?v=3"></script>
+<script src="assets/cdn-fallback.js?v=4"></script>
 <style>
 /* ===== 字体 ===== */
 @font-face{font-family:'YuweiFanti';src:url('yuweifanti.ttf') format('truetype');font-display:swap;}
@@ -70,7 +70,7 @@ body.winter{
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:auto;}
 html,body{overflow-x:hidden; min-height:100vh;}
 body{
   font-family:var(--serif);color:var(--text);
@@ -1973,10 +1973,19 @@ function drawVineTree(forceRemeasure) {
     if(bfLead) { bfLead.style.offsetPath = cssPath; bfLead.style.offsetRotate = 'auto 90deg'; }
     if(bfFollow) { bfFollow.style.offsetPath = cssPath; bfFollow.style.offsetRotate = 'auto 90deg'; }
   }
-  updateScrollReveal();
+  updateScrollRevealNow();
 }
 
 function updateScrollReveal() {
+  if (updateScrollReveal._pending) return;
+  updateScrollReveal._pending = true;
+  requestAnimationFrame(() => {
+    updateScrollReveal._pending = false;
+    updateScrollRevealNow();
+  });
+}
+
+function updateScrollRevealNow() {
   const vineClip = document.getElementById('treeVineClip');
   const main = document.getElementById('main');
   if(!vineClip || !main) return;

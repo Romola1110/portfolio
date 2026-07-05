@@ -49,7 +49,7 @@ function photoFallbackSrc(season, file) {
   if (typeof window !== 'undefined' && typeof window.sitePhotoCdnUrl === 'function') {
     return window.sitePhotoCdnUrl(season, file);
   }
-  return `https://fastly.jsdelivr.net/gh/Romola1110/portfolio@gh-pages/assets/photos/${season}/${file}`;
+  return `https://fastly.jsdelivr.net/gh/Romola1110/portfolio@main/assets/photos/${season}/${file}`;
 }
 
 function titleFromFilename(file) {
