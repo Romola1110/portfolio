@@ -1,0 +1,55 @@
+name: Deploy to Gitee Pages
+
+# 免费 + 内地稳定：GitHub 改完自动同步到码云，无需本机上传 240MB
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: gitee-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy-gitee:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build static site
+        run: bash scripts/prepare-pages-bundle.sh
+
+      - name: Push to Gitee master
+        id: push
+        env:
+          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+        run: |
+          if [ -z "$GITEE_TOKEN" ]; then
+            echo "skipped=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::未配置 GITEE_TOKEN，跳过码云部署"
+            echo "请到 GitHub → Settings → Secrets → 添加 GITEE_TOKEN"
+            exit 0
+          fi
+          echo "skipped=false" >> "$GITHUB_OUTPUT"
+          cd _site
+          git init -b master
+          git config user.email "actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config http.postBuffer 524288000
+          git add -A
+          git commit -m "Deploy from GitHub Actions $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push --progress -f "https://romola1110:${GITEE_TOKEN}@gitee.com/romola1110/portfolio.git" master
+
+      - name: Trigger Gitee Pages rebuild
+        if: steps.push.outputs.skipped != 'true'
+        uses: yanglbme/gitee-pages-action@main
+        with:
+          gitee-username: romola1110
+          gitee-password: ${{ secrets.GITEE_TOKEN }}
+          gitee-repo: romola1110/portfolio
+          branch: master
+
+      - name: Done
+        if: steps.push.outputs.skipped != 'true'
+        run: echo "码云地址：https://romola1110.gitee.io/portfolio/"
