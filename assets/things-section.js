@@ -9,6 +9,14 @@ function getThingsData() {
     : [];
 }
 
+function thingsAssetSrc(path) {
+  if (!path) return path;
+  if (typeof window !== 'undefined' && typeof window.sitePickAssetSrc === 'function') {
+    return window.sitePickAssetSrc(path);
+  }
+  return path;
+}
+
 const TREE_SLOTS = [
   { x: 76, y: 6, rot: -4, str: 36, delay: '0s' },
   { x: 62, y: 14, rot: 6, str: 42, delay: '0.4s' },
@@ -91,7 +99,7 @@ function initThingsV5(root) {
   setupFlorals(floralBurst);
 
   function renderThumb(item) {
-    if (item.image) return `<img src="${item.image}" alt="${item.name}" loading="lazy">`;
+    if (item.image) return `<img src="${thingsAssetSrc(item.image)}" alt="${item.name}" loading="lazy">`;
     return `<div class="ph ${item.ph}">${item.glyph}</div>`;
   }
 
@@ -272,7 +280,7 @@ function initThingsV4(root) {
 
   function renderThumb(item) {
     if (item.image) {
-      return `<img src="${item.image}" alt="${item.name}" loading="lazy">`;
+      return `<img src="${thingsAssetSrc(item.image)}" alt="${item.name}" loading="lazy">`;
     }
     return `<div class="ph ${item.ph}">${item.glyph}</div>`;
   }
@@ -706,7 +714,7 @@ function initThingsV6(root) {
   const THREAD_COUNT = THREAD_POSITIONS.length;
 
   function renderThumb(item) {
-    if (item.image) return `<img class="thing-photo" src="${item.image}" alt="${item.name}" loading="lazy">`;
+    if (item.image) return `<img class="thing-photo" src="${thingsAssetSrc(item.image)}" alt="${item.name}" loading="lazy">`;
     return `<div class="ph ${item.ph}">${item.glyph}</div>`;
   }
 
@@ -912,7 +920,7 @@ function initThingsV3(root) {
   let drawing = false;
 
   function renderThumb(item) {
-    if (item.image) return `<img src="${item.image}" alt="${item.name}" loading="lazy">`;
+    if (item.image) return `<img src="${thingsAssetSrc(item.image)}" alt="${item.name}" loading="lazy">`;
     return `<div class="ph ${item.ph}">${item.glyph}</div>`;
   }
 
