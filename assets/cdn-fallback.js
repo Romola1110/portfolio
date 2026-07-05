@@ -1,7 +1,7 @@
-/* 内地访问：GitHub Pages 慢/被墙时，图片与静态资源走 jsDelivr 镜像（gh-pages 分支） */
+/* 内地访问：GitHub Pages 慢/被墙时，图片与静态资源走 jsDelivr 镜像（main 分支） */
 (function () {
   const REPO = 'Romola1110/portfolio';
-  const BRANCH = 'gh-pages';
+  const BRANCH = 'main';
   const CDN_HOSTS = [
     'https://fastly.jsdelivr.net/gh',
     'https://gcore.jsdelivr.net/gh',
