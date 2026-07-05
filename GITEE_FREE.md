@@ -17,7 +17,7 @@ https://gitee.com/profile/personal_access_tokens
 → Value 粘贴码云令牌 → 保存
 
 ### 3. 码云网页开启 Pages（只点一次）
-https://gitee.com/romola1110/portfolio2/pages  
+https://gitee.com/romola1110/portfolio/pages  
 → 部署分支 **`master`**，目录 **`/`**，HTTPS 开启  
 → 点 **「启动」**
 
@@ -27,7 +27,7 @@ https://gitee.com/romola1110/portfolio2/pages
 
 等 30～60 分钟（自动上传 240MB），完成后访问：
 
-## https://romola1110.gitee.io/portfolio2/
+## https://romola1110.gitee.io/portfolio/
 
 ---
 
@@ -43,7 +43,7 @@ https://gitee.com/romola1110/portfolio2/pages
 
 | 给谁 | 链接 |
 |------|------|
-| 内地 HR（稳定） | https://romola1110.gitee.io/portfolio2/ |
+| 内地 HR（稳定） | https://romola1110.gitee.io/portfolio/ |
 | 海外 / 备用 | https://romola1110.github.io/portfolio/ |
 
 **费用：0 元**（码云公开仓库 Pages 免费）

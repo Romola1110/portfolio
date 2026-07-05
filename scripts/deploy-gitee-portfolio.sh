@@ -9,7 +9,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 GITEE_USER="${GITEE_USER:-}"
 GITEE_TOKEN="${GITEE_TOKEN:-}"
-GITEE_REPO="${GITEE_REPO:-portfolio2}"
+GITEE_REPO="${GITEE_REPO:-portfolio}"
 GITEE_BRANCH="${GITEE_BRANCH:-master}"
 SITE_DIR="${SITE_DIR:-}"
 API="https://gitee.com/api/v5"

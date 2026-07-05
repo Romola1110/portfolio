@@ -39,7 +39,7 @@ jobs:
           git config http.postBuffer 524288000
           git add -A
           git commit -m "Deploy from GitHub Actions $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          git push --progress -f "https://romola1110:${GITEE_TOKEN}@gitee.com/romola1110/portfolio2.git" master
+          git push --progress -f "https://romola1110:${GITEE_TOKEN}@gitee.com/romola1110/portfolio.git" master
 
       - name: Trigger Gitee Pages rebuild
         if: steps.push.outputs.skipped != 'true'
@@ -47,9 +47,9 @@ jobs:
         with:
           gitee-username: romola1110
           gitee-password: ${{ secrets.GITEE_TOKEN }}
-          gitee-repo: romola1110/portfolio2
+          gitee-repo: romola1110/portfolio
           branch: master
 
       - name: Done
         if: steps.push.outputs.skipped != 'true'
-        run: echo "码云地址：https://romola1110.gitee.io/portfolio2/"
+        run: echo "码云地址：https://romola1110.gitee.io/portfolio/"

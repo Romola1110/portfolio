@@ -16,7 +16,7 @@
      则路径为 ~/Desktop/portfolio 】
 2. Gitee 账号信息：
    - 用户名：romola1110
-   - 仓库名：portfolio2（不存在则自动新建开源仓库，分支 master）
+   - 仓库名：portfolio（开源公开，分支 master）
    - Gitee 私人令牌：【去 https://gitee.com/profile/personal_access_tokens 生成，勾选 projects 权限】
 
 执行步骤：
@@ -26,9 +26,9 @@
    chmod +x scripts/deploy-gitee-portfolio.sh
    GITEE_USER=romola1110 GITEE_TOKEN=【令牌】 ./scripts/deploy-gitee-portfolio.sh
 4. 脚本会自动：构建 _site 静态包 → 查询/创建码云仓库 → 推送到 master → 尝试触发 Pages
-5. 若 API 无法自动启动 Pages，提示用户打开 https://gitee.com/romola1110/portfolio2/pages
+5. 若 API 无法自动启动 Pages，提示用户打开 https://gitee.com/romola1110/portfolio/pages
    部署分支 master，目录 /，强制 HTTPS，点击「启动」
-6. 输出公开链接：https://romola1110.gitee.io/portfolio2/
+6. 输出公开链接：https://romola1110.gitee.io/portfolio/
 7. 告知后续更新命令：GITEE_USER=romola1110 GITEE_TOKEN=令牌 ./scripts/update-gitee-pages.sh
 
 约束：
@@ -62,8 +62,8 @@ GITEE_USER=romola1110 GITEE_TOKEN=你的新令牌 ./scripts/update-gitee-pages.s
 
 ### 开启 Pages（仅第一次，网页点一下）
 
-https://gitee.com/romola1110/portfolio2/pages → 分支 `master` → 目录 `/` → **启动**
+https://gitee.com/romola1110/portfolio/pages → 分支 `master` → 目录 `/` → **启动**
 
 ### 简历链接
 
-https://romola1110.gitee.io/portfolio2/
+https://romola1110.gitee.io/portfolio/
