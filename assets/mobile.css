@@ -178,7 +178,7 @@
 
   html.is-mobile #overlay .title-row,
   #overlay .title-row {
-    letter-spacing: 0.08em !important;
+    letter-spacing: 0.11em !important;
     max-width: 100% !important;
     justify-content: center !important;
     flex-wrap: nowrap !important;
