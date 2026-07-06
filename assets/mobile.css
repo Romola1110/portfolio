@@ -1,4 +1,4 @@
-/* 手机端适配 v8 · 启封内联+导航单行+字号层级 */
+/* 手机端适配 v9 · 启封居中+点击修复+字号层级 */
 
 @media (max-width: 768px) {
   /* —— 性能：减弱全局装饰 —— */
@@ -21,7 +21,7 @@
   /* —— 统一大标题（关于我/文以载心/流影/数境/四时/物有灵犀/续音）—— */
   .section-title,
   #contactTitle {
-    font-size: clamp(1.62rem, 8vw, 2.05rem) !important;
+    font-size: clamp(1.72rem, 8.5vw, 2.32rem) !important;
     line-height: 1.3;
     letter-spacing: 0.1em;
     margin-bottom: 0.34rem;
@@ -34,12 +34,12 @@
     margin-bottom: 0.75rem;
   }
 
-  /* —— 启封页：#overlay 高优先级，防止基础样式撑破信笺 —— */
+  /* —— 启封页：垂直居中，季选钮绝对定位不压信笺 —— */
   html.is-mobile #overlay,
   #overlay {
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    padding: max(0.45rem, env(safe-area-inset-top)) 0.4rem 0.55rem !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: max(0.5rem, env(safe-area-inset-top)) 0.4rem max(0.5rem, env(safe-area-inset-bottom)) !important;
     overflow: hidden !important;
   }
 
@@ -50,7 +50,7 @@
     min-width: 0 !important;
     max-height: min(52vh, 320px) !important;
     padding: 0.5rem 0.38rem 0.45rem !important;
-    margin: 1rem auto 0 !important;
+    margin: 0 auto !important;
     overflow: hidden !important;
     box-sizing: border-box !important;
     box-shadow: 0 12px 32px rgba(120, 90, 60, 0.12), 0 4px 12px rgba(120, 90, 60, 0.08) !important;
@@ -178,7 +178,7 @@
     grid-template-rows: auto !important;
     align-items: center !important;
     gap: 0.25rem 0.32rem !important;
-    padding: 0.38rem 0.5rem max(0.34rem, env(safe-area-inset-bottom)) !important;
+    padding: 0.42rem 0.68rem max(0.36rem, env(safe-area-inset-bottom)) !important;
     overflow: visible;
   }
 
@@ -289,17 +289,17 @@
     max-width: 38vw;
   }
 
-  /* —— 大标题：上移、保留标点 —— */
+  /* —— 大标题：上移、减少顶部空白 —— */
   .hero {
     min-height: calc(100dvh - 6.25rem);
-    padding-top: 3.85rem;
+    padding-top: 2.55rem;
     padding-bottom: 1.5rem;
     justify-content: flex-start;
   }
 
   .hero-center {
     padding: 0 0.75rem;
-    transform: translateY(-0.85rem);
+    transform: translateY(-1.15rem);
   }
 
   .hero-title.hero-title-split {
@@ -359,10 +359,14 @@
     padding-top: 0;
   }
 
+  /* 手机端：区块默认可点（避免 IntersectionObserver 未触发导致整段 pointer-events:none） */
   .open-section {
     margin-bottom: 3rem;
     padding: 0 0.55rem;
     scroll-margin-top: 7.25rem;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
   }
 
   .section-desc {
@@ -380,8 +384,8 @@
   #about .section-desc {
     max-width: 100%;
     padding: 0.65rem 0.55rem;
-    font-size: 0.78rem;
-    line-height: 1.48;
+    font-size: 0.72rem;
+    line-height: 1.46;
   }
 
   #about .about-fall-line {
@@ -434,8 +438,28 @@
     font-size: 0.54rem;
   }
 
+  #words .binder-holes {
+    display: none !important;
+    pointer-events: none !important;
+  }
+
+  #words .word-card.align-left {
+    border-left: 2px solid var(--accent) !important;
+  }
+
+  #words .word-card.align-right {
+    border-right: 2px solid var(--accent) !important;
+  }
+
+  #words .word-card {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
+
   .word-card .hover-panel {
-    display: none;
+    display: none !important;
+    pointer-events: none !important;
   }
 
   .word-card::after {
@@ -751,6 +775,9 @@
     gap: 0.55rem;
     order: 2;
     padding: 0.1rem 0;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    touch-action: manipulation;
   }
 
   #images .album-photos .vis-card {
@@ -1108,9 +1135,9 @@
   #things .section-title,
   #contactTitle,
   .contact-frame h3 {
-    font-size: 2.08rem !important;
-    line-height: 1.26 !important;
-    max-width: 78% !important;
+    font-size: 2.32rem !important;
+    line-height: 1.24 !important;
+    max-width: 82% !important;
   }
 
   /* 文以载心：两级统一 —— 卡片大标题 / 引言+标签 */
