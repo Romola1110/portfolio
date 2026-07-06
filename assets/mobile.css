@@ -1,4 +1,4 @@
-/* 手机端适配 v6 · 启封尺寸/导航两行/标题与正文字号精调 */
+/* 手机端适配 v7 · 启封强制约束 / 导航 ROMOLA·PORTFOLIO / 字号终局覆盖 */
 
 @media (max-width: 768px) {
   /* —— 性能：减弱全局装饰 —— */
@@ -34,66 +34,120 @@
     margin-bottom: 0.75rem;
   }
 
-  /* —— 启封页：严格约束信笺尺寸与字号 —— */
+  /* —— 启封页：#overlay 高优先级，防止基础样式撑破信笺 —— */
+  html.is-mobile #overlay,
   #overlay {
-    align-items: flex-start;
-    padding: max(0.5rem, env(safe-area-inset-top)) 0.45rem 0.65rem;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    padding: max(0.45rem, env(safe-area-inset-top)) 0.4rem 0.55rem !important;
+    overflow: hidden !important;
   }
 
-  .letter-paper {
-    width: min(68vw, 218px);
-    max-width: 218px;
-    max-height: min(58vh, 360px);
-    padding: 0.68rem 0.56rem 0.62rem;
-    margin-top: 1.25rem;
-    overflow: hidden;
-    box-sizing: border-box;
+  html.is-mobile #overlay .letter-paper,
+  #overlay .letter-paper {
+    width: min(62vw, 196px) !important;
+    max-width: 196px !important;
+    min-width: 0 !important;
+    max-height: min(52vh, 320px) !important;
+    padding: 0.5rem 0.38rem 0.45rem !important;
+    margin: 1rem auto 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 12px 32px rgba(120, 90, 60, 0.12), 0 4px 12px rgba(120, 90, 60, 0.08) !important;
   }
 
-  .letter-content {
-    max-width: 100%;
+  html.is-mobile #overlay .letter-content,
+  #overlay .letter-content {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
   }
 
-  .main-title {
-    font-size: 0.92rem;
-    margin-bottom: 0.42rem;
-    gap: 0.08rem;
+  html.is-mobile #overlay .letter-corner,
+  #overlay .letter-corner {
+    width: 11px !important;
+    height: 11px !important;
   }
 
-  .title-row { letter-spacing: 0.06em; }
-  .title-row.top {
-    margin-left: 2%;
-    align-self: flex-start;
-    transform: translate(-1px, 1px);
-  }
-  .title-row.bottom {
-    margin-right: 2%;
-    align-self: flex-end;
-    transform: translate(1px, -1px);
+  html.is-mobile #overlay .letter-corner.tl,
+  #overlay .letter-corner.tl {
+    top: 5px !important;
+    left: 5px !important;
   }
 
-  .lunar-line {
-    font-size: 0.54rem;
-    margin-bottom: 0.36rem;
-    letter-spacing: 0.05em;
+  html.is-mobile #overlay .letter-corner.br,
+  #overlay .letter-corner.br {
+    bottom: 5px !important;
+    right: 5px !important;
   }
 
-  .poem-cn {
-    font-size: 0.56rem;
-    line-height: 1.42;
-    margin-bottom: 0.34rem;
+  html.is-mobile #overlay .main-title,
+  #overlay .main-title {
+    font-size: 0.78rem !important;
+    margin-bottom: 0.32rem !important;
+    gap: 0.06rem !important;
+    line-height: 1.15 !important;
+    max-width: 100% !important;
   }
 
-  .poem-en {
-    font-size: 0.5rem;
-    line-height: 1.36;
-    margin-bottom: 0.48rem;
+  html.is-mobile #overlay .title-row,
+  #overlay .title-row {
+    letter-spacing: 0.02em !important;
+    max-width: 100% !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
   }
 
-  .unfold-btn {
-    font-size: 0.56rem;
-    padding: 0.28rem 0.82rem;
-    letter-spacing: 0.1em;
+  html.is-mobile #overlay .title-char,
+  #overlay .title-char {
+    font-size: inherit !important;
+  }
+
+  html.is-mobile #overlay .lunar-line,
+  #overlay .lunar-line {
+    font-size: 0.5rem !important;
+    margin-bottom: 0.28rem !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.35 !important;
+  }
+
+  html.is-mobile #overlay .poem-cn,
+  #overlay .poem-cn {
+    font-size: 0.5rem !important;
+    line-height: 1.38 !important;
+    margin-bottom: 0.28rem !important;
+    letter-spacing: 0.03em !important;
+  }
+
+  html.is-mobile #overlay .poem-en,
+  #overlay .poem-en {
+    font-size: 0.44rem !important;
+    line-height: 1.32 !important;
+    margin-bottom: 0.38rem !important;
+    letter-spacing: 0.01em !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    max-width: 100% !important;
+  }
+
+  html.is-mobile #overlay .title-row.top,
+  #overlay .title-row.top {
+    margin-left: 1% !important;
+    transform: translate(-1px, 1px) !important;
+  }
+
+  html.is-mobile #overlay .title-row.bottom,
+  #overlay .title-row.bottom {
+    margin-right: 1% !important;
+    transform: translate(1px, -1px) !important;
+  }
+
+  html.is-mobile #overlay .unfold-btn,
+  #overlay .unfold-btn {
+    font-size: 0.5rem !important;
+    padding: 0.24rem 0.68rem !important;
+    letter-spacing: 0.08em !important;
+    max-width: 100% !important;
   }
 
   .season-mini-switcher {
@@ -131,9 +185,10 @@
     grid-row: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.06rem;
-    max-width: 46vw;
-    line-height: 1.18;
+    gap: 0.04rem;
+    min-width: 5.6rem;
+    max-width: 52vw;
+    line-height: 1.15;
   }
 
   nav.site-nav .logo-line {
@@ -144,14 +199,14 @@
   }
 
   nav.site-nav .logo-primary {
-    font-size: 0.62rem;
-    letter-spacing: 0.07em;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.08em;
   }
 
   nav.site-nav .logo-secondary {
-    font-size: 0.48rem;
-    letter-spacing: 0.045em;
-    opacity: 0.9;
+    font-size: 0.64rem !important;
+    letter-spacing: 0.06em;
+    opacity: 0.92;
   }
 
   nav.site-nav .nav-items {
@@ -454,8 +509,8 @@
 
   .contact-frame h3,
   #contactTitle {
-    font-size: 1.42rem !important;
-    letter-spacing: 0.12em;
+    font-size: 1.78rem !important;
+    letter-spacing: 0.1em;
     margin-bottom: 0.35rem;
   }
 
@@ -1039,6 +1094,65 @@
     padding-left: 0.35rem;
     padding-right: 0.35rem;
     padding-bottom: 2rem;
+  }
+
+  /* —— 字号终局覆盖（避免被后续规则冲掉）—— */
+  #about .section-title,
+  #words .section-title,
+  #images .section-title,
+  #dh .section-title,
+  #photography .section-title,
+  #things .section-title,
+  #contactTitle {
+    font-size: 1.78rem !important;
+    line-height: 1.28 !important;
+    max-width: 72% !important;
+  }
+
+  #words .card-title {
+    font-size: 0.72rem !important;
+    line-height: 1.24 !important;
+  }
+
+  #words .word-card {
+    padding: 0.65rem 0.52rem 0.58rem !important;
+  }
+
+  #images .a-desc,
+  #images .album-row.motion-row .a-desc,
+  #images #motionDescCN,
+  #images #motionDescEN,
+  #images #layoutDescEN,
+  #images #scriptDescEN {
+    font-size: 0.76rem !important;
+  }
+
+  #dh .section-desc,
+  #dh .dh-report,
+  #dh .dh-vibe-cn {
+    font-size: 0.76rem !important;
+  }
+
+  #dh .dh-project-title {
+    font-size: 1.36rem !important;
+  }
+
+  #dh .dh-vibe-tag {
+    font-size: 0.62rem !important;
+  }
+
+  #dh .dh-vibe-site {
+    font-size: 0.82rem !important;
+  }
+
+  #things.open-section.things-v6 .things-welcome {
+    font-size: 0.76rem !important;
+  }
+
+  .hero-title.hero-title-split {
+    font-size: 2.85rem !important;
+    gap: 0.48rem !important;
+    line-height: 1.42 !important;
   }
 }
 

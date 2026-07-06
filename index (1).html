@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=12">
 <link rel="stylesheet" href="assets/season-pendant.css?v=2">
-<link rel="stylesheet" href="assets/mobile.css?v=6">
+<link rel="stylesheet" href="assets/mobile.css?v=7">
 <script src="assets/mobile-perf.js?v=1"></script>
 <script src="assets/cdn-fallback.js?v=4"></script>
 <style>
@@ -73,6 +73,11 @@ body.winter{
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:auto;}
+@media (min-width: 769px) {
+  #treeVineClip { contain: layout paint style; }
+  .butterfly-layer { contain: layout style; }
+  #treeContainer { contain: layout style; }
+}
 html,body{overflow-x:hidden; min-height:100vh;}
 body{
   font-family:var(--serif);color:var(--text);
@@ -293,7 +298,7 @@ nav .logo{
   line-height:1.25;
 }
 nav .logo-line{display:block;}
-nav .logo-secondary{font-size:0.72em;letter-spacing:.14em;opacity:0.92;}
+nav .logo-secondary{font-size:0.72em;letter-spacing:.12em;opacity:0.92;}
 nav .nav-items{
   grid-column:2;
   justify-self:center;
@@ -996,9 +1001,9 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
 <!-- ========== 主页 ========== -->
 <main id="main">
 <nav class="site-nav">
-  <div class="logo" aria-label="Romola Creative Portfolio">
+  <div class="logo" aria-label="Romola Portfolio">
     <span class="logo-line logo-primary">ROMOLA</span>
-    <span class="logo-line logo-secondary">CREATIVE PORTFOLIO</span>
+    <span class="logo-line logo-secondary">· PORTFOLIO</span>
   </div>
   <ul class="nav-items">
     <li class="nav-item">
