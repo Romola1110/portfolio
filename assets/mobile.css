@@ -1,4 +1,4 @@
-/* 手机端适配 v7 · 启封强制约束 / 导航 ROMOLA·PORTFOLIO / 字号终局覆盖 */
+/* 手机端适配 v8 · 启封内联+导航单行+字号层级 */
 
 @media (max-width: 768px) {
   /* —— 性能：减弱全局装饰 —— */
@@ -151,15 +151,17 @@
   }
 
   .season-mini-switcher {
-    top: max(0.5rem, env(safe-area-inset-top));
-    right: 0.5rem;
-    gap: 0.3rem;
+    top: max(0.35rem, env(safe-area-inset-top)) !important;
+    right: 0.35rem !important;
+    left: auto !important;
+    gap: 0.18rem !important;
+    z-index: 12 !important;
   }
 
   .season-mini-btn {
-    width: 24px;
-    height: 24px;
-    font-size: 0.7rem;
+    width: 21px !important;
+    height: 21px !important;
+    font-size: 0.62rem !important;
   }
 
   #poemBg .poem-fragment {
@@ -169,26 +171,26 @@
 
   .deco-shape { opacity: 0.24; transform: scale(0.5); }
 
-  /* —— 导航：ROMOLA 两行放大 + 文影数物 2×2 —— */
+  /* —— 导航：ROMOLA 两行，文影数物单行同一水平线 —— */
   nav.site-nav {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-rows: auto auto;
-    align-items: start;
-    gap: 0.32rem 0.5rem;
-    padding: 0.42rem 0.62rem max(0.38rem, env(safe-area-inset-bottom));
+    display: grid !important;
+    grid-template-columns: minmax(4.6rem, auto) 1fr auto !important;
+    grid-template-rows: auto !important;
+    align-items: center !important;
+    gap: 0.25rem 0.32rem !important;
+    padding: 0.38rem 0.5rem max(0.34rem, env(safe-area-inset-bottom)) !important;
     overflow: visible;
   }
 
   nav.site-nav .logo {
-    grid-column: 1;
-    grid-row: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.04rem;
-    min-width: 5.6rem;
-    max-width: 52vw;
-    line-height: 1.15;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.02rem !important;
+    min-width: 4.6rem !important;
+    max-width: 34vw !important;
+    line-height: 1.12 !important;
   }
 
   nav.site-nav .logo-line {
@@ -199,43 +201,44 @@
   }
 
   nav.site-nav .logo-primary {
-    font-size: 0.78rem !important;
-    letter-spacing: 0.08em;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.07em;
   }
 
   nav.site-nav .logo-secondary {
-    font-size: 0.64rem !important;
-    letter-spacing: 0.06em;
+    font-size: 0.58rem !important;
+    letter-spacing: 0.05em;
     opacity: 0.92;
   }
 
   nav.site-nav .nav-items {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: auto auto;
-    gap: 0.32rem 0.55rem;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    justify-items: center;
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.18rem !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   nav.site-nav .nav-item {
-    width: 100%;
-    max-width: 9.5rem;
+    width: auto !important;
+    max-width: none !important;
   }
 
   nav.site-nav .nav-item a {
-    width: 100%;
-    padding: 0.16rem 0.55rem;
-    border-radius: 10px;
+    width: auto !important;
+    padding: 0.1rem 0.38rem !important;
+    border-radius: 9px;
   }
 
   nav.site-nav .nav-item .nav-cn {
-    font-size: 1.02rem;
-    line-height: 1.08;
+    font-size: 0.92rem !important;
+    line-height: 1.05;
   }
 
   nav.site-nav .nav-item .nav-en {
@@ -243,12 +246,12 @@
   }
 
   nav.site-nav .sundial-wrap {
-    grid-column: 2;
-    grid-row: 1;
+    grid-column: 3 !important;
+    grid-row: 1 !important;
     justify-self: end;
-    align-self: start;
-    gap: 0.38rem;
-    max-width: 42vw;
+    align-self: center !important;
+    gap: 0.32rem;
+    max-width: 36vw;
     flex-shrink: 0;
   }
 
@@ -1096,57 +1099,105 @@
     padding-bottom: 2rem;
   }
 
-  /* —— 字号终局覆盖（避免被后续规则冲掉）—— */
+  /* —— 字号终局覆盖 —— */
   #about .section-title,
   #words .section-title,
   #images .section-title,
   #dh .section-title,
   #photography .section-title,
   #things .section-title,
-  #contactTitle {
-    font-size: 1.78rem !important;
-    line-height: 1.28 !important;
-    max-width: 72% !important;
+  #contactTitle,
+  .contact-frame h3 {
+    font-size: 2.08rem !important;
+    line-height: 1.26 !important;
+    max-width: 78% !important;
   }
 
-  #words .card-title {
-    font-size: 0.72rem !important;
-    line-height: 1.24 !important;
-  }
-
+  /* 文以载心：两级统一 —— 卡片大标题 / 引言+标签 */
   #words .word-card {
-    padding: 0.65rem 0.52rem 0.58rem !important;
+    padding: 1.75rem 0.62rem 0.68rem !important;
+    position: relative !important;
   }
 
+  #words .card-ribbon {
+    top: 6px !important;
+    font-size: 0.56rem !important;
+    padding: 3px 9px !important;
+    max-width: 46% !important;
+    z-index: 3 !important;
+  }
+
+  #words .card-ribbon .feather-icon {
+    width: 9px !important;
+    height: 9px !important;
+  }
+
+  #words .card-title,
+  #words .card-title span {
+    font-size: 1.02rem !important;
+    font-weight: 600 !important;
+    line-height: 1.34 !important;
+    margin: 0 0 0.48rem 0 !important;
+    padding-top: 0.15rem !important;
+  }
+
+  #words .card-quote,
+  #words .card-quote-box .card-quote {
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+  }
+
+  #words .card-quote-box {
+    padding: 0 0.32rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  #words .quote-mark {
+    font-size: 1.4rem !important;
+    top: -3px !important;
+    opacity: 0.42 !important;
+  }
+
+  #words .card-tag {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.08em !important;
+    margin-top: 0.3rem !important;
+    display: block !important;
+    clear: both !important;
+  }
+
+  /* 流影：尺幅/帧频/幕布同级文案 */
   #images .a-desc,
   #images .album-row.motion-row .a-desc,
   #images #motionDescCN,
   #images #motionDescEN,
+  #images #layoutDescCN,
   #images #layoutDescEN,
+  #images #scriptDescCN,
   #images #scriptDescEN {
-    font-size: 0.76rem !important;
+    font-size: 0.84rem !important;
   }
 
   #dh .section-desc,
   #dh .dh-report,
   #dh .dh-vibe-cn {
-    font-size: 0.76rem !important;
+    font-size: 0.84rem !important;
   }
 
   #dh .dh-project-title {
-    font-size: 1.36rem !important;
+    font-size: 1.42rem !important;
   }
 
   #dh .dh-vibe-tag {
-    font-size: 0.62rem !important;
+    font-size: 0.58rem !important;
   }
 
   #dh .dh-vibe-site {
-    font-size: 0.82rem !important;
+    font-size: 0.78rem !important;
   }
 
   #things.open-section.things-v6 .things-welcome {
-    font-size: 0.76rem !important;
+    font-size: 0.84rem !important;
   }
 
   .hero-title.hero-title-split {
