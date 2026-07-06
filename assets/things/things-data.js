@@ -234,7 +234,7 @@ window.THINGS_DATA = [
     "signLabel": "清暑签",
     "note": "西瓜纹团扇。",
     "story": "一口西瓜甜，一扇清风来。",
-    "verse": "「长昼无尽，山海同辉」。",
+    "verse": "长昼无尽，山海同辉。",
     "blessing": "愿酷暑有凉，奔波有歇。",
     "ph": "ph-calligraphy",
     "glyph": "瓜",

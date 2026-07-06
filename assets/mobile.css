@@ -1,4 +1,4 @@
-/* 手机端适配 v12 · 修复启封层挡点击+竖向信笺排版 */
+/* 手机端适配 v13 · 启封字号间距+背景诗可见 */
 
 @media (max-width: 768px) {
   /* —— 性能：减弱全局装饰 —— */
@@ -78,22 +78,27 @@
     box-sizing: border-box !important;
     flex: 1 1 auto !important;
     width: 100% !important;
-    min-height: 100% !important;
+    min-height: 0 !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
     align-items: stretch !important;
-    gap: clamp(0.55rem, 2.4vw, 0.95rem) !important;
-    padding: clamp(0.35rem, 1.6vw, 0.65rem) 0 clamp(0.25rem, 1.2vw, 0.5rem) !important;
+    gap: 0 !important;
+    padding: clamp(0.2rem, 1vw, 0.4rem) 0 clamp(0.15rem, 0.8vw, 0.35rem) !important;
   }
 
   html.is-mobile #overlay .main-title,
   #overlay .main-title {
-    font-size: clamp(1.75rem, 8.2vw, 2.38rem) !important;
-    margin-bottom: 0 !important;
-    gap: clamp(0.12rem, 0.6vw, 0.28rem) !important;
-    line-height: 1.14 !important;
+    font-size: clamp(1.92rem, 9vw, 2.55rem) !important;
+    margin-bottom: clamp(0.72rem, 3vw, 0.95rem) !important;
+    gap: clamp(0.32rem, 1.4vw, 0.48rem) !important;
+    line-height: 1.12 !important;
     flex: 0 0 auto !important;
+  }
+
+  html.is-mobile #overlay .title-row,
+  #overlay .title-row {
+    letter-spacing: 0.11em !important;
   }
 
   html.is-mobile #overlay .title-row.top,
@@ -112,38 +117,47 @@
 
   html.is-mobile #overlay .lunar-line,
   #overlay .lunar-line {
-    font-size: clamp(0.82rem, 3.6vw, 1.02rem) !important;
-    margin-bottom: 0 !important;
+    font-size: clamp(0.9rem, 4vw, 1.12rem) !important;
+    margin-bottom: clamp(0.62rem, 2.6vw, 0.82rem) !important;
+    letter-spacing: 0.08em !important;
+    line-height: 1.42 !important;
     flex: 0 0 auto !important;
   }
 
   html.is-mobile #overlay .poem-cn,
   #overlay .poem-cn {
-    font-size: clamp(0.86rem, 3.8vw, 1.08rem) !important;
-    margin-bottom: 0 !important;
-    flex: 1 1 auto !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    font-size: clamp(0.98rem, 4.3vw, 1.22rem) !important;
+    line-height: 1.62 !important;
+    letter-spacing: 0.07em !important;
+    margin-bottom: clamp(0.52rem, 2.2vw, 0.72rem) !important;
+    flex: 0 0 auto !important;
+    display: block !important;
+    text-align: center !important;
   }
 
   html.is-mobile #overlay .poem-en,
   #overlay .poem-en {
-    font-size: clamp(0.76rem, 3.2vw, 0.96rem) !important;
-    margin-bottom: 0 !important;
-    flex: 1 1 auto !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    font-size: clamp(0.88rem, 3.8vw, 1.08rem) !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.03em !important;
+    margin-bottom: clamp(0.45rem, 1.8vw, 0.62rem) !important;
+    flex: 0 0 auto !important;
+    display: block !important;
+    text-align: center !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    max-width: 100% !important;
   }
 
   html.is-mobile #overlay .unfold-btn,
   #overlay .unfold-btn {
-    font-size: clamp(0.78rem, 3.2vw, 0.94rem) !important;
-    padding: clamp(0.42rem, 1.8vw, 0.55rem) clamp(1rem, 4.2vw, 1.45rem) !important;
+    font-size: clamp(0.82rem, 3.4vw, 0.98rem) !important;
+    padding: clamp(0.44rem, 1.9vw, 0.58rem) clamp(1.05rem, 4.4vw, 1.5rem) !important;
     margin-top: auto !important;
+    padding-top: clamp(0.35rem, 1.5vw, 0.55rem) !important;
     align-self: center !important;
     flex: 0 0 auto !important;
+    letter-spacing: 0.12em !important;
   }
   #overlay .letter-corner {
     width: clamp(14px, 4vw, 22px) !important;
@@ -164,7 +178,7 @@
 
   html.is-mobile #overlay .title-row,
   #overlay .title-row {
-    letter-spacing: 0.08em !important;
+    letter-spacing: 0.11em !important;
     max-width: 100% !important;
     justify-content: center !important;
     flex-wrap: nowrap !important;
@@ -189,9 +203,22 @@
     font-size: clamp(0.68rem, 2.8vw, 0.82rem) !important;
   }
 
-  #poemBg .poem-fragment {
-    font-size: 0.58rem !important;
-    opacity: 0.38 !important;
+  #poemBg .poem-fragment.depth-near {
+    font-size: clamp(0.72rem, 3.1vw, 0.88rem) !important;
+    opacity: 0.52 !important;
+    filter: blur(0) !important;
+  }
+
+  #poemBg .poem-fragment.depth-mid {
+    font-size: clamp(0.64rem, 2.8vw, 0.78rem) !important;
+    opacity: 0.44 !important;
+    filter: blur(0.8px) !important;
+  }
+
+  #poemBg .poem-fragment.depth-far {
+    font-size: clamp(0.58rem, 2.4vw, 0.7rem) !important;
+    opacity: 0.36 !important;
+    filter: blur(1.2px) !important;
   }
 
   .deco-shape { opacity: 0.24; transform: scale(0.5); }

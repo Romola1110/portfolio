@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=12">
 <link rel="stylesheet" href="assets/season-pendant.css?v=2">
-<link rel="stylesheet" href="assets/mobile.css?v=12">
+<link rel="stylesheet" href="assets/mobile.css?v=13">
 <script src="assets/mobile-perf.js?v=1"></script>
 <script src="assets/cdn-fallback.js?v=4"></script>
 <style>
@@ -1014,44 +1014,57 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
     max-width: 100% !important;
     flex: 1 1 auto !important;
     width: 100% !important;
-    min-height: 100% !important;
+    min-height: 0 !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
     align-items: stretch !important;
-    gap: clamp(0.55rem, 2.4vw, 0.95rem) !important;
-    padding: clamp(0.35rem, 1.6vw, 0.65rem) 0 clamp(0.25rem, 1.2vw, 0.5rem) !important;
+    gap: 0 !important;
+    padding: clamp(0.2rem, 1vw, 0.4rem) 0 clamp(0.15rem, 0.8vw, 0.35rem) !important;
   }
   #overlay .letter-corner { width: clamp(14px, 4vw, 22px) !important; height: clamp(14px, 4vw, 22px) !important; }
   #overlay .letter-corner.tl { top: clamp(6px, 1.8vw, 10px) !important; left: clamp(6px, 1.8vw, 10px) !important; }
   #overlay .letter-corner.br { bottom: clamp(6px, 1.8vw, 10px) !important; right: clamp(6px, 1.8vw, 10px) !important; }
   #overlay .main-title {
-    font-size: clamp(1.75rem, 8.2vw, 2.38rem) !important;
-    margin-bottom: 0 !important;
-    gap: clamp(0.12rem, 0.6vw, 0.28rem) !important;
-    line-height: 1.14 !important;
+    font-size: clamp(1.92rem, 9vw, 2.55rem) !important;
+    margin-bottom: clamp(0.72rem, 3vw, 0.95rem) !important;
+    gap: clamp(0.32rem, 1.4vw, 0.48rem) !important;
+    line-height: 1.12 !important;
   }
-  #overlay .title-row { letter-spacing: 0.08em !important; justify-content: center !important; }
+  #overlay .title-row { letter-spacing: 0.11em !important; justify-content: center !important; }
   #overlay .title-row.top { margin-left: 4% !important; align-self: flex-start !important; transform: translate(-2px, 2px) !important; }
   #overlay .title-row.bottom { margin-right: 4% !important; align-self: flex-end !important; transform: translate(2px, -2px) !important; }
-  #overlay .lunar-line { font-size: clamp(0.82rem, 3.6vw, 1.02rem) !important; margin-bottom: 0 !important; letter-spacing: 0.06em !important; }
-  #overlay .poem-cn { font-size: clamp(0.86rem, 3.8vw, 1.08rem) !important; line-height: 1.55 !important; margin-bottom: 0 !important; flex: 1 1 auto; display: flex; align-items: center; justify-content: center; }
-  #overlay .poem-en {
-    font-size: clamp(0.76rem, 3.2vw, 0.96rem) !important;
+  #overlay .lunar-line {
+    font-size: clamp(0.9rem, 4vw, 1.12rem) !important;
+    margin-bottom: clamp(0.62rem, 2.6vw, 0.82rem) !important;
+    letter-spacing: 0.08em !important;
     line-height: 1.42 !important;
-    margin-bottom: 0 !important;
-    flex: 1 1 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  }
+  #overlay .poem-cn {
+    font-size: clamp(0.98rem, 4.3vw, 1.22rem) !important;
+    line-height: 1.62 !important;
+    letter-spacing: 0.07em !important;
+    margin-bottom: clamp(0.52rem, 2.2vw, 0.72rem) !important;
+    display: block !important;
+    text-align: center !important;
+  }
+  #overlay .poem-en {
+    font-size: clamp(0.88rem, 3.8vw, 1.08rem) !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.03em !important;
+    margin-bottom: clamp(0.45rem, 1.8vw, 0.62rem) !important;
+    display: block !important;
+    text-align: center !important;
     word-break: break-word !important;
     overflow-wrap: anywhere !important;
   }
   #overlay .unfold-btn {
-    font-size: clamp(0.78rem, 3.2vw, 0.94rem) !important;
-    padding: clamp(0.42rem, 1.8vw, 0.55rem) clamp(1rem, 4.2vw, 1.45rem) !important;
+    font-size: clamp(0.82rem, 3.4vw, 0.98rem) !important;
+    padding: clamp(0.44rem, 1.9vw, 0.58rem) clamp(1.05rem, 4.4vw, 1.5rem) !important;
     margin-top: auto !important;
+    padding-top: clamp(0.35rem, 1.5vw, 0.55rem) !important;
     align-self: center !important;
+    letter-spacing: 0.12em !important;
     letter-spacing: 0.1em !important;
     border-width: 1px !important;
   }
@@ -2560,7 +2573,7 @@ function generatePoemBg(season){
   for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const cx=c*cw+cw/2,cy=r*rh+rh/2;if(cx>(mobileBg?18:22)&&cx<(mobileBg?82:78)&&cy>(mobileBg?18:25)&&cy<(mobileBg?82:75))continue;zones.push({top:[r*rh+1,r*rh+rh-2],left:[c*cw+1,c*cw+cw-3]});}
   const sz=[...zones].sort(()=>Math.random()-0.5),sp=[...poems].sort(()=>Math.random()-0.5);
   const deps=['depth-near','depth-mid','depth-far'];
-  const sizes=mobileBg?{'depth-near':[0.55,0.75],'depth-mid':[0.45,0.6],'depth-far':[0.38,0.5]}:{'depth-near':[1.4,2.0],'depth-mid':[1.0,1.4],'depth-far':[0.75,1.0]};
+  const sizes=mobileBg?{'depth-near':[0.72,0.9],'depth-mid':[0.62,0.78],'depth-far':[0.54,0.68]}:{'depth-near':[1.4,2.0],'depth-mid':[1.0,1.4],'depth-far':[0.75,1.0]};
   const poemLimit = mobileBg ? 10 : sz.length;
   sp.forEach((p,i)=>{if(i>=sz.length||i>=poemLimit)return;const el=document.createElement('div');const isEn=typeof p==='object';const dep=deps[i%3];el.className='poem-fragment '+dep+(isEn?' en':'');el.textContent=isEn?p.en:p;el.style.color=isEn?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.28)';const z=sz[i];el.style.fontSize=(sizes[dep][0]+Math.random()*(sizes[dep][1]-sizes[dep][0]))+'rem';el.style.top=(z.top[0]+Math.random()*(z.top[1]-z.top[0]))+'%';el.style.left=(z.left[0]+Math.random()*(z.left[1]-z.left[0]))+'%';const rot=(Math.random()-0.5)*15;el.style.transform=`rotate(${rot}deg)`;el.dataset.baseRotate=rot;bg.appendChild(el);});
 }
@@ -2695,7 +2708,7 @@ function closeLightbox() {
 <script src="assets/vendor/pdf.min.js?v=1"></script>
 <script src="assets/visual-section.js?v=2"></script>
 <script src="assets/mobile-tap.js?v=2"></script>
-<script src="assets/things/things-data.js?v=7"></script>
+<script src="assets/things/things-data.js?v=8"></script>
 <script src="assets/things-section.js?v=34"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
