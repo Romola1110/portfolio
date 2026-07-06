@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=12">
 <link rel="stylesheet" href="assets/season-pendant.css?v=2">
-<link rel="stylesheet" href="assets/mobile.css?v=7">
+<link rel="stylesheet" href="assets/mobile.css?v=8">
 <script src="assets/mobile-perf.js?v=1"></script>
 <script src="assets/cdn-fallback.js?v=4"></script>
 <style>
@@ -960,6 +960,111 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
 .image-lightbox.active { opacity: 1; visibility: visible; }
 .image-lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); transform: scale(0.95); transition: transform 0.3s ease; }
 .image-lightbox.active img { transform: scale(1); }
+
+/* ===== 手机端关键样式（内联确保启封/导航生效）===== */
+@media (max-width: 768px) {
+  #overlay {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: max(0.4rem, env(safe-area-inset-top)) 0.35rem 0.5rem !important;
+    overflow: hidden !important;
+  }
+  #overlay .season-mini-switcher {
+    position: absolute !important;
+    top: max(0.35rem, env(safe-area-inset-top)) !important;
+    right: 0.35rem !important;
+    left: auto !important;
+    z-index: 12 !important;
+    gap: 0.18rem !important;
+  }
+  #overlay .season-mini-btn {
+    width: 21px !important;
+    height: 21px !important;
+    font-size: 0.62rem !important;
+    border-width: 1px !important;
+  }
+  #overlay .letter-paper {
+    position: relative !important;
+    z-index: 5 !important;
+    width: min(70vw, 220px) !important;
+    max-width: 220px !important;
+    margin: 2.15rem auto 0 !important;
+    padding: 0.48rem 0.36rem 0.42rem !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  #overlay .letter-content { overflow: hidden !important; max-width: 100% !important; }
+  #overlay .letter-corner { width: 10px !important; height: 10px !important; }
+  #overlay .letter-corner.tl { top: 4px !important; left: 4px !important; }
+  #overlay .letter-corner.br { bottom: 4px !important; right: 4px !important; }
+  #overlay .main-title {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.24rem !important;
+    gap: 0.05rem !important;
+    line-height: 1.12 !important;
+  }
+  #overlay .title-row { letter-spacing: 0.01em !important; justify-content: center !important; }
+  #overlay .title-row.top { margin-left: 0 !important; transform: translate(-1px, 1px) !important; }
+  #overlay .title-row.bottom { margin-right: 0 !important; transform: translate(1px, -1px) !important; }
+  #overlay .lunar-line { font-size: 0.46rem !important; margin-bottom: 0.2rem !important; letter-spacing: 0.03em !important; }
+  #overlay .poem-cn { font-size: 0.46rem !important; line-height: 1.34 !important; margin-bottom: 0.22rem !important; }
+  #overlay .poem-en {
+    font-size: 0.4rem !important;
+    line-height: 1.28 !important;
+    margin-bottom: 0.32rem !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+  }
+  #overlay .unfold-btn {
+    font-size: 0.46rem !important;
+    padding: 0.2rem 0.55rem !important;
+    letter-spacing: 0.05em !important;
+    border-width: 1px !important;
+  }
+  nav.site-nav {
+    display: grid !important;
+    grid-template-columns: minmax(4.6rem, auto) 1fr auto !important;
+    grid-template-rows: auto !important;
+    align-items: center !important;
+    gap: 0.25rem 0.32rem !important;
+    padding: 0.38rem 0.5rem !important;
+  }
+  nav.site-nav .logo {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.02rem !important;
+    min-width: 4.6rem !important;
+    max-width: 34vw !important;
+    line-height: 1.12 !important;
+  }
+  nav.site-nav .logo-primary { font-size: 0.72rem !important; letter-spacing: 0.07em !important; }
+  nav.site-nav .logo-secondary { font-size: 0.58rem !important; letter-spacing: 0.05em !important; }
+  nav.site-nav .nav-items {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    gap: 0.18rem !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  nav.site-nav .nav-item { width: auto !important; max-width: none !important; }
+  nav.site-nav .nav-item a { width: auto !important; padding: 0.1rem 0.38rem !important; }
+  nav.site-nav .nav-item .nav-cn { font-size: 0.92rem !important; }
+  nav.site-nav .sundial-wrap {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    align-self: center !important;
+    max-width: 36vw !important;
+  }
+}
 
 </style>
 </head>
