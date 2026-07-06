@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=12">
 <link rel="stylesheet" href="assets/season-pendant.css?v=2">
-<link rel="stylesheet" href="assets/mobile.css?v=11">
+<link rel="stylesheet" href="assets/mobile.css?v=12">
 <script src="assets/mobile-perf.js?v=1"></script>
 <script src="assets/cdn-fallback.js?v=4"></script>
 <style>
@@ -963,13 +963,19 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
 
 /* ===== 手机端关键样式（内联确保启封/导航生效）===== */
 @media (max-width: 768px) {
-  #overlay {
+  #overlay:not(.is-dismissed) {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
     padding: max(0.5rem, env(safe-area-inset-top)) 0.4rem max(0.5rem, env(safe-area-inset-bottom)) !important;
     overflow: hidden !important;
+  }
+  #overlay.is-dismissed {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
   #overlay .season-mini-switcher {
     position: absolute !important;
@@ -995,7 +1001,7 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
     aspect-ratio: 5 / 8;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: stretch !important;
     margin: 0 auto !important;
     padding: clamp(1.15rem, 4.2vw, 1.75rem) clamp(0.95rem, 3.6vw, 1.3rem) clamp(1rem, 3.8vw, 1.5rem) !important;
     overflow-x: hidden !important;
@@ -1007,34 +1013,45 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
     overflow: visible !important;
     max-width: 100% !important;
     flex: 1 1 auto !important;
+    width: 100% !important;
+    min-height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: space-between !important;
+    align-items: stretch !important;
+    gap: clamp(0.55rem, 2.4vw, 0.95rem) !important;
+    padding: clamp(0.35rem, 1.6vw, 0.65rem) 0 clamp(0.25rem, 1.2vw, 0.5rem) !important;
   }
   #overlay .letter-corner { width: clamp(14px, 4vw, 22px) !important; height: clamp(14px, 4vw, 22px) !important; }
   #overlay .letter-corner.tl { top: clamp(6px, 1.8vw, 10px) !important; left: clamp(6px, 1.8vw, 10px) !important; }
   #overlay .letter-corner.br { bottom: clamp(6px, 1.8vw, 10px) !important; right: clamp(6px, 1.8vw, 10px) !important; }
   #overlay .main-title {
-    font-size: clamp(1.52rem, 7vw, 2.05rem) !important;
-    margin-bottom: clamp(0.38rem, 1.6vw, 0.62rem) !important;
-    gap: 0.08rem !important;
-    line-height: 1.18 !important;
+    font-size: clamp(1.75rem, 8.2vw, 2.38rem) !important;
+    margin-bottom: 0 !important;
+    gap: clamp(0.12rem, 0.6vw, 0.28rem) !important;
+    line-height: 1.14 !important;
   }
-  #overlay .title-row { letter-spacing: 0.04em !important; justify-content: center !important; }
-  #overlay .title-row.top { margin-left: 0 !important; transform: translate(-2px, 2px) !important; }
-  #overlay .title-row.bottom { margin-right: 0 !important; transform: translate(2px, -2px) !important; }
-  #overlay .lunar-line { font-size: clamp(0.82rem, 3.6vw, 1.02rem) !important; margin-bottom: clamp(0.38rem, 1.6vw, 0.58rem) !important; letter-spacing: 0.06em !important; }
-  #overlay .poem-cn { font-size: clamp(0.86rem, 3.8vw, 1.08rem) !important; line-height: 1.55 !important; margin-bottom: clamp(0.38rem, 1.6vw, 0.58rem) !important; }
+  #overlay .title-row { letter-spacing: 0.08em !important; justify-content: center !important; }
+  #overlay .title-row.top { margin-left: 4% !important; align-self: flex-start !important; transform: translate(-2px, 2px) !important; }
+  #overlay .title-row.bottom { margin-right: 4% !important; align-self: flex-end !important; transform: translate(2px, -2px) !important; }
+  #overlay .lunar-line { font-size: clamp(0.82rem, 3.6vw, 1.02rem) !important; margin-bottom: 0 !important; letter-spacing: 0.06em !important; }
+  #overlay .poem-cn { font-size: clamp(0.86rem, 3.8vw, 1.08rem) !important; line-height: 1.55 !important; margin-bottom: 0 !important; flex: 1 1 auto; display: flex; align-items: center; justify-content: center; }
   #overlay .poem-en {
     font-size: clamp(0.76rem, 3.2vw, 0.96rem) !important;
     line-height: 1.42 !important;
-    margin-bottom: clamp(0.42rem, 1.8vw, 0.68rem) !important;
+    margin-bottom: 0 !important;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     word-break: break-word !important;
     overflow-wrap: anywhere !important;
   }
   #overlay .unfold-btn {
     font-size: clamp(0.78rem, 3.2vw, 0.94rem) !important;
     padding: clamp(0.42rem, 1.8vw, 0.55rem) clamp(1rem, 4.2vw, 1.45rem) !important;
+    margin-top: auto !important;
+    align-self: center !important;
     letter-spacing: 0.1em !important;
     border-width: 1px !important;
   }
@@ -2611,9 +2628,12 @@ document.addEventListener('mousemove',e=>{if(!document.getElementById('main').cl
 document.addEventListener('click',e=>{if(!document.getElementById('main').classList.contains('visible'))return;if(e.target.closest('a,button,nav,.modal,label,input'))return;createClick(e.clientX,e.clientY);});
 
 document.getElementById('unfold').addEventListener('click',()=>{
-  document.getElementById('overlay').style.opacity=0;
+  const ov = document.getElementById('overlay');
+  ov.style.pointerEvents = 'none';
+  ov.style.opacity = '0';
   setTimeout(()=>{
-    document.getElementById('overlay').style.display='none';
+    ov.classList.add('is-dismissed');
+    ov.style.display = 'none';
     document.getElementById('main').classList.add('visible');
     drawVineTree(true);
     const s = document.body.className.split(' ')[0] || 'summer';
