@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=12">
 <link rel="stylesheet" href="assets/season-pendant.css?v=2">
-<link rel="stylesheet" href="assets/mobile.css?v=5">
+<link rel="stylesheet" href="assets/mobile.css?v=6">
 <script src="assets/mobile-perf.js?v=1"></script>
 <script src="assets/cdn-fallback.js?v=4"></script>
 <style>
@@ -289,7 +289,11 @@ nav .logo{
   letter-spacing:.18em;
   font-size:1rem;
   color:var(--soft);
+  display:block;
+  line-height:1.25;
 }
+nav .logo-line{display:block;}
+nav .logo-secondary{font-size:0.72em;letter-spacing:.14em;opacity:0.92;}
 nav .nav-items{
   grid-column:2;
   justify-self:center;
@@ -992,7 +996,10 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
 <!-- ========== 主页 ========== -->
 <main id="main">
 <nav class="site-nav">
-  <div class="logo">ROMOLA · CREATIVE PORTFOLIO</div>
+  <div class="logo" aria-label="Romola Creative Portfolio">
+    <span class="logo-line logo-primary">ROMOLA</span>
+    <span class="logo-line logo-secondary">CREATIVE PORTFOLIO</span>
+  </div>
   <ul class="nav-items">
     <li class="nav-item">
       <a href="#words">
@@ -2019,6 +2026,8 @@ function updateScrollReveal() {
 }
 
 function updateScrollRevealNow() {
+  if (window.matchMedia('(max-width: 768px)').matches) return;
+
   const vineClip = document.getElementById('treeVineClip');
   const main = document.getElementById('main');
   if(!vineClip || !main) return;
@@ -2028,25 +2037,33 @@ function updateScrollRevealNow() {
   const mainTop = main.offsetTop;
   const mainHeight = _vineLockedH ?? Math.max(main.offsetHeight, 1);
 
-  // 藤蔓前沿随滚动 1:1 延伸，停留在视口约 70% 高度
   const tipY = scrollY + viewH * 0.70 - mainTop;
   const visibleH = Math.max(0, Math.min(mainHeight, tipY));
-  vineClip.style.clipPath = `inset(0 0 ${mainHeight - visibleH}px 0)`;
+  const qVisibleH = Math.round(visibleH / 8) * 8;
 
   const pathStart = window._vineGuideStartY ?? 0;
   const pathEnd = window._vineGuideEndY ?? mainHeight;
   const pathSpan = Math.max(pathEnd - pathStart, 1);
   const pathPercent = Math.max(0, Math.min(100, ((tipY - pathStart) / pathSpan) * 100));
+  const qPathPercent = Math.round(pathPercent * 10) / 10;
+
+  if (qVisibleH !== updateScrollRevealNow._lastClip) {
+    vineClip.style.clipPath = `inset(0 0 ${mainHeight - qVisibleH}px 0)`;
+    updateScrollRevealNow._lastClip = qVisibleH;
+  }
 
   const bfLead = document.getElementById('bf2');
   const bfFollow = document.getElementById('bf1');
-  if(bfLead) {
-    bfLead.style.offsetDistance = pathPercent + '%';
-    bfLead.style.opacity = pathPercent > 0.5 ? '0.8' : '0';
-  }
-  if(bfFollow) {
-    bfFollow.style.offsetDistance = Math.max(0, pathPercent - 2.5) + '%';
-    bfFollow.style.opacity = pathPercent > 1 ? '0.74' : '0';
+  if (qPathPercent !== updateScrollRevealNow._lastPct) {
+    if(bfLead) {
+      bfLead.style.offsetDistance = qPathPercent + '%';
+      bfLead.style.opacity = qPathPercent > 0.5 ? '0.8' : '0';
+    }
+    if(bfFollow) {
+      bfFollow.style.offsetDistance = Math.max(0, qPathPercent - 2.5) + '%';
+      bfFollow.style.opacity = qPathPercent > 1 ? '0.74' : '0';
+    }
+    updateScrollRevealNow._lastPct = qPathPercent;
   }
 }
 
