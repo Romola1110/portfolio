@@ -11,7 +11,8 @@
 <link rel="stylesheet" href="assets/things-section.css?v=38">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=12">
-<link rel="stylesheet" href="assets/mobile.css?v=2">
+<link rel="stylesheet" href="assets/mobile.css?v=3">
+<script src="assets/mobile-perf.js?v=1"></script>
 <script src="assets/cdn-fallback.js?v=4"></script>
 <style>
 /* ===== 字体 ===== */
@@ -1816,6 +1817,13 @@ let _vineGeom = null;
 let _vineLockedH = null;
 
 function drawVineTree(forceRemeasure) {
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    const container = document.getElementById('treeVineClip');
+    if (container) container.innerHTML = '';
+    const treeContainer = document.getElementById('treeContainer');
+    if (treeContainer) treeContainer.style.height = '0';
+    return;
+  }
   const container = document.getElementById('treeVineClip');
   if(!container) return;
 
@@ -2020,6 +2028,7 @@ function updateScrollRevealNow() {
 window.addEventListener('scroll', updateScrollReveal, { passive: true });
 let vineDrawTimer;
 function scheduleDrawVineTree(forceRemeasure){
+  if (window.matchMedia('(max-width: 768px)').matches) return;
   clearTimeout(vineDrawTimer);
   vineDrawTimer=setTimeout(() => drawVineTree(!!forceRemeasure), 150);
 }
@@ -2160,7 +2169,9 @@ function generateEffect(s, layer) {
   layer.innerHTML = '';
   
   const w = window.innerWidth || document.documentElement.clientWidth || 1000;
-  const count = s === 'winter' ? 96 : (s === 'summer' ? 84 : (s === 'autumn' ? 44 : 94));
+  const mobileFx = window.matchMedia('(max-width: 768px)').matches;
+  const baseCount = s === 'winter' ? 96 : (s === 'summer' ? 84 : (s === 'autumn' ? 44 : 94));
+  const count = mobileFx ? Math.max(14, Math.floor(baseCount * 0.2)) : baseCount;
   const anims = ['fallStraight', 'fallLeft', 'fallRight'];
 
   for (let i = 0; i < count; i++) {
@@ -2262,12 +2273,14 @@ const poemFragments={spring:['桃之夭夭','灼灼其华','春眠不觉晓','�
 function generatePoemBg(season){
   const bg=document.getElementById('poemBg');if(!bg)return;bg.innerHTML='';
   const poems=poemFragments[season],zones=[];
-  const cols=6,rows=5,cw=100/cols,rh=100/rows;
-  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const cx=c*cw+cw/2,cy=r*rh+rh/2;if(cx>22&&cx<78&&cy>25&&cy<75)continue;zones.push({top:[r*rh+1,r*rh+rh-2],left:[c*cw+1,c*cw+cw-3]});}
+  const mobileBg = window.matchMedia('(max-width: 768px)').matches;
+  const cols=mobileBg?5:6,rows=mobileBg?4:5,cw=100/cols,rh=100/rows;
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const cx=c*cw+cw/2,cy=r*rh+rh/2;if(cx>(mobileBg?18:22)&&cx<(mobileBg?82:78)&&cy>(mobileBg?18:25)&&cy<(mobileBg?82:75))continue;zones.push({top:[r*rh+1,r*rh+rh-2],left:[c*cw+1,c*cw+cw-3]});}
   const sz=[...zones].sort(()=>Math.random()-0.5),sp=[...poems].sort(()=>Math.random()-0.5);
   const deps=['depth-near','depth-mid','depth-far'];
-  const sizes={'depth-near':[1.4,2.0],'depth-mid':[1.0,1.4],'depth-far':[0.75,1.0]};
-  sp.forEach((p,i)=>{if(i>=sz.length)return;const el=document.createElement('div');const isEn=typeof p==='object';const dep=deps[i%3];el.className='poem-fragment '+dep+(isEn?' en':'');el.textContent=isEn?p.en:p;el.style.color=isEn?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.28)';const z=sz[i];el.style.fontSize=(sizes[dep][0]+Math.random()*(sizes[dep][1]-sizes[dep][0]))+'rem';el.style.top=(z.top[0]+Math.random()*(z.top[1]-z.top[0]))+'%';el.style.left=(z.left[0]+Math.random()*(z.left[1]-z.left[0]))+'%';const rot=(Math.random()-0.5)*15;el.style.transform=`rotate(${rot}deg)`;el.dataset.baseRotate=rot;bg.appendChild(el);});
+  const sizes=mobileBg?{'depth-near':[0.55,0.75],'depth-mid':[0.45,0.6],'depth-far':[0.38,0.5]}:{'depth-near':[1.4,2.0],'depth-mid':[1.0,1.4],'depth-far':[0.75,1.0]};
+  const poemLimit = mobileBg ? 10 : sz.length;
+  sp.forEach((p,i)=>{if(i>=sz.length||i>=poemLimit)return;const el=document.createElement('div');const isEn=typeof p==='object';const dep=deps[i%3];el.className='poem-fragment '+dep+(isEn?' en':'');el.textContent=isEn?p.en:p;el.style.color=isEn?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.28)';const z=sz[i];el.style.fontSize=(sizes[dep][0]+Math.random()*(sizes[dep][1]-sizes[dep][0]))+'rem';el.style.top=(z.top[0]+Math.random()*(z.top[1]-z.top[0]))+'%';el.style.left=(z.left[0]+Math.random()*(z.left[1]-z.left[0]))+'%';const rot=(Math.random()-0.5)*15;el.style.transform=`rotate(${rot}deg)`;el.dataset.baseRotate=rot;bg.appendChild(el);});
 }
 const decorations={spring:['<ellipse cx="50" cy="50" rx="40" ry="32" fill="#E5A9C0" opacity="0.3"/>','<path d="M50,15 C70,25 75,55 60,75 C45,85 25,70 25,50 C25,30 35,15 50,15Z" fill="#F5DDEB" opacity="0.4"/>','<ellipse cx="50" cy="50" rx="38" ry="28" fill="#DCE8F5" opacity="0.4"/>','<path d="M50,20 Q75,35 70,55 Q60,80 40,70 Q20,55 30,35Z" fill="#E2DDF2" opacity="0.4"/>'],summer:['<path d="M5,55 Q25,40 45,55 T85,55" stroke="#C8E2D5" stroke-width="4" fill="none" opacity="0.5"/>','<ellipse cx="50" cy="55" rx="42" ry="30" fill="#E2F0EA" opacity="0.4"/>','<path d="M50,25 Q65,40 60,60 Q55,80 40,70 Q30,55 35,40Z" fill="#DCECE0" opacity="0.5"/>','<path d="M10,60 Q30,45 50,60 Q70,75 90,60" stroke="#90B0A0" stroke-width="3" fill="none" opacity="0.4"/>'],autumn:['<defs><filter id="af1"><feGaussianBlur stdDeviation="1.5"/></filter></defs><g filter="url(#af1)" opacity="0.5"><path d="M50,10 C53,18 58,20 65,15 C62,25 68,30 75,28 C70,35 72,42 68,48 C62,45 56,48 52,55 L50,90 L48,55 C44,48 38,45 32,48 C28,42 30,35 25,28 C32,30 38,25 35,15 C42,20 47,18 50,10Z" fill="#E8C59B"/></g>','<defs><filter id="af2"><feGaussianBlur stdDeviation="2.5"/></filter></defs><g filter="url(#af2)" opacity="0.4"><path d="M50,8 C54,16 60,18 68,12 C64,24 70,30 78,27 C72,36 74,44 70,50 C63,46 56,50 52,58 L50,92 L48,58 C44,50 37,46 30,50 C26,44 28,36 22,27 C30,30 36,24 32,12 C40,18 46,16 50,8Z" fill="#F6D3B6"/></g>','<defs><filter id="af3"><feGaussianBlur stdDeviation="2"/></filter></defs><path d="M50,15 C65,20 75,35 72,50 C68,65 55,72 45,68 C30,62 22,45 28,32Z" fill="#F3E2CE" opacity="0.5" filter="url(#af3)"/>','<defs><filter id="af4"><feGaussianBlur stdDeviation="1"/></filter></defs><g filter="url(#af4)" opacity="0.55"><path d="M50,15 C52,20 56,22 62,18 C59,26 63,30 68,28 C64,34 66,38 63,42 C58,40 54,42 52,47 L50,75 L48,47 C46,42 42,40 37,42 C34,38 36,34 32,28 C37,30 41,26 38,18Z" fill="#D08040"/></g>'],winter:['<defs><filter id="wf1"><feGaussianBlur stdDeviation="6"/></filter></defs><ellipse cx="50" cy="50" rx="38" ry="32" fill="#DCE4EC" opacity="0.5" filter="url(#wf1)"/>','<defs><filter id="wf2"><feGaussianBlur stdDeviation="4"/></filter></defs><g filter="url(#wf2)" opacity="0.4"><polygon points="50,15 58,35 78,35 62,48 68,68 50,55 32,68 38,48 22,35 42,35" fill="#E6E8F0"/></g>','<defs><filter id="wf3"><feGaussianBlur stdDeviation="5"/></filter></defs><ellipse cx="50" cy="55" rx="35" ry="28" fill="#C8D6E8" opacity="0.4" filter="url(#wf3)"/>','<defs><filter id="wf4"><feGaussianBlur stdDeviation="3"/></filter></defs><g filter="url(#wf4)" opacity="0.4"><polygon points="50,20 55,32 68,32 58,42 62,55 50,47 38,55 42,42 32,32 45,32" fill="#A8B8D0"/></g>']};
 function updateOverlayDecos(s){for(let i=0;i<4;i++){const el=document.getElementById('deco'+(i+1));if(el)el.innerHTML=decorations[s][i];}}
@@ -2373,7 +2386,7 @@ function closeLightbox() {
 <script src="assets/vendor/pdf.min.js?v=1"></script>
 <script src="assets/visual-section.js?v=2"></script>
 <script src="assets/things/things-data.js?v=7"></script>
-<script src="assets/things-section.js?v=32"></script>
+<script src="assets/things-section.js?v=33"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const thingsRoot = document.getElementById('things');
