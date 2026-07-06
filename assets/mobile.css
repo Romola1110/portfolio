@@ -1,4 +1,4 @@
-/* 手机端适配 v9 · 启封居中+点击修复+字号层级 */
+/* 手机端适配 v10 · 启封放大+触摸点击兜底 */
 
 @media (max-width: 768px) {
   /* —— 性能：减弱全局装饰 —— */
@@ -45,11 +45,11 @@
 
   html.is-mobile #overlay .letter-paper,
   #overlay .letter-paper {
-    width: min(62vw, 196px) !important;
-    max-width: 196px !important;
+    width: min(88vw, 380px) !important;
+    max-width: 380px !important;
     min-width: 0 !important;
-    max-height: min(52vh, 320px) !important;
-    padding: 0.5rem 0.38rem 0.45rem !important;
+    max-height: min(78vh, 560px) !important;
+    padding: clamp(0.85rem, 3.5vw, 1.35rem) clamp(0.72rem, 3.2vw, 1.15rem) clamp(0.78rem, 3vw, 1.05rem) !important;
     margin: 0 auto !important;
     overflow: hidden !important;
     box-sizing: border-box !important;
@@ -65,28 +65,28 @@
 
   html.is-mobile #overlay .letter-corner,
   #overlay .letter-corner {
-    width: 11px !important;
-    height: 11px !important;
+    width: clamp(14px, 4vw, 22px) !important;
+    height: clamp(14px, 4vw, 22px) !important;
   }
 
   html.is-mobile #overlay .letter-corner.tl,
   #overlay .letter-corner.tl {
-    top: 5px !important;
-    left: 5px !important;
+    top: clamp(6px, 1.8vw, 10px) !important;
+    left: clamp(6px, 1.8vw, 10px) !important;
   }
 
   html.is-mobile #overlay .letter-corner.br,
   #overlay .letter-corner.br {
-    bottom: 5px !important;
-    right: 5px !important;
+    bottom: clamp(6px, 1.8vw, 10px) !important;
+    right: clamp(6px, 1.8vw, 10px) !important;
   }
 
   html.is-mobile #overlay .main-title,
   #overlay .main-title {
-    font-size: 0.78rem !important;
-    margin-bottom: 0.32rem !important;
-    gap: 0.06rem !important;
-    line-height: 1.15 !important;
+    font-size: clamp(1.28rem, 6.2vw, 2.15rem) !important;
+    margin-bottom: clamp(0.38rem, 1.6vw, 0.62rem) !important;
+    gap: 0.08rem !important;
+    line-height: 1.18 !important;
     max-width: 100% !important;
   }
 
@@ -105,25 +105,25 @@
 
   html.is-mobile #overlay .lunar-line,
   #overlay .lunar-line {
-    font-size: 0.5rem !important;
-    margin-bottom: 0.28rem !important;
-    letter-spacing: 0.04em !important;
-    line-height: 1.35 !important;
+    font-size: clamp(0.72rem, 3.2vw, 1rem) !important;
+    margin-bottom: clamp(0.32rem, 1.4vw, 0.52rem) !important;
+    letter-spacing: 0.05em !important;
+    line-height: 1.38 !important;
   }
 
   html.is-mobile #overlay .poem-cn,
   #overlay .poem-cn {
-    font-size: 0.5rem !important;
-    line-height: 1.38 !important;
-    margin-bottom: 0.28rem !important;
-    letter-spacing: 0.03em !important;
+    font-size: clamp(0.78rem, 3.4vw, 1.05rem) !important;
+    line-height: 1.48 !important;
+    margin-bottom: clamp(0.32rem, 1.4vw, 0.52rem) !important;
+    letter-spacing: 0.04em !important;
   }
 
   html.is-mobile #overlay .poem-en,
   #overlay .poem-en {
-    font-size: 0.44rem !important;
-    line-height: 1.32 !important;
-    margin-bottom: 0.38rem !important;
+    font-size: clamp(0.68rem, 2.9vw, 0.92rem) !important;
+    line-height: 1.42 !important;
+    margin-bottom: clamp(0.42rem, 1.8vw, 0.68rem) !important;
     letter-spacing: 0.01em !important;
     word-break: break-word !important;
     overflow-wrap: anywhere !important;
@@ -144,24 +144,24 @@
 
   html.is-mobile #overlay .unfold-btn,
   #overlay .unfold-btn {
-    font-size: 0.5rem !important;
-    padding: 0.24rem 0.68rem !important;
-    letter-spacing: 0.08em !important;
+    font-size: clamp(0.72rem, 3.1vw, 0.95rem) !important;
+    padding: clamp(0.32rem, 1.4vw, 0.48rem) clamp(0.85rem, 3.8vw, 1.2rem) !important;
+    letter-spacing: 0.1em !important;
     max-width: 100% !important;
   }
 
   .season-mini-switcher {
-    top: max(0.35rem, env(safe-area-inset-top)) !important;
-    right: 0.35rem !important;
+    top: max(0.4rem, env(safe-area-inset-top)) !important;
+    right: 0.45rem !important;
     left: auto !important;
-    gap: 0.18rem !important;
+    gap: 0.28rem !important;
     z-index: 12 !important;
   }
 
   .season-mini-btn {
-    width: 21px !important;
-    height: 21px !important;
-    font-size: 0.62rem !important;
+    width: clamp(26px, 7vw, 32px) !important;
+    height: clamp(26px, 7vw, 32px) !important;
+    font-size: clamp(0.68rem, 2.8vw, 0.82rem) !important;
   }
 
   #poemBg .poem-fragment {
@@ -1152,6 +1152,18 @@
     padding: 3px 9px !important;
     max-width: 46% !important;
     z-index: 3 !important;
+    background: var(--accent) !important;
+    color: color-mix(in srgb, var(--text) 88%, #000) !important;
+  }
+
+  #words .word-card.align-left .card-ribbon::before {
+    border-top-color: var(--accent) !important;
+    filter: brightness(0.82) !important;
+  }
+
+  #words .word-card.align-right .card-ribbon::before {
+    border-top-color: var(--accent) !important;
+    filter: brightness(0.82) !important;
   }
 
   #words .card-ribbon .feather-icon {
@@ -1191,6 +1203,7 @@
     margin-top: 0.3rem !important;
     display: block !important;
     clear: both !important;
+    color: var(--accent) !important;
   }
 
   /* 流影：尺幅/帧频/幕布同级文案 */

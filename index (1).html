@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=12">
 <link rel="stylesheet" href="assets/season-pendant.css?v=2">
-<link rel="stylesheet" href="assets/mobile.css?v=9">
+<link rel="stylesheet" href="assets/mobile.css?v=10">
 <script src="assets/mobile-perf.js?v=1"></script>
 <script src="assets/cdn-fallback.js?v=4"></script>
 <style>
@@ -980,48 +980,65 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
     gap: 0.18rem !important;
   }
   #overlay .season-mini-btn {
-    width: 21px !important;
-    height: 21px !important;
-    font-size: 0.62rem !important;
+    width: clamp(26px, 7vw, 32px) !important;
+    height: clamp(26px, 7vw, 32px) !important;
+    font-size: clamp(0.68rem, 2.8vw, 0.82rem) !important;
     border-width: 1px !important;
   }
   #overlay .letter-paper {
     position: relative !important;
     z-index: 5 !important;
-    width: min(70vw, 220px) !important;
-    max-width: 220px !important;
+    width: min(88vw, 380px) !important;
+    max-width: 380px !important;
+    max-height: min(78vh, 560px) !important;
     margin: 0 auto !important;
-    padding: 0.48rem 0.36rem 0.42rem !important;
+    padding: clamp(0.85rem, 3.5vw, 1.35rem) clamp(0.72rem, 3.2vw, 1.15rem) clamp(0.78rem, 3vw, 1.05rem) !important;
     overflow: hidden !important;
     box-sizing: border-box !important;
   }
   #overlay .letter-content { overflow: hidden !important; max-width: 100% !important; }
-  #overlay .letter-corner { width: 10px !important; height: 10px !important; }
-  #overlay .letter-corner.tl { top: 4px !important; left: 4px !important; }
-  #overlay .letter-corner.br { bottom: 4px !important; right: 4px !important; }
+  #overlay .letter-corner { width: clamp(14px, 4vw, 22px) !important; height: clamp(14px, 4vw, 22px) !important; }
+  #overlay .letter-corner.tl { top: clamp(6px, 1.8vw, 10px) !important; left: clamp(6px, 1.8vw, 10px) !important; }
+  #overlay .letter-corner.br { bottom: clamp(6px, 1.8vw, 10px) !important; right: clamp(6px, 1.8vw, 10px) !important; }
   #overlay .main-title {
-    font-size: 0.7rem !important;
-    margin-bottom: 0.24rem !important;
-    gap: 0.05rem !important;
-    line-height: 1.12 !important;
+    font-size: clamp(1.28rem, 6.2vw, 2.15rem) !important;
+    margin-bottom: clamp(0.38rem, 1.6vw, 0.62rem) !important;
+    gap: 0.08rem !important;
+    line-height: 1.18 !important;
   }
-  #overlay .title-row { letter-spacing: 0.01em !important; justify-content: center !important; }
-  #overlay .title-row.top { margin-left: 0 !important; transform: translate(-1px, 1px) !important; }
-  #overlay .title-row.bottom { margin-right: 0 !important; transform: translate(1px, -1px) !important; }
-  #overlay .lunar-line { font-size: 0.46rem !important; margin-bottom: 0.2rem !important; letter-spacing: 0.03em !important; }
-  #overlay .poem-cn { font-size: 0.46rem !important; line-height: 1.34 !important; margin-bottom: 0.22rem !important; }
+  #overlay .title-row { letter-spacing: 0.04em !important; justify-content: center !important; }
+  #overlay .title-row.top { margin-left: 0 !important; transform: translate(-2px, 2px) !important; }
+  #overlay .title-row.bottom { margin-right: 0 !important; transform: translate(2px, -2px) !important; }
+  #overlay .lunar-line { font-size: clamp(0.72rem, 3.2vw, 1rem) !important; margin-bottom: clamp(0.32rem, 1.4vw, 0.52rem) !important; letter-spacing: 0.05em !important; }
+  #overlay .poem-cn { font-size: clamp(0.78rem, 3.4vw, 1.05rem) !important; line-height: 1.48 !important; margin-bottom: clamp(0.32rem, 1.4vw, 0.52rem) !important; }
   #overlay .poem-en {
-    font-size: 0.4rem !important;
-    line-height: 1.28 !important;
-    margin-bottom: 0.32rem !important;
+    font-size: clamp(0.68rem, 2.9vw, 0.92rem) !important;
+    line-height: 1.42 !important;
+    margin-bottom: clamp(0.42rem, 1.8vw, 0.68rem) !important;
     word-break: break-word !important;
     overflow-wrap: anywhere !important;
   }
   #overlay .unfold-btn {
-    font-size: 0.46rem !important;
-    padding: 0.2rem 0.55rem !important;
-    letter-spacing: 0.05em !important;
+    font-size: clamp(0.72rem, 3.1vw, 0.95rem) !important;
+    padding: clamp(0.32rem, 1.4vw, 0.48rem) clamp(0.85rem, 3.8vw, 1.2rem) !important;
+    letter-spacing: 0.1em !important;
     border-width: 1px !important;
+  }
+  .open-section {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+  #words .word-card,
+  #images .album-photos {
+    pointer-events: auto !important;
+    touch-action: manipulation;
+    cursor: pointer !important;
+  }
+  #words .binder-holes,
+  #words .hover-panel {
+    display: none !important;
+    pointer-events: none !important;
   }
   nav.site-nav {
     display: grid !important;
@@ -1234,7 +1251,7 @@ What remains unsaid, I leave to you—<br>
 your glance completes, your thoughts renew.</p>
         <span class="a-hint">Hover to expand the covers, click to view details.</span>
       </div>
-      <div class="album-photos layout-gallery" onclick="openTheater('layout')">
+      <div class="album-photos layout-gallery" data-theater="layout" onclick="openTheater('layout')">
         <div class="vis-card layout p1"><div class="vis-inner cover-mode"><img class="cover-fill" src="assets/previews/cuhk.jpg" alt="CUHK留学日记首页"></div><span>公众号排版·CU留学</span></div>
         <div class="vis-card layout p2"><div class="vis-inner cover-mode"><img class="cover-fill" src="assets/previews/ulysses.png" alt="尤利西斯首页"></div><span>公众号排版·尤利西斯</span></div>
         <div class="vis-card layout p3"><div class="vis-inner pdf-thumb cover-mode" data-pdf="layout%201.pdf" data-cover="1"><span class="pdf-thumb-loading">加载预览…</span></div><span>课堂展示·飞鸟集</span></div>
@@ -1253,7 +1270,7 @@ your glance completes, your thoughts renew.</p>
 <p class="a-desc" id="motionDescEN" style="display:none;"><span class="lead-line">Where the idea leads, all things find their way home.</span> Images do not move—thoughts do. The raw material waits; a single breath runs through, and it awakens into form. To subtract is harder than to add—a shot you cannot bear to lose, yet cannot bear to keep; in its absence, the whole feels fuller.<br><br>Words, images, sound, rhythm—their harmony lies in distance. Too close, they crowd; too far, they drift. Let each hold its place and give way to the other; between stillness and motion, just a thought, and everything turns.</p>
         <span class="a-hint">Hover to fan the previews apart, click to enter the theater.</span>
       </div>
-      <div class="album-photos motion-gallery" onclick="openTheater('motion')">
+      <div class="album-photos motion-gallery" data-theater="motion" onclick="openTheater('motion')">
         <div class="vis-card film film-portrait p1"><div class="vis-inner film-cover"><img src="assets/previews/mall.jpg" alt="商场周年庆"></div><span>Commercial Works</span></div>
         <div class="vis-card film film-portrait p2"><div class="vis-inner film-cover"><img src="assets/previews/dubliners.jpg" alt="都柏林人"></div><span>Dubliners</span></div>
         <div class="vis-card film film-portrait p3"><div class="vis-inner film-cover"><img src="assets/previews/spring-summer.png" alt="春夏之交"></div><span>Spring/Summer</span></div>
@@ -1276,7 +1293,7 @@ A good script never says all it knows. It leaves room—for the actor's breath t
 Those quiet sentences on the page will, in time, pass through light and shadow—and become the most moving frame of all.</p>
         <span class="a-hint">Hover to view scripts, click to read.</span>
       </div>
-      <div class="album-photos stamp-gallery" onclick="openTheater('script')">
+      <div class="album-photos stamp-gallery" data-theater="script" onclick="openTheater('script')">
         <div class="vis-card stamp p1"><div class="stamp-wrap"><div class="vis-inner script-shot-preview"><img src="assets/previews/scripts/huaxin.jpg" alt="华信广告分镜头脚本预览"></div><span>周年庆广告脚本</span></div></div>
         <div class="vis-card stamp p3"><div class="stamp-wrap"><div class="vis-inner script-shot-preview"><img src="assets/previews/scripts/commendation.jpg" alt="表彰大会脚本预览"></div><span>表彰大会脚本</span></div></div>
         <div class="vis-card stamp p2"><div class="stamp-wrap"><div class="vis-inner script-shot-preview"><img src="assets/previews/scripts/anti-fraud.jpg" alt="反诈最强音脚本预览"></div><span>反诈宣传片脚本</span></div></div>
@@ -1713,7 +1730,7 @@ window.addEventListener('DOMContentLoaded', () => {
     `;
 
     const html = `
-      <div class="word-card align-${data.align}" style="${extraStyle}" onclick="openBook('${data.id}')">
+      <div class="word-card align-${data.align}" data-book-id="${data.id}" style="${extraStyle}" onclick="openBook('${data.id}')">
         ${binderHoles}
         <div class="card-ribbon">
           ${featherSvg}
@@ -2619,6 +2636,7 @@ function closeLightbox() {
 
 <script src="assets/vendor/pdf.min.js?v=1"></script>
 <script src="assets/visual-section.js?v=2"></script>
+<script src="assets/mobile-tap.js?v=1"></script>
 <script src="assets/things/things-data.js?v=7"></script>
 <script src="assets/things-section.js?v=34"></script>
 <script>
