@@ -1,4 +1,4 @@
-/* 手机端适配 v10 · 启封放大+触摸点击兜底 */
+/* 手机端适配 v11 · 启封竖向信笺+触摸直达 */
 
 @media (max-width: 768px) {
   /* —— 性能：减弱全局装饰 —— */
@@ -45,13 +45,20 @@
 
   html.is-mobile #overlay .letter-paper,
   #overlay .letter-paper {
-    width: min(88vw, 380px) !important;
-    max-width: 380px !important;
+    width: min(72vw, 300px) !important;
+    max-width: 300px !important;
     min-width: 0 !important;
-    max-height: min(78vh, 560px) !important;
-    padding: clamp(0.85rem, 3.5vw, 1.35rem) clamp(0.72rem, 3.2vw, 1.15rem) clamp(0.78rem, 3vw, 1.05rem) !important;
+    min-height: min(72vh, 560px) !important;
+    max-height: min(84vh, 640px) !important;
+    aspect-ratio: 5 / 8;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: clamp(1.15rem, 4.2vw, 1.75rem) clamp(0.95rem, 3.6vw, 1.3rem) clamp(1rem, 3.8vw, 1.5rem) !important;
     margin: 0 auto !important;
-    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
     box-sizing: border-box !important;
     box-shadow: 0 12px 32px rgba(120, 90, 60, 0.12), 0 4px 12px rgba(120, 90, 60, 0.08) !important;
   }
@@ -59,8 +66,12 @@
   html.is-mobile #overlay .letter-content,
   #overlay .letter-content {
     max-width: 100% !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     box-sizing: border-box !important;
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
   }
 
   html.is-mobile #overlay .letter-corner,
@@ -83,7 +94,7 @@
 
   html.is-mobile #overlay .main-title,
   #overlay .main-title {
-    font-size: clamp(1.28rem, 6.2vw, 2.15rem) !important;
+    font-size: clamp(1.52rem, 7vw, 2.05rem) !important;
     margin-bottom: clamp(0.38rem, 1.6vw, 0.62rem) !important;
     gap: 0.08rem !important;
     line-height: 1.18 !important;
@@ -105,7 +116,7 @@
 
   html.is-mobile #overlay .lunar-line,
   #overlay .lunar-line {
-    font-size: clamp(0.72rem, 3.2vw, 1rem) !important;
+    font-size: clamp(0.82rem, 3.6vw, 1.02rem) !important;
     margin-bottom: clamp(0.32rem, 1.4vw, 0.52rem) !important;
     letter-spacing: 0.05em !important;
     line-height: 1.38 !important;
@@ -113,7 +124,7 @@
 
   html.is-mobile #overlay .poem-cn,
   #overlay .poem-cn {
-    font-size: clamp(0.78rem, 3.4vw, 1.05rem) !important;
+    font-size: clamp(0.86rem, 3.8vw, 1.08rem) !important;
     line-height: 1.48 !important;
     margin-bottom: clamp(0.32rem, 1.4vw, 0.52rem) !important;
     letter-spacing: 0.04em !important;
@@ -121,7 +132,7 @@
 
   html.is-mobile #overlay .poem-en,
   #overlay .poem-en {
-    font-size: clamp(0.68rem, 2.9vw, 0.92rem) !important;
+    font-size: clamp(0.76rem, 3.2vw, 0.96rem) !important;
     line-height: 1.42 !important;
     margin-bottom: clamp(0.42rem, 1.8vw, 0.68rem) !important;
     letter-spacing: 0.01em !important;
@@ -144,8 +155,8 @@
 
   html.is-mobile #overlay .unfold-btn,
   #overlay .unfold-btn {
-    font-size: clamp(0.72rem, 3.1vw, 0.95rem) !important;
-    padding: clamp(0.32rem, 1.4vw, 0.48rem) clamp(0.85rem, 3.8vw, 1.2rem) !important;
+    font-size: clamp(0.78rem, 3.2vw, 0.94rem) !important;
+    padding: clamp(0.42rem, 1.8vw, 0.55rem) clamp(1rem, 4.2vw, 1.45rem) !important;
     letter-spacing: 0.1em !important;
     max-width: 100% !important;
   }
@@ -394,6 +405,19 @@
 
   .content-wrapper {
     padding-bottom: 1.75rem;
+    position: relative;
+    z-index: 8 !important;
+  }
+
+  #bf2,
+  #treeContainer {
+    pointer-events: none !important;
+  }
+
+  #things.open-section.things-v6 .thing-modal:not(.open) {
+    pointer-events: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
 
   /* —— 文以载心：大标题随区块放大，卡片标题与框缩小 —— */
