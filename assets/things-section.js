@@ -514,8 +514,15 @@ function buildRopeLayout(items) {
   return { slots, totalWidth: cursor + 56 };
 }
 
-const THREAD_POSITIONS = [3.5, 11, 19, 28, 37, 46, 55, 64, 73, 82, 91];
-const THREAD_COUNT = THREAD_POSITIONS.length;
+const THREAD_POSITIONS_DESKTOP = [3.5, 11, 19, 28, 37, 46, 55, 64, 73, 82, 91];
+const THREAD_POSITIONS_MOBILE = [12, 32, 52, 72, 92];
+
+function getThreadPositions() {
+  if (typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches) {
+    return THREAD_POSITIONS_MOBILE;
+  }
+  return THREAD_POSITIONS_DESKTOP;
+}
 const SLOT_GAP = 90;
 
 function slotHeight(slot) {
@@ -711,6 +718,7 @@ function initThingsV6(root) {
   let lastDrawId = null;
   let drawing = false;
   const drawnIds = new Set();
+  const THREAD_POSITIONS = getThreadPositions();
   const THREAD_COUNT = THREAD_POSITIONS.length;
 
   function renderThumb(item) {

@@ -1,125 +1,351 @@
-/* 手机端适配 · 留白 + 弹窗全屏可滚动 */
+/* 手机端适配 v3 · 留白、字号、布局、性能 */
 
 @media (max-width: 768px) {
-  /* —— 全局留白，减轻满屏感 —— */
-  main {
-    padding-top: 0.25rem;
+  /* —— 性能：减弱全局装饰 —— */
+  body::before { filter: blur(6px); }
+  body::after { opacity: 0.18; }
+  .sparkles { display: none; }
+  .ink-trail { display: none !important; }
+
+  body.mobile-lite #treeContainer,
+  body.mobile-lite .butterfly-layer,
+  body.mobile-lite #treeVineClip {
+    display: none !important;
+    height: 0 !important;
   }
 
-  nav {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    justify-items: center;
+  body.mobile-lite .season-effect {
+    opacity: 0.55;
+  }
+
+  /* —— 启封页：缩小信笺，露出背景诗 —— */
+  #overlay {
+    align-items: flex-start;
+    padding: max(0.75rem, env(safe-area-inset-top)) 0.65rem 1rem;
+  }
+
+  .letter-paper {
+    width: min(82vw, 320px);
+    max-height: min(68vh, 520px);
+    padding: 1.35rem 1rem 1.1rem;
+    margin-top: 2.5rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .main-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.85rem;
+    gap: 0.2rem;
+  }
+
+  .title-row { letter-spacing: 0.12em; }
+  .title-row.top { margin-left: 6%; align-self: flex-start; }
+  .title-row.bottom { margin-right: 6%; align-self: flex-end; }
+
+  .lunar-line {
+    font-size: 0.78rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .poem-cn {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    margin-bottom: 0.65rem;
+  }
+
+  .poem-en {
+    font-size: 0.72rem;
+    line-height: 1.55;
+    margin-bottom: 0.85rem;
+  }
+
+  .unfold-btn {
+    font-size: 0.78rem;
+    padding: 0.5rem 1.35rem;
+    letter-spacing: 0.22em;
+  }
+
+  .season-mini-switcher {
+    top: max(0.55rem, env(safe-area-inset-top));
+    right: 0.55rem;
     gap: 0.35rem;
-    padding: 0.45rem 0.65rem max(0.45rem, env(safe-area-inset-bottom));
+  }
+
+  .season-mini-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+  }
+
+  #poemBg .poem-fragment {
+    font-size: 0.62rem !important;
+    opacity: 0.35 !important;
+  }
+
+  .deco-shape { opacity: 0.28; transform: scale(0.55); }
+
+  /* —— 导航：单行紧凑，不挡大标题 —— */
+  nav {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 0.25rem 0.45rem;
+    padding: 0.35rem 0.55rem max(0.35rem, env(safe-area-inset-bottom));
   }
 
   nav .logo {
     grid-column: 1;
     grid-row: 1;
-    justify-self: center;
-    font-size: 0.58rem;
-    letter-spacing: 0.07em;
+    justify-self: start;
+    font-size: 0.5rem;
+    letter-spacing: 0.05em;
     line-height: 1.35;
+    max-width: 52vw;
   }
 
   nav .nav-items {
-    grid-column: 1;
+    grid-column: 1 / -1;
     grid-row: 2;
-    justify-self: center;
-    justify-content: center;
-    gap: 0.35rem;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.22rem;
+    flex-wrap: nowrap;
+    width: 100%;
+    padding: 0 0.1rem;
   }
 
   nav .sundial-wrap {
-    grid-column: 1;
-    grid-row: 3;
-    justify-self: center;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    gap: 0.35rem;
+    max-width: 42vw;
+    flex-shrink: 0;
   }
 
   nav .nav-item a {
-    padding: 0.22rem 0.62rem;
+    padding: 0.14rem 0.42rem;
+    border-radius: 10px;
+    min-width: 0;
   }
 
   nav .nav-item .nav-cn {
-    font-size: 0.95rem;
+    font-size: 0.88rem;
+    line-height: 1.1;
   }
 
   nav .nav-item .nav-en {
-    font-size: 0.58rem;
+    display: none;
   }
 
-  nav .sundial-wrap {
-    gap: 0.45rem;
+  nav .sundial {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
   }
 
-  nav .time-info .term-poem-line,
+  nav .time-info {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  nav .time-info .term-line {
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 28vw;
+  }
+
   nav .time-info .date-line {
     display: none;
   }
 
-  nav .time-info .term-line {
+  /* —— 大标题页 —— */
+  .hero {
+    min-height: calc(100dvh - 5.25rem);
+    padding-top: 5.25rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero-center {
+    padding: 0 1rem;
+  }
+
+  .hero-title {
+    font-size: 2.05rem !important;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.85rem;
+    line-height: 1.25;
+  }
+
+  .hero-subtitle {
+    font-size: 0.92rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-greeting {
+    font-size: 0.84rem !important;
+    line-height: 1.62 !important;
+    padding: 0.7rem 0.85rem !important;
+    max-width: min(300px, 88vw);
+    min-height: 0;
+  }
+
+  .scroll-hint {
+    margin-top: 1.25rem;
+  }
+
+  .scroll-hint span {
     font-size: 0.72rem;
   }
 
+  /* —— 各区块标题与正文 —— */
+  main {
+    padding-top: 0;
+  }
+
   .open-section {
-    margin-bottom: 4.5rem;
-    padding: 0 1rem;
-    scroll-margin-top: 7.5rem;
+    margin-bottom: 3.5rem;
+    padding: 0 0.85rem;
+    scroll-margin-top: 6.5rem;
   }
 
   .section-title {
-    font-size: 2.35rem;
+    font-size: 1.65rem;
+    line-height: 1.25;
+    margin-bottom: 0.35rem;
   }
 
   .section-en {
-    font-size: 0.98rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.82rem;
+    margin-bottom: 0.85rem;
   }
 
   .section-desc {
     max-width: 100%;
-    padding: 1rem 0.85rem;
-    font-size: 0.98rem;
-    line-height: 1.85;
+    padding: 0.75rem 0.7rem;
+    font-size: 0.86rem;
+    line-height: 1.62;
   }
 
   #about .section-desc {
-    padding: 1.15rem 0.9rem;
+    padding: 0.8rem 0.75rem;
   }
 
-  .hero-center {
-    padding: 0 1.1rem;
+  #about .about-fall-line {
+    line-height: 1.58;
   }
 
-  .hero-subtitle {
-    font-size: 1.05rem;
-    margin-bottom: 1.5rem;
+  .content-wrapper {
+    padding-bottom: 2rem;
   }
 
-  .hero-greeting {
-    font-size: 1rem;
-    line-height: 1.85;
-    padding: 0.95rem 1.1rem;
+  /* —— 文以载心 —— */
+  .words-grid {
+    gap: 1.35rem;
+    margin-top: 1rem;
   }
 
+  .word-card {
+    width: 100% !important;
+    padding: 1.35rem 1rem 1.1rem;
+    align-self: stretch !important;
+  }
+
+  .card-title {
+    font-size: 1.08rem;
+    margin-bottom: 0.65rem;
+    line-height: 1.35;
+  }
+
+  .card-quote {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .card-quote-box {
+    padding: 0 0.5rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .quote-mark {
+    font-size: 2rem;
+    top: -8px;
+  }
+
+  .card-tag {
+    font-size: 0.68rem;
+  }
+
+  .word-card .hover-panel {
+    display: none;
+  }
+
+  .word-card::after {
+    content: '轻触展开全文';
+    display: block;
+    margin-top: 0.45rem;
+    font-family: var(--cn-light);
+    font-size: 0.72rem;
+    color: var(--soft);
+    letter-spacing: 0.08em;
+  }
+
+  /* —— 翻译卡片堆叠 —— */
+  .stack-container {
+    min-height: min(52dvh, 400px) !important;
+    height: min(52dvh, 400px) !important;
+    margin-top: 0.75rem;
+  }
+
+  .stack-card {
+    padding: 0.85rem 0.75rem 0.65rem;
+  }
+
+  .st-title {
+    font-size: 0.92rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .st-src {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    margin-bottom: 0.55rem;
+  }
+
+  .st-tgt {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    margin-bottom: 0.65rem;
+    padding-left: 0.65rem;
+  }
+
+  .st-note {
+    font-size: 0.76rem;
+    line-height: 1.55;
+    padding-top: 0.65rem;
+  }
+
+  .st-hint {
+    font-size: 0.72rem;
+    padding-top: 0.65rem;
+  }
+
+  /* —— 联系页 —— */
   .contact-section {
-    padding: 2.5rem 1rem 5rem;
+    padding: 2rem 0.85rem 4rem;
   }
 
   .contact-frame {
     width: 100%;
-    max-width: min(100%, 22rem);
-    padding: 1.75rem 1.25rem;
+    max-width: min(100%, 20rem);
+    padding: 1.35rem 1rem;
   }
 
   .contact-frame h3 {
-    font-size: 2.4rem;
-  }
-
-  .content-wrapper {
-    padding-bottom: 3rem;
+    font-size: 1.85rem;
   }
 
   /* —— 季节选择弹窗 —— */
@@ -131,7 +357,7 @@
 
   .modal-box {
     width: min(100%, 20rem);
-    margin: 12vh auto 2rem;
+    margin: 10vh auto 2rem;
     padding: 1.35rem 1rem;
   }
 
@@ -166,7 +392,7 @@
   .book-page {
     flex: none;
     width: 100%;
-    padding: 1.15rem 0.95rem 1.25rem;
+    padding: 0.95rem 0.8rem 1rem;
     overflow: visible;
   }
 
@@ -176,17 +402,18 @@
   }
 
   .book-page.right {
-    padding: 1rem 0.85rem 1.25rem;
+    padding: 0.85rem 0.75rem 1rem;
   }
 
   .b-full-title {
-    font-size: 1.55rem;
-    margin-bottom: 1.25rem;
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.35;
   }
 
   .b-text {
-    font-size: 0.95rem;
-    line-height: 1.95;
+    font-size: 0.82rem;
+    line-height: 1.62;
   }
 
   .close-btn {
@@ -195,27 +422,6 @@
     width: 38px;
     height: 38px;
     font-size: 1.45rem;
-  }
-
-  .stack-container {
-    min-height: 240px;
-    height: min(52vh, 380px);
-    margin-top: 0.25rem;
-  }
-
-  .stack-card {
-    padding: 1.15rem 0.95rem 1rem;
-    height: 100%;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .stack-card.pos-1 {
-    transform: translate3d(8px, 12px, -40px);
-  }
-
-  .stack-card.pos-2 {
-    transform: translate3d(14px, 22px, -80px);
   }
 
   /* —— 图片放大 —— */
@@ -283,14 +489,14 @@
   }
 
   .t-title {
-    font-size: 1.55rem;
-    margin-bottom: 0.85rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.65rem;
   }
 
   .t-desc {
-    font-size: 0.92rem;
-    line-height: 1.85;
-    margin-bottom: 1rem;
+    font-size: 0.82rem;
+    line-height: 1.62;
+    margin-bottom: 0.75rem;
   }
 
   .phone-mockup {
@@ -299,9 +505,268 @@
     aspect-ratio: 360 / 700;
     max-height: 58dvh;
   }
+
+  /* —— 流影拾微 · 列表式预览（替代悬停堆叠）—— */
+  #images .album-row,
+  #images .album-row:nth-child(even) {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  #images .album-text,
+  #images .album-row:nth-child(even) .album-text,
+  #images .album-row.motion-row .album-text {
+    text-align: left;
+    width: 100%;
+    order: 1;
+  }
+
+  #images .album-row.motion-row .a-desc {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    font-size: 0.84rem;
+    line-height: 1.62;
+  }
+
+  #images .a-title {
+    font-size: 1.45rem;
+    margin-bottom: 0.65rem;
+  }
+
+  #images .a-desc {
+    font-size: 0.84rem;
+    line-height: 1.62;
+    margin-bottom: 0.75rem;
+    max-width: 100%;
+  }
+
+  #images .a-hint {
+    font-size: 0.78rem;
+    display: block;
+  }
+
+  #images .album-photos {
+    position: relative !important;
+    flex: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    perspective: none !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+    order: 2;
+    padding: 0.15rem 0;
+  }
+
+  #images .album-photos .vis-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    padding: 6px 6px 26px;
+  }
+
+  #images .album-photos .vis-card > span {
+    font-size: 0.68rem;
+    bottom: 6px;
+  }
+
+  #images .vis-inner {
+    aspect-ratio: 3 / 4;
+    height: auto;
+  }
+
+  #images .layout-gallery .vis-card:nth-child(n+3),
+  #images .stamp-gallery .vis-card,
+  #images .vis-card.film.film-portrait {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  #images .motion-gallery {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.65rem !important;
+    order: 2;
+  }
+
+  #images .motion-gallery .vis-card.film-portrait {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+  }
+
+  #images .motion-gallery .vis-inner.film-cover {
+    aspect-ratio: 16 / 10;
+  }
+
+  #images .album-row.motion-row {
+    flex-direction: column !important;
+    overflow: visible;
+  }
+
+  #images .album-row.motion-row .motion-gallery {
+    order: 2;
+  }
+
+  #images .motion-desc-block {
+    margin-bottom: 0.65rem;
+  }
+
+  #images #motionDescCN,
+  #images #motionDescEN,
+  #images #layoutDescEN,
+  #images #scriptDescEN {
+    font-size: 0.84rem !important;
+    line-height: 1.62 !important;
+  }
 }
 
 @media (max-width: 768px) {
+  /* —— 数境人文 —— */
+  #dh .dh-project {
+    padding: 1.1rem 0.85rem 1.25rem;
+  }
+
+  #dh .dh-project-title {
+    font-size: 1.35rem;
+    letter-spacing: 0.06em;
+  }
+
+  #dh .dh-project-en {
+    font-size: 0.88rem;
+  }
+
+  #dh .dh-tools {
+    font-size: 0.8rem;
+  }
+
+  #dh .section-desc {
+    font-size: 0.86rem;
+    line-height: 1.62;
+  }
+
+  #dh .dh-body {
+    gap: 1.25rem;
+  }
+
+  #dh .dh-chart-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  #dh .dh-chart figcaption {
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
+
+  #dh .dh-report {
+    font-size: 0.8rem;
+    line-height: 1.58;
+  }
+
+  #dh .dh-vibe {
+    margin-top: 1.5rem;
+    padding: 1rem 0.85rem;
+  }
+
+  #dh .dh-vibe-site {
+    font-size: 1.15rem;
+  }
+
+  #dh .dh-vibe-cn,
+  #dh .dh-vibe-en {
+    font-size: 0.82rem;
+    line-height: 1.58;
+  }
+
+  /* —— 物有灵犀：签筒缩小、垂帘减列、防溢出 —— */
+  #things.open-section.things-v6 {
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+  }
+
+  #things.open-section.things-v6 .things-title-row {
+    margin-bottom: 0.5rem;
+  }
+
+  #things.open-section.things-v6 .section-title {
+    font-size: 1.55rem;
+  }
+
+  #things.open-section.things-v6 .things-hero {
+    gap: 0.75rem;
+  }
+
+  #things.open-section.things-v6 .things-welcome {
+    padding: 0.85rem 0.75rem;
+    font-size: 0.82rem;
+    line-height: 1.58;
+  }
+
+  #things.open-section.things-v6 .draw-zone {
+    max-width: 240px;
+    min-height: 200px;
+  }
+
+  #things.open-section.things-v6 .lot-bucket {
+    width: 148px;
+    height: 192px;
+  }
+
+  #things.open-section.things-v6 .pattern-center {
+    left: 50%;
+    top: 92%;
+    width: min(280px, 118%);
+    height: min(280px, 118%);
+    margin-left: min(-140px, -59%);
+    margin-top: min(-140px, -59%);
+    opacity: 0.55;
+  }
+
+  #things.open-section.things-v6 .curtain-gallery {
+    margin-top: 1.25rem;
+    overflow: hidden;
+  }
+
+  #things.open-section.things-v6 .curtain-stage {
+    min-height: 280px;
+    max-height: 340px;
+    overflow: hidden;
+  }
+
+  #things.open-section.things-v6 .curtain-label {
+    font-size: 0.82rem;
+    margin-bottom: 0.45rem;
+  }
+
+  #things.open-section.things-v6 .thing-modal,
+  #things.open-section.things-v6 .thing-modal.open {
+    align-items: center !important;
+    padding-top: max(3.5rem, calc(env(safe-area-inset-top) + 2.5rem)) !important;
+  }
+
+  #things.open-section.things-v6 .modal-at-draw.open,
+  #things.open-section.things-v6 .modal-at-curtain.open {
+    justify-content: center !important;
+  }
+
   /* —— 四时摄影 · 灯箱 —— */
   .pb-lightbox {
     align-items: flex-start;
@@ -356,14 +821,24 @@
 
   #photography .section-desc {
     width: 100%;
-    padding: 0.95rem 0.85rem;
-    font-size: 0.98rem;
-    line-height: 1.85;
+    padding: 0.75rem 0.7rem;
+    font-size: 0.86rem;
+    line-height: 1.62;
   }
 
   #photography .pb-wrap {
     padding-left: 0.55rem;
     padding-right: 0.55rem;
     padding-bottom: 2.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .season-effect,
+  .fall-particle,
+  .rain-container,
+  .leaf-particle,
+  .snow-particle {
+    display: none !important;
   }
 }
