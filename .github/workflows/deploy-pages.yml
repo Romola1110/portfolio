@@ -17,6 +17,7 @@ on:
       - 'assets/fonts/**'
       - 'assets/mobile.css'
       - 'assets/season-pendant.css'
+      - 'assets/things-section.js'
       - 'assets/mobile-perf.js'
       - 'assets/cdn-fallback.js'
       - 'assets/font-fallback.js'
