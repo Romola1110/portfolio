@@ -1,4 +1,4 @@
-/* 手机端适配 v4 · 启封/导航/标题层级/各区块紧凑化 */
+/* 手机端适配 v5 · 启封/导航/标题层级/各区块精调 */
 
 @media (max-width: 768px) {
   /* —— 性能：减弱全局装饰 —— */
@@ -18,74 +18,76 @@
     opacity: 0.55;
   }
 
-  /* —— 统一区块标题层级 —— */
+  /* —— 统一区块标题层级（不小于正文，约占行宽六七成）—— */
   .section-title,
   #contactTitle {
-    font-size: 1.42rem !important;
-    line-height: 1.28;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.3rem;
+    font-size: clamp(1.38rem, 6.8vw, 1.72rem) !important;
+    line-height: 1.32;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.32rem;
+    max-width: 70%;
+    width: fit-content;
   }
 
   .section-en {
-    font-size: 0.78rem;
-    margin-bottom: 0.7rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.72rem;
   }
 
-  /* —— 启封页：缩小信笺、无滚动条 —— */
+  /* —— 启封页：再缩小信笺与字号 —— */
   #overlay {
     align-items: flex-start;
-    padding: max(0.65rem, env(safe-area-inset-top)) 0.55rem 0.85rem;
+    padding: max(0.55rem, env(safe-area-inset-top)) 0.5rem 0.75rem;
   }
 
   .letter-paper {
-    width: min(84vw, 300px);
+    width: min(76vw, 252px);
     max-height: none;
-    padding: 1rem 0.85rem 0.9rem;
-    margin-top: 2.1rem;
+    padding: 0.82rem 0.68rem 0.75rem;
+    margin-top: 1.65rem;
     overflow: hidden;
   }
 
   .main-title {
-    font-size: 1.38rem;
-    margin-bottom: 0.65rem;
-    gap: 0.12rem;
+    font-size: 1.12rem;
+    margin-bottom: 0.52rem;
+    gap: 0.1rem;
   }
 
-  .title-row { letter-spacing: 0.1em; }
+  .title-row { letter-spacing: 0.08em; }
   .title-row.top {
-    margin-left: 4%;
+    margin-left: 3%;
     align-self: flex-start;
     transform: translate(-2px, 2px);
   }
   .title-row.bottom {
-    margin-right: 4%;
+    margin-right: 3%;
     align-self: flex-end;
-    transform: translate(3px, -1px);
+    transform: translate(2px, -1px);
   }
 
   .lunar-line {
-    font-size: 0.7rem;
-    margin-bottom: 0.55rem;
-    letter-spacing: 0.08em;
+    font-size: 0.62rem;
+    margin-bottom: 0.45rem;
+    letter-spacing: 0.06em;
   }
 
   .poem-cn {
-    font-size: 0.74rem;
-    line-height: 1.55;
-    margin-bottom: 0.5rem;
+    font-size: 0.66rem;
+    line-height: 1.48;
+    margin-bottom: 0.42rem;
   }
 
   .poem-en {
-    font-size: 0.66rem;
-    line-height: 1.45;
-    margin-bottom: 0.7rem;
+    font-size: 0.58rem;
+    line-height: 1.4;
+    margin-bottom: 0.58rem;
   }
 
   .unfold-btn {
-    font-size: 0.72rem;
-    padding: 0.42rem 1.15rem;
-    letter-spacing: 0.18em;
+    font-size: 0.64rem;
+    padding: 0.34rem 0.95rem;
+    letter-spacing: 0.14em;
   }
 
   .season-mini-switcher {
@@ -107,45 +109,44 @@
 
   .deco-shape { opacity: 0.24; transform: scale(0.5); }
 
-  /* —— 导航：单行紧凑 —— */
+  /* —— 导航：恢复 sundial，拉宽索引栏 —— */
   nav.site-nav {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, auto) 1fr auto;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.35rem;
-    padding: 0.3rem 0.5rem max(0.28rem, env(safe-area-inset-bottom));
+    gap: 0.35rem 0.45rem;
+    padding: 0.38rem 0.62rem max(0.32rem, env(safe-area-inset-bottom));
     overflow: visible;
   }
 
   nav.site-nav .logo {
-    flex: 0 1 auto;
-    font-size: 0.42rem;
-    letter-spacing: 0.04em;
-    line-height: 1.25;
-    max-width: 28vw;
+    grid-column: 1;
+    font-size: 0.48rem;
+    letter-spacing: 0.045em;
+    line-height: 1.22;
+    max-width: none;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   nav.site-nav .nav-items {
+    grid-column: 2;
     flex: 1 1 auto;
     justify-content: center;
-    gap: 0.18rem;
+    gap: 0.28rem;
     flex-wrap: nowrap;
     margin: 0;
-    padding: 0;
+    padding: 0 0.15rem;
     min-width: 0;
   }
 
   nav.site-nav .nav-item a {
-    padding: 0.1rem 0.34rem;
+    padding: 0.12rem 0.46rem;
     border-radius: 9px;
     min-width: 0;
   }
 
   nav.site-nav .nav-item .nav-cn {
-    font-size: 0.82rem;
+    font-size: 0.88rem;
     line-height: 1.05;
   }
 
@@ -153,83 +154,86 @@
     display: none;
   }
 
-  nav.site-nav .season-pendant {
-    position: absolute;
-    right: max(0.45rem, env(safe-area-inset-right));
-    top: calc(100% - 1px);
+  nav.site-nav .sundial-wrap {
+    grid-column: 3;
+    justify-self: end;
+    gap: 0.42rem;
+    max-width: 38vw;
+    flex-shrink: 0;
   }
 
-  nav.site-nav .pendant-plaque {
-    min-width: 4.2rem;
-    max-width: 6.8rem;
-    padding: 0.32rem 0.48rem 0.36rem;
+  nav.site-nav .sundial {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
   }
 
-  nav.site-nav .pendant-term {
-    font-size: 0.66rem;
+  nav.site-nav .time-info {
+    min-width: 0;
+    overflow: hidden;
   }
 
-  nav.site-nav .pendant-poem {
+  nav.site-nav .time-info .date-line {
+    display: none;
+  }
+
+  nav.site-nav .time-info .term-line {
+    font-size: 0.64rem;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 34vw;
+  }
+
+  nav.site-nav .time-info .term-poem-line {
+    display: block;
     font-size: 0.52rem;
-    max-width: 6.2rem;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 34vw;
   }
 
-  nav.site-nav .pendant-season-hint {
-    font-size: 0.46rem;
-    letter-spacing: 0.1em;
-  }
-
-  nav.site-nav .season-picker {
-    top: calc(100% + 4px);
-    right: 0;
-    gap: 0.22rem;
-    padding: 0.32rem 0.36rem;
-  }
-
-  nav.site-nav .season-picker button {
-    width: 27px;
-    height: 27px;
-    font-size: 0.76rem;
-  }
-
-  /* —— 大标题：两行四字、微微错位 —— */
+  /* —— 大标题：加大、加行距、保留标点 —— */
   .hero {
-    min-height: calc(100dvh - 4.75rem);
-    padding-top: 4.85rem;
-    padding-bottom: 1.75rem;
+    min-height: calc(100dvh - 4.5rem);
+    padding-top: 4.65rem;
+    padding-bottom: 1.65rem;
   }
 
   .hero-center {
-    padding: 0 0.85rem;
+    padding: 0 0.75rem;
   }
 
   .hero-title.hero-title-split {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.18rem;
-    font-size: 2.35rem !important;
-    letter-spacing: 0.12em;
-    margin-bottom: 0.75rem;
-    line-height: 1.15;
+    gap: 0.42rem;
+    font-size: 2.72rem !important;
+    letter-spacing: 0.11em;
+    margin-bottom: 0.82rem;
+    line-height: 1.38;
     white-space: normal;
   }
 
   .hero-title-row {
     display: flex;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
   }
 
   .hero-title-row.row-top {
     align-self: flex-start;
-    margin-left: 8%;
-    transform: translate(-3px, 2px);
+    margin-left: 7%;
+    transform: translate(-2px, 2px);
   }
 
   .hero-title-row.row-bottom {
     align-self: flex-end;
-    margin-right: 8%;
-    transform: translate(4px, -2px);
+    margin-right: 7%;
+    transform: translate(3px, -2px);
   }
 
   .hero-subtitle {
@@ -269,7 +273,7 @@
   .section-desc {
     max-width: 100%;
     padding: 0.62rem 0.55rem;
-    font-size: 0.8rem;
+    font-size: 0.84rem;
     line-height: 1.52;
   }
 
@@ -293,41 +297,51 @@
     padding-bottom: 1.75rem;
   }
 
-  /* —— 文以载心 —— */
+  /* —— 文以载心：栏目整体略缩小 —— */
+  #words .section-title {
+    font-size: clamp(1.18rem, 5.8vw, 1.42rem) !important;
+    max-width: 62%;
+  }
+
+  #words .section-en {
+    font-size: 0.72rem;
+    margin-bottom: 0.55rem;
+  }
+
   .words-grid {
-    gap: 1.1rem;
-    margin-top: 0.75rem;
+    gap: 0.95rem;
+    margin-top: 0.55rem;
   }
 
   .word-card {
     width: 100% !important;
-    padding: 1.1rem 0.85rem 0.95rem;
+    padding: 0.95rem 0.72rem 0.82rem;
     align-self: stretch !important;
   }
 
   .card-title {
-    font-size: 0.98rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.3;
+    font-size: 0.88rem;
+    margin-bottom: 0.42rem;
+    line-height: 1.28;
   }
 
   .card-quote {
-    font-size: 0.76rem;
-    line-height: 1.38;
+    font-size: 0.72rem;
+    line-height: 1.35;
   }
 
   .card-quote-box {
-    padding: 0 0.35rem;
-    margin-bottom: 0.65rem;
+    padding: 0 0.28rem;
+    margin-bottom: 0.52rem;
   }
 
   .quote-mark {
-    font-size: 1.65rem;
-    top: -6px;
+    font-size: 1.45rem;
+    top: -5px;
   }
 
   .card-tag {
-    font-size: 0.62rem;
+    font-size: 0.58rem;
   }
 
   .word-card .hover-panel {
@@ -344,16 +358,16 @@
     letter-spacing: 0.06em;
   }
 
-  /* —— 翻译卡片：铺满框、左滑翻页 —— */
+  /* —— 翻译卡片：再放大 —— */
   .stack-container {
-    min-height: min(58dvh, 440px) !important;
-    height: min(58dvh, 440px) !important;
-    margin-top: 0.35rem;
+    min-height: min(66dvh, 500px) !important;
+    height: min(66dvh, 500px) !important;
+    margin-top: 0.3rem;
     touch-action: pan-y;
   }
 
   .stack-card {
-    padding: 0.75rem 0.62rem 0.55rem;
+    padding: 0.92rem 0.72rem 0.62rem;
     overflow: hidden;
     justify-content: flex-start;
   }
@@ -364,35 +378,35 @@
   }
 
   .st-title {
-    font-size: 0.86rem;
-    margin-bottom: 0.42rem;
+    font-size: 0.96rem;
+    margin-bottom: 0.48rem;
   }
 
   .st-src {
-    font-size: 0.74rem;
-    line-height: 1.38;
-    margin-bottom: 0.42rem;
+    font-size: 0.82rem;
+    line-height: 1.42;
+    margin-bottom: 0.48rem;
   }
 
   .st-tgt {
-    font-size: 0.76rem;
-    line-height: 1.42;
-    margin-bottom: 0.5rem;
-    padding-left: 0.55rem;
+    font-size: 0.84rem;
+    line-height: 1.46;
+    margin-bottom: 0.55rem;
+    padding-left: 0.58rem;
   }
 
   .st-note {
-    font-size: 0.7rem;
-    line-height: 1.42;
-    padding-top: 0.45rem;
+    font-size: 0.76rem;
+    line-height: 1.44;
+    padding-top: 0.5rem;
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
   .st-hint {
-    font-size: 0.66rem;
-    padding-top: 0.45rem;
+    font-size: 0.68rem;
+    padding-top: 0.42rem;
   }
 
   /* —— 续音：紧凑行距 —— */
@@ -737,7 +751,7 @@
   }
 
   #dh .dh-project-title {
-    font-size: 1.05rem;
+    font-size: 1.14rem;
     letter-spacing: 0.05em;
   }
 
@@ -781,7 +795,7 @@
   }
 
   #dh .dh-vibe-site {
-    font-size: 1rem;
+    font-size: 1.02rem;
   }
 
   #dh .dh-vibe-cn,
@@ -801,10 +815,6 @@
     margin-bottom: 0.4rem;
   }
 
-  #things.open-section.things-v6 .section-title {
-    font-size: 1.42rem !important;
-  }
-
   #things.open-section.things-v6 .things-title-en {
     font-size: 0.72rem;
   }
@@ -821,31 +831,43 @@
 
   #things.open-section.things-v6 .draw-zone {
     max-width: 100%;
-    min-height: 185px;
-    padding: 1rem 0.5rem 1.25rem;
+    min-height: 210px;
+    padding: 0.85rem 0.45rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.35rem;
   }
 
   #things.open-section.things-v6 .lot-scene {
-    width: min(100%, 280px);
-    height: 210px;
+    width: min(100%, 220px);
+    height: 168px;
     margin: 0 auto;
+    transform: translateX(16%);
+    order: 1;
+  }
+
+  #things.open-section.things-v6 .draw-panel {
+    order: 2;
+    width: 100%;
+    text-align: center;
   }
 
   #things.open-section.things-v6 .lot-bucket {
-    width: 132px;
-    height: 172px;
-    margin-left: -8%;
-    margin-top: 6%;
+    width: 126px;
+    height: 164px;
+    margin: 0 auto;
   }
 
   #things.open-section.things-v6 .pattern-center {
-    left: 48%;
-    top: 96%;
-    width: min(240px, 105%);
-    height: min(240px, 105%);
-    margin-left: min(-120px, -52.5%);
-    margin-top: min(-120px, -52.5%);
-    opacity: 0.5;
+    left: 56%;
+    top: 92%;
+    width: min(220px, 100%);
+    height: min(220px, 100%);
+    margin-left: min(-110px, -50%);
+    margin-top: min(-110px, -50%);
+    opacity: 0.48;
   }
 
   #things.open-section.things-v6 .curtain-gallery {
@@ -866,9 +888,45 @@
     margin-bottom: 0.35rem;
   }
 
+  #things.open-section.things-v6 .thing-modal.modal-at-draw.open,
+  #things.open-section.things-v6 .thing-modal.modal-at-draw {
+    position: fixed !important;
+    inset: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    z-index: 10050;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding: max(4.25rem, calc(env(safe-area-inset-top) + 3.5rem)) 0.65rem 1.5rem !important;
+  }
+
+  #things.open-section.things-v6 .thing-modal.modal-at-curtain.open,
+  #things.open-section.things-v6 .thing-modal.modal-at-curtain {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    z-index: 10050;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding: var(--modal-vtop, 28vh) 0.65rem 1.5rem !important;
+  }
+
   #things.open-section.things-v6 .thing-modal,
   #things.open-section.things-v6 .thing-modal.open {
-    align-items: center !important;
+    align-items: flex-start !important;
     padding-top: max(3.25rem, calc(env(safe-area-inset-top) + 2.25rem)) !important;
   }
 
@@ -936,8 +994,8 @@
   #photography .section-desc {
     width: 100%;
     padding: 0.62rem 0.5rem;
-    font-size: 0.8rem;
-    line-height: 1.48;
+    font-size: 0.88rem;
+    line-height: 1.55;
   }
 
   #photography .pb-wrap {

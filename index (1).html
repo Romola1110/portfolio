@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="assets/things-section.css?v=38">
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=12">
-<link rel="stylesheet" href="assets/season-pendant.css?v=1">
-<link rel="stylesheet" href="assets/mobile.css?v=4">
+<link rel="stylesheet" href="assets/season-pendant.css?v=2">
+<link rel="stylesheet" href="assets/mobile.css?v=5">
 <script src="assets/mobile-perf.js?v=1"></script>
 <script src="assets/cdn-fallback.js?v=4"></script>
 <style>
@@ -1015,16 +1015,14 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
       </a>
     </li>
   </ul>
-  <div class="season-pendant" id="seasonPendant">
-    <button type="button" class="pendant-toggle" id="sundialBtn" aria-label="选择季节" aria-expanded="false" aria-haspopup="menu">
-      <span class="pendant-cord" aria-hidden="true"></span>
-      <span class="pendant-plaque">
-        <span class="pendant-sun" aria-hidden="true"></span>
-        <span class="pendant-term" id="termName"></span>
-        <span class="pendant-poem" id="termPoem"></span>
-        <span class="pendant-season-hint">选季节 · Season</span>
-      </span>
-    </button>
+  <div class="sundial-wrap" id="sundialBtn" aria-haspopup="menu">
+    <div class="sundial"></div>
+    <div class="time-info">
+      <div class="date-line" id="solarDate"></div>
+      <div class="term-line" id="termName"></div>
+      <div class="term-poem-line" id="termPoem"></div>
+      <span class="season-select-hint">点此选季 · Season</span>
+    </div>
     <div class="season-picker" id="seasonPicker" role="menu" aria-label="选择季节" hidden>
       <button type="button" role="menuitem" data-season="spring" title="春">春</button>
       <button type="button" role="menuitem" data-season="summer" title="夏">夏</button>
@@ -1032,7 +1030,6 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
       <button type="button" role="menuitem" data-season="winter" title="冬">冬</button>
     </div>
   </div>
-  <span class="sr-only" id="solarDate" aria-hidden="true"></span>
 </nav>
 
 <!-- 诗词树干与藤蔓 SVG 背景层 -->
@@ -2096,10 +2093,17 @@ function applySeason(s){
   hCN.classList.toggle('hero-title-split', isMobileHero);
 
   if (isMobileHero) {
-    const clean = fullText.replace(/[。．]/g, '');
-    const parts = clean.split(/[，,]/).filter(Boolean);
-    const topText = parts[0] || clean.slice(0, 4);
-    const bottomText = parts[1] || clean.slice(4, 8);
+    const commaIdx = fullText.search(/[，,]/);
+    let topText;
+    let bottomText;
+    if (commaIdx >= 0) {
+      topText = fullText.slice(0, commaIdx + 1);
+      bottomText = fullText.slice(commaIdx + 1);
+    } else {
+      const mid = Math.ceil(fullText.length / 2);
+      topText = fullText.slice(0, mid);
+      bottomText = fullText.slice(mid);
+    }
     [
       { cls: 'row-top', text: topText },
       { cls: 'row-bottom', text: bottomText }
@@ -2436,6 +2440,7 @@ function toggleSeasonPicker(forceOpen) {
 }
 
 document.getElementById('sundialBtn').addEventListener('click', (e) => {
+  if (e.target.closest('#seasonPicker [data-season]')) return;
   e.stopPropagation();
   toggleSeasonPicker();
 });
@@ -2477,7 +2482,7 @@ function closeLightbox() {
 <script src="assets/vendor/pdf.min.js?v=1"></script>
 <script src="assets/visual-section.js?v=2"></script>
 <script src="assets/things/things-data.js?v=7"></script>
-<script src="assets/things-section.js?v=33"></script>
+<script src="assets/things-section.js?v=34"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const thingsRoot = document.getElementById('things');

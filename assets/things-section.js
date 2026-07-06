@@ -796,22 +796,42 @@ function initThingsV6(root) {
     return pool[Math.floor(Math.random() * pool.length)];
   }
 
-  function setModalAnchor(anchor) {
+  function setModalAnchor(anchor, anchorY) {
     if (!modal) return;
     modal.classList.remove('modal-at-draw', 'modal-at-curtain');
     modal.classList.add(anchor === 'curtain' ? 'modal-at-curtain' : 'modal-at-draw');
+    modal.style.removeProperty('--modal-top');
+    modal.style.removeProperty('--modal-vtop');
+
+    const mobile = window.matchMedia('(max-width: 768px)').matches;
+    if (mobile) {
+      let topPx;
+      if (anchor === 'curtain' && curtainGallery) {
+        const rect = curtainGallery.getBoundingClientRect();
+        const focusY = rect.top + Math.min(rect.height * 0.42, rect.height - 120);
+        topPx = Math.min(window.innerHeight - 200, Math.max(68, focusY));
+      } else if (typeof anchorY === 'number') {
+        topPx = Math.min(window.innerHeight - 200, Math.max(68, anchorY - 48));
+      } else if (drawZone) {
+        const rect = drawZone.getBoundingClientRect();
+        topPx = Math.min(window.innerHeight - 200, Math.max(68, rect.top + 12));
+      } else {
+        topPx = Math.max(68, window.innerHeight * 0.22);
+      }
+      modal.style.setProperty('--modal-vtop', `${topPx}px`);
+      return;
+    }
+
     if (anchor === 'curtain' && curtainGallery) {
       const rootRect = root.getBoundingClientRect();
       const galleryRect = curtainGallery.getBoundingClientRect();
       modal.style.setProperty('--modal-top', `${Math.max(0, galleryRect.top - rootRect.top)}px`);
-    } else {
-      modal.style.removeProperty('--modal-top');
     }
   }
 
-  function openBookmarkModal(item, anchor = 'draw') {
+  function openBookmarkModal(item, anchor = 'draw', anchorY) {
     if (!modal) return;
-    setModalAnchor(anchor);
+    setModalAnchor(anchor, anchorY);
     const hasPhoto = Boolean(item.image);
     modal.innerHTML = `
       <div class="thing-modal-box modal-bookmark-only${hasPhoto ? ' modal-has-photo' : ''}">
@@ -845,6 +865,7 @@ function initThingsV6(root) {
     if (modal) {
       modal.onclick = null;
       modal.style.removeProperty('--modal-top');
+      modal.style.removeProperty('--modal-vtop');
     }
   }
 
@@ -895,7 +916,7 @@ function initThingsV6(root) {
     if (item) {
       lastDrawId = item.id;
       markCurtainDrawn(item.id);
-      openBookmarkModal(item, 'curtain');
+      openBookmarkModal(item, 'curtain', e.clientY);
     }
   });
 
