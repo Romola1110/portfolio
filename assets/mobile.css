@@ -1,4 +1,4 @@
-/* 手机端适配 v5 · 启封/导航/标题层级/各区块精调 */
+/* 手机端适配 v7 · 启封强制约束 / 导航 ROMOLA·PORTFOLIO / 字号终局覆盖 */
 
 @media (max-width: 768px) {
   /* —— 性能：减弱全局装饰 —— */
@@ -18,76 +18,136 @@
     opacity: 0.55;
   }
 
-  /* —— 统一区块标题层级（不小于正文，约占行宽六七成）—— */
+  /* —— 统一大标题（关于我/文以载心/流影/数境/四时/物有灵犀/续音）—— */
   .section-title,
   #contactTitle {
-    font-size: clamp(1.38rem, 6.8vw, 1.72rem) !important;
-    line-height: 1.32;
+    font-size: clamp(1.62rem, 8vw, 2.05rem) !important;
+    line-height: 1.3;
     letter-spacing: 0.1em;
-    margin-bottom: 0.32rem;
-    max-width: 70%;
+    margin-bottom: 0.34rem;
+    max-width: 75%;
     width: fit-content;
   }
 
   .section-en {
-    font-size: 0.8rem;
-    margin-bottom: 0.72rem;
+    font-size: 0.82rem;
+    margin-bottom: 0.75rem;
   }
 
-  /* —— 启封页：再缩小信笺与字号 —— */
+  /* —— 启封页：#overlay 高优先级，防止基础样式撑破信笺 —— */
+  html.is-mobile #overlay,
   #overlay {
-    align-items: flex-start;
-    padding: max(0.55rem, env(safe-area-inset-top)) 0.5rem 0.75rem;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    padding: max(0.45rem, env(safe-area-inset-top)) 0.4rem 0.55rem !important;
+    overflow: hidden !important;
   }
 
-  .letter-paper {
-    width: min(76vw, 252px);
-    max-height: none;
-    padding: 0.82rem 0.68rem 0.75rem;
-    margin-top: 1.65rem;
-    overflow: hidden;
+  html.is-mobile #overlay .letter-paper,
+  #overlay .letter-paper {
+    width: min(62vw, 196px) !important;
+    max-width: 196px !important;
+    min-width: 0 !important;
+    max-height: min(52vh, 320px) !important;
+    padding: 0.5rem 0.38rem 0.45rem !important;
+    margin: 1rem auto 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 12px 32px rgba(120, 90, 60, 0.12), 0 4px 12px rgba(120, 90, 60, 0.08) !important;
   }
 
-  .main-title {
-    font-size: 1.12rem;
-    margin-bottom: 0.52rem;
-    gap: 0.1rem;
+  html.is-mobile #overlay .letter-content,
+  #overlay .letter-content {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
   }
 
-  .title-row { letter-spacing: 0.08em; }
-  .title-row.top {
-    margin-left: 3%;
-    align-self: flex-start;
-    transform: translate(-2px, 2px);
-  }
-  .title-row.bottom {
-    margin-right: 3%;
-    align-self: flex-end;
-    transform: translate(2px, -1px);
+  html.is-mobile #overlay .letter-corner,
+  #overlay .letter-corner {
+    width: 11px !important;
+    height: 11px !important;
   }
 
-  .lunar-line {
-    font-size: 0.62rem;
-    margin-bottom: 0.45rem;
-    letter-spacing: 0.06em;
+  html.is-mobile #overlay .letter-corner.tl,
+  #overlay .letter-corner.tl {
+    top: 5px !important;
+    left: 5px !important;
   }
 
-  .poem-cn {
-    font-size: 0.66rem;
-    line-height: 1.48;
-    margin-bottom: 0.42rem;
+  html.is-mobile #overlay .letter-corner.br,
+  #overlay .letter-corner.br {
+    bottom: 5px !important;
+    right: 5px !important;
   }
 
-  .poem-en {
-    font-size: 0.58rem;
-    line-height: 1.4;
-    margin-bottom: 0.58rem;
+  html.is-mobile #overlay .main-title,
+  #overlay .main-title {
+    font-size: 0.78rem !important;
+    margin-bottom: 0.32rem !important;
+    gap: 0.06rem !important;
+    line-height: 1.15 !important;
+    max-width: 100% !important;
   }
 
-  .unfold-btn {
-    font-size: 0.64rem;
-    padding: 0.34rem 0.95rem;
-    letter-spacing: 0.14em;
+  html.is-mobile #overlay .title-row,
+  #overlay .title-row {
+    letter-spacing: 0.02em !important;
+    max-width: 100% !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
+  }
+
+  html.is-mobile #overlay .title-char,
+  #overlay .title-char {
+    font-size: inherit !important;
+  }
+
+  html.is-mobile #overlay .lunar-line,
+  #overlay .lunar-line {
+    font-size: 0.5rem !important;
+    margin-bottom: 0.28rem !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.35 !important;
+  }
+
+  html.is-mobile #overlay .poem-cn,
+  #overlay .poem-cn {
+    font-size: 0.5rem !important;
+    line-height: 1.38 !important;
+    margin-bottom: 0.28rem !important;
+    letter-spacing: 0.03em !important;
+  }
+
+  html.is-mobile #overlay .poem-en,
+  #overlay .poem-en {
+    font-size: 0.44rem !important;
+    line-height: 1.32 !important;
+    margin-bottom: 0.38rem !important;
+    letter-spacing: 0.01em !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    max-width: 100% !important;
+  }
+
+  html.is-mobile #overlay .title-row.top,
+  #overlay .title-row.top {
+    margin-left: 1% !important;
+    transform: translate(-1px, 1px) !important;
+  }
+
+  html.is-mobile #overlay .title-row.bottom,
+  #overlay .title-row.bottom {
+    margin-right: 1% !important;
+    transform: translate(1px, -1px) !important;
+  }
+
+  html.is-mobile #overlay .unfold-btn,
+  #overlay .unfold-btn {
+    font-size: 0.5rem !important;
+    padding: 0.24rem 0.68rem !important;
+    letter-spacing: 0.08em !important;
+    max-width: 100% !important;
   }
 
   .season-mini-switcher {
@@ -109,45 +169,73 @@
 
   .deco-shape { opacity: 0.24; transform: scale(0.5); }
 
-  /* —— 导航：恢复 sundial，拉宽索引栏 —— */
+  /* —— 导航：ROMOLA 两行放大 + 文影数物 2×2 —— */
   nav.site-nav {
     display: grid;
-    grid-template-columns: minmax(0, auto) 1fr auto;
-    align-items: center;
-    gap: 0.35rem 0.45rem;
-    padding: 0.38rem 0.62rem max(0.32rem, env(safe-area-inset-bottom));
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    align-items: start;
+    gap: 0.32rem 0.5rem;
+    padding: 0.42rem 0.62rem max(0.38rem, env(safe-area-inset-bottom));
     overflow: visible;
   }
 
   nav.site-nav .logo {
     grid-column: 1;
-    font-size: 0.48rem;
-    letter-spacing: 0.045em;
-    line-height: 1.22;
-    max-width: none;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.04rem;
+    min-width: 5.6rem;
+    max-width: 52vw;
+    line-height: 1.15;
+  }
+
+  nav.site-nav .logo-line {
+    display: block;
+    font-family: 'Italiana', serif;
+    color: var(--soft);
     white-space: nowrap;
   }
 
+  nav.site-nav .logo-primary {
+    font-size: 0.78rem !important;
+    letter-spacing: 0.08em;
+  }
+
+  nav.site-nav .logo-secondary {
+    font-size: 0.64rem !important;
+    letter-spacing: 0.06em;
+    opacity: 0.92;
+  }
+
   nav.site-nav .nav-items {
-    grid-column: 2;
-    flex: 1 1 auto;
-    justify-content: center;
-    gap: 0.28rem;
-    flex-wrap: nowrap;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    gap: 0.32rem 0.55rem;
+    width: 100%;
     margin: 0;
-    padding: 0 0.15rem;
-    min-width: 0;
+    padding: 0;
+    justify-items: center;
+  }
+
+  nav.site-nav .nav-item {
+    width: 100%;
+    max-width: 9.5rem;
   }
 
   nav.site-nav .nav-item a {
-    padding: 0.12rem 0.46rem;
-    border-radius: 9px;
-    min-width: 0;
+    width: 100%;
+    padding: 0.16rem 0.55rem;
+    border-radius: 10px;
   }
 
   nav.site-nav .nav-item .nav-cn {
-    font-size: 0.88rem;
-    line-height: 1.05;
+    font-size: 1.02rem;
+    line-height: 1.08;
   }
 
   nav.site-nav .nav-item .nav-en {
@@ -155,16 +243,18 @@
   }
 
   nav.site-nav .sundial-wrap {
-    grid-column: 3;
+    grid-column: 2;
+    grid-row: 1;
     justify-self: end;
-    gap: 0.42rem;
-    max-width: 38vw;
+    align-self: start;
+    gap: 0.38rem;
+    max-width: 42vw;
     flex-shrink: 0;
   }
 
   nav.site-nav .sundial {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     flex-shrink: 0;
   }
 
@@ -178,33 +268,35 @@
   }
 
   nav.site-nav .time-info .term-line {
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     letter-spacing: 0.05em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 34vw;
+    max-width: 38vw;
   }
 
   nav.site-nav .time-info .term-poem-line {
     display: block;
-    font-size: 0.52rem;
+    font-size: 0.56rem;
     line-height: 1.25;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 34vw;
+    max-width: 38vw;
   }
 
-  /* —— 大标题：加大、加行距、保留标点 —— */
+  /* —— 大标题：上移、保留标点 —— */
   .hero {
-    min-height: calc(100dvh - 4.5rem);
-    padding-top: 4.65rem;
-    padding-bottom: 1.65rem;
+    min-height: calc(100dvh - 6.25rem);
+    padding-top: 3.85rem;
+    padding-bottom: 1.5rem;
+    justify-content: flex-start;
   }
 
   .hero-center {
     padding: 0 0.75rem;
+    transform: translateY(-0.85rem);
   }
 
   .hero-title.hero-title-split {
@@ -267,7 +359,7 @@
   .open-section {
     margin-bottom: 3rem;
     padding: 0 0.55rem;
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: 7.25rem;
   }
 
   .section-desc {
@@ -297,51 +389,46 @@
     padding-bottom: 1.75rem;
   }
 
-  /* —— 文以载心：栏目整体略缩小 —— */
-  #words .section-title {
-    font-size: clamp(1.18rem, 5.8vw, 1.42rem) !important;
-    max-width: 62%;
-  }
-
+  /* —— 文以载心：大标题随区块放大，卡片标题与框缩小 —— */
   #words .section-en {
-    font-size: 0.72rem;
-    margin-bottom: 0.55rem;
+    font-size: 0.78rem;
+    margin-bottom: 0.62rem;
   }
 
   .words-grid {
-    gap: 0.95rem;
-    margin-top: 0.55rem;
+    gap: 0.82rem;
+    margin-top: 0.48rem;
   }
 
   .word-card {
     width: 100% !important;
-    padding: 0.95rem 0.72rem 0.82rem;
+    padding: 0.72rem 0.58rem 0.65rem;
     align-self: stretch !important;
   }
 
   .card-title {
-    font-size: 0.88rem;
-    margin-bottom: 0.42rem;
-    line-height: 1.28;
+    font-size: 0.76rem;
+    margin-bottom: 0.36rem;
+    line-height: 1.26;
   }
 
   .card-quote {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     line-height: 1.35;
   }
 
   .card-quote-box {
-    padding: 0 0.28rem;
-    margin-bottom: 0.52rem;
+    padding: 0 0.22rem;
+    margin-bottom: 0.45rem;
   }
 
   .quote-mark {
-    font-size: 1.45rem;
-    top: -5px;
+    font-size: 1.28rem;
+    top: -4px;
   }
 
   .card-tag {
-    font-size: 0.58rem;
+    font-size: 0.54rem;
   }
 
   .word-card .hover-panel {
@@ -422,8 +509,8 @@
 
   .contact-frame h3,
   #contactTitle {
-    font-size: 1.42rem !important;
-    letter-spacing: 0.12em;
+    font-size: 1.78rem !important;
+    letter-spacing: 0.1em;
     margin-bottom: 0.35rem;
   }
 
@@ -628,7 +715,7 @@
     margin-left: 0;
     margin-right: 0;
     max-width: 100%;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     line-height: 1.48;
   }
 
@@ -638,7 +725,7 @@
   }
 
   #images .a-desc {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     line-height: 1.48;
     margin-bottom: 0.6rem;
     max-width: 100%;
@@ -734,7 +821,7 @@
   #images #motionDescEN,
   #images #layoutDescEN,
   #images #scriptDescEN {
-    font-size: 0.78rem !important;
+    font-size: 0.76rem !important;
     line-height: 1.48 !important;
   }
 }
@@ -751,7 +838,7 @@
   }
 
   #dh .dh-project-title {
-    font-size: 1.14rem;
+    font-size: 1.32rem;
     letter-spacing: 0.05em;
   }
 
@@ -764,7 +851,7 @@
   }
 
   #dh .section-desc {
-    font-size: 0.8rem;
+    font-size: 0.76rem;
     line-height: 1.48;
     max-width: 100%;
     padding: 0.62rem 0.5rem;
@@ -785,7 +872,7 @@
   }
 
   #dh .dh-report {
-    font-size: 0.74rem;
+    font-size: 0.76rem;
     line-height: 1.45;
   }
 
@@ -794,8 +881,13 @@
     padding: 0.85rem 0.55rem;
   }
 
+  #dh .dh-vibe-tag {
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+  }
+
   #dh .dh-vibe-site {
-    font-size: 1.02rem;
+    font-size: 0.86rem;
   }
 
   #dh .dh-vibe-cn,
@@ -1002,6 +1094,65 @@
     padding-left: 0.35rem;
     padding-right: 0.35rem;
     padding-bottom: 2rem;
+  }
+
+  /* —— 字号终局覆盖（避免被后续规则冲掉）—— */
+  #about .section-title,
+  #words .section-title,
+  #images .section-title,
+  #dh .section-title,
+  #photography .section-title,
+  #things .section-title,
+  #contactTitle {
+    font-size: 1.78rem !important;
+    line-height: 1.28 !important;
+    max-width: 72% !important;
+  }
+
+  #words .card-title {
+    font-size: 0.72rem !important;
+    line-height: 1.24 !important;
+  }
+
+  #words .word-card {
+    padding: 0.65rem 0.52rem 0.58rem !important;
+  }
+
+  #images .a-desc,
+  #images .album-row.motion-row .a-desc,
+  #images #motionDescCN,
+  #images #motionDescEN,
+  #images #layoutDescEN,
+  #images #scriptDescEN {
+    font-size: 0.76rem !important;
+  }
+
+  #dh .section-desc,
+  #dh .dh-report,
+  #dh .dh-vibe-cn {
+    font-size: 0.76rem !important;
+  }
+
+  #dh .dh-project-title {
+    font-size: 1.36rem !important;
+  }
+
+  #dh .dh-vibe-tag {
+    font-size: 0.62rem !important;
+  }
+
+  #dh .dh-vibe-site {
+    font-size: 0.82rem !important;
+  }
+
+  #things.open-section.things-v6 .things-welcome {
+    font-size: 0.76rem !important;
+  }
+
+  .hero-title.hero-title-split {
+    font-size: 2.85rem !important;
+    gap: 0.48rem !important;
+    line-height: 1.42 !important;
   }
 }
 
