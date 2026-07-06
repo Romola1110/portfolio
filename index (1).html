@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="assets/photography-breeze.css?v=7">
 <link rel="stylesheet" href="assets/photography-main.css?v=12">
 <link rel="stylesheet" href="assets/season-pendant.css?v=2">
-<link rel="stylesheet" href="assets/mobile.css?v=8">
+<link rel="stylesheet" href="assets/mobile.css?v=9">
 <script src="assets/mobile-perf.js?v=1"></script>
 <script src="assets/cdn-fallback.js?v=4"></script>
 <style>
@@ -967,8 +967,8 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: flex-start !important;
-    padding: max(0.4rem, env(safe-area-inset-top)) 0.35rem 0.5rem !important;
+    justify-content: center !important;
+    padding: max(0.5rem, env(safe-area-inset-top)) 0.4rem max(0.5rem, env(safe-area-inset-bottom)) !important;
     overflow: hidden !important;
   }
   #overlay .season-mini-switcher {
@@ -990,7 +990,7 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
     z-index: 5 !important;
     width: min(70vw, 220px) !important;
     max-width: 220px !important;
-    margin: 2.15rem auto 0 !important;
+    margin: 0 auto !important;
     padding: 0.48rem 0.36rem 0.42rem !important;
     overflow: hidden !important;
     box-sizing: border-box !important;
@@ -1029,7 +1029,7 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
     grid-template-rows: auto !important;
     align-items: center !important;
     gap: 0.25rem 0.32rem !important;
-    padding: 0.38rem 0.5rem !important;
+    padding: 0.42rem 0.68rem !important;
   }
   nav.site-nav .logo {
     grid-column: 1 !important;
@@ -2357,8 +2357,19 @@ function revealSectionsInView(){
     }
   });
 }
+function ensureMobileSectionsInteractive(){
+  if(!window.matchMedia('(max-width: 768px)').matches) return;
+  document.querySelectorAll('.open-section').forEach(el=>{
+    el.classList.add('visible');
+    if (el.id === 'about') initAboutReveal();
+  });
+}
 requestAnimationFrame(revealSectionsInView);
-window.addEventListener('load',()=>setTimeout(revealSectionsInView,80));
+requestAnimationFrame(ensureMobileSectionsInteractive);
+window.addEventListener('load',()=>{
+  setTimeout(revealSectionsInView,80);
+  ensureMobileSectionsInteractive();
+});
 
 /* ==================
    真正被无损还原的底层 CSS 下落动画逻辑！
