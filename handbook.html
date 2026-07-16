@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>四时风物 · 作品集使用手册 | Romola</title>
+  <meta name="description" content="杨雪琪（Romola）个人创意作品集《四时风物》的双语使用手册：缘起、创意、栏目漫游与制作心血。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Noto+Serif+SC:wght@400;500;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #2a261f;
+      --ink-soft: #5c5348;
+      --mute: #8a7f72;
+      --paper: #f7f2e8;
+      --paper-deep: #efe6d6;
+      --mist: #d9e4dc;
+      --moss: #3f6b57;
+      --moss-deep: #2c4f3f;
+      --blossom: #c4786a;
+      --gold: #b08a4a;
+      --line: rgba(42, 38, 31, 0.12);
+      --shadow: 0 18px 50px rgba(44, 40, 32, 0.08);
+      --max: 720px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Noto Serif SC", "Songti SC", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(217, 228, 220, 0.85), transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, rgba(196, 120, 106, 0.12), transparent 45%),
+        linear-gradient(180deg, #fbf7ef 0%, var(--paper) 38%, #f3ebe0 100%);
+      line-height: 1.85;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(42, 38, 31, 0.015) 3px,
+          rgba(42, 38, 31, 0.015) 4px
+        );
+      z-index: 0;
+    }
+
+    .petal {
+      position: fixed;
+      width: 10px;
+      height: 14px;
+      background: rgba(196, 120, 106, 0.35);
+      border-radius: 80% 0 70% 0;
+      pointer-events: none;
+      z-index: 1;
+      animation: drift linear infinite;
+      opacity: 0;
+    }
+    @keyframes drift {
+      0% { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.7; }
+      90% { opacity: 0.45; }
+      100% { transform: translate3d(40px, 110vh, 0) rotate(220deg); opacity: 0; }
+    }
+
+    .wrap { position: relative; z-index: 2; }
+
+    /* —— Top bar —— */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 1.25rem;
+      background: rgba(247, 242, 232, 0.82);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand-mini {
+      font-family: "ZCOOL XiaoWei", "Noto Serif SC", serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      color: var(--moss-deep);
+    }
+    .brand-mini span {
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--mute);
+      text-transform: uppercase;
+      margin-top: 0.1rem;
+    }
+    .lang-switch {
+      display: inline-flex;
+      border: 1px solid rgba(63, 107, 87, 0.35);
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.45);
+    }
+    .lang-switch button {
+      border: 0;
+      background: transparent;
+      padding: 0.35rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: background 0.25s var(--ease), color 0.25s;
+    }
+    .lang-switch button.active {
+      background: var(--moss);
+      color: #f8f5ee;
+    }
+
+    /* —— Hero —— */
+    .hero {
+      min-height: min(100vh, 860px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 4.5rem 1.4rem 3.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, transparent 20%, rgba(247, 242, 232, 0.55) 62%, var(--paper) 100%),
+        radial-gradient(ellipse 80% 55% at 50% 35%, rgba(63, 107, 87, 0.18), transparent 70%),
+        radial-gradient(circle at 20% 70%, rgba(176, 138, 74, 0.12), transparent 40%);
+      z-index: 0;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      width: 100%;
+      animation: rise 1.1s var(--ease) both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .eyebrow {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--moss);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.85rem;
+    }
+    .hero h1 {
+      font-family: "ZCOOL XiaoWei", "Noto Serif SC", serif;
+      font-size: clamp(2.4rem, 8vw, 3.6rem);
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      line-height: 1.25;
+      color: var(--moss-deep);
+      margin-bottom: 0.35rem;
+    }
+    .hero h1 em {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      display: block;
+      font-size: 0.48em;
+      color: var(--ink-soft);
+      margin-top: 0.45rem;
+    }
+    .hero-lead {
+      margin-top: 1.25rem;
+      max-width: 34em;
+      font-size: 1.02rem;
+      color: var(--ink-soft);
+    }
+    .hero-lead .en {
+      display: block;
+      margin-top: 0.55rem;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--mute);
+    }
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.8rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.72rem 1.25rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      transition: transform 0.25s var(--ease), box-shadow 0.25s, background 0.25s;
+    }
+    .btn-primary {
+      background: var(--moss);
+      color: #f8f5ee;
+      box-shadow: 0 8px 24px rgba(63, 107, 87, 0.25);
+    }
+    .btn-primary:hover { transform: translateY(-2px); background: var(--moss-deep); }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.5);
+      color: var(--moss-deep);
+      border: 1px solid rgba(63, 107, 87, 0.28);
+    }
+    .btn-ghost:hover { transform: translateY(-2px); background: #fff; }
+
+    .scroll-cue {
+      margin-top: 2.4rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      color: var(--mute);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.45; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(4px); }
+    }
+
+    /* —— Layout —— */
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 1.4rem 5rem;
+    }
+    section {
+      padding: 2.8rem 0 2.4rem;
+      border-top: 1px solid var(--line);
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+    section.in { opacity: 1; transform: none; }
+
+    .sec-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      color: var(--moss);
+      margin-bottom: 0.85rem;
+      text-transform: uppercase;
+    }
+    .sec-label::before {
+      content: "";
+      width: 1.4rem;
+      height: 1px;
+      background: var(--moss);
+    }
+    h2 {
+      font-family: "ZCOOL XiaoWei", "Noto Serif SC", serif;
+      font-size: clamp(1.55rem, 4.5vw, 1.95rem);
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+    .h2-en {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--mute);
+      margin-bottom: 1.35rem;
+    }
+    p { margin-bottom: 1rem; color: var(--ink-soft); font-size: 0.98rem; }
+    .en-block {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 1.12rem;
+      color: var(--mute);
+      margin: 0.85rem 0 1.2rem;
+      line-height: 1.7;
+    }
+    .quote {
+      margin: 1.5rem 0;
+      padding: 1.1rem 1.25rem 1.1rem 1.35rem;
+      border-left: 2px solid rgba(63, 107, 87, 0.45);
+      background: linear-gradient(90deg, rgba(217, 228, 220, 0.45), transparent 85%);
+    }
+    .quote .cn {
+      font-family: "ZCOOL XiaoWei", "Noto Serif SC", serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+      color: var(--moss-deep);
+      margin-bottom: 0.35rem;
+    }
+    .quote .en {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--mute);
+      margin: 0;
+    }
+    .quote .attr {
+      display: block;
+      margin-top: 0.55rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+    }
+
+    /* Language visibility */
+    html[data-lang="zh"] .only-en { display: none !important; }
+    html[data-lang="en"] .only-zh { display: none !important; }
+
+    /* TOC */
+    .toc {
+      display: grid;
+      gap: 0.65rem;
+      margin-top: 0.5rem;
+    }
+    .toc a {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.75rem;
+      align-items: baseline;
+      text-decoration: none;
+      color: inherit;
+      padding: 0.7rem 0.85rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.35);
+      border: 1px solid transparent;
+      transition: border-color 0.25s, background 0.25s, transform 0.25s var(--ease);
+    }
+    .toc a:hover {
+      border-color: rgba(63, 107, 87, 0.28);
+      background: rgba(255, 255, 255, 0.7);
+      transform: translateX(3px);
+    }
+    .toc .num {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.15rem;
+      color: var(--blossom);
+      font-weight: 600;
+    }
+    .toc .title { color: var(--ink); letter-spacing: 0.06em; }
+    .toc .hint {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--mute);
+    }
+
+    /* Steps */
+    .steps { display: grid; gap: 1.1rem; margin-top: 0.5rem; }
+    .step {
+      display: grid;
+      grid-template-columns: 2.4rem 1fr;
+      gap: 0.85rem;
+      align-items: start;
+    }
+    .step-seal {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: "ZCOOL XiaoWei", serif;
+      font-size: 0.95rem;
+      color: #f8f5ee;
+      background: linear-gradient(145deg, var(--moss), #5a8a72);
+      box-shadow: 0 6px 16px rgba(63, 107, 87, 0.22);
+    }
+    .step h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.25rem;
+      color: var(--ink);
+    }
+    .step p { margin-bottom: 0.35rem; font-size: 0.94rem; }
+
+    /* Season chips — interactive filter of solar terms */
+    .season-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0 1.2rem;
+    }
+    .chip {
+      border: 1px solid rgba(63, 107, 87, 0.28);
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--moss-deep);
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.25s, color 0.25s, transform 0.2s;
+    }
+    .chip.active, .chip:hover {
+      background: var(--moss);
+      color: #f8f5ee;
+      transform: translateY(-1px);
+    }
+    .term-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+    }
+    @media (max-width: 560px) {
+      .term-board { grid-template-columns: repeat(2, 1fr); }
+    }
+    .term {
+      padding: 0.7rem 0.65rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid var(--line);
+      text-align: center;
+      transition: opacity 0.35s, transform 0.35s var(--ease);
+    }
+    .term.dim { opacity: 0.28; transform: scale(0.98); }
+    .term strong {
+      display: block;
+      font-family: "ZCOOL XiaoWei", serif;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      color: var(--moss-deep);
+      font-weight: 400;
+    }
+    .term span {
+      display: block;
+      margin-top: 0.2rem;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--mute);
+    }
+
+    /* Section map */
+    .map {
+      display: grid;
+      gap: 0.85rem;
+      margin-top: 0.75rem;
+    }
+    .map-item {
+      padding: 1.05rem 1.15rem;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.48);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    .map-item h3 {
+      font-size: 1.08rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.2rem;
+      color: var(--ink);
+    }
+    .map-item .tag {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--blossom);
+      margin-bottom: 0.55rem;
+    }
+    .map-item p { margin: 0; font-size: 0.92rem; }
+
+    .detail-list {
+      list-style: none;
+      display: grid;
+      gap: 0.85rem;
+      margin: 0.75rem 0 0;
+    }
+    .detail-list li {
+      position: relative;
+      padding-left: 1.35rem;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .detail-list li::before {
+      content: "◇";
+      position: absolute;
+      left: 0;
+      top: 0.05rem;
+      color: var(--gold);
+      font-size: 0.75rem;
+    }
+
+    .letter-box {
+      margin-top: 0.5rem;
+      padding: 1.4rem 1.35rem 1.5rem;
+      border-radius: 16px;
+      background:
+        linear-gradient(165deg, rgba(255, 255, 255, 0.72), rgba(239, 230, 214, 0.65));
+      border: 1px solid rgba(176, 138, 74, 0.28);
+      box-shadow: var(--shadow);
+    }
+    .letter-box .sign {
+      margin-top: 1.2rem;
+      font-family: "ZCOOL XiaoWei", serif;
+      letter-spacing: 0.15em;
+      color: var(--moss-deep);
+    }
+    .letter-box .sign-en {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      color: var(--mute);
+      font-size: 1.05rem;
+    }
+
+    .cta-end {
+      text-align: center;
+      padding: 2.5rem 0 1rem;
+    }
+    .cta-end h2 { letter-spacing: 0.18em; }
+    .footer-note {
+      text-align: center;
+      padding: 2rem 0 0;
+      font-size: 0.8rem;
+      color: var(--mute);
+      letter-spacing: 0.08em;
+    }
+    .footer-note a { color: var(--moss); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      section { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand-mini">
+        ROMOLA · 四时风物
+        <span>Portfolio Field Guide</span>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="zh" class="active">中文</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <p class="eyebrow only-zh">一本写给投递信箱的小说明书</p>
+        <p class="eyebrow only-en">A small field guide for the inbox that found me</p>
+        <h1>
+          四时风物
+          <em>Four Seasons · A Living Portfolio</em>
+        </h1>
+        <p class="hero-lead only-zh">
+          这不是冷冰冰的功能说明书，而是我把一整年的光、诗、物与心血，折成一封可点开的信。
+          <span class="en">Not a cold manual — a letter folded from light, poetry, craft, and care.</span>
+        </p>
+        <p class="hero-lead only-en">
+          Not a cold technical manual, but a letter folded from a year’s light, poetry, objects, and quiet labour.
+          <span class="en">一卷可展开的心 · A scroll meant to be opened slowly.</span>
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://romola1110.github.io/portfolio/" target="_blank" rel="noopener">进入作品集 · Open Site</a>
+          <a class="btn btn-ghost" href="#toc">先读目录 · Contents</a>
+        </div>
+        <p class="scroll-cue only-zh">向下展开这卷故事 ▾</p>
+        <p class="scroll-cue only-en">Scroll to unfold the story ▾</p>
+      </div>
+    </header>
+
+    <main>
+      <!-- 00 TOC -->
+      <section id="toc">
+        <p class="sec-label">00 · Contents</p>
+        <h2 class="only-zh">目录 · 如何读这本小册</h2>
+        <h2 class="only-en">Contents · How to read this guide</h2>
+        <p class="h2-en only-zh">六章，像六次启封</p>
+        <p class="h2-en only-en">Six chapters, like six unfoldings</p>
+        <nav class="toc" aria-label="Handbook contents">
+          <a href="#origin"><span class="num">01</span><span class="title only-zh">缘起：从 R 语言到一座网站</span><span class="title only-en">Origin: From R to a website</span><span class="hint">why</span></a>
+          <a href="#theme"><span class="num">02</span><span class="title only-zh">主题：四时风物与二十四节气</span><span class="title only-en">Theme: Seasons &amp; solar terms</span><span class="hint">spirit</span></a>
+          <a href="#wander"><span class="num">03</span><span class="title only-zh">漫游：怎样点开、怎样换季</span><span class="title only-en">Wander: Open &amp; change seasons</span><span class="hint">how</span></a>
+          <a href="#map"><span class="num">04</span><span class="title only-zh">地图：文 · 影 · 物 · 数 · 光</span><span class="title only-en">Map: Words · Visual · Craft · DH · Light</span><span class="hint">where</span></a>
+          <a href="#craft"><span class="num">05</span><span class="title only-zh">心血：看不见的针脚</span><span class="title only-en">Craft: Invisible stitches</span><span class="hint">care</span></a>
+          <a href="#letter"><span class="num">06</span><span class="title only-zh">致读者：写给打开邮件的你</span><span class="title only-en">Letter: To you who opened this</span><span class="hint">you</span></a>
+        </nav>
+      </section>
+
+      <!-- 01 Origin -->
+      <section id="origin">
+        <p class="sec-label">01 · Origin</p>
+        <h2 class="only-zh">缘起：我想亲手造一个「完全属于自己的东西」</h2>
+        <h2 class="only-en">Origin: I wanted something entirely my own</h2>
+        <p class="h2-en only-zh">From distant reading to a living scroll</p>
+        <p class="h2-en only-en">From distant reading to a living scroll</p>
+
+        <p class="only-zh">
+          故事不是从「会不会写代码」开始的。它开始于港中文研究生课上的一次文本分析——我用 <strong>R 语言</strong>去远读《都柏林人》，看情感值如何在短篇里起伏，像看天气图一样看文字的气压。那一刻我忽然觉得：文学研究不必只停在批注与段落，它也可以变成可触摸的界面、可漫游的路径。
+        </p>
+        <p class="en-block only-zh">
+          It began not with “knowing how to code,” but with distant reading in an MA seminar — watching Joyce’s Dubliners rise and fall as data weather.
+        </p>
+        <p class="only-en">
+          The story did not begin with “knowing how to code.” It began in a graduate seminar at CUHK, when I used <strong>R</strong> for distant reading of <em>Dubliners</em>—watching emotion scores rise and fall across stories like a weather map of feeling. Suddenly literary study need not stop at annotations; it could become a path you wander, an interface you touch.
+        </p>
+
+        <p class="only-zh">
+          兴趣像一粒种子：我想试试 <strong>AI 辅助编程与部署</strong>——不是让机器替我「生成一个作品集模板」，而是我当主编，AI 当夜班排字工。我写文案、定视觉、挑诗句、画信息架构；它帮我把藤蔓曲线、启封动画、移动端点击这些琐碎针脚缝上。改到第无数版时，我仍记得某次为了让启封信在手机上「站在画面正中」，来回调了整晚——因为我想让第一眼就有「被人郑重递来一封信」的感觉。
+        </p>
+        <p class="only-en">
+          Curiosity became a seed: I wanted to try <strong>AI-assisted coding and deployment</strong>—not to let a model spit out a template portfolio, but to stay editor-in-chief while AI worked the night shift of typesetting. I wrote copy, set the visual system, chose poems, designed information architecture; it helped stitch vine curves, unfold animations, mobile taps. On one night I kept adjusting the opening letter until it stood centred on a phone screen—because the first glance should feel like receiving a letter, not a dashboard.
+        </p>
+
+        <div class="quote">
+          <p class="cn">一笺为引，一卷为心；同声相应，与君共寻。</p>
+          <p class="en">A small scroll of light, offered as an invitation — when kindred voices answer, we walk this way together.</p>
+          <span class="attr">— 网站启封页题辞 · Opening motto</span>
+        </div>
+
+        <p class="only-zh">
+          于是有了 <strong>Romola · 四时风物</strong>：中英双语、四季主题、节气日晷、文 / 影 / 物 / 数 / 摄影栏目——从创意构思、文案、视觉交互，到 GitHub Pages 上线，是一条我亲手走完的全流程。链接：
+          <a href="https://romola1110.github.io/portfolio/" target="_blank" rel="noopener">romola1110.github.io/portfolio</a>
+        </p>
+        <p class="only-en">
+          Thus <strong>Romola · Four Seasons</strong>: bilingual, season-themed, solar-term sundial, sections for writing / visual / craft / digital humanities / photography—from concept and copy to interaction and GitHub Pages deploy, a full path I walked myself.
+          <a href="https://romola1110.github.io/portfolio/" target="_blank" rel="noopener">romola1110.github.io/portfolio</a>
+        </p>
+      </section>
+
+      <!-- 02 Theme -->
+      <section id="theme">
+        <p class="sec-label">02 · Theme</p>
+        <h2 class="only-zh">主题心法：四时风物，让时间成为首页</h2>
+        <h2 class="only-en">Theme: Let time itself be the homepage</h2>
+        <p class="h2-en only-zh">Seasons · Solar terms · Poems in two tongues</p>
+        <p class="h2-en only-en">Seasons · Solar terms · Poems in two tongues</p>
+
+        <p class="only-zh">
+          「四时风物」不是装饰性的国风皮肤。我想回答的是：一个人文背景的人，如何用网站讲述<strong>时间如何被感知</strong>——春有花信，夏有长风，秋有落木，冬有归藏。导航旁的<strong>日晷</strong>会显示当日节气与一句节气诗；背景藤蔓与蝴蝶随季节变色；启封页漂浮着中英诗片。你看到的不是静态海报，而是一座会呼吸的小园子。
+        </p>
+        <p class="only-en">
+          “Four Seasons Scenery” is not decorative chinoiserie. I wanted to ask how someone trained in the humanities might let a website narrate <strong>how time is felt</strong>—spring’s blossom-news, summer’s long wind, autumn’s leaving leaves, winter’s returning stillness. A <strong>sundial</strong> beside the nav shows today’s solar term and a short verse; vines and butterflies shift with the season; the opening letter floats bilingual poem-fragments. Not a static poster—a little garden that breathes.
+        </p>
+
+        <div class="quote">
+          <p class="cn only-zh">风传花信，雨濯春尘。</p>
+          <p class="en only-zh">The wind carries word of blossoms; spring washes the world anew.</p>
+          <p class="cn only-en">暮色含金，木叶将辞。</p>
+          <p class="en only-en">Dusk gilds the world in gold; the leaves prepare to leave.</p>
+          <span class="attr only-zh">— 春季主标题之一 · One of the season headlines</span>
+          <span class="attr only-en">— An autumn headline from the site</span>
+        </div>
+
+        <p class="only-zh">点选季节，可看二十四节气在园子里的位置（与网站日晷同源的时间逻辑）：</p>
+        <p class="only-en">Tap a season to see where the twenty-four solar terms sit in this garden (the same time-logic as the site’s sundial):</p>
+
+        <div class="season-row" id="seasonChips">
+          <button type="button" class="chip active" data-season="all">全览 · All</button>
+          <button type="button" class="chip" data-season="spring">春 Spring</button>
+          <button type="button" class="chip" data-season="summer">夏 Summer</button>
+          <button type="button" class="chip" data-season="autumn">秋 Autumn</button>
+          <button type="button" class="chip" data-season="winter">冬 Winter</button>
+        </div>
+        <div class="term-board" id="termBoard" aria-live="polite"></div>
+      </section>
+
+      <!-- 03 Wander -->
+      <section id="wander">
+        <p class="sec-label">03 · How to wander</p>
+        <h2 class="only-zh">漫游指南：请像读一封信那样点开</h2>
+        <h2 class="only-en">How to wander: Open it like a letter</h2>
+        <p class="h2-en only-zh">A gentle path from seal to seasons</p>
+        <p class="h2-en only-en">A gentle path from seal to seasons</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-seal">启</div>
+            <div>
+              <h3 class="only-zh">第一步 · 启封</h3>
+              <h3 class="only-en">Step 1 · Unfold</h3>
+              <p class="only-zh">进入网站，先停在「信纸」前。可读中英题辞，也可点右上角春夏秋冬小圆钮预览季节气质，再点 <strong>啟封 · Unfold</strong>。那一下，是我最在意的仪式感——像把信封口轻轻撕开。</p>
+              <p class="only-en">You arrive at a letter-paper. Read the bilingual motto, or tap the tiny season dots to preview the mood, then press <strong>啟封 · Unfold</strong>. That click is the ritual I cared about most—like easing open an envelope.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-seal">晷</div>
+            <div>
+              <h3 class="only-zh">第二步 · 看日晷与节气</h3>
+              <h3 class="only-en">Step 2 · Meet the sundial</h3>
+              <p class="only-zh">导航右侧是日晷：公历日期、当前<strong>二十四节气</strong>、一句节气诗。想换一季风景，点日晷打开季节选择——整站色调、诗句、特效会跟着换季。像把窗外的树摇成另一种绿。</p>
+              <p class="only-en">On the right of the nav sits a sundial: calendar date, today’s <strong>solar term</strong>, and a short verse. Tap it to change season—colours, poems, and effects shift together, as if the trees outside changed their green.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-seal">游</div>
+            <div>
+              <h3 class="only-zh">第三步 · 沿导航漫游</h3>
+              <h3 class="only-en">Step 3 · Wander the nav</h3>
+              <p class="only-zh"><strong>文 / Writing</strong>、<strong>影 / Visual</strong>、<strong>物 / Craft</strong>、<strong>数 / Digital</strong>，再往下是摄影「四时·流转之境」。卡片与展区多可点击展开——请慢慢点，像翻一本不愿一次读完的书。</p>
+              <p class="only-en"><strong>Writing</strong>, <strong>Visual</strong>, <strong>Craft</strong>, <strong>Digital</strong>, then photography—“Seasons through the Lens.” Cards and galleries open on tap. Go slowly, like a book you refuse to finish in one sitting.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-seal">音</div>
+            <div>
+              <h3 class="only-zh">第四步 · 在「续音」留下可能</h3>
+              <h3 class="only-en">Step 4 · Leave a possible echo</h3>
+              <p class="only-zh">页末「续音」是联系方式。山高水长，愿有回响——若你因这封投递邮件而来，那一声回响，或许就是我们下一次对话的开始。</p>
+              <p class="only-en">“续音 / Echo” at the end holds contact details. Across mountains and rivers, may words still answer—if you came from an application email, that answer might begin our next conversation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04 Map -->
+      <section id="map">
+        <p class="sec-label">04 · Map</p>
+        <h2 class="only-zh">栏目地图：一卷里藏着五道光</h2>
+        <h2 class="only-en">Section map: Five kinds of light in one scroll</h2>
+        <p class="h2-en only-zh">What you will find when you unfold</p>
+        <p class="h2-en only-en">What you will find when you unfold</p>
+
+        <div class="map">
+          <article class="map-item">
+            <h3>文以载心</h3>
+            <p class="tag">Writing — the window through which I see</p>
+            <p class="only-zh">文学创作、评论与双语书写。有英文小说《The Unanswered Call》的多次结构修订，也有远读《都柏林人》的研究足迹——文字是我认识世界的第一种方式。</p>
+            <p class="only-en">Creative writing, criticism, bilingual prose. The English novella <em>The Unanswered Call</em> (many structural revisions) and distant-reading work on <em>Dubliners</em>—words were my first way of knowing the world.</p>
+          </article>
+          <article class="map-item">
+            <h3>流影拾微</h3>
+            <p class="tag">Visual &amp; Layout — a quiet conversation</p>
+            <p class="only-zh">排版、公众号编辑、短视频与视觉叙事。我想让「沉默的空隙」也被设计——标题与留白像呼吸。</p>
+            <p class="only-en">Layout, editorial design for WeChat, short video and visual narrative. I design the silent gaps too—titles and white space as breath.</p>
+          </article>
+          <article class="map-item">
+            <h3>寄情于物</h3>
+            <p class="tag">Craft — gentle footnotes to time</p>
+            <p class="only-zh">书法、染卡、书签、折扇与明信片；还有可互动的「摇签」与垂幕展陈。物很小，却是时间的温柔脚注——我做过「醉花阴」主题文创售卖，也懂得一枚书签如何成为记忆的把手。</p>
+            <p class="only-en">Calligraphy, dye cards, bookmarks, fans and postcards; an interactive lot-drawing tube and curtain gallery. Small objects as gentle footnotes to time—I once designed and sold “醉花阴” stationery, and know how a bookmark can be a handle for memory.</p>
+          </article>
+          <article class="map-item">
+            <h3>数境人文</h3>
+            <p class="tag">Digital Humanities — mountains emerge within data</p>
+            <p class="only-zh">当文学遇见数据：R 语言量化分析、可视化，以及 Vibe Coding 人机共创实验。这座网站本身，就是「数境人文」落地的最大证物。</p>
+            <p class="only-en">When literature meets data: quantitative analysis in R, visualisation, and AI-assisted “vibe coding.” This website itself is the largest proof of that practice.</p>
+          </article>
+          <article class="map-item">
+            <h3>四时·流转之境</h3>
+            <p class="tag">Seasons through the Lens</p>
+            <p class="only-zh">春苔生，夏影长，秋叶落，冬窗寂。校园与四季的摄影，按季节切换浏览——光在四季里留下脚印，我替它一一拾起。</p>
+            <p class="only-en">Spring moss, summer shade, autumn leaves, winter windows. Campus and seasonal photography, browsable by season—light left footprints; I picked them up one by one.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 05 Craft -->
+      <section id="craft">
+        <p class="sec-label">05 · Craft</p>
+        <h2 class="only-zh">心血细节：那些你不一定第一眼看见的针脚</h2>
+        <h2 class="only-en">Craft: Stitches you may not see at first glance</h2>
+        <p class="h2-en only-zh">Why this site took so many midnights</p>
+        <p class="h2-en only-en">Why this site took so many midnights</p>
+
+        <p class="only-zh">
+          若只看截图，它像一座漂亮的站；若走近，会发现许多「为一个人的阅读感受」而抠的细节。我愿意把它们写出来——不是炫技，而是想诚实地说：<strong>这是我一点点养大的园子</strong>。
+        </p>
+        <p class="only-en">
+          In a screenshot it looks merely pretty; up close, it is full of stitches made for one reader’s feeling. I list them not to show off, but to say honestly: <strong>this is a garden I raised by hand</strong>.
+        </p>
+
+        <ul class="detail-list">
+          <li class="only-zh"><strong>双语同屏：</strong>不是机翻贴两行，而是中英各自成立——中文求意境，英文求可诵读的呼吸（如启封题辞与四季大标题）。</li>
+          <li class="only-en"><strong>Bilingual on one screen:</strong> not machine-translated doubles, but two voices that each stand alone—Chinese for atmosphere, English for breath you can speak aloud.</li>
+
+          <li class="only-zh"><strong>诗句会「下雨」：</strong>启封背景漂浮中英诗片；主页藤蔓旁藏着四季诗句。我希望你还没点开栏目，就已经先被语言的天气包围。</li>
+          <li class="only-en"><strong>Poems that weather the page:</strong> fragments drift behind the opening letter; seasonal verses hide along the vine—so language surrounds you before any section opens.</li>
+
+          <li class="only-zh"><strong>节气不是标签：</strong>日晷联动真实日期与二十四节气诗，让「今天」参与排版——你若在雨水来访，读到的气质会不同于霜降。</li>
+          <li class="only-en"><strong>Solar terms are not stickers:</strong> the sundial ties real dates to the twenty-four terms and their verses, so “today” joins the layout—Rain Water feels unlike Frost’s Descent.</li>
+
+          <li class="only-zh"><strong>移动端也要能「被点开」：</strong>为手机浏览器修过启封遮罩误拦截点击、卡片触控、竖版信纸比例……琐碎，却决定你是否真的进得去。</li>
+          <li class="only-en"><strong>Mobile must truly open:</strong> I fixed overlay click-blocking, card taps, portrait letter proportions—tedious work that decides whether you can actually enter.</li>
+
+          <li class="only-zh"><strong>全流程署名：</strong>信息架构、栏目文案、视觉系统、交互、AI 辅助迭代、GitHub Pages 部署——我都在场。AI 是工具，判断与审美是我的。</li>
+          <li class="only-en"><strong>Full-process authorship:</strong> IA, copy, visual system, interaction, AI-assisted iteration, GitHub Pages—I was present for all. AI is a tool; judgment and taste are mine.</li>
+        </ul>
+
+        <div class="quote" style="margin-top:1.6rem;">
+          <p class="cn">山高水长，愿有回响。</p>
+          <p class="en">Across mountains and rivers, may words still answer.</p>
+          <span class="attr">— 续音 · Closing wish</span>
+        </div>
+      </section>
+
+      <!-- 06 Letter -->
+      <section id="letter">
+        <p class="sec-label">06 · Letter</p>
+        <h2 class="only-zh">致打开邮件的你</h2>
+        <h2 class="only-en">To you who opened the email</h2>
+        <p class="h2-en only-zh">If you are reading this from an application</p>
+        <p class="h2-en only-en">If you are reading this from an application</p>
+
+        <div class="letter-box">
+          <p class="only-zh">
+            你好。若你因一份简历或一封求职信点开这里，谢谢你多给我三分钟。
+          </p>
+          <p class="only-zh">
+            我是杨雪琪（Romola），港中文英文文学研究硕士在读。我热爱阅读、策展式的内容组织，也愿意把琐碎做成有温度的成品——正如这个网站：它诞生于课堂里对 R 与文本的好奇，长成于无数次「再改一版」的深夜，最终成为一个可以换季、可以启封、可以用中英两种声音说话的作品集。
+          </p>
+          <p class="only-zh">
+            我相信内容工作需要四种力：把主题串起来的<strong>策展力</strong>，写出有温度有观点的<strong>叙事力</strong>，连接人与文化的<strong>连接力</strong>，以及把脑中创意落地成推文、页面与活动的<strong>行动力</strong>。四时风物，是我交给你的一份行动力样本——不完美，但真诚，且仍在生长。
+          </p>
+          <p class="only-zh">
+            「好雨知时节，当春乃发生。」若此刻正是我们可能共事的时节，我很乐意把这份认真，带到下一段具体的工作里。
+          </p>
+
+          <p class="only-en">
+            Hello. If you opened this from a CV or cover email—thank you for three more minutes.
+          </p>
+          <p class="only-en">
+            I am Yang Xueqi (Romola), an MA student in English Literary Studies at CUHK. I love reading and curatorial ways of organising content, and I am willing to turn tedious details into warm finished things—as with this site: born from classroom curiosity about R and text, raised through countless “one more revision” nights, grown into a portfolio that changes seasons, unfolds like a letter, and speaks in Chinese and English.
+          </p>
+          <p class="only-en">
+            I believe content work asks for four strengths: <strong>curatorial sense</strong> to thread a theme, <strong>narrative warmth</strong> with a point of view, <strong>connection</strong> between people and culture, and <strong>action</strong> that lands ideas as posts, pages, and events. Four Seasons is a sample of that action—imperfect, sincere, still growing.
+          </p>
+          <p class="only-en">
+            “Good rain knows its season.” If this might be our season to work together, I would gladly bring this care to the next concrete task.
+          </p>
+
+          <p class="sign">杨雪琪 · ROMOLA</p>
+          <p class="sign-en">A scroll of seasons, with words still to come.</p>
+        </div>
+      </section>
+
+      <div class="cta-end">
+        <h2 class="only-zh">现在，去园子里走走吧</h2>
+        <h2 class="only-en">Now—walk into the garden</h2>
+        <p class="h2-en only-zh">一卷四时，未尽之言</p>
+        <p class="h2-en only-en">A scroll of seasons, with words still to come</p>
+        <div class="hero-cta" style="justify-content:center;margin-top:1.2rem;">
+          <a class="btn btn-primary" href="https://romola1110.github.io/portfolio/" target="_blank" rel="noopener">打开作品集 · Visit Portfolio</a>
+          <a class="btn btn-ghost" href="#origin">再读缘起 · Re-read origin</a>
+        </div>
+      </div>
+
+      <p class="footer-note">
+        © 杨雪琪 Romola · 2025–2026<br />
+        <a href="https://romola1110.github.io/portfolio/">romola1110.github.io/portfolio</a>
+        ·
+        <a href="handbook.html">handbook.html</a>
+      </p>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const TERMS = [
+        { name: "小寒", en: "Minor Cold", season: "winter" },
+        { name: "大寒", en: "Major Cold", season: "winter" },
+        { name: "立春", en: "Start of Spring", season: "spring" },
+        { name: "雨水", en: "Rain Water", season: "spring" },
+        { name: "惊蛰", en: "Awakening of Insects", season: "spring" },
+        { name: "春分", en: "Spring Equinox", season: "spring" },
+        { name: "清明", en: "Clear and Bright", season: "spring" },
+        { name: "谷雨", en: "Grain Rain", season: "spring" },
+        { name: "立夏", en: "Start of Summer", season: "summer" },
+        { name: "小满", en: "Grain Buds", season: "summer" },
+        { name: "芒种", en: "Grain in Ear", season: "summer" },
+        { name: "夏至", en: "Summer Solstice", season: "summer" },
+        { name: "小暑", en: "Minor Heat", season: "summer" },
+        { name: "大暑", en: "Major Heat", season: "summer" },
+        { name: "立秋", en: "Start of Autumn", season: "autumn" },
+        { name: "处暑", en: "End of Heat", season: "autumn" },
+        { name: "白露", en: "White Dew", season: "autumn" },
+        { name: "秋分", en: "Autumn Equinox", season: "autumn" },
+        { name: "寒露", en: "Cold Dew", season: "autumn" },
+        { name: "霜降", en: "Frost’s Descent", season: "autumn" },
+        { name: "立冬", en: "Start of Winter", season: "winter" },
+        { name: "小雪", en: "Minor Snow", season: "winter" },
+        { name: "大雪", en: "Major Snow", season: "winter" },
+        { name: "冬至", en: "Winter Solstice", season: "winter" }
+      ];
+
+      const board = document.getElementById("termBoard");
+      function renderTerms(filter) {
+        board.innerHTML = TERMS.map(function (t) {
+          const dim = filter !== "all" && t.season !== filter ? " dim" : "";
+          return (
+            '<div class="term' + dim + '" data-season="' + t.season + '">' +
+            "<strong>" + t.name + "</strong>" +
+            "<span>" + t.en + "</span></div>"
+          );
+        }).join("");
+      }
+      renderTerms("all");
+
+      document.getElementById("seasonChips").addEventListener("click", function (e) {
+        const btn = e.target.closest(".chip");
+        if (!btn) return;
+        document.querySelectorAll(".chip").forEach(function (c) { c.classList.remove("active"); });
+        btn.classList.add("active");
+        renderTerms(btn.dataset.season);
+      });
+
+      /* Language */
+      const root = document.documentElement;
+      const saved = localStorage.getItem("romola-handbook-lang");
+      if (saved === "en" || saved === "zh") root.setAttribute("data-lang", saved);
+      else root.setAttribute("data-lang", "zh");
+
+      function syncLangButtons() {
+        const lang = root.getAttribute("data-lang") || "zh";
+        document.querySelectorAll(".lang-switch button").forEach(function (b) {
+          b.classList.toggle("active", b.dataset.lang === lang);
+        });
+      }
+      syncLangButtons();
+
+      document.querySelector(".lang-switch").addEventListener("click", function (e) {
+        const btn = e.target.closest("button[data-lang]");
+        if (!btn) return;
+        root.setAttribute("data-lang", btn.dataset.lang);
+        localStorage.setItem("romola-handbook-lang", btn.dataset.lang);
+        syncLangButtons();
+      });
+
+      /* Reveal */
+      const io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) entry.target.classList.add("in");
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      );
+      document.querySelectorAll("main section").forEach(function (s) { io.observe(s); });
+
+      /* Petals */
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        for (let i = 0; i < 8; i++) {
+          const p = document.createElement("span");
+          p.className = "petal";
+          p.style.left = Math.random() * 100 + "vw";
+          p.style.animationDuration = 12 + Math.random() * 14 + "s";
+          p.style.animationDelay = Math.random() * 8 + "s";
+          p.style.background =
+            i % 3 === 0
+              ? "rgba(196,120,106,0.35)"
+              : i % 3 === 1
+                ? "rgba(63,107,87,0.28)"
+                : "rgba(176,138,74,0.3)";
+          document.body.appendChild(p);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -6,6 +6,7 @@ on:
     paths:
       - 'index.html'
       - 'index (1).html'
+      - 'handbook.html'
       - 'assets/things/**'
       - 'assets/things-section.*'
       - 'assets/photos/**'

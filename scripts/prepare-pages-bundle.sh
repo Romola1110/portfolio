@@ -10,6 +10,7 @@ mkdir -p "$OUT"
 touch "$OUT/.nojekyll"
 
 cp "$ROOT/index.html" "$ROOT/index (1).html" "$OUT/"
+[ -f "$ROOT/handbook.html" ] && cp "$ROOT/handbook.html" "$OUT/"
 
 for f in "$ROOT"/*.pdf; do
   [ -f "$f" ] && cp "$f" "$OUT/"
