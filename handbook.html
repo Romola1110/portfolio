@@ -7,7 +7,7 @@
   <meta name="description" content="杨雪琪（Romola）个人创意作品集《四时风物》使用手册：缘起、主题、漫游与制作心血。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     @font-face {
       font-family: "YuweiJianti";
@@ -46,6 +46,7 @@
       --font-title: "FZ-QKBY", "YuweiFanti", "Noto Serif SC", serif;
       --font-body: "FZ-WuYT", "Noto Serif SC", "Songti SC", serif;
       --font-en: "Cormorant Garamond", Georgia, serif;
+      --font-en-title: "Playfair Display", "Cormorant Garamond", Georgia, serif;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -231,11 +232,9 @@
     section {
       padding: 2.6rem 0 2.2rem;
       border-top: 1px solid var(--line);
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+      opacity: 1;
+      transform: none;
     }
-    section.in { opacity: 1; transform: none; }
 
     .sec-label {
       display: inline-flex;
@@ -260,6 +259,24 @@
       letter-spacing: 0.1em;
       color: var(--ink);
       margin-bottom: 0.3rem;
+    }
+    h2.only-en {
+      font-family: var(--font-en-title);
+      font-style: italic;
+      letter-spacing: 0.04em;
+    }
+    .hero h1 .only-en {
+      font-family: var(--font-en-title);
+      letter-spacing: 0.08em;
+    }
+    .cta-end h2.only-en {
+      font-family: var(--font-en-title);
+      font-style: italic;
+      letter-spacing: 0.06em;
+    }
+    .feedback h3.only-en {
+      font-family: var(--font-en-title);
+      font-style: italic;
     }
     .h2-en {
       font-family: var(--font-en);
@@ -945,30 +962,26 @@
       <section id="feedback" class="feedback">
         <h3 class="only-zh">如果可以——</h3>
         <h3 class="only-en">If you would—</h3>
-        <p class="hint only-zh">若你读完了作品集与本手册，愿留几句感受、建议或批评。写好后点「打开邮件」，会唤起你的邮箱客户端；把内容发出即可，我会认真读。你的回响对我很重要。</p>
-        <p class="hint only-en">If you have finished the portfolio and this guide, I would be grateful for a few words. Tap “Open mail” to open your email app with a drafted message—then send. I read every note carefully.</p>
+        <p class="hint only-zh">若你读完了作品集与本手册，愿留几句感受、建议或批评——我会认真读。你的回响对我很重要。</p>
+        <p class="hint only-en">If you have finished the portfolio and this guide, I would be grateful for a few words—impressions, suggestions, or critique. I read every message carefully.</p>
         <form id="feedbackForm">
           <label class="only-zh" for="fbName">称呼（可选）</label>
           <label class="only-en" for="fbName">Name (optional)</label>
           <input type="text" id="fbName" name="name" autocomplete="name" />
-          <label class="only-zh" for="fbEmail">你的邮箱（可选，便于我回复）</label>
-          <label class="only-en" for="fbEmail">Your email (optional, for reply)</label>
+          <label class="only-zh" for="fbEmail">你的邮箱（可选）</label>
+          <label class="only-en" for="fbEmail">Your email (optional)</label>
           <input type="email" id="fbEmail" name="email" autocomplete="email" />
           <label class="only-zh" for="fbMsg">你的感受与建议</label>
           <label class="only-en" for="fbMsg">Your thoughts &amp; suggestions</label>
           <textarea id="fbMsg" name="message" required></textarea>
-          <button type="submit">
-            <span class="only-zh">打开邮件 · 送出回响</span>
-            <span class="only-en">Open mail · Send</span>
+          <button type="submit" id="fbSubmit">
+            <span class="only-zh">送出回响</span>
+            <span class="only-en">Send</span>
           </button>
         </form>
-        <p class="hint" style="margin-top:0.75rem;">
-          <span class="only-zh">也可直接写信至：</span>
-          <span class="only-en">Or write directly to: </span>
-          <a href="mailto:15861715770@163.com">15861715770@163.com</a>
-        </p>
-        <p class="ok only-zh">已为你打开邮件窗口。若未弹出，请检查浏览器是否拦截，或直接发信至上方邮箱。</p>
-        <p class="ok only-en">Your mail app should open. If nothing appears, check blockers—or write to the email above.</p>
+        <p class="ok only-zh" id="fbOkZh">已送出，谢谢你。我会在邮箱里收到。</p>
+        <p class="ok only-en" id="fbOkEn">Sent—thank you. It will arrive in my inbox.</p>
+        <p class="hint" id="fbErr" style="display:none;color:#a45c4a;"></p>
       </section>
 
       <p class="footer-note">
@@ -1011,24 +1024,24 @@
 
       var POEMS = {
         overlay: {
-          cn: ["惠风和畅 · 杂花生树 · 燕燕于飞 · 东风夜放花千树 · 海棠未雨，梨花先雪，一半春休", "When daisies pied and violets blue · The soft south wind, the sweet spring showers · Loveliest of trees, the cherry now"],
-          en: ["Fragments drift behind the opening letter—Chinese and English, never quite the same twice.", "Move the cursor; the poems sway gently with you."]
+          cn: ["惠风和畅 · 杂花生树 · 燕燕于飞 · 东风夜放花千树 · 海棠未雨，梨花先雪，一半春休"],
+          en: ["Fragments drift behind the opening letter—never quite the same twice.", "Move the cursor; the poems sway gently with you."]
         },
         spring: {
           cn: ["风传花信，雨濯春尘。", "杨柳丝丝弄轻柔，烟缕织成愁 · 试上超然台上看，半壕春水一城花 · 红豆生南国，春来发几枝 · 燕草如碧丝，秦桑低绿枝"],
-          en: ["The wind carries word of blossoms; spring washes the world anew.", "Come live with me and be my love · Now the bright morning star, day's harbinger · If winter comes, can spring be far behind"]
+          en: ["The wind carries word of blossoms; spring washes the world anew.", "Come live with me and be my love · Now the bright morning star, day's harbinger"]
         },
         summer: {
           cn: ["碧海生光，长风度夏。", "风老莺雏，雨肥梅子，午阴嘉树清圆 · 连雨不知春去，一晴方觉夏深 · 荷风送香气，竹露滴清响 · 兴尽晚回舟，误入藕花深处"],
-          en: ["Light glimmers on the sea; the long wind carries the summer through.", "Green leaves, and silence, and a dreamy shade · The dragonflies are stitching the air · Under the greenwood tree"]
+          en: ["Light glimmers on the sea; the long wind carries the summer through.", "Green leaves, and silence, and a dreamy shade · The dragonflies are stitching the air"]
         },
         autumn: {
           cn: ["暮色含金，木叶将辞。", "银烛秋光冷画屏，轻罗小扇扑流萤 · 洛阳城里见秋风，欲作家书意万重 · 复恐匆匆说不尽，行人临发又开封 · 山气日夕佳，飞鸟相与还"],
-          en: ["Dusk gilds the world in gold; the leaves prepare to leave.", "A touch of cold in the Autumn night · While barred clouds bloom the soft-dying day · Thou hast thy music too"]
+          en: ["Dusk gilds the world in gold; the leaves prepare to leave.", "A touch of cold in the Autumn night · While barred clouds bloom the soft-dying day"]
         },
         winter: {
           cn: ["一夜雪深，万物归藏。", "梅须逊雪三分白，雪却输梅一段香 · 六出飞花入户时，坐看青竹变琼枝 · 已讶衾枕冷，复见窗户明 · 夜深知雪重，时闻折竹声"],
-          en: ["The night deepens with snow; all things return to stillness.", "Announced by all the trumpets of the sky, arrives the snow · In the bleak midwinter · Frosty wind made moan"]
+          en: ["The night deepens with snow; all things return to stillness.", "Announced by all the trumpets of the sky, arrives the snow · In the bleak midwinter"]
         }
       };
 
@@ -1074,12 +1087,11 @@
       var poemBoard = document.getElementById("poemBoard");
       function renderPoems(key) {
         var p = POEMS[key];
-        var lang = root.getAttribute("data-lang") || "zh";
-        var lines = lang === "en" ? p.en : p.cn;
-        poemBoard.innerHTML = lines.map(function (line) {
+        poemBoard.innerHTML = p.cn.map(function (line, i) {
           return (
             '<div class="poem-excerpt">' +
-            '<div class="' + (lang === "en" ? "en" : "cn") + '">' + line + "</div>" +
+            '<div class="cn">' + line + "</div>" +
+            (p.en[i] ? '<div class="en">' + p.en[i] + "</div>" : "") +
             "</div>"
           );
         }).join("");
@@ -1103,8 +1115,6 @@
         document.querySelectorAll(".lang-switch button").forEach(function (b) {
           b.classList.toggle("active", b.dataset.lang === lang);
         });
-        var activePoem = document.querySelector("#poemChips .chip.active");
-        if (activePoem) renderPoems(activePoem.dataset.poem);
       }
       syncLang();
 
@@ -1125,29 +1135,42 @@
 
       document.getElementById("feedbackForm").addEventListener("submit", function (e) {
         e.preventDefault();
-        var name = document.getElementById("fbName").value.trim();
-        var email = document.getElementById("fbEmail").value.trim();
+        var btn = document.getElementById("fbSubmit");
+        var err = document.getElementById("fbErr");
         var msg = document.getElementById("fbMsg").value.trim();
         if (!msg) return;
-        var body =
-          (name ? "称呼：" + name + "\n" : "") +
-          (email ? "联系邮箱：" + email + "\n" : "") +
-          "\n——\n\n" +
-          msg;
-        var href =
-          "mailto:15861715770@163.com" +
-          "?subject=" +
-          encodeURIComponent("【四时风物手册】读者回响") +
-          "&body=" +
-          encodeURIComponent(body);
-        window.location.href = href;
-        document.getElementById("feedback").classList.add("sent");
+        err.style.display = "none";
+        btn.disabled = true;
+        fetch("https://formsubmit.co/ajax/15861715770@163.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            name: document.getElementById("fbName").value.trim() || "匿名读者",
+            email: document.getElementById("fbEmail").value.trim() || "noreply@romola.portfolio",
+            message: msg,
+            _subject: "【四时风物手册】读者回响"
+          })
+        })
+          .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+          .then(function (res) {
+            if (res.ok) {
+              document.getElementById("feedback").classList.add("sent");
+              document.getElementById("feedbackForm").reset();
+            } else {
+              err.style.display = "block";
+              err.textContent = (document.documentElement.getAttribute("data-lang") === "en")
+                ? "Could not send. Please email 15861715770@163.com directly."
+                : "暂时未能送出。请直接写信至 15861715770@163.com。";
+            }
+          })
+          .catch(function () {
+            err.style.display = "block";
+            err.textContent = (document.documentElement.getAttribute("data-lang") === "en")
+              ? "Could not send. Please email 15861715770@163.com directly."
+              : "暂时未能送出。请直接写信至 15861715770@163.com。";
+          })
+          .finally(function () { btn.disabled = false; });
       });
-
-      var params = new URLSearchParams(window.location.search);
-      if (params.get("sent") === "1") {
-        document.getElementById("feedback").classList.add("sent");
-      }
     })();
   </script>
 </body>
