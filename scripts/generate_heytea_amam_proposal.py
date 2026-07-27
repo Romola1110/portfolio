@@ -145,7 +145,7 @@ def build():
     add_subtitle(doc, "Hero Idea：把一份想念，寄到TA手里")
     add_subtitle(
         doc,
-        "版本：面试最终小改版 v8.2｜面试作业｜仅供内部讨论｜" + date.today().isoformat(),
+        "版本：面试最终小改版 v8.2（KV层级锁定）｜面试作业｜仅供内部讨论｜" + date.today().isoformat(),
     )
     quote(doc, "心中念你，便不觉远。")
     body(
@@ -626,23 +626,23 @@ def build():
         "面试作品忌「三个方向请选择」。收口为：一个Hero主视觉，下挂即时/异地/留下三延展。视觉原则约60%喜茶商业感 + 40%电影叙事。",
         False,
     )
-    h2(doc, "主KV｜把一份想念，寄到TA手里")
+    h2(doc, "主KV｜把一份想念，寄到TA手里（唯一主视觉）")
     try_add_image(
         doc,
         MOCKUP_DIR / "01-kv-poster.png",
-        caption="唯一主视觉：覆盖一杯/一盒/送达命题；产品在中心，电影作背景。",
+        caption="Hero：杯+茶礼盒+短笺，覆盖即时/异地命题。",
     )
     h2(doc, "延展1｜即时：给想念的人，一杯茶")
     try_add_image(
         doc,
-        MOCKUP_DIR / "02-product-packaging.png",
-        caption="现制侧应用：杯套/短笺/同城送给TA物料（可再配外卖送达画面）。",
+        MOCKUP_DIR / "05-kv-instant.png",
+        caption="产品slogan应用：现制/同城送给TA。",
     )
     h2(doc, "延展2｜异地：给想念的人，一盒茶")
     try_add_image(
         doc,
         MOCKUP_DIR / "04-bottle-gift.png",
-        caption="茶礼应用：礼盒+邮戳地址+可寄达，证明跨地域履约。",
+        caption="茶礼应用：礼盒+邮戳/地址，证明可寄达。",
     )
     h2(doc, "延展3｜留下：写下一句想念")
     try_add_image(
@@ -650,9 +650,15 @@ def build():
         MOCKUP_DIR / "03-store-experience.png",
         caption="念你邮局 +「许多句念你」精选墙。",
     )
+    h2(doc, "备用｜Campaign气质物料（非主KV）")
+    try_add_image(
+        doc,
+        MOCKUP_DIR / "06-kv-campaign-mood.png",
+        caption="《心中念你，便不觉远》氛围图，仅backup/内页，勿与Hero并列竞选。",
+    )
     note(
         doc,
-        "层级备忘：Campaign《心中念你》→ Hero「把一份想念，寄到TA手里」→ 产品语「给想念的人，一杯茶」→ 礼赠语「给想念的人，一盒茶」。勿把产品slogan升成唯一Hero。",
+        "层级：Campaign《心中念你》→ Hero「把一份想念，寄到TA手里」→ 产品语「给想念的人，一杯茶」→ 礼赠语「给想念的人，一盒茶」。面试勿放三个主KV请选择。",
     )
 
     h1(doc, "附录B｜汇报目录")
