@@ -1851,11 +1851,11 @@ const contentData = [
     tag: 'ACADEMIC · 3 PAPERS',
     hoverQuotes: [
       '时间绵延视域下的意识流 · 境界说读《西风颂》 · 女扮男装与女性主体',
-      '三篇研究合为一卷，点选篇目阅读导读与 PDF。'
+      '现代主义、比较美学与古典女性书写——三条并行的研究路径。'
     ],
     mode: 'papers',
     bookTitle: '学术写作选辑 · 三篇',
-    intro: '文学研究的三条路径：现代主义意识流、中西比较美学，与古典文学中的女性主体。点选篇目阅读导读并查看原文 PDF。',
+    intro: '文学研究的三条路径：现代主义意识流、中西比较美学，与古典文学中的女性主体。',
     papers: [
         {
           id: 'thesis',
@@ -2220,7 +2220,7 @@ function openBook(id) {
     left.innerHTML = `
       <h3 class="b-full-title">${data.bookTitle}</h3>
       <div class="b-text" style="margin-bottom:1rem">${data.intro}</div>
-      <div class="b-intro-title">选择篇目</div>
+      <div class="b-intro-title">篇目</div>
       <div class="anthology-nav" id="paperNav"></div>
       <div id="paperIntro" style="margin-top:1.2rem"></div>`;
     right.innerHTML = '';
