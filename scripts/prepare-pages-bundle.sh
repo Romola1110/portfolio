@@ -11,6 +11,9 @@ touch "$OUT/.nojekyll"
 
 cp "$ROOT/index.html" "$ROOT/index (1).html" "$OUT/"
 [ -f "$ROOT/handbook.html" ] && cp "$ROOT/handbook.html" "$OUT/"
+# Structure demos (HTML preview — must ship so MIME is text/html on Pages)
+[ -f "$ROOT/words-section-demo.html" ] && cp "$ROOT/words-section-demo.html" "$OUT/"
+[ -f "$ROOT/portfolio-map-demo.html" ] && cp "$ROOT/portfolio-map-demo.html" "$OUT/"
 
 for f in "$ROOT"/*.pdf; do
   [ -f "$f" ] && cp "$f" "$OUT/"

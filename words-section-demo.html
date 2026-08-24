@@ -4,68 +4,113 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>文以载心 · 结构 Demo · 杨雪琪</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400;600&family=Ma+Shan+Zheng&family=Zhi+Mang+Xing&family=LXGW+WenKai:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400;600&family=Zhi+Mang+Xing&family=LXGW+WenKai:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
+/* 变量与卡片语言对齐主站（spring 示意）；正式合并时复用主站 CSS，不另起体系 */
 :root{
   --bg:#F2EDF8;--text:#2D2536;--soft:#8A92B0;--accent:#D88CA8;
-  --g1:#E2DDF2;--g2:#F5DDEB;--serif:'Noto Serif SC',serif;
+  --g1:#E2DDF2;--g2:#F5DDEB;--g3:#DCE8F5;
+  --serif:'Noto Serif SC',serif;
   --english:'Cormorant Garamond',Georgia,serif;
-  --cn-art:'Zhi Mang Xing',cursive;--cn-light:'LXGW WenKai','Noto Serif SC',serif;
+  --cn-art:'Zhi Mang Xing',cursive;
+  --cn-light:'LXGW WenKai','Noto Serif SC',serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:var(--serif);color:var(--text);line-height:1.85;
-  background:radial-gradient(circle at 10% 20%,var(--g1),transparent 55%),
-  radial-gradient(circle at 85% 30%,var(--g2),transparent 50%),var(--bg);
+  background:
+    radial-gradient(circle at 10% 20%,var(--g1) 0%,transparent 55%),
+    radial-gradient(circle at 85% 30%,var(--g2) 0%,transparent 50%),
+    radial-gradient(circle at 50% 80%,var(--g3) 0%,transparent 55%),
+    var(--bg);
   min-height:100vh;
 }
 .demo-banner{
-  text-align:center;padding:2rem 1.5rem 1rem;
+  text-align:center;padding:1.6rem 1.5rem 1.2rem;
   border-bottom:1px solid rgba(120,100,140,.12);
   background:rgba(255,255,255,.35);backdrop-filter:blur(8px);
 }
-.demo-banner p{font-size:.82rem;color:var(--soft);margin-top:.35rem}
-.nav-mini{display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap;margin-top:1rem}
-.nav-mini a{font-size:.78rem;color:var(--soft);text-decoration:none;letter-spacing:.08em}
+.demo-banner strong{font-size:1rem;letter-spacing:.06em}
+.demo-banner p{font-size:.8rem;color:var(--soft);margin-top:.4rem;max-width:640px;margin-left:auto;margin-right:auto;line-height:1.7}
+.nav-mini{display:flex;justify-content:center;gap:1.4rem;flex-wrap:wrap;margin-top:.9rem}
+.nav-mini a{font-size:.78rem;color:var(--soft);text-decoration:none;letter-spacing:.1em}
 .nav-mini a:hover{color:var(--accent)}
 
-.content-wrapper{padding:3rem 0 5rem;max-width:1100px;margin:0 auto}
-.open-section{padding:0 2rem;margin-bottom:3rem}
-.section-title{font-family:var(--cn-art);font-size:3rem;font-weight:400;letter-spacing:.1em}
-.section-en{font-family:var(--english);font-style:italic;color:var(--soft);margin:.3rem 0 2rem;font-weight:600}
-.section-desc{
-  font-family:var(--cn-light);font-size:.95rem;color:var(--text);
-  background:rgba(255,255,255,.35);padding:1rem 1.2rem;border-radius:8px;
-  margin-bottom:2.5rem;max-width:720px;
+.content-wrapper{padding:3.5rem 0 5rem;max-width:1050px;margin:0 auto}
+.open-section{padding:0 2rem}
+.section-title{
+  font-family:var(--cn-art);font-size:3.5rem;font-weight:400;letter-spacing:.1em;
+  text-shadow:0 0 12px rgba(255,255,255,.9),0 0 6px rgba(255,255,255,.9);
+  position:relative;display:inline-block;
+}
+.section-title::before{
+  content:'';position:absolute;inset:-20px;z-index:-1;
+  background:radial-gradient(circle,rgba(255,255,255,.55) 0%,transparent 70%);
+  border-radius:50%;animation:glowPulse 3s infinite alternate;
+}
+@keyframes glowPulse{from{transform:scale(.92);opacity:.45}to{transform:scale(1.08);opacity:.85}}
+.section-en{
+  font-family:var(--english);font-style:italic;font-size:1.15rem;color:var(--soft);
+  letter-spacing:.05em;margin:.35rem 0 2.2rem;font-weight:600;
+  text-shadow:0 0 5px rgba(255,255,255,.8);
+}
+.section-note{
+  font-family:var(--cn-light);font-size:.92rem;color:var(--soft);margin-bottom:3rem;max-width:36em;
 }
 
-/* ===== 分区 ===== */
-.words-zone{margin-bottom:3.5rem}
-.words-zone-label{
-  font-size:.78rem;letter-spacing:.18em;color:var(--soft);
-  margin:0 0 1.5rem;padding-left:.5rem;
-  border-left:3px solid var(--accent);font-weight:600;
+/* ========== 分区标题：比 section 小一号的行书 + 英文 + 细线 ========== */
+.words-zone{margin-bottom:4.5rem;position:relative}
+.zone-head{
+  display:flex;flex-direction:column;align-items:flex-start;
+  margin:0 0 2rem;padding:1.2rem 0 1.4rem;
+  position:relative;
 }
-.words-zone--brand .words-zone-label{border-left-color:#C06B8A}
-.words-zone--culture .words-zone-label{border-left-color:#8A9BB8}
-.words-zone--literature .words-zone-label{border-left-color:#9A9088}
+.zone-head::after{
+  content:'';position:absolute;left:0;bottom:0;width:min(280px,55%);height:1px;
+  background:linear-gradient(90deg,var(--accent),transparent);
+  opacity:.55;
+}
+.zone-num{
+  font-family:var(--english);font-size:.72rem;letter-spacing:.22em;color:var(--accent);
+  font-weight:600;margin-bottom:.45rem;opacity:.9;
+}
+.zone-title{
+  font-family:var(--cn-art);font-size:2.35rem;font-weight:400;letter-spacing:.14em;
+  color:var(--text);line-height:1.25;
+  text-shadow:0 0 10px rgba(255,255,255,.85);
+  position:relative;display:inline-block;
+}
+.zone-title::before{
+  content:'';position:absolute;inset:-14px -18px;z-index:-1;
+  background:radial-gradient(ellipse at 40% 50%,rgba(255,255,255,.5) 0%,transparent 70%);
+  opacity:.7;pointer-events:none;
+}
+.zone-en{
+  font-family:var(--english);font-style:italic;font-size:1rem;color:var(--soft);
+  margin-top:.35rem;letter-spacing:.04em;font-weight:600;
+}
+.zone-hint{
+  font-family:var(--cn-light);font-size:.82rem;color:var(--soft);margin-top:.55rem;opacity:.9;
+}
+.words-zone--culture .zone-head{align-items:flex-end;text-align:right}
+.words-zone--culture .zone-head::after{left:auto;right:0;background:linear-gradient(270deg,var(--accent),transparent)}
+.words-zone--literature .zone-title{font-size:2.1rem}
 
-.words-grid{display:flex;flex-direction:column;gap:3.5rem;position:relative;z-index:5}
-.words-grid--compact{gap:2.5rem}
-.words-grid--compact .word-card{width:82%;padding:3.2rem 3rem 2.6rem}
+.words-grid{display:flex;flex-direction:column;gap:2.8rem;position:relative;z-index:5}
+.words-grid--compact{gap:2.2rem}
+.words-grid--compact .word-card{width:78%;padding:2.8rem 2.6rem 2.4rem}
 
-/* ===== word-card（沿用主站逻辑）===== */
+/* word-card —— 贴近主站尺寸与交互 */
 .word-card{
   position:relative;background:rgba(255,255,255,.55);backdrop-filter:blur(12px);
   border:1px solid rgba(255,255,255,.8);border-radius:8px;
-  padding:4.2rem 3.8rem 3.2rem;width:88%;
+  padding:3rem 2.8rem 2.6rem;width:82%;
   box-shadow:0 10px 40px rgba(0,0,0,.03),inset 0 0 15px rgba(255,255,255,.6);
   cursor:pointer;overflow:visible;transition:all .5s cubic-bezier(.2,.8,.2,1);
 }
 .word-card.align-left{align-self:flex-start;text-align:left;border-left:3px solid rgba(160,155,165,.4)}
 .word-card.align-right{align-self:flex-end;text-align:right;border-right:3px solid rgba(160,155,165,.4)}
-.word-card:hover{background:rgba(255,255,255,.88);transform:translateY(-5px);
-  box-shadow:0 20px 50px rgba(0,0,0,.08)}
+.word-card:hover{background:rgba(255,255,255,.88);transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.08)}
 .word-card.align-left:hover{border-left-color:var(--accent)}
 .word-card.align-right:hover{border-right-color:var(--accent)}
 
@@ -78,14 +123,16 @@ body{
   position:absolute;top:-12px;display:inline-flex;align-items:center;gap:.4rem;
   background:var(--g2);padding:.35rem .85rem;border-radius:4px;
   font-size:.78rem;color:var(--text);font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.06);
+  transition:background .35s ease;
 }
 .word-card.align-left .card-ribbon{left:2rem}
 .word-card.align-right .card-ribbon{right:2rem}
-.card-title{font-family:var(--serif);font-size:1.55rem;font-weight:700;margin:1rem 0 .8rem;line-height:1.5}
-.card-quote-box{position:relative;margin:1rem 0 1.2rem}
-.quote-mark{font-family:var(--english);font-size:2.5rem;color:var(--accent);opacity:.5;line-height:1}
-.card-quote{font-family:var(--cn-light);font-size:1.05rem;color:var(--text);font-weight:500;line-height:1.8}
-.card-tag{font-family:var(--english);font-size:.85rem;font-weight:600;color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
+.word-card:hover .card-ribbon{background:var(--accent);color:#fff}
+.card-title{font-family:var(--serif);font-size:1.4rem;font-weight:700;margin:1rem 0 .7rem;line-height:1.5}
+.card-quote-box{position:relative;margin:1rem 0 1.1rem}
+.quote-mark{font-family:var(--english);font-size:2.2rem;color:var(--accent);opacity:.5;line-height:1}
+.card-quote{font-family:var(--cn-light);font-size:1.02rem;color:var(--text);font-weight:500;line-height:1.8}
+.card-tag{font-family:var(--english);font-size:.82rem;font-weight:600;color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
 
 .hover-panel{position:absolute;top:0;bottom:0;width:70%;display:flex;align-items:center;
   padding:2rem 3rem;pointer-events:none;z-index:15;overflow:hidden}
@@ -96,10 +143,10 @@ body{
 .word-card.align-left:hover .hover-panel.left-panel{transform:translateX(0)}
 .hover-content{opacity:0;transition:opacity .4s .2s;text-align:left;max-width:95%}
 .word-card:hover .hover-content{opacity:1}
-.hover-text{font-size:1rem;line-height:1.85;margin-bottom:.8rem;font-weight:600}
-.hover-hint{font-family:var(--english);font-style:italic;font-size:.9rem;color:var(--soft)}
+.hover-text{font-size:.98rem;line-height:1.85;margin-bottom:.75rem;font-weight:600}
+.hover-hint{font-family:var(--english);font-style:italic;font-size:.88rem;color:var(--soft)}
 
-/* ===== Book Modal ===== */
+/* Modal */
 .book-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);
   display:flex;align-items:center;justify-content:center;z-index:1000;
   opacity:0;visibility:hidden;transition:all .45s ease}
@@ -109,91 +156,114 @@ body{
   background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-radius:12px;
   box-shadow:0 30px 80px rgba(0,0,0,.2);position:relative;
   transform:scale(.96) translateY(16px);transition:all .45s cubic-bezier(.2,.8,.2,1);
+  overflow:hidden;
 }
 .book-overlay.active .book-container{transform:scale(1) translateY(0)}
+/* 单栏散文：整页一卷 */
+.book-container.single-col{max-width:780px;display:block}
+.book-container.single-col .book-page{border:none;width:100%;height:100%}
+.book-container.single-col .book-spine{display:none}
+
 .book-spine{position:absolute;top:0;bottom:0;left:50%;width:36px;margin-left:-18px;
   background:linear-gradient(to right,transparent,rgba(0,0,0,.04),rgba(255,255,255,.4),transparent);pointer-events:none;z-index:10}
-.book-page{flex:1;padding:3rem 3.5rem;overflow-y:auto;text-align:left}
+.book-page{flex:1;padding:3rem 3.2rem;overflow-y:auto;text-align:left}
 .book-page.left{border-right:1px solid rgba(0,0,0,.06)}
 .close-btn{position:absolute;top:1rem;right:1rem;width:40px;height:40px;border-radius:50%;
   border:none;background:#fff;cursor:pointer;font-size:1.2rem;box-shadow:0 4px 12px rgba(0,0,0,.08);z-index:20}
-.b-full-title{font-size:1.35rem;font-weight:700;margin-bottom:1rem;line-height:1.5}
-.b-intro-title{font-size:.85rem;color:var(--soft);letter-spacing:.1em;margin:1.2rem 0 .6rem}
-.b-text{font-family:var(--cn-light);font-size:.95rem;line-height:1.9}
+.b-full-title{font-size:1.35rem;font-weight:700;margin-bottom:.8rem;line-height:1.55}
+.b-meta{font-family:var(--english);font-style:italic;font-size:.88rem;color:var(--soft);margin-bottom:1.4rem}
+.b-intro-title{font-size:.82rem;color:var(--soft);letter-spacing:.12em;margin:1rem 0 .55rem}
+.b-text{font-family:var(--cn-light);font-size:.95rem;line-height:1.95}
 .pdf-btn,.ext-btn{
-  display:inline-block;margin-top:1.2rem;padding:.55rem 1.1rem;border-radius:999px;
-  background:var(--g2);color:var(--text);text-decoration:none;font-size:.85rem;border:1px solid rgba(0,0,0,.06)
+  display:inline-block;margin-top:1.1rem;padding:.5rem 1.05rem;border-radius:999px;
+  background:var(--g2);color:var(--text);text-decoration:none;font-size:.84rem;border:1px solid rgba(0,0,0,.06)
 }
 .pdf-btn:hover,.ext-btn:hover{background:var(--accent);color:#fff}
 
-/* anthology nav */
-.anthology-nav{display:flex;flex-direction:column;gap:.35rem;margin-top:1rem}
+.anthology-nav{display:flex;flex-direction:column;gap:.35rem;margin-top:.6rem}
 .anthology-nav button{
   text-align:left;border:1px solid rgba(0,0,0,.06);background:rgba(255,255,255,.6);
-  padding:.65rem .85rem;border-radius:8px;cursor:pointer;font-family:var(--cn-light);font-size:.88rem;
-  transition:.2s;color:var(--text);
+  padding:.6rem .8rem;border-radius:8px;cursor:pointer;font-family:var(--cn-light);font-size:.86rem;
+  color:var(--text);transition:.2s;
 }
 .anthology-nav button.active,.anthology-nav button:hover{border-color:var(--accent);background:var(--g2)}
-.pitch-list{list-style:none;margin-top:.5rem}
-.pitch-list li{padding:.55rem 0;border-bottom:1px solid rgba(0,0,0,.05);font-size:.9rem;cursor:pointer}
-.pitch-list li:hover{color:var(--accent)}
-.pitch-list li.active{font-weight:700;color:var(--accent)}
-.essay-body p{margin-bottom:1rem;text-indent:2em}
-.essay-body .scene-break{text-align:center;color:var(--soft);margin:1.5rem 0;letter-spacing:.3em}
+.pitch-list{list-style:none;margin-top:.4rem}
+.pitch-list li{padding:.55rem 0;border-bottom:1px solid rgba(0,0,0,.05);font-size:.88rem;cursor:pointer;line-height:1.5}
+.pitch-list li:hover,.pitch-list li.active{color:var(--accent);font-weight:700}
+.essay-body p{margin-bottom:1.05rem;text-indent:2em}
+.essay-body .scene-break{text-align:center;color:var(--soft);margin:1.4rem 0;letter-spacing:.35em;text-indent:0}
 .fig-placeholder{
-  height:140px;background:linear-gradient(135deg,var(--g1),var(--g2));
+  height:130px;background:linear-gradient(135deg,var(--g1),var(--g2));
   border-radius:8px;display:flex;align-items:center;justify-content:center;
-  font-size:.78rem;color:var(--soft);margin:1rem 0;border:1px dashed rgba(0,0,0,.08)
+  font-size:.76rem;color:var(--soft);margin:1rem 0;border:1px dashed rgba(0,0,0,.08);text-indent:0
 }
-.mode-tag{position:absolute;top:1rem;left:1.5rem;font-size:.68rem;color:var(--soft);letter-spacing:.1em}
+.mode-tag{position:absolute;top:1.1rem;left:1.4rem;font-size:.65rem;color:var(--soft);letter-spacing:.12em}
+
+@media(max-width:720px){
+  .section-title{font-size:2.6rem}
+  .zone-title{font-size:1.85rem}
+  .word-card,.words-grid--compact .word-card{width:100%}
+  .book-container{flex-direction:column;height:90vh}
+  .book-spine,.book-page.left{border:none}
+}
 </style>
 </head>
-<body class="spring">
+<body>
 
 <div class="demo-banner">
-  <strong>文以载心 · 三区结构 Demo</strong>
-  <p>保留 word-card / hover 抽屉 / book modal · 品牌在上 · 文学紧凑不折叠</p>
+  <strong>文以载心 · 结构 Demo v2</strong>
+  <p>分区标题改用行书+光晕（对齐主站「文以载心」气质）；散文单栏；选题改为「研究案例」表述。<br>
+  正式合并时只动 <code>#words</code> 内卡片数据与分区，不改启封、藤蔓、诗词、季节特效。</p>
   <div class="nav-mini">
-    <a href="#zone-brand">品牌与策划</a>
-    <a href="#zone-culture">文化观察</a>
-    <a href="#zone-literature">文学与翻译</a>
+    <a href="#zone-brand">壹 · 品牌与策划</a>
+    <a href="#zone-culture">贰 · 文化观察</a>
+    <a href="#zone-literature">叁 · 文学与翻译</a>
   </div>
 </div>
 
 <main class="content-wrapper">
 <section class="open-section" id="words">
   <h2 class="section-title">文以载心</h2>
-  <p class="section-en">Writing — brand, culture, and the word</p>
-  <p class="section-desc">
-    同一套卡片与翻页特效；用<strong>顺序与分区</strong>区分用途，不用整组隐藏。
-    品牌与策划在上，文化观察居中，文学与翻译在下（略紧凑，仍完整可见）。
-  </p>
+  <p class="section-en">Words — the window through which I see</p>
+  <p class="section-note">同一套活页卡片与翻页浮层；用分区标题划界，文学组仍完整可见（紧凑轨）。</p>
 
-  <!-- 品牌与策划 -->
   <div class="words-zone words-zone--brand" id="zone-brand">
-    <p class="words-zone-label">品牌与策划 · 面试默认看这里</p>
+    <header class="zone-head">
+      <span class="zone-num">I · BRAND &amp; STRATEGY</span>
+      <h3 class="zone-title">品牌与策划</h3>
+      <p class="zone-en">Where culture becomes a brand language</p>
+      <p class="zone-hint">商业提案 · 品牌专栏 · 图文表达 —— 面试默认从这里看</p>
+    </header>
     <div class="words-grid" id="gridBrand"></div>
   </div>
 
-  <!-- 文化观察 -->
   <div class="words-zone words-zone--culture" id="zone-culture">
-    <p class="words-zone-label">文化观察 · 纪行与选题</p>
+    <header class="zone-head">
+      <span class="zone-num">II · CULTURAL OBSERVATION</span>
+      <h3 class="zone-title">文化观察</h3>
+      <p class="zone-en">Field notes and editorial research</p>
+      <p class="zone-hint">纪行散文 · 选题研究 —— 长文单栏阅读，不设多余导读</p>
+    </header>
     <div class="words-grid" id="gridCulture"></div>
   </div>
 
-  <!-- 文学与翻译 -->
   <div class="words-zone words-zone--literature" id="zone-literature">
-    <p class="words-zone-label">文学与翻译 · 文字功底（紧凑轨，不折叠）</p>
+    <header class="zone-head">
+      <span class="zone-num">III · LITERATURE &amp; TRANSLATION</span>
+      <h3 class="zone-title">文学与翻译</h3>
+      <p class="zone-en">Fiction, papers, and bilingual craft</p>
+      <p class="zone-hint">不折叠 · 略收窄间距；论文合并为一卡</p>
+    </header>
     <div class="words-grid words-grid--compact" id="gridLit"></div>
   </div>
 </section>
 </main>
 
 <div class="book-overlay" id="bookModal" onclick="closeBook(event)">
-  <div class="book-container" onclick="event.stopPropagation()">
+  <div class="book-container" id="bookContainer" onclick="event.stopPropagation()">
     <span class="mode-tag" id="modalMode"></span>
-    <button class="close-btn" onclick="closeBook({target:{id:'bookModal'}})">×</button>
-    <div class="book-spine"></div>
+    <button class="close-btn" type="button" onclick="closeBook({target:{id:'bookModal'}})">×</button>
+    <div class="book-spine" id="bookSpine"></div>
     <div class="book-page left" id="bookLeft"></div>
     <div class="book-page right" id="bookRight"></div>
   </div>
@@ -213,7 +283,7 @@ const works = {
       intro:`<p><b>战役名</b>：《心中念你》</p>
       <p><b>Hero</b>：把一份想念，寄到 TA 手里。</p>
       <p><b>三行动</b>：一杯茶（即时） / 一盒茶（远距茶礼） / 写下一句想念（邮局）</p>
-      <p>完整 12 页策划案含 KV 层级、传播节奏与产品叙事，展示商业落地与品牌转译能力。</p>`
+      <p>完整策划案展示品牌叙事如何落到产品与行动——用于说明商业落地与文化转译能力。</p>`
     },
     {
       id:'xinya', align:'right', cnTag:'品牌内容专栏',
@@ -223,22 +293,22 @@ const works = {
       hover:['钱穆图书馆的淡绿与竹影','合一亭：山水相逢，天人合一'],
       mode:'anthology',
       articles:[
-        { title:'在山顶，走进一片淡绿色', slug:'library',
-          body:`<p>从书院巴士站下车，沿路直行不远，便能看见钱穆图书馆。走进馆内，淡绿色随即蔓延开来……</p><p class="fig-placeholder">[ 钱穆图书馆 · 淡绿地毯与竹影隔栏 ]</p><p>对一位来访者而言，一所书院如何理解自身，往往可以从这些具体细节中感知。</p>` },
-        { title:'合一亭：山水相逢，天人合一', slug:'pavilion',
+        { title:'在山顶，走进一片淡绿色',
+          body:`<p>从书院巴士站下车，沿路直行不远，便能看见钱穆图书馆。走进馆内，淡绿色随即蔓延开来……</p><div class="fig-placeholder">[ 钱穆图书馆 · 淡绿地毯与竹影隔栏 ]</div><p>对一位来访者而言，一所书院如何理解自身，往往可以从这些具体细节中感知。</p>` },
+        { title:'合一亭：山水相逢，天人合一',
           body:`<p>从钱穆图书馆出来，沿着新亚书院的山路继续往前。临空的一侧，一弯池水映着远山与长天……</p><p>在这里，亭、池、榕树、竹木、步道与远景被组织成一个整体。</p>` },
-        { title:'从桂林街到沙田山顶，新亚带走了什么？', slug:'history',
-          body:`<p>来到沙田的新亚书院，很难从这里开阔的校园想到，它最初来自桂林街几间租来的唐楼……</p><p>从桂林街到农圃道，再到沙田，新亚延续的并不是某一种固定面貌，而是一套持续参与选择的内在方向。</p>` },
-        { title:'圆形广场，记得谁曾来过？', slug:'plaza',
+        { title:'从桂林街到沙田山顶，新亚带走了什么？',
+          body:`<p>来到沙田的新亚书院，很难从这里开阔的校园想到，它最初来自桂林街几间租来的唐楼……</p><p>新亚延续的并不是某一种固定面貌，而是一套持续参与选择的内在方向。</p>` },
+        { title:'圆形广场，记得谁曾来过？',
           body:`<p>一次到访新亚书院圆形广场，恰好遇见一群学生拍合照。也是在这时，才注意到他们身后的弧形石墙……</p><p>广场不断迎来新的活动，墙上的姓名也逐年增加。</p>` }
       ]
     },
     {
       id:'bws', align:'left', cnTag:'品牌文案与排版',
       listTitle:'BWS · 设计理念与品牌表达',
-      listQuote:'（理念句从笔记摘取 · 外链展示）',
+      listQuote:'把理念写成可读的版面，让品牌被慢慢看见。',
       tag:'XIAOHONGSHU · EDITORIAL',
-      hover:['视觉排版 + 品牌理念阐述','平台原文 · 截图备档'],
+      hover:['视觉排版 + 品牌理念阐述','平台原文 · 站内截图备档'],
       mode:'link',
       url:'https://www.xiaohongshu.com/explore/6a84162900000000060066ac',
       intro:'为 BWS 撰写设计理念与品牌宣传文案，并完成小红书图文排版。站内以截图墙 + 外链呈现。'
@@ -250,28 +320,33 @@ const works = {
       listTitle:'长洲半日闲',
       listQuote:'没想到长洲的沙子，会一直陪我到家。',
       tag:'ESSAY · HONG KONG · 2026',
-      hover:['没有汽车的岛 · 慢时间与离岸生活','文 & 图 / Romola · 2026年7月'],
+      hover:['没有汽车的岛 · 慢时间','散文直读 · 单栏 · 无需导读'],
       mode:'essay',
+      meta:'文 & 图 / Romola · 2026年7月，香港长洲',
       sections:[
-        { text:'从中环五号码头出发，快船三十分钟——这是长洲和中环之间的距离，比大部分香港人的通勤时间还短。' },
+        { text:'从中环五号码头出发，快船三十分钟——这是长洲和中环之间的距离，比大部分香港人的通勤时间还短。可惜没赶上快船，只能坐慢船晃晃悠悠地睡到长洲。' },
         { text:'刚下船，熙攘的人群和街市的喧闹就直接把我推进了这个满山彩色房子的小岛。除了警车、消防车、救护车，你在这里找不到一辆车。', fig:'图1 · 长洲码头' },
         { text:'我觉得，这里是香港，又不像真正的香港。长洲的平安包是一个绝佳的隐喻——在其余的三百六十四天里，包子只是包子。', fig:'图2 · 玉虚宫门前的小狗' },
-        { text:'东湾沙滩是长洲最开阔的地方。我没带拖鞋，但还是想摸一下海水的温度……', fig:'图4 · 雨后 / 东湾' },
+        { text:'东湾沙滩是长洲最开阔的地方。我没带拖鞋，但还是想摸一下海水的温度。于是就有了一个站在岸边、缓缓靠近海浪的小女孩……', fig:'图4 · 雨后 / 东湾' },
         { text:'回中环的船来了。只是我的鞋子里还是湿漉漉的，走一步吱一声。没想到长洲的沙子，会一直陪我到家。' }
       ]
     },
     {
-      id:'pitch', align:'left', cnTag:'选题提案',
-      listTitle:'三个我想做的选题 · 三联生活周刊向',
+      id:'pitch', align:'left', cnTag:'选题研究',
+      listTitle:'选题研究案例 · 三个当代文化切口',
       listQuote:'不是来的人变多了，而是来的人变了。',
-      tag:'EDITORIAL PITCH · 2026',
-      hover:['48小时离岸实验 · 周末去香港','新中式2.0 · 年轻人求签'],
+      tag:'EDITORIAL RESEARCH · CASE',
+      hover:['从现象到问题意识 · 数据与现场互证','展示选题判断、研究框架与内容结构能力'],
       mode:'pitch',
-      pdf:'assets/proposals/杨雪琪_选题提案.docx',
+      pdf:'assets/proposals/%E6%9D%A8%E9%9B%AA%E7%90%AA_%E9%80%89%E9%A2%98%E6%8F%90%E6%A1%88.docx',
+      intro:'这是一份选题研究练习：从公共数据与现场观察出发，提炼可执行的专题方向，并完成洞察、框架与传播设想。用于呈现选题判断与研究能力（非已刊发稿）。',
       topics:[
-        { title:'《周末去香港：一亿人次背后的「48小时离岸实验」》', summary:'2026年深圳口岸破1.4亿人次；内地旅客购物占比降至44%。年轻人把香港 reinvent 成「48小时不属于日常的时间」——离岸生活，而非纯购物旅游。主稿 + 深水埗反攻略 + 离岛慢时间 + 松弛感文化评论。' },
-        { title:'《新中式走到了岔路口》', summary:'国风服饰、非遗市场规模持续扩大，但审美疲劳已至。「看起来很中国」之后，「用起来很日常」的2.0正在发生：茶室、活字印刷、景德镇自用器皿。' },
-        { title:'《年轻人开始「求签」了》', summary:'寺庙经济规模逼近千亿；72%年轻人去寺庙为缓解焦虑。不是迷信回潮，是确定性稀缺时代的「精神急诊室」。' }
+        { title:'《周末去香港：一亿人次背后的「48小时离岸实验」》',
+          summary:'口岸客流与消费结构变化交叉验证：购物占比下降，体验与离岛上升。将「周末赴港」从旅游攻略改写为「离岸生活」问题意识，并拆成主稿 + 街区反攻略 + 离岛慢时间 + 松弛感文化评论。' },
+        { title:'《新中式走到了岔路口》',
+          summary:'国风/非遗市场扩张与审美疲劳并存。提出从「看起来很中国」到「用起来很日常」的 2.0 判断，并寻找茶室、活字、器皿等安静案例作为证据链。' },
+        { title:'《年轻人开始「求签」了》',
+          summary:'寺庙经济与年轻客群数据并行；核心不是信仰回潮，而是焦虑时代的低成本心理对冲。用调研比例支撑「精神急诊室」这一解释框架。' }
       ]
     }
   ],
@@ -281,36 +356,38 @@ const works = {
       listTitle:'The Unanswered Call · 未接来电',
       listQuote:'林毅第一次死去时，没有人注意到，连他自己也没有。',
       tag:'ENGLISH NOVEL',
-      hover:['48页英文小说 · 毕业设计方向','超现实叙事 · 冥河与未接来电'],
+      hover:['英文长篇写作 · 叙事实验','正式站沿用现有 openBook'],
       mode:'book',
-      intro:'假如你醒来时，掌心握着一枚冰冷的银币……这是一个人与自己的幽灵在破碎的冥界尽头相遇的故事。'
+      intro:'假如你醒来时，掌心握着一枚冰冷的银币……一个人与自己的幽灵在破碎的冥界尽头相遇的故事。'
     },
     {
       id:'trans', align:'right', cnTag:'翻译作品',
       listTitle:'翻译实践选辑',
       listQuote:'翻译的忠诚，有时需要以「不忠」来实现。',
       tag:'CN–EN TRANSLATION',
-      hover:['商务 · 文化 · 广告 · 学术 · 时事','主站保留 stack 卡片翻页特效'],
+      hover:['商务 · 文化 · 广告 · 学术','正式站保留 stack 翻页特效'],
       mode:'book',
-      intro:'六篇译例 + 策略卡片 —— 正式并入时沿用现有 transStack 交互。'
+      intro:'六篇译例 + 策略卡片。正式并入时继续使用主站 transStack，不改交互。'
     },
     {
       id:'academic', align:'left', cnTag:'学术写作选辑',
       listTitle:'论文三篇 · 尤利西斯 / 比较文学 / 女性研究',
       listQuote:'意识流叙事 · 境界说 · 女扮男装形象',
       tag:'ACADEMIC · 3 PAPERS',
-      hover:['毕业论文：时间绵延与《尤利西斯》','合并为 1 卡，内页再分篇'],
+      hover:['三篇合并为一卡，节省首页','点开后再分篇'],
       mode:'book',
-      intro:'三篇学术论文合并展示，节省首页空间，点开后再选择具体篇目。'
+      intro:'三篇学术论文合并展示，内页再选择具体篇目。'
     }
   ]
 };
 
-function feather(){return `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" opacity=".6"><path d="M20.24,3.76C19,2.5 16.5,2 13.5,3c-3.13,1.04-6.44,3.8-8.8,7.11"/></svg>`}
+function feather(){
+  return `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" opacity=".65"><path d="M20.24,3.76C19,2.5 16.5,2 13.5,3c-3.13,1.04-6.44,3.8-8.8,7.11"/></svg>`;
+}
 
 function renderCard(data, container){
   const panelClass = data.align === 'left' ? 'left-panel' : '';
-  const html = `
+  container.insertAdjacentHTML('beforeend', `
     <div class="word-card align-${data.align}" onclick="openWork('${data.id}')">
       <div class="binder-holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
       <div class="card-ribbon">${feather()}<span>${data.cnTag}</span></div>
@@ -323,12 +400,18 @@ function renderCard(data, container){
           <div class="hover-hint">Read More →</div>
         </div>
       </div>
-    </div>`;
-  container.insertAdjacentHTML('beforeend', html);
+    </div>`);
 }
 
-function allWorks(){
-  return [...works.brand,...works.culture,...works.literature];
+function allWorks(){ return [...works.brand,...works.culture,...works.literature]; }
+
+function setModalLayout(single){
+  const box = document.getElementById('bookContainer');
+  const right = document.getElementById('bookRight');
+  const spine = document.getElementById('bookSpine');
+  box.classList.toggle('single-col', !!single);
+  right.style.display = single ? 'none' : '';
+  spine.style.display = single ? 'none' : '';
 }
 
 function openWork(id){
@@ -338,11 +421,22 @@ function openWork(id){
   const right = document.getElementById('bookRight');
   document.getElementById('modalMode').textContent = 'MODE · ' + data.mode.toUpperCase();
 
-  if(data.mode === 'proposal'){
+  if(data.mode === 'essay'){
+    // 散文：单栏直读，无导读分栏
+    setModalLayout(true);
+    left.innerHTML = `
+      <h3 class="b-full-title">${data.listTitle}</h3>
+      <p class="b-meta">${data.meta || ''}</p>
+      <div class="b-text essay-body">${data.sections.map((s,i)=>
+        `${i?`<div class="scene-break">——</div>`:''}<p>${s.text}</p>${s.fig?`<div class="fig-placeholder">${s.fig}</div>`:''}`
+      ).join('')}</div>`;
+  } else if(data.mode === 'proposal'){
+    setModalLayout(false);
     left.innerHTML = `<h3 class="b-full-title">${data.listTitle}</h3><div class="b-intro-title">方案摘要</div><div class="b-text">${data.intro}</div>`;
     right.innerHTML = `<div class="fig-placeholder" style="height:220px">KV / 策划案预览区</div>
       <a class="pdf-btn" href="${data.pdf}" target="_blank">查看完整 PDF</a>`;
   } else if(data.mode === 'anthology'){
+    setModalLayout(false);
     left.innerHTML = `<h3 class="b-full-title">${data.listTitle}</h3>
       <div class="b-intro-title">目录 · 4 篇</div>
       <div class="anthology-nav" id="anthNav"></div>`;
@@ -350,21 +444,19 @@ function openWork(id){
     const nav = document.getElementById('anthNav');
     data.articles.forEach((a,i)=>{
       const btn = document.createElement('button');
+      btn.type = 'button';
       btn.textContent = (i+1)+'. '+a.title;
       btn.onclick = ()=>showArticle(data, i, btn);
       nav.appendChild(btn);
     });
     showArticle(data, 0, nav.querySelector('button'));
-  } else if(data.mode === 'essay'){
-    left.innerHTML = `<h3 class="b-full-title">${data.listTitle}</h3><div class="b-intro-title">纪行 · 节选</div>`;
-    right.innerHTML = `<div class="b-text essay-body">${data.sections.map(s=>
-      `<p>${s.text}</p>${s.fig?`<div class="fig-placeholder">${s.fig}</div>`:''}`
-    ).join('<div class="scene-break">——</div>')}</div>`;
   } else if(data.mode === 'pitch'){
+    setModalLayout(false);
     left.innerHTML = `<h3 class="b-full-title">${data.listTitle}</h3>
-      <div class="b-intro-title">三个选题 · 点击切换</div>
+      <div class="b-text" style="margin-bottom:1rem">${data.intro}</div>
+      <div class="b-intro-title">三则切口 · 点击切换</div>
       <ul class="pitch-list" id="pitchList"></ul>
-      <a class="pdf-btn" href="${data.pdf}" download>下载完整提案 Word</a>`;
+      <a class="pdf-btn" href="${data.pdf}" download>下载完整研究文稿</a>`;
     right.innerHTML = `<div class="b-text" id="pitchBody"></div>`;
     const list = document.getElementById('pitchList');
     data.topics.forEach((t,i)=>{
@@ -375,11 +467,13 @@ function openWork(id){
     });
     showPitch(data, 0, list.querySelector('li'));
   } else if(data.mode === 'link'){
+    setModalLayout(false);
     left.innerHTML = `<h3 class="b-full-title">${data.listTitle}</h3><div class="b-text">${data.intro}</div>`;
-    right.innerHTML = `<div class="fig-placeholder" style="height:180px">小红书截图 1</div>
-      <div class="fig-placeholder" style="height:180px">小红书截图 2</div>
+    right.innerHTML = `<div class="fig-placeholder" style="height:170px">小红书截图 1</div>
+      <div class="fig-placeholder" style="height:170px">小红书截图 2</div>
       <a class="ext-btn" href="${data.url}" target="_blank" rel="noopener">在小红书查看原文</a>`;
   } else {
+    setModalLayout(false);
     left.innerHTML = `<h3 class="b-full-title">${data.listTitle}</h3><div class="b-intro-title">导读</div><div class="b-text">${data.intro}</div>`;
     right.innerHTML = `<div class="fig-placeholder" style="height:260px">正式站 · 封面 / PDF / 翻译 stack</div>`;
   }
@@ -389,12 +483,14 @@ function openWork(id){
 function showArticle(data, idx, btn){
   document.querySelectorAll('#anthNav button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('anthBody').innerHTML = `<h4 style="margin-bottom:1rem;font-weight:700">${data.articles[idx].title}</h4>` + data.articles[idx].body;
+  document.getElementById('anthBody').innerHTML =
+    `<h4 style="margin-bottom:1rem;font-weight:700">${data.articles[idx].title}</h4>` + data.articles[idx].body;
 }
 function showPitch(data, idx, li){
   document.querySelectorAll('#pitchList li').forEach(l=>l.classList.remove('active'));
   li.classList.add('active');
-  document.getElementById('pitchBody').innerHTML = `<p style="font-weight:700;margin-bottom:1rem">${data.topics[idx].title}</p><p>${data.topics[idx].summary}</p>`;
+  document.getElementById('pitchBody').innerHTML =
+    `<p style="font-weight:700;margin-bottom:1rem">${data.topics[idx].title}</p><p>${data.topics[idx].summary}</p>`;
 }
 function closeBook(e){
   if(e.target.id==='bookModal'||e.target.classList.contains('close-btn'))
