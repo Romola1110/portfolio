@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>作品集结构 Demo · 杨雪琪</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F3EC;--paper:#FFFCF6;--ink:#2A2520;--muted:#7A7268;
+  --line:rgba(120,100,70,.14);--accent:#8B6914;--tag:#EDE6DA;
+  --serif:'Noto Serif SC',serif;--en:'Cormorant Garamond',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--serif);background:var(--bg);color:var(--ink);line-height:1.75}
+.wrap{max-width:980px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+.badge{display:inline-block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);padding:.25rem .65rem;border-radius:999px;margin-bottom:1rem}
+h1{font-weight:600;font-size:1.85rem;letter-spacing:.04em;margin-bottom:.35rem}
+.sub{color:var(--muted);font-size:.95rem;margin-bottom:2rem}
+.sub em{font-style:normal;color:var(--accent)}
+
+/* ===== 方案对比 ===== */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0 2.5rem}
+@media(max-width:720px){.compare{grid-template-columns:1fr}}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:1.25rem 1.35rem}
+.card h3{font-size:1rem;margin-bottom:.5rem}
+.card p{font-size:.88rem;color:var(--muted)}
+.card.recommended{border-color:rgba(139,105,20,.35);box-shadow:0 8px 28px rgba(120,90,40,.06)}
+.card.recommended h3::after{content:' · 推荐';font-size:.75rem;color:var(--accent);font-weight:400}
+
+/* ===== 索引栏 Demo ===== */
+.index-panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:1.25rem 1.5rem 1.5rem;margin-bottom:2.5rem}
+.index-panel h2{font-size:1.05rem;font-weight:600;margin-bottom:.25rem}
+.index-note{font-size:.82rem;color:var(--muted);margin-bottom:1rem}
+.search-row{display:flex;gap:.6rem;margin-bottom:1.1rem;flex-wrap:wrap}
+.search-row input{
+  flex:1;min-width:180px;border:1px solid var(--line);background:#fff;
+  border-radius:999px;padding:.55rem 1rem;font-family:var(--serif);font-size:.9rem
+}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1rem}
+.chip{
+  font-size:.78rem;padding:.28rem .75rem;border-radius:999px;background:var(--tag);
+  color:var(--muted);cursor:pointer;border:1px solid transparent;transition:.2s
+}
+.chip:hover,.chip.active{border-color:var(--accent);color:var(--accent);background:#fff}
+.index-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+@media(max-width:720px){.index-grid{grid-template-columns:1fr}}
+.index-col h4{font-size:.78rem;color:var(--muted);letter-spacing:.08em;margin-bottom:.45rem;font-weight:600}
+.index-item{
+  display:block;text-decoration:none;color:var(--ink);font-size:.86rem;
+  padding:.45rem .55rem;border-radius:8px;border:1px solid transparent;margin-bottom:.25rem
+}
+.index-item:hover{background:var(--tag);border-color:var(--line)}
+.index-item .en{display:block;font-family:var(--en);font-size:.72rem;color:var(--muted);font-style:italic;margin-top:.1rem}
+.index-item .tag{font-size:.68rem;color:var(--accent);margin-left:.35rem}
+
+/* ===== 新站点结构 ===== */
+.section{margin-top:2.5rem}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:1rem;border-bottom:1px solid var(--line);padding-bottom:.65rem}
+.section-head h2{font-size:1.15rem;font-weight:600}
+.section-head span{font-family:var(--en);font-style:italic;color:var(--muted);font-size:.9rem}
+.group-label{font-size:.78rem;color:var(--accent);letter-spacing:.1em;margin:1.25rem 0 .65rem;font-weight:600}
+.works{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem}
+@media(max-width:640px){.works{grid-template-columns:1fr}}
+.work{
+  background:var(--paper);border:1px solid var(--line);border-radius:12px;
+  padding:1rem 1.1rem;text-decoration:none;color:inherit;transition:.2s
+}
+.work:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(80,60,30,.07)}
+.work.primary{border-color:rgba(139,105,20,.28);grid-column:1/-1;display:grid;grid-template-columns:1.2fr .8fr;gap:1rem;align-items:center}
+@media(max-width:640px){.work.primary{grid-template-columns:1fr}}
+.work .k{font-size:.72rem;color:var(--accent);letter-spacing:.06em;margin-bottom:.35rem}
+.work h3{font-size:1rem;font-weight:600;margin-bottom:.35rem}
+.work p{font-size:.84rem;color:var(--muted)}
+.work .meta{font-size:.72rem;color:var(--muted);margin-top:.55rem}
+.work .thumb{
+  height:120px;border-radius:8px;background:linear-gradient(135deg,#EDE6DA,#F5EFE4);
+  border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;color:var(--muted);text-align:center;padding:.5rem
+}
+.collapsed{opacity:.72}
+.collapsed .work h3{font-size:.92rem}
+
+/* ===== 流程图 ===== */
+.flow{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:1.25rem;margin-top:2rem;font-size:.84rem;color:var(--muted)}
+.flow strong{color:var(--ink)}
+.flow pre{font-family:var(--serif);white-space:pre-wrap;line-height:1.65;margin-top:.75rem;color:var(--ink);font-size:.82rem}
+
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">Structure Demo · 非最终样式</span>
+  <h1>作品集信息架构 · 修改方案</h1>
+  <p class="sub">解决「漂亮但找不到」：<em>首页只做索引 + 三类代表作</em>，文学与论文下沉到第二层。</p>
+
+  <!-- 方案对比 -->
+  <div class="compare">
+    <div class="card">
+      <h3>手绘地图 / 插画导航</h3>
+      <p>气质好、像你的站点，但维护成本高；新作品要改图；移动端难读；面试官要「猜」该点哪里。</p>
+    </div>
+    <div class="card recommended">
+      <h3>轻量索引栏 + 锚点跳转</h3>
+      <p>固定三列：<strong>品牌与策划 / 文化内容 / 文学与翻译</strong>。可加搜索过滤。10 秒知道「该看哪件」，和现有诗意 UI 不冲突。</p>
+    </div>
+  </div>
+
+  <!-- 索引栏 Demo -->
+  <div class="index-panel" id="map">
+    <h2>作品索引 · 启封后第一屏（Demo）</h2>
+    <p class="index-note">建议放在「关于我」下方、「文以载心」上方；导航增加「索 · Index」入口回到此处。</p>
+    <div class="search-row">
+      <input type="search" id="q" placeholder="搜索：品牌 / 新亚 / 喜茶 / 翻译…" oninput="filterIndex(this.value)"/>
+    </div>
+    <div class="chips">
+      <span class="chip active" data-f="all" onclick="setFilter('all',this)">全部</span>
+      <span class="chip" data-f="brand" onclick="setFilter('brand',this)">品牌与策划</span>
+      <span class="chip" data-f="culture" onclick="setFilter('culture',this)">文化内容</span>
+      <span class="chip" data-f="lit" onclick="setFilter('lit',this)">文学与翻译</span>
+      <span class="chip" data-f="visual" onclick="setFilter('visual',this)">影像与视觉</span>
+    </div>
+    <div class="index-grid" id="indexGrid">
+      <div class="index-col" data-col="brand">
+        <h4>品牌与策划 · 面试优先看</h4>
+        <a class="index-item" href="#w-heytea" data-f="brand" data-k="喜茶 心中念你 商业策划">
+          《心中念你》喜茶 × 给阿嬷的情书
+          <span class="en">Commercial proposal · PDF</span>
+        </a>
+        <a class="index-item" href="#w-xinya" data-f="brand culture" data-k="新亚漫谈 COUNTERPART 品牌叙事">
+          新亚漫谈（4 篇）· For COUNTERPART
+          <span class="en">Brand narrative column</span>
+        </a>
+        <a class="index-item" href="#w-bws" data-f="brand" data-k="BWS 小红书 排版 文案">
+          BWS · 设计理念与品牌文案
+          <span class="en">Xiaohongshu · layout & copy</span>
+        </a>
+      </div>
+      <div class="index-col" data-col="culture">
+        <h4>文化内容 · 观察与纪行</h4>
+        <a class="index-item" href="#w-changzhou" data-f="culture visual" data-k="长洲 半日闲 纪行">
+          长洲半日闲
+          <span class="en">Travel essay · text & photo</span>
+        </a>
+        <a class="index-item" href="#w-sanlian" data-f="brand" data-k="三联 选题 提案">
+          三联生活周刊选题提案（未采用）
+          <span class="en">Editorial pitch · optional</span>
+        </a>
+      </div>
+      <div class="index-col" data-col="lit">
+        <h4>文学与翻译 · 第二层</h4>
+        <a class="index-item" href="#w-novel" data-f="lit" data-k="未接来电 英文小说">
+          The Unanswered Call · 未接来电
+          <span class="en">English novella</span>
+        </a>
+        <a class="index-item" href="#w-trans" data-f="lit" data-k="翻译 双语">
+          翻译作品选辑
+          <span class="en">CN–EN translation</span>
+        </a>
+        <a class="index-item" href="#w-academic" data-f="lit" data-k="论文 尤利西斯 学术">
+          学术论文（折叠）
+          <span class="en">Thesis & papers · collapsed</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 文以载心 新结构 -->
+  <div class="section" id="words">
+    <div class="section-head">
+      <h2>文以载心 · 重组后</h2>
+      <span>Writing — restructured</span>
+    </div>
+
+    <div class="group-label">① 品牌与策划（默认展开 · 2–3 件）</div>
+    <div class="works">
+      <a class="work primary" id="w-heytea" href="#">
+        <div>
+          <div class="k">COMMERCIAL · 商业策划案</div>
+          <h3>《心中念你》喜茶 × 给阿嬷的情书</h3>
+          <p>完整品牌 campaign：Hero「把一份想念，寄到TA手里」· 三行动 · 主 SKU 叙事。展示商业落地思路与品牌叙事能力（三联未采用 ≠ 作品无效）。</p>
+          <div class="meta">PDF 下载 · 约 12 页 · 2026</div>
+        </div>
+        <div class="thumb">封面 mock / KV 层级<br>（链至 PDF）</div>
+      </a>
+      <a class="work" id="w-xinya" href="#">
+        <div class="k">BRAND COLUMN · For COUNTERPART</div>
+        <h3>新亚漫谈（4 篇）</h3>
+        <p>钱穆图书馆 · 合一亭 · 桂林街到沙田 · 圆形广场 —— 空间与来历如何转译为品牌叙事。</p>
+        <div class="meta">1 张总卡 → 内页目录</div>
+      </a>
+      <a class="work" id="w-bws" href="https://www.xiaohongshu.com/explore/6a84162900000000060066ac" target="_blank" rel="noopener">
+        <div class="k">EDITORIAL · BWS</div>
+        <h3>设计理念 · 品牌文案与排版</h3>
+        <p>小红书图文：理念阐述 + 视觉排版。外链展示，站内放 2–3 张截图 + 一句说明。</p>
+        <div class="meta">外链 · Xiaohongshu</div>
+      </a>
+    </div>
+
+    <div class="group-label">② 文化观察（次要 · 1–2 件）</div>
+    <div class="works">
+      <a class="work" id="w-changzhou" href="#">
+        <div class="k">ESSAY · 纪行</div>
+        <h3>长洲半日闲</h3>
+        <p>地方观察与图文纪行。证明写作与现场感，不占品牌主卡位。</p>
+        <div class="meta">归入「四时·流转」或文化观察子栏</div>
+      </a>
+      <a class="work collapsed" id="w-sanlian" href="#">
+        <div class="k">PITCH · 可选</div>
+        <h3>三联选题提案（未采用）</h3>
+        <p>折叠展示；简历可写「选题策划实践」，站内不必首页主推。</p>
+      </a>
+    </div>
+
+    <div class="group-label">③ 文学与翻译（默认折叠 · 点击展开）</div>
+    <div class="works collapsed">
+      <a class="work" id="w-novel" href="#">
+        <div class="k">FICTION</div>
+        <h3>未接来电 · English novella</h3>
+        <p>48 页英文小说 —— 保留 1 张代表卡即可。</p>
+      </a>
+      <a class="work" id="w-trans" href="#">
+        <div class="k">TRANSLATION</div>
+        <h3>翻译作品选辑</h3>
+        <p>商务 · 文化 · 学术 —— 维持现有交互。</p>
+      </a>
+      <a class="work" id="w-academic" href="#">
+        <div class="k">ACADEMIC · 折叠</div>
+        <h3>论文 3 篇</h3>
+        <p>毕业论文 + 比较文学 + 女性研究 → 合并为「学术写作」一张卡。</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- 其他板块不变 -->
+  <div class="section" id="visual">
+    <div class="section-head">
+      <h2>流影拾微 · 保持</h2>
+      <span>Visual — unchanged</span>
+    </div>
+    <p style="font-size:.88rem;color:var(--muted)">尺幅之间 / 帧频之中 / 幕布之后 —— 结构不动，索引栏链过来即可。</p>
+  </div>
+
+  <div class="flow">
+    <strong>面试官 60 秒路径（Demo 逻辑）</strong>
+    <pre>启封 → 作品索引（三列 + 搜索）
+  → 点击「心中念你」PDF
+  → 点击「新亚漫谈」看品牌转译
+  → 可选：BWS 小红书 / 翻译选辑
+  → 文学论文：只有主动展开才看到</pre>
+  </div>
+
+  <footer>Demo 文件：portfolio-map-demo.html · 确认结构后可并入 index (1).html</footer>
+</div>
+
+<script>
+let currentFilter = 'all';
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  filterIndex(document.getElementById('q').value);
+}
+function filterIndex(q) {
+  q = (q || '').trim().toLowerCase();
+  document.querySelectorAll('.index-item').forEach(item => {
+    const tags = (item.dataset.f || '') + ' ' + (item.dataset.k || '') + ' ' + item.textContent;
+    const matchQ = !q || tags.toLowerCase().includes(q);
+    const matchF = currentFilter === 'all' || (item.dataset.f || '').includes(currentFilter);
+    item.style.display = matchQ && matchF ? '' : 'none';
+  });
+  document.querySelectorAll('.index-col').forEach(col => {
+    const visible = [...col.querySelectorAll('.index-item')].some(i => i.style.display !== 'none');
+    col.style.display = visible ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
