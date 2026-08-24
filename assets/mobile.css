@@ -1,0 +1,1333 @@
+/* 手机端适配 v14 · 启封分散排版+背景诗放大 */
+
+@media (max-width: 768px) {
+  /* —— 性能：减弱全局装饰 —— */
+  body::before { filter: blur(6px); }
+  body::after { opacity: 0.18; }
+  .sparkles { display: none; }
+  .ink-trail { display: none !important; }
+
+  body.mobile-lite #treeContainer,
+  body.mobile-lite .butterfly-layer,
+  body.mobile-lite #treeVineClip {
+    display: none !important;
+    height: 0 !important;
+  }
+
+  body.mobile-lite .season-effect {
+    opacity: 0.55;
+  }
+
+  /* —— 统一大标题（关于我/文以载心/流影/数境/四时/物有灵犀/续音）—— */
+  .section-title,
+  #contactTitle {
+    font-size: clamp(1.72rem, 8.5vw, 2.32rem) !important;
+    line-height: 1.3;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.34rem;
+    max-width: 75%;
+    width: fit-content;
+  }
+
+  .section-en {
+    font-size: 0.82rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* —— 启封页：垂直居中（未关闭时）；关闭后必须让出点击 —— */
+  html.is-mobile #overlay:not(.is-dismissed),
+  #overlay:not(.is-dismissed) {
+    align-items: center !important;
+    justify-content: center !important;
+    padding: max(0.5rem, env(safe-area-inset-top)) 0.4rem max(0.5rem, env(safe-area-inset-bottom)) !important;
+    overflow: hidden !important;
+  }
+
+  html.is-mobile #overlay.is-dismissed,
+  #overlay.is-dismissed {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  html.is-mobile #overlay .letter-paper,
+  #overlay .letter-paper {
+    width: min(72vw, 300px) !important;
+    max-width: 300px !important;
+    min-width: 0 !important;
+    min-height: min(72vh, 560px) !important;
+    max-height: min(84vh, 640px) !important;
+    aspect-ratio: 5 / 8;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: stretch !important;
+    padding: clamp(1.15rem, 4.2vw, 1.75rem) clamp(0.95rem, 3.6vw, 1.3rem) clamp(1rem, 3.8vw, 1.5rem) !important;
+    margin: 0 auto !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box !important;
+    box-shadow: 0 12px 32px rgba(120, 90, 60, 0.12), 0 4px 12px rgba(120, 90, 60, 0.08) !important;
+  }
+
+  html.is-mobile #overlay .letter-content,
+  #overlay .letter-content {
+    max-width: 100% !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    min-height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-evenly !important;
+    align-items: stretch !important;
+    gap: clamp(0.45rem, 2vw, 0.75rem) !important;
+    padding: clamp(0.65rem, 2.8vw, 1rem) 0 clamp(0.45rem, 2vw, 0.7rem) !important;
+  }
+
+  html.is-mobile #overlay .main-title,
+  #overlay .main-title {
+    font-size: clamp(1.92rem, 9vw, 2.55rem) !important;
+    margin-bottom: 0 !important;
+    padding-top: clamp(0.2rem, 1vw, 0.35rem) !important;
+    gap: clamp(0.78rem, 3.5vw, 1.15rem) !important;
+    line-height: 1.16 !important;
+    flex: 0 0 auto !important;
+  }
+
+  html.is-mobile #overlay .title-row,
+  #overlay .title-row {
+    letter-spacing: 0.11em !important;
+  }
+
+  html.is-mobile #overlay .title-row.top,
+  #overlay .title-row.top {
+    margin-left: 4% !important;
+    align-self: flex-start !important;
+    transform: translate(-2px, 2px) !important;
+  }
+
+  html.is-mobile #overlay .title-row.bottom,
+  #overlay .title-row.bottom {
+    margin-right: 4% !important;
+    align-self: flex-end !important;
+    transform: translate(2px, -2px) !important;
+  }
+
+  html.is-mobile #overlay .lunar-line,
+  #overlay .lunar-line {
+    font-size: clamp(0.9rem, 4vw, 1.12rem) !important;
+    margin: 0 !important;
+    letter-spacing: 0.08em !important;
+    line-height: 1.55 !important;
+    flex: 0 0 auto !important;
+  }
+
+  html.is-mobile #overlay .poem-cn,
+  #overlay .poem-cn {
+    font-size: clamp(0.98rem, 4.3vw, 1.22rem) !important;
+    line-height: 1.78 !important;
+    letter-spacing: 0.07em !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+    display: block !important;
+    text-align: center !important;
+  }
+
+  html.is-mobile #overlay .poem-en,
+  #overlay .poem-en {
+    font-size: clamp(0.88rem, 3.8vw, 1.08rem) !important;
+    line-height: 1.68 !important;
+    letter-spacing: 0.03em !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+    display: block !important;
+    text-align: center !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    max-width: 100% !important;
+  }
+
+  html.is-mobile #overlay .unfold-btn,
+  #overlay .unfold-btn {
+    font-size: clamp(0.82rem, 3.4vw, 0.98rem) !important;
+    padding: clamp(0.44rem, 1.9vw, 0.58rem) clamp(1.05rem, 4.4vw, 1.5rem) !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    align-self: center !important;
+    flex: 0 0 auto !important;
+    letter-spacing: 0.12em !important;
+  }
+  #overlay .letter-corner {
+    width: clamp(14px, 4vw, 22px) !important;
+    height: clamp(14px, 4vw, 22px) !important;
+  }
+
+  html.is-mobile #overlay .letter-corner.tl,
+  #overlay .letter-corner.tl {
+    top: clamp(6px, 1.8vw, 10px) !important;
+    left: clamp(6px, 1.8vw, 10px) !important;
+  }
+
+  html.is-mobile #overlay .letter-corner.br,
+  #overlay .letter-corner.br {
+    bottom: clamp(6px, 1.8vw, 10px) !important;
+    right: clamp(6px, 1.8vw, 10px) !important;
+  }
+
+  html.is-mobile #overlay .title-row,
+  #overlay .title-row {
+    letter-spacing: 0.11em !important;
+    max-width: 100% !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
+  }
+
+  html.is-mobile #overlay .title-char,
+  #overlay .title-char {
+    font-size: inherit !important;
+  }
+
+  .season-mini-switcher {
+    top: max(0.4rem, env(safe-area-inset-top)) !important;
+    right: 0.45rem !important;
+    left: auto !important;
+    gap: 0.28rem !important;
+    z-index: 12 !important;
+  }
+
+  .season-mini-btn {
+    width: clamp(26px, 7vw, 32px) !important;
+    height: clamp(26px, 7vw, 32px) !important;
+    font-size: clamp(0.68rem, 2.8vw, 0.82rem) !important;
+  }
+
+  #poemBg .poem-fragment {
+    color: rgba(45, 24, 16, 0.46) !important;
+    text-shadow: 0 1px 4px rgba(255, 255, 255, 0.55) !important;
+  }
+
+  #poemBg .poem-fragment.en {
+    color: rgba(45, 24, 16, 0.4) !important;
+  }
+
+  #poemBg .poem-fragment.depth-near {
+    font-size: clamp(1rem, 4.5vw, 1.28rem) !important;
+    opacity: 0.72 !important;
+    filter: blur(0) !important;
+  }
+
+  #poemBg .poem-fragment.depth-mid {
+    font-size: clamp(0.9rem, 4vw, 1.12rem) !important;
+    opacity: 0.6 !important;
+    filter: blur(0.4px) !important;
+  }
+
+  #poemBg .poem-fragment.depth-far {
+    font-size: clamp(0.82rem, 3.5vw, 1rem) !important;
+    opacity: 0.5 !important;
+    filter: blur(0.8px) !important;
+  }
+
+  .deco-shape { opacity: 0.24; transform: scale(0.5); }
+
+  /* —— 导航：ROMOLA 两行，文影数物单行同一水平线 —— */
+  nav.site-nav {
+    display: grid !important;
+    grid-template-columns: minmax(4.6rem, auto) 1fr auto !important;
+    grid-template-rows: auto !important;
+    align-items: center !important;
+    gap: 0.25rem 0.32rem !important;
+    padding: 0.42rem 0.68rem max(0.36rem, env(safe-area-inset-bottom)) !important;
+    overflow: visible;
+  }
+
+  nav.site-nav .logo {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.02rem !important;
+    min-width: 4.6rem !important;
+    max-width: 34vw !important;
+    line-height: 1.12 !important;
+  }
+
+  nav.site-nav .logo-line {
+    display: block;
+    font-family: 'Italiana', serif;
+    color: var(--soft);
+    white-space: nowrap;
+  }
+
+  nav.site-nav .logo-primary {
+    font-size: 0.72rem !important;
+    letter-spacing: 0.07em;
+  }
+
+  nav.site-nav .logo-secondary {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.05em;
+    opacity: 0.92;
+  }
+
+  nav.site-nav .nav-items {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.18rem !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  nav.site-nav .nav-item {
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  nav.site-nav .nav-item a {
+    width: auto !important;
+    padding: 0.1rem 0.38rem !important;
+    border-radius: 9px;
+  }
+
+  nav.site-nav .nav-item .nav-cn {
+    font-size: 0.92rem !important;
+    line-height: 1.05;
+  }
+
+  nav.site-nav .nav-item .nav-en {
+    display: none;
+  }
+
+  nav.site-nav .sundial-wrap {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    justify-self: end;
+    align-self: center !important;
+    gap: 0.32rem;
+    max-width: 36vw;
+    flex-shrink: 0;
+  }
+
+  nav.site-nav .sundial {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+
+  nav.site-nav .time-info {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  nav.site-nav .time-info .date-line {
+    display: none;
+  }
+
+  nav.site-nav .time-info .term-line {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 38vw;
+  }
+
+  nav.site-nav .time-info .term-poem-line {
+    display: block;
+    font-size: 0.56rem;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 38vw;
+  }
+
+  /* —— 大标题：上移、减少顶部空白 —— */
+  .hero {
+    min-height: calc(100dvh - 6.25rem);
+    padding-top: 2.55rem;
+    padding-bottom: 1.5rem;
+    justify-content: flex-start;
+  }
+
+  .hero-center {
+    padding: 0 0.75rem;
+    transform: translateY(-1.15rem);
+  }
+
+  .hero-title.hero-title-split {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.42rem;
+    font-size: 2.72rem !important;
+    letter-spacing: 0.11em;
+    margin-bottom: 0.82rem;
+    line-height: 1.38;
+    white-space: normal;
+  }
+
+  .hero-title-row {
+    display: flex;
+    letter-spacing: 0.12em;
+  }
+
+  .hero-title-row.row-top {
+    align-self: flex-start;
+    margin-left: 7%;
+    transform: translate(-2px, 2px);
+  }
+
+  .hero-title-row.row-bottom {
+    align-self: flex-end;
+    margin-right: 7%;
+    transform: translate(3px, -2px);
+  }
+
+  .hero-subtitle {
+    font-size: 0.84rem;
+    margin-bottom: 0.85rem;
+    line-height: 1.45;
+    padding: 0 0.25rem;
+  }
+
+  .hero-greeting {
+    font-size: 0.78rem !important;
+    line-height: 1.52 !important;
+    padding: 0.58rem 0.72rem !important;
+    max-width: min(320px, 92vw);
+    min-height: 0;
+  }
+
+  .scroll-hint {
+    margin-top: 1rem;
+  }
+
+  .scroll-hint span {
+    font-size: 0.68rem;
+  }
+
+  /* —— 各区块正文 —— */
+  main {
+    padding-top: 0;
+  }
+
+  /* 手机端：区块默认可点（避免 IntersectionObserver 未触发导致整段 pointer-events:none） */
+  .open-section {
+    margin-bottom: 3rem;
+    padding: 0 0.55rem;
+    scroll-margin-top: 7.25rem;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+
+  .section-desc {
+    max-width: 100%;
+    padding: 0.62rem 0.55rem;
+    font-size: 0.84rem;
+    line-height: 1.52;
+  }
+
+  /* —— 关于我：拉宽、缩小 —— */
+  #about {
+    padding: 0 0.45rem;
+  }
+
+  #about .section-desc {
+    max-width: 100%;
+    padding: 0.65rem 0.55rem;
+    font-size: 0.72rem;
+    line-height: 1.46;
+  }
+
+  #about .about-fall-line {
+    line-height: 1.46;
+  }
+
+  .content-wrapper {
+    padding-bottom: 1.75rem;
+    position: relative;
+    z-index: 8 !important;
+  }
+
+  #bf2,
+  #treeContainer {
+    pointer-events: none !important;
+  }
+
+  #things.open-section.things-v6 .thing-modal:not(.open) {
+    pointer-events: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  /* —— 文以载心：大标题随区块放大，卡片标题与框缩小 —— */
+  #words .section-en {
+    font-size: 0.78rem;
+    margin-bottom: 0.62rem;
+  }
+
+  .words-grid {
+    gap: 0.82rem;
+    margin-top: 0.48rem;
+  }
+
+  .word-card {
+    width: 100% !important;
+    padding: 0.72rem 0.58rem 0.65rem;
+    align-self: stretch !important;
+  }
+
+  .card-title {
+    font-size: 0.76rem;
+    margin-bottom: 0.36rem;
+    line-height: 1.26;
+  }
+
+  .card-quote {
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
+
+  .card-quote-box {
+    padding: 0 0.22rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .quote-mark {
+    font-size: 1.28rem;
+    top: -4px;
+  }
+
+  .card-tag {
+    font-size: 0.54rem;
+  }
+
+  #words .binder-holes {
+    display: none !important;
+    pointer-events: none !important;
+  }
+
+  #words .word-card.align-left {
+    border-left: 2px solid var(--accent) !important;
+  }
+
+  #words .word-card.align-right {
+    border-right: 2px solid var(--accent) !important;
+  }
+
+  #words .word-card {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
+
+  .word-card .hover-panel {
+    display: none !important;
+    pointer-events: none !important;
+  }
+
+  .word-card::after {
+    content: '轻触展开全文';
+    display: block;
+    margin-top: 0.35rem;
+    font-family: var(--cn-light);
+    font-size: 0.66rem;
+    color: var(--soft);
+    letter-spacing: 0.06em;
+  }
+
+  /* —— 翻译卡片：再放大 —— */
+  .stack-container {
+    min-height: min(66dvh, 500px) !important;
+    height: min(66dvh, 500px) !important;
+    margin-top: 0.3rem;
+    touch-action: pan-y;
+  }
+
+  .stack-card {
+    padding: 0.92rem 0.72rem 0.62rem;
+    overflow: hidden;
+    justify-content: flex-start;
+  }
+
+  .stack-card.pos-1,
+  .stack-card.pos-2 {
+    display: none;
+  }
+
+  .st-title {
+    font-size: 0.96rem;
+    margin-bottom: 0.48rem;
+  }
+
+  .st-src {
+    font-size: 0.82rem;
+    line-height: 1.42;
+    margin-bottom: 0.48rem;
+  }
+
+  .st-tgt {
+    font-size: 0.84rem;
+    line-height: 1.46;
+    margin-bottom: 0.55rem;
+    padding-left: 0.58rem;
+  }
+
+  .st-note {
+    font-size: 0.76rem;
+    line-height: 1.44;
+    padding-top: 0.5rem;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .st-hint {
+    font-size: 0.68rem;
+    padding-top: 0.42rem;
+  }
+
+  /* —— 续音：紧凑行距 —— */
+  .contact-section {
+    padding: 1.75rem 0.45rem 3.5rem;
+  }
+
+  .contact-frame {
+    width: 100%;
+    max-width: 100%;
+    padding: 1.1rem 0.85rem;
+  }
+
+  .contact-frame h3,
+  #contactTitle {
+    font-size: 1.78rem !important;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.35rem;
+  }
+
+  .contact-frame .cn {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    margin-bottom: 0.15rem;
+  }
+
+  .contact-frame .en {
+    font-size: 0.76rem;
+    line-height: 1.42;
+    margin-bottom: 1.1rem;
+  }
+
+  .contact-details p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin-bottom: 0.35rem;
+  }
+
+  /* —— 季节选择弹窗（备用）—— */
+  .modal {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: max(1rem, env(safe-area-inset-top)) 0.75rem 1.5rem;
+  }
+
+  .modal-box {
+    width: min(100%, 20rem);
+    margin: 10vh auto 2rem;
+    padding: 1.35rem 1rem;
+  }
+
+  /* —— 文以载心 · 书籍弹窗：紧凑 —— */
+  .book-overlay {
+    align-items: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: max(0.55rem, env(safe-area-inset-top)) 0.4rem 1.25rem;
+  }
+
+  .book-container {
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 0.2rem 0 1.25rem;
+    border-radius: 10px;
+    overflow: visible;
+    transform: none;
+  }
+
+  .book-overlay.active .book-container {
+    transform: none;
+  }
+
+  .book-spine {
+    display: none;
+  }
+
+  .book-page {
+    flex: none;
+    width: 100%;
+    padding: 0.8rem 0.55rem 0.85rem;
+    overflow: visible;
+  }
+
+  .book-page.left {
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .book-page.right {
+    padding: 0.72rem 0.5rem 0.85rem;
+  }
+
+  .b-full-title {
+    font-size: 1.02rem;
+    margin-bottom: 0.55rem;
+    line-height: 1.3;
+  }
+
+  .b-text {
+    font-size: 0.76rem;
+    line-height: 1.42;
+  }
+
+  .b-intro-title {
+    font-size: 0.72rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .close-btn {
+    top: 0.55rem;
+    right: 0.55rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1.35rem;
+  }
+
+  /* —— 图片放大 —— */
+  .image-lightbox {
+    padding: max(0.75rem, env(safe-area-inset-top)) 0.5rem 1rem;
+    align-items: center;
+    overflow-y: auto;
+  }
+
+  .image-lightbox img {
+    max-width: 96vw;
+    max-height: 82dvh;
+  }
+}
+
+@media (max-width: 768px) {
+  /* —— 流影拾微 · 剧场弹窗 —— */
+  .theater-modal {
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: max(0.75rem, env(safe-area-inset-top)) 0.55rem 1.5rem;
+  }
+
+  .close-theater {
+    position: fixed;
+    top: max(0.65rem, env(safe-area-inset-top));
+    right: 0.65rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.55rem;
+  }
+
+  .theater-content {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    margin-top: 2.75rem;
+    gap: 0.85rem;
+    overflow: visible;
+  }
+
+  .theater-left {
+    flex: none;
+    width: 100%;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 4 / 3;
+  }
+
+  .theater-left.ppt-stage {
+    aspect-ratio: 16 / 10;
+    max-height: 42dvh;
+    flex: none;
+  }
+
+  .theater-right {
+    flex: none;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    padding-bottom: 1rem;
+  }
+
+  .t-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .t-desc {
+    font-size: 0.78rem;
+    line-height: 1.48;
+    margin-bottom: 0.65rem;
+  }
+
+  .phone-mockup {
+    width: min(280px, 86vw);
+    height: auto;
+    aspect-ratio: 360 / 700;
+    max-height: 58dvh;
+  }
+
+  /* —— 流影拾微 · 列表式预览 —— */
+  #images .album-row,
+  #images .album-row:nth-child(even) {
+    flex-direction: column;
+    gap: 0.85rem;
+    align-items: stretch;
+  }
+
+  #images .album-text,
+  #images .album-row:nth-child(even) .album-text,
+  #images .album-row.motion-row .album-text {
+    text-align: left;
+    width: 100%;
+    order: 1;
+  }
+
+  #images .album-row.motion-row .a-desc {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    font-size: 0.76rem;
+    line-height: 1.48;
+  }
+
+  #images .a-title {
+    font-size: 1.12rem;
+    margin-bottom: 0.5rem;
+  }
+
+  #images .a-desc {
+    font-size: 0.76rem;
+    line-height: 1.48;
+    margin-bottom: 0.6rem;
+    max-width: 100%;
+  }
+
+  #images .a-hint {
+    font-size: 0.72rem;
+    display: block;
+  }
+
+  #images .album-photos {
+    position: relative !important;
+    flex: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    perspective: none !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    order: 2;
+    padding: 0.1rem 0;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
+
+  #images .album-photos .vis-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    padding: 5px 5px 22px;
+  }
+
+  #images .album-photos .vis-card > span {
+    font-size: 0.62rem;
+    bottom: 5px;
+  }
+
+  #images .vis-inner {
+    aspect-ratio: 3 / 4;
+    height: auto;
+  }
+
+  #images .layout-gallery .vis-card:nth-child(n+3),
+  #images .stamp-gallery .vis-card,
+  #images .vis-card.film.film-portrait {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  #images .motion-gallery {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.55rem !important;
+    order: 2;
+  }
+
+  #images .motion-gallery .vis-card.film-portrait {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+  }
+
+  #images .motion-gallery .vis-inner.film-cover {
+    aspect-ratio: 16 / 10;
+  }
+
+  #images .album-row.motion-row {
+    flex-direction: column !important;
+    overflow: visible;
+  }
+
+  #images .album-row.motion-row .motion-gallery {
+    order: 2;
+  }
+
+  #images .motion-desc-block {
+    margin-bottom: 0.55rem;
+  }
+
+  #images #motionDescCN,
+  #images #motionDescEN,
+  #images #layoutDescEN,
+  #images #scriptDescEN {
+    font-size: 0.76rem !important;
+    line-height: 1.48 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* —— 数境人文：拉宽至边缘 —— */
+  #dh {
+    padding: 0 0.35rem;
+  }
+
+  #dh .dh-project {
+    padding: 0.95rem 0.55rem 1.1rem;
+    border-radius: 14px;
+  }
+
+  #dh .dh-project-title {
+    font-size: 1.32rem;
+    letter-spacing: 0.05em;
+  }
+
+  #dh .dh-project-en {
+    font-size: 0.76rem;
+  }
+
+  #dh .dh-tools {
+    font-size: 0.72rem;
+  }
+
+  #dh .section-desc {
+    font-size: 0.76rem;
+    line-height: 1.48;
+    max-width: 100%;
+    padding: 0.62rem 0.5rem;
+  }
+
+  #dh .dh-body {
+    gap: 1rem;
+  }
+
+  #dh .dh-chart-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+
+  #dh .dh-chart figcaption {
+    font-size: 0.62rem;
+    line-height: 1.28;
+  }
+
+  #dh .dh-report {
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
+  #dh .dh-vibe {
+    margin-top: 1.15rem;
+    padding: 0.85rem 0.55rem;
+  }
+
+  #dh .dh-vibe-tag {
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+  }
+
+  #dh .dh-vibe-site {
+    font-size: 0.86rem;
+  }
+
+  #dh .dh-vibe-cn,
+  #dh .dh-vibe-en {
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
+  /* —— 物有灵犀：签筒左下、垂帘完整显示 —— */
+  #things.open-section.things-v6 {
+    overflow: visible;
+    margin-bottom: 2rem;
+    padding: 0 0.35rem 0.75rem;
+  }
+
+  #things.open-section.things-v6 .things-title-row {
+    margin-bottom: 0.4rem;
+  }
+
+  #things.open-section.things-v6 .things-title-en {
+    font-size: 0.72rem;
+  }
+
+  #things.open-section.things-v6 .things-hero {
+    gap: 0.6rem;
+  }
+
+  #things.open-section.things-v6 .things-welcome {
+    padding: 0.72rem 0.58rem;
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
+  #things.open-section.things-v6 .draw-zone {
+    max-width: 100%;
+    min-height: 210px;
+    padding: 0.85rem 0.45rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.35rem;
+  }
+
+  #things.open-section.things-v6 .lot-scene {
+    width: min(100%, 220px);
+    height: 168px;
+    margin: 0 auto;
+    transform: translateX(16%);
+    order: 1;
+  }
+
+  #things.open-section.things-v6 .draw-panel {
+    order: 2;
+    width: 100%;
+    text-align: center;
+  }
+
+  #things.open-section.things-v6 .lot-bucket {
+    width: 126px;
+    height: 164px;
+    margin: 0 auto;
+  }
+
+  #things.open-section.things-v6 .pattern-center {
+    left: 56%;
+    top: 92%;
+    width: min(220px, 100%);
+    height: min(220px, 100%);
+    margin-left: min(-110px, -50%);
+    margin-top: min(-110px, -50%);
+    opacity: 0.48;
+  }
+
+  #things.open-section.things-v6 .curtain-gallery {
+    margin-top: 0.85rem;
+    overflow: visible;
+  }
+
+  #things.open-section.things-v6 .curtain-stage {
+    min-height: auto;
+    max-height: none;
+    height: auto;
+    overflow: visible;
+    padding-bottom: 1.5rem;
+  }
+
+  #things.open-section.things-v6 .curtain-label {
+    font-size: 0.76rem;
+    margin-bottom: 0.35rem;
+  }
+
+  #things.open-section.things-v6 .thing-modal.modal-at-draw.open,
+  #things.open-section.things-v6 .thing-modal.modal-at-draw {
+    position: fixed !important;
+    inset: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    z-index: 10050;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding: max(4.25rem, calc(env(safe-area-inset-top) + 3.5rem)) 0.65rem 1.5rem !important;
+  }
+
+  #things.open-section.things-v6 .thing-modal.modal-at-curtain.open,
+  #things.open-section.things-v6 .thing-modal.modal-at-curtain {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    z-index: 10050;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding: var(--modal-vtop, 28vh) 0.65rem 1.5rem !important;
+  }
+
+  #things.open-section.things-v6 .thing-modal,
+  #things.open-section.things-v6 .thing-modal.open {
+    align-items: flex-start !important;
+    padding-top: max(3.25rem, calc(env(safe-area-inset-top) + 2.25rem)) !important;
+  }
+
+  #things.open-section.things-v6 .modal-at-draw.open,
+  #things.open-section.things-v6 .modal-at-curtain.open {
+    justify-content: center !important;
+  }
+
+  /* —— 四时摄影 —— */
+  .pb-lightbox {
+    align-items: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: max(0.65rem, env(safe-area-inset-top)) 0.55rem 1.25rem;
+  }
+
+  .pb-lb-close {
+    position: fixed;
+    top: max(0.55rem, env(safe-area-inset-top));
+    right: 0.55rem;
+    z-index: 10070;
+  }
+
+  .pb-lb-stage {
+    width: 100%;
+    max-width: 100%;
+    margin: 2.5rem auto 1rem;
+    transform: none;
+    filter: none;
+    opacity: 1;
+  }
+
+  .pb-lightbox.is-open .pb-lb-stage.is-ready {
+    transform: none;
+  }
+
+  .pb-lb-img-wrap {
+    border-width: 8px;
+  }
+
+  .pb-lb-img-wrap img {
+    max-width: 100%;
+    max-height: min(52dvh, 520px);
+  }
+
+  .pb-lb-meta {
+    margin-top: 0.85rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .pb-lb-meta .pb-lb-title {
+    font-size: 0.98rem;
+  }
+
+  .pb-lb-meta .pb-lb-diary {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    max-height: none;
+  }
+
+  #photography {
+    padding: 0 0.35rem;
+  }
+
+  #photography .section-desc {
+    width: 100%;
+    padding: 0.62rem 0.5rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  #photography .pb-wrap {
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+    padding-bottom: 2rem;
+  }
+
+  /* —— 字号终局覆盖 —— */
+  #about .section-title,
+  #words .section-title,
+  #images .section-title,
+  #dh .section-title,
+  #photography .section-title,
+  #things .section-title,
+  #contactTitle,
+  .contact-frame h3 {
+    font-size: 2.32rem !important;
+    line-height: 1.24 !important;
+    max-width: 82% !important;
+  }
+
+  /* 文以载心：两级统一 —— 卡片大标题 / 引言+标签 */
+  #words .word-card {
+    padding: 1.75rem 0.62rem 0.68rem !important;
+    position: relative !important;
+  }
+
+  #words .card-ribbon {
+    top: 6px !important;
+    font-size: 0.56rem !important;
+    padding: 3px 9px !important;
+    max-width: 46% !important;
+    z-index: 3 !important;
+    background: var(--accent) !important;
+    color: color-mix(in srgb, var(--text) 88%, #000) !important;
+  }
+
+  #words .word-card.align-left .card-ribbon::before {
+    border-top-color: var(--accent) !important;
+    filter: brightness(0.82) !important;
+  }
+
+  #words .word-card.align-right .card-ribbon::before {
+    border-top-color: var(--accent) !important;
+    filter: brightness(0.82) !important;
+  }
+
+  #words .card-ribbon .feather-icon {
+    width: 9px !important;
+    height: 9px !important;
+  }
+
+  #words .card-title,
+  #words .card-title span {
+    font-size: 1.02rem !important;
+    font-weight: 600 !important;
+    line-height: 1.34 !important;
+    margin: 0 0 0.48rem 0 !important;
+    padding-top: 0.15rem !important;
+  }
+
+  #words .card-quote,
+  #words .card-quote-box .card-quote {
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+  }
+
+  #words .card-quote-box {
+    padding: 0 0.32rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  #words .quote-mark {
+    font-size: 1.4rem !important;
+    top: -3px !important;
+    opacity: 0.42 !important;
+  }
+
+  #words .card-tag {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.08em !important;
+    margin-top: 0.3rem !important;
+    display: block !important;
+    clear: both !important;
+    color: var(--accent) !important;
+  }
+
+  /* 流影：尺幅/帧频/幕布同级文案 */
+  #images .a-desc,
+  #images .album-row.motion-row .a-desc,
+  #images #motionDescCN,
+  #images #motionDescEN,
+  #images #layoutDescCN,
+  #images #layoutDescEN,
+  #images #scriptDescCN,
+  #images #scriptDescEN {
+    font-size: 0.84rem !important;
+  }
+
+  #dh .section-desc,
+  #dh .dh-report,
+  #dh .dh-vibe-cn {
+    font-size: 0.84rem !important;
+  }
+
+  #dh .dh-project-title {
+    font-size: 1.42rem !important;
+  }
+
+  #dh .dh-vibe-tag {
+    font-size: 0.58rem !important;
+  }
+
+  #dh .dh-vibe-site {
+    font-size: 0.78rem !important;
+  }
+
+  #things.open-section.things-v6 .things-welcome {
+    font-size: 0.84rem !important;
+  }
+
+  .hero-title.hero-title-split {
+    font-size: 2.85rem !important;
+    gap: 0.48rem !important;
+    line-height: 1.42 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .season-effect,
+  .fall-particle,
+  .rain-container,
+  .leaf-particle,
+  .snow-particle {
+    display: none !important;
+  }
+}

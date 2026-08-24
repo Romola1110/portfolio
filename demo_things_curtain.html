@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>垂帘 Demo · 物有灵犀 — 楊雪琪</title>
+  <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/things-section.css?v=13">
+  <link rel="stylesheet" href="assets/things-curtain-demo.css?v=1">
+</head>
+<body>
+  <div class="demo-banner">
+    垂帘 Demo（简洁版 · SVG 纸鹤风铃 · 未接入主站）·
+    <a href="index%20(1).html?v=21">返回主页</a>
+  </div>
+
+  <main class="demo-wrap">
+    <section class="things-v6 demo-curtain" id="things-curtain-demo">
+      <h2 class="demo-heading">物有灵犀 · 垂帘</h2>
+      <p class="demo-sub">摇签或点击垂帘签纸 · 中央暗纹随摇签旋转</p>
+
+      <div class="draw-zone" id="thingsDrawZone">
+        <div class="lot-scene">
+          <div class="pattern-center" aria-hidden="true">
+            <img src="assets/things/ui/dark-pattern.png" alt="">
+          </div>
+          <div class="lot-bucket" role="button" tabindex="0" aria-label="签筒">
+            <img class="bucket-art" src="assets/things/ui/lot-bucket-2.png" alt="" width="184" height="304">
+          </div>
+        </div>
+        <div class="draw-panel">
+          <button type="button" class="draw-btn"><span class="draw-btn-inner">摇一支签</span></button>
+        </div>
+      </div>
+
+      <div class="curtain-gallery">
+        <p class="curtain-label">展笺 · 垂幕如许</p>
+        <div class="curtain-stage">
+          <div class="curtain-bar" aria-hidden="true"></div>
+          <div class="curtain-threads"></div>
+        </div>
+      </div>
+
+      <div class="thing-modal"></div>
+    </section>
+  </main>
+
+  <script src="assets/things-section.js?v=13"></script>
+  <script src="assets/things-curtain-demo.js?v=1"></script>
+  <script>initCurtainDemo('things-curtain-demo');</script>
+</body>
+</html>

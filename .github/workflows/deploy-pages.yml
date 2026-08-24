@@ -3,6 +3,29 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths:
+      - 'index.html'
+      - 'index (1).html'
+      - 'handbook.html'
+      - 'assets/things/**'
+      - 'assets/things-section.*'
+      - 'assets/photos/**'
+      - 'assets/previews/**'
+      - 'assets/dh/**'
+      - 'assets/visual-section.*'
+      - 'assets/photography-*'
+      - 'assets/photo/**'
+      - 'assets/fonts/**'
+      - 'assets/mobile.css'
+      - 'assets/season-pendant.css'
+      - 'assets/things-section.js'
+      - 'assets/mobile-perf.js'
+      - 'assets/mobile-tap.js'
+      - 'assets/cdn-fallback.js'
+      - 'assets/font-fallback.js'
+      - 'assets/vendor/**'
+      - '.github/workflows/deploy-pages.yml'
+      - 'scripts/prepare-pages-bundle.sh'
   workflow_dispatch:
 
 permissions:
@@ -17,14 +40,22 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Prepare lean site bundle
+        run: bash scripts/prepare-pages-bundle.sh
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - name: Retry Pages deployment
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        id: deployment_retry

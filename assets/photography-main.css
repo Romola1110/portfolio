@@ -1,0 +1,277 @@
+/* 主站四时摄影 · 风拂晾晒 */
+
+#photography.open-section {
+  max-width: none;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-left: 0;
+  padding-right: 0;
+  overflow-x: clip;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== 标题区：花草分割 + 立体字 ===== */
+#photography .photo-section-head {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: min(1280px, 96vw);
+  margin: 0 auto;
+  padding: 0 1.25rem 0.5rem;
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+#photography .photo-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.35rem, 2vw, 1.5rem);
+  width: 100%;
+  margin-bottom: 0.15rem;
+}
+
+#photography .photo-title-center {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+#photography .section-title {
+  display: block;
+  margin: 0 auto 0.2rem;
+  text-align: center;
+}
+
+#photography .section-title::before {
+  display: none !important;
+  content: none !important;
+  animation: none !important;
+}
+
+#photography .section-title {
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95),
+    0 2px 0 rgba(255, 248, 236, 0.55),
+    0 4px 10px rgba(148, 126, 96, 0.28),
+    0 8px 22px rgba(148, 126, 96, 0.14),
+    0 0 32px rgba(233, 214, 165, 0.38);
+  transform: perspective(520px) translateZ(0);
+}
+
+#photography .section-en {
+  margin: 0 auto 0;
+  text-align: center;
+}
+
+/* 灵气蝴蝶装饰（抠图 · 透明融合） */
+#photography .photo-butterflies {
+  flex: 1 1 0;
+  width: clamp(100px, 18vw, 220px);
+  height: auto;
+  max-height: clamp(72px, 12vw, 140px);
+  object-fit: contain;
+  pointer-events: none;
+  opacity: 0.92;
+  mix-blend-mode: screen;
+  filter:
+    drop-shadow(0 0 14px rgba(255, 255, 255, 0.75))
+    drop-shadow(0 0 28px rgba(220, 245, 210, 0.45))
+    blur(0.2px);
+}
+
+#photography .photo-butterflies--left {
+  transform-origin: 100% 60%;
+  animation: photoButterflyLeft 6.2s ease-in-out infinite;
+}
+
+#photography .photo-butterflies--right {
+  transform-origin: 0% 60%;
+  animation: photoButterflyRight 6.8s ease-in-out infinite;
+}
+
+@keyframes photoButterflyLeft {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.88; }
+  50% { transform: translate(-4px, -6px) rotate(-2deg); opacity: 1; }
+}
+
+@keyframes photoButterflyRight {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.88; }
+  50% { transform: translate(4px, -5px) rotate(2deg); opacity: 1; }
+}
+
+#photography .photo-title-row--plain {
+  justify-content: center;
+}
+
+#photography .photo-title-row--plain .photo-title-center {
+  flex: 0 1 auto;
+}
+
+#photography .section-desc {
+  margin: 1.1rem auto 0;
+  max-width: none;
+  width: min(1060px, 94vw);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.28);
+  line-height: 1.95;
+  letter-spacing: 0.06em;
+  padding: 1.2rem 2rem;
+  font-family: var(--font-2), 'LXGW WenKai', 'Noto Serif SC', serif;
+  font-size: 1.12rem;
+}
+
+/* ===== 画廊区：文案下 → 晾绳 → 季节 → 图片 ===== */
+#photography .photo-gallery-block {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  flex: 0 0 auto;
+  margin-top: 2.25rem;
+  clear: both;
+}
+
+#photography .pb-wrap {
+  max-width: none;
+  width: min(1280px, 97vw);
+  margin: 0 auto;
+  padding: 0 clamp(0.5rem, 1.2vw, 1.25rem) 4rem;
+  display: block;
+}
+
+#photography .pb-toolbar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+}
+
+#photography .pb-clothesline {
+  margin: 0 0 2rem;
+  flex-shrink: 0;
+  position: relative;
+}
+
+#photography .pb-seasons {
+  position: relative;
+  margin: 0 0 1.75rem;
+  flex-shrink: 0;
+  gap: 0.85rem 4.25rem;
+  z-index: 1;
+}
+
+#photography .pb-gallery {
+  position: relative;
+  column-count: 5;
+  column-gap: 8px;
+  width: 100%;
+  padding: 0.15rem 0 2rem;
+  z-index: 0;
+}
+
+#photography .pb-hint {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* 胶片相纸：白框 */
+#photography .pb-polaroid {
+  background: #ffffff !important;
+  opacity: 1;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(220, 215, 205, 0.9);
+  box-shadow: 1px 4px 12px rgba(44, 36, 27, 0.08);
+}
+
+#photography .pb-img {
+  background: #ffffff;
+}
+
+/* 季节晕染 */
+#photography .pb-seasons button::before,
+#photography .pb-seasons button::after {
+  display: none;
+}
+
+#photography .pb-season-glow {
+  display: block !important;
+  left: 50%;
+  top: 56%;
+  width: 155%;
+  height: 195%;
+  transform: translate(-50%, -50%);
+  border-radius: 48% 52% 55% 45% / 50% 48% 52% 50%;
+  background:
+    radial-gradient(ellipse 62% 58% at 38% 42%, rgba(var(--season-hue), 0.72) 0%, rgba(var(--season-hue), 0.38) 38%, transparent 72%),
+    radial-gradient(ellipse 52% 48% at 68% 58%, rgba(var(--season-hue), 0.58) 0%, rgba(var(--season-hue), 0.22) 42%, transparent 70%);
+  filter: none !important;
+  opacity: 0;
+  transition: opacity 0.42s ease, transform 0.45s ease;
+  mix-blend-mode: multiply;
+}
+
+#photography .pb-seasons button:hover .pb-season-glow {
+  opacity: 0.78;
+  transform: translate(-50%, -50%) scale(1.02);
+}
+
+#photography .pb-seasons button.is-active .pb-season-glow {
+  opacity: 1;
+  animation: photoInkGlowMain 2.8s ease-in-out infinite;
+}
+
+#photography .pb-seasons button.is-active .pb-season-text {
+  animation: photoInkTextMain 2.8s ease-in-out infinite;
+  color: rgba(44, 36, 27, 0.96);
+}
+
+#photography .pb-seasons button.is-active .pb-season-en {
+  color: rgba(44, 36, 27, 0.72);
+}
+
+@keyframes photoInkGlowMain {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.96);
+    opacity: 0.88;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes photoInkTextMain {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(var(--season-hue), 0.45),
+      0 0 22px rgba(var(--season-hue), 0.28);
+  }
+  50% {
+    text-shadow:
+      0 0 6px rgba(var(--season-hue), 0.68),
+      0 0 16px rgba(var(--season-hue), 0.52),
+      0 0 30px rgba(var(--season-hue), 0.32);
+  }
+}
+
+@media (max-width: 900px) {
+  #photography .pb-gallery { column-count: 4; }
+  #photography .pb-seasons { gap: 0.75rem 2.75rem; }
+  #photography .photo-butterflies { width: clamp(72px, 14vw, 140px); max-height: 100px; }
+}
+
+@media (max-width: 560px) {
+  #photography .pb-gallery { column-count: 3; }
+  #photography .pb-wrap { width: 100vw; padding-left: 0.65rem; padding-right: 0.65rem; }
+  #photography .pb-seasons { gap: 0.65rem 1.75rem; }
+  #photography .section-desc { width: 96vw; padding: 1rem 1.1rem; }
+  #photography .photo-butterflies { width: 56px; max-height: 72px; }
+  #photography .photo-title-row { gap: 0.25rem; }
+}

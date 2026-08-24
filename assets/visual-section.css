@@ -1,20 +1,20 @@
 /* 流影拾微 v6 — scoped to #images, uses site season theme vars */
-#images.open-section { max-width: 1180px; margin-bottom: 5rem; }
+#images.open-section { max-width: 1180px; margin-bottom: 3.5rem; }
 #images .section-en { margin-bottom: 2rem; }
 
-#images .album-wrapper { display: flex; flex-direction: column; gap: 4.5rem; margin-top: 1.5rem; text-align: left; }
-#images .album-row { display: flex; align-items: center; justify-content: space-between; gap: 3.5rem; }
+#images .album-wrapper { display: flex; flex-direction: column; gap: 1.75rem; margin-top: 0.75rem; text-align: left; }
+#images .album-row { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
 #images .album-row:nth-child(even) { flex-direction: row-reverse; }
 #images .album-text { flex: 1; text-align: left; }
 #images .album-row:nth-child(even) .album-text { text-align: right; }
 #images .a-tag { font-family: var(--english); font-size: 0.95rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; display: block; font-weight: 600; }
-#images .a-title { font-family: 'ZCOOL XiaoWei', var(--cn-title), var(--serif); font-size: 2.8rem; font-weight: 400; margin: 0 0 1.5rem; line-height: 1.3; letter-spacing: 0.08em; color: var(--text); }
-#images .a-desc { font-family: var(--cn-light); font-size: 1.05rem; color: color-mix(in srgb, var(--text) 70%, var(--soft)); line-height: 2; margin-bottom: 2rem; max-width: 540px; }
+#images .a-title { font-family: var(--font-3), 'YuweiFanti', var(--serif); font-size: 2.8rem; font-weight: 400; margin: 0 0 1.5rem; line-height: 1.3; letter-spacing: 0.08em; color: var(--text); }
+#images .a-desc { font-family: var(--font-2), 'LXGW WenKai', var(--serif); font-size: 1.05rem; color: color-mix(in srgb, var(--text) 70%, var(--soft)); line-height: 2; margin-bottom: 2rem; max-width: 540px; }
 #images .a-desc b, #images .a-desc .lead-line { color: var(--text); font-weight: 700; }
 #images .a-desc .lead-line { display: block; margin-bottom: 1rem; }
 #images .a-hint { font-family: var(--english); font-style: italic; font-size: 0.95rem; color: var(--soft); opacity: 0.85; }
 
-#images .album-photos { flex: 1.5; position: relative; height: 580px; perspective: 1200px; cursor: pointer; }
+#images .album-photos { flex: 1.5; position: relative; height: 700px; perspective: 1200px; cursor: pointer; z-index: 1; }
 #images .album-photos .vis-card {
   position: absolute; top: 50%; left: 50%; width: 320px; height: 420px;
   background: #FFF; padding: 15px 15px 45px 15px; border-radius: 4px;
@@ -60,13 +60,14 @@
 #images .motion-gallery:hover .vis-card.film-portrait.p1 { transform: translate(-50%, -50%) rotate(-26deg) translateX(6px) translateY(-200px); z-index: 2; }
 #images .motion-gallery:hover .vis-card.film-portrait.p2 { transform: translate(-50%, -50%) rotate(0deg) translateX(32px) translateY(0) scale(1.02); z-index: 5; box-shadow: 0 30px 58px rgba(0,0,0,0.2); }
 #images .motion-gallery:hover .vis-card.film-portrait.p3 { transform: translate(-50%, -50%) rotate(26deg) translateX(58px) translateY(200px); z-index: 3; }
-#images .album-row.motion-row { gap: 5rem; align-items: center; overflow: visible; }
+#images .album-row.motion-row { gap: 3rem; align-items: center; overflow: visible; }
 #images .album-row.motion-row .album-text { text-align: right; margin-left: auto; }
 #images .album-row.motion-row .a-desc { margin-left: auto; max-width: 560px; }
 #images .motion-desc-block { margin-bottom: 1.35rem; }
 #images .album-row.motion-row .album-photos { overflow: visible; }
 
-#images .stamp-gallery .vis-card { width: 300px; height: 390px; }
+#images .stamp-gallery .vis-card { width: 380px; height: 490px; }
+#images .stamp-gallery { height: 700px; }
 #images .vis-card.stamp {
   background: radial-gradient(circle, transparent 4px, #fff 4.5px) -6px -6px / 16px 16px;
   padding: 10px; border-radius: 0; box-shadow: none; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.08));
@@ -75,16 +76,17 @@
 #images .stamp-wrap span { position: absolute; bottom: 8px; left: 0; width: 100%; text-align: center; font-family: var(--cn-light); font-size: 0.9rem; color: #888; font-weight: 600; }
 #images .vis-card.stamp .vis-inner { background: transparent; border: 1px dashed #CCC; }
 
-#images .layout-gallery .vis-card { width: 278px; height: 368px; }
+#images .layout-gallery { height: 700px; }
+#images .layout-gallery .vis-card { width: 340px; height: 450px; }
 #images .layout-gallery .vis-inner { background: #ece6dc; }
-#images .layout-gallery .vis-card:nth-child(n+3) { width: 380px; height: 228px; padding: 14px 14px 42px; }
+#images .layout-gallery .vis-card:nth-child(n+3) { width: 460px; height: 276px; padding: 14px 14px 42px; }
 #images .layout-gallery .vis-card:nth-child(n+3) .vis-inner img,
 #images .layout-gallery .vis-card:nth-child(n+3) .pdf-thumb-canvas { object-fit: cover; width: 100%; height: 100%; }
-#images .layout-gallery .vis-card:nth-child(4) { transform: translate(-50%, -50%) rotate(7deg) translateX(102px) translateY(44px); }
-#images .layout-gallery .vis-card:nth-child(5) { transform: translate(-50%, -50%) rotate(-10deg) translateX(-102px) translateY(48px); }
+#images .layout-gallery .vis-card:nth-child(4) { transform: translate(-50%, -50%) rotate(7deg) translateX(128px) translateY(52px); }
+#images .layout-gallery .vis-card:nth-child(5) { transform: translate(-50%, -50%) rotate(-10deg) translateX(-128px) translateY(56px); }
 #images .layout-gallery:hover .vis-card:nth-child(3) { transform: translate(-50%, -50%) rotate(0deg) scale(1.03) translateY(-10px); z-index: 10; }
-#images .layout-gallery:hover .vis-card:nth-child(4) { transform: translate(-50%, -50%) rotate(15deg) translateX(205px) translateY(48px); }
-#images .layout-gallery:hover .vis-card:nth-child(5) { transform: translate(-50%, -50%) rotate(-17deg) translateX(-205px) translateY(52px); }
+#images .layout-gallery:hover .vis-card:nth-child(4) { transform: translate(-50%, -50%) rotate(15deg) translateX(248px) translateY(56px); }
+#images .layout-gallery:hover .vis-card:nth-child(5) { transform: translate(-50%, -50%) rotate(-17deg) translateX(-248px) translateY(60px); }
 #images .script-shot-preview { padding: 0 !important; border: none !important; background: #fff !important; overflow: hidden; }
 #images .script-shot-preview img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
 
@@ -172,8 +174,9 @@
   .theater-content { flex-direction: column; height: 90vh; gap: 1rem; }
   .theater-right { max-height: 38vh; overflow: auto; }
   .phone-mockup { width: 300px; height: 590px; }
-  #images .layout-gallery .vis-card { width: 230px; height: 300px; }
-  #images .layout-gallery .vis-card:nth-child(n+3) { width: 300px; height: 180px; }
+  #images .layout-gallery .vis-card { width: 280px; height: 372px; }
+  #images .layout-gallery .vis-card:nth-child(n+3) { width: 360px; height: 216px; }
+  #images .stamp-gallery .vis-card { width: 320px; height: 412px; }
   #images .motion-gallery { flex: 1 1 auto; width: 100%; max-width: 100%; height: 660px; margin-left: 0; }
   #images .motion-gallery .vis-card.film-portrait { left: 50%; width: 318px; height: 198px; }
   #images .motion-gallery .vis-card.film-portrait.p1 { transform: translate(-50%, -50%) rotate(-5deg) translateY(-64px) translateX(6px); }

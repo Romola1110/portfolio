@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>匣中签 · 物有灵犀 — Demo v5 — 楊雪琪</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/things-section.css?v=6">
+  <style>
+    :root {
+      --bg: #F2EDF8; --text: #2D2536; --soft: #8A92B0; --accent: #D88CA8;
+      --g1: #E2DDF2; --g2: #F5DDEB; --branch: #4a6a52;
+      --cn-classic: 'LXGW WenKai', 'ZCOOL XiaoWei', serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--cn-classic);
+      color: var(--text);
+      min-height: 100vh;
+      background: radial-gradient(circle at 12% 18%, var(--g1) 0%, transparent 55%),
+        radial-gradient(circle at 82% 28%, var(--g2) 0%, transparent 50%), var(--bg);
+    }
+    .demo-banner {
+      text-align: center;
+      padding: 0.85rem;
+      font-size: 0.8rem;
+      color: var(--soft);
+      background: rgba(255,255,255,0.35);
+      border-bottom: 1px dashed color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+    .demo-banner a { color: var(--accent); }
+    .content-wrapper { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  </style>
+</head>
+<body class="spring">
+  <div class="demo-banner">
+    Demo v5 · 仅预览 · 未接入主站 ·
+    <a href="index%20(1).html">返回主页</a> ·
+    <a href="assets/things/DESIGN.md">素材指南</a>
+  </div>
+
+  <div class="content-wrapper">
+    <section class="things-v5 visible" id="things-demo">
+      <h2 class="things-main-title">匣中签 · 物有灵犀</h2>
+
+      <div class="intro-env-row">
+        <div class="things-welcome">
+          <p class="intro-line" data-type="岁月是一首未尽的诗。若你也偏爱袖珍的光影与墨迹，欢迎在此驻足。"></p>
+          <p class="intro-line" data-type="它们不急着被看完，像窗台上晾着的字，等风，也等一个愿意停下来的你。"></p>
+          <p class="intro-line intro-gap" data-type="欢迎来到我的原创世界"></p>
+          <p class="intro-line" data-type="此处每一缕墨色、每一道纸痕，皆出自我手；愿你在翻阅之间，与我隔空相遇，默然相知。"></p>
+        </div>
+
+        <div class="envelope-stack">
+          <p class="env-hint">择一封而启</p>
+          <div class="env-pile" role="group" aria-label="信封堆，点击抽选">
+            <!-- JS 生成信封堆；有上传图则用 assets/things/ui/envelope.png -->
+          </div>
+          <div class="floral-burst" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="poetic-chips" aria-hidden="true">
+        <span>墨迹</span><span>纸痕</span><span>袖珍</span><span>风信</span><span>慢作</span><span>窗晾</span>
+      </div>
+
+      <div class="env-foot">
+        <button type="button" class="env-again-btn" hidden>再抽一封</button>
+        <button type="button" class="env-find-btn" hidden>在展匣中寻它</button>
+      </div>
+
+      <div class="gallery-gate">
+        <button type="button" class="gallery-toggle-btn">展开展匣，慢慢翻阅</button>
+      </div>
+
+      <div class="wish-tree-wrap">
+        <p class="wish-tree-label">展匣</p>
+        <div class="wish-tree">
+          <img class="tree-art-fallback" src="assets/things/ui/wish-tree.png" alt=""
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <svg class="tree-svg-painted" viewBox="0 0 600 760" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs>
+              <filter id="paperTex">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="n"/>
+                <feColorMatrix type="saturate" values="0"/>
+                <feBlend in="SourceGraphic" in2="n" mode="multiply"/>
+              </filter>
+              <linearGradient id="trunkG" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stop-color="#6a5848"/><stop offset="50%" stop-color="#8a7a62"/><stop offset="100%" stop-color="#5a6a52"/>
+              </linearGradient>
+              <radialGradient id="leafG1" cx="40%" cy="40%"><stop offset="0%" stop-color="#c8e0b8" stop-opacity="0.7"/><stop offset="100%" stop-color="#a8c8a0" stop-opacity="0"/></radialGradient>
+              <radialGradient id="leafG2" cx="50%" cy="50%"><stop offset="0%" stop-color="#dce8c8" stop-opacity="0.65"/><stop offset="100%" stop-color="#b8d0a8" stop-opacity="0"/></radialGradient>
+            </defs>
+            <rect width="600" height="760" fill="#f5f2ea" opacity="0.35"/>
+            <ellipse cx="420" cy="180" rx="95" ry="70" fill="url(#leafG1)" filter="url(#paperTex)"/>
+            <ellipse cx="280" cy="140" rx="80" ry="58" fill="url(#leafG2)" filter="url(#paperTex)"/>
+            <ellipse cx="180" cy="220" rx="70" ry="50" fill="url(#leafG1)" opacity="0.8"/>
+            <ellipse cx="350" cy="280" rx="88" ry="62" fill="url(#leafG2)"/>
+            <ellipse cx="220" cy="320" rx="75" ry="55" fill="url(#leafG1)" opacity="0.75"/>
+            <ellipse cx="480" cy="320" rx="65" ry="48" fill="url(#leafG2)" opacity="0.7"/>
+            <ellipse cx="140" cy="380" rx="60" ry="42" fill="url(#leafG1)" opacity="0.65"/>
+            <ellipse cx="400" cy="420" rx="72" ry="50" fill="url(#leafG2)" opacity="0.7"/>
+            <path d="M460 720 C450 620, 435 520, 418 440 C400 360, 385 290, 368 220 C352 155, 338 100, 322 55" fill="none" stroke="url(#trunkG)" stroke-width="14" stroke-linecap="round" opacity="0.85"/>
+            <path d="M418 440 C360 420, 300 400, 240 385 C180 370, 120 358, 70 348" fill="none" stroke="#6a7a58" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+            <path d="M418 440 C395 390, 368 342, 335 298 C302 254, 265 215, 220 180" fill="none" stroke="#7a8a68" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+            <path d="M368 220 C340 198, 308 180, 272 165 C236 150, 195 138, 150 128" fill="none" stroke="#6a7a58" stroke-width="2" opacity="0.4"/>
+            <path d="M368 220 C382 175, 392 135, 398 98 C404 61, 408 30, 410 5" fill="none" stroke="#7a8a68" stroke-width="2" opacity="0.4"/>
+            <path d="M322 55 C298 42, 270 32, 238 24 C206 16, 168 10, 125 5" fill="none" stroke="#6a7a58" stroke-width="1.8" opacity="0.35"/>
+            <path d="M418 440 C438 400, 458 358, 475 312 C492 266, 505 218, 515 168" fill="none" stroke="#7a8a68" stroke-width="2.5" opacity="0.42"/>
+            <path d="M335 298 C312 278, 285 260, 252 245" fill="none" stroke="#8a9a78" stroke-width="1.6" opacity="0.38"/>
+            <path d="M475 312 C492 300, 508 284, 522 262" fill="none" stroke="#8a9a78" stroke-width="1.4" opacity="0.35"/>
+            <path d="M220 180 C198 158, 172 140, 140 125" fill="none" stroke="#8a9a78" stroke-width="1.4" opacity="0.35"/>
+            <path d="M460 720 C478 685, 492 645, 502 598 C512 551, 518 500, 520 448" fill="none" stroke="#6a5848" stroke-width="8" stroke-linecap="round" opacity="0.3"/>
+          </svg>
+          <div class="tree-tags"></div>
+        </div>
+      </div>
+
+      <div class="thing-modal"></div>
+    </section>
+  </div>
+
+  <script src="assets/things-section.js?v=6"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => initThingsSection('things-demo'));
+  </script>
+</body>
+</html>

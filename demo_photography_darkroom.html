@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>摄影画廊 Demo · 暗房显影</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=LXGW+WenKai&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/photography-section.css?v=2">
+  <style>
+    :root {
+      --cn-title: 'ZCOOL XiaoWei', serif;
+      --cn-poem: 'LXGW WenKai', serif;
+      --cn-light: 'LXGW WenKai', serif;
+      --english: 'Cormorant Garamond', serif;
+      --text: #2c241b;
+      --soft: #b0a396;
+    }
+    body { margin: 0; background: #1a1612; color: #f4ede4; font-family: var(--cn-light); }
+    .demo-bar {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+      padding: 0.75rem 1rem; background: rgba(26, 22, 18, 0.92);
+      border-bottom: 1px solid rgba(244, 237, 228, 0.08);
+    }
+    .demo-bar a { color: #d8cfc4; text-decoration: none; font-size: 0.85rem; }
+    .demo-bar a.is-here { color: #e8a598; font-weight: 700; }
+    .demo-wrap { max-width: 1080px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    h1 { font-family: var(--cn-title); font-weight: 400; letter-spacing: 0.12em; font-size: 1.6rem; color: #f4ede4; }
+    .demo-note { color: #a89888; font-size: 0.9rem; line-height: 1.8; margin-bottom: 1.5rem; }
+    #photography .section-desc { color: #a89888; }
+    #photography .season-pill { background: rgba(255,255,255,0.06); color: #f4ede4; border-color: rgba(244,237,228,0.12); }
+  </style>
+</head>
+<body>
+  <nav class="demo-bar">
+    <strong>四时摄影 Demo</strong>
+    <a href="demo_photography_3d.html">① 3D 瀑布流</a>
+    <a class="is-here" href="demo_photography_darkroom.html">② 暗房显影</a>
+    <a href="demo_photography_scroll.html">③ 长卷横滑</a>
+  </nav>
+  <div class="demo-wrap">
+    <h1>方案二 · 暗房洗照片</h1>
+    <p class="demo-note">默认高模糊低饱和；滚入视口或悬停时逐渐清晰，像墨迹在水中散开。节奏更慢、更神秘。</p>
+    <div class="open-section photo-gallery-section" id="photography">
+      <nav class="photo-season-nav" aria-label="四季摄影"></nav>
+      <div class="photo-masonry"></div>
+    </div>
+  </div>
+  <div class="photo-lightbox" id="photoLightbox" aria-hidden="true">
+    <button type="button" class="photo-lightbox-close" aria-label="关闭">×</button>
+    <div class="photo-lightbox-stage">
+      <img class="photo-lightbox-img" src="" alt="">
+      <div class="photo-lightbox-meta">
+        <p class="lb-index"></p>
+        <p class="lb-title"></p>
+        <p class="lb-caption"></p>
+      </div>
+    </div>
+  </div>
+  <script src="assets/photography-data.js?v=2"></script>
+  <script src="assets/photography-section.js?v=2"></script>
+  <script>initPhotographySection('photography', { mode: 'darkroom' });</script>
+</body>
+</html>
