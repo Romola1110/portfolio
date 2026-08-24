@@ -7,6 +7,8 @@ on:
       - 'index.html'
       - 'index (1).html'
       - 'handbook.html'
+      - 'words-section-demo.html'
+      - 'portfolio-map-demo.html'
       - 'assets/things/**'
       - 'assets/things-section.*'
       - 'assets/photos/**'
