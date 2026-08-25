@@ -477,6 +477,14 @@
     margin-bottom: 0.62rem;
   }
 
+  #words .words-zone { margin-bottom: 1.6rem; }
+  #words .zone-head { margin-bottom: 0.7rem; }
+  #words .zone-title { font-size: 1.35rem; letter-spacing: 0.06em; }
+  #words .zone-en { font-size: 0.78rem; margin-top: 0.2rem; }
+  #words .words-zone--brand .zone-head,
+  #words .words-zone--culture .zone-head,
+  #words .words-zone--literature .zone-head { text-align: left; }
+
   .words-grid {
     gap: 0.82rem;
     margin-top: 0.48rem;
