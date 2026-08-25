@@ -732,6 +732,23 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
 .pitch-list li.active, .pitch-list li:hover { border-color: var(--accent); background: var(--g2, #F5DDEB); }
 .essay-body p { margin-bottom: 1.05rem; text-indent: 2em; }
 .essay-body .scene-break { text-align: center; color: var(--soft); margin: 1.4rem 0; letter-spacing: 0.35em; text-indent: 0; }
+.essay-fig { margin: 1.2rem 0 1.6rem; text-indent: 0; text-align: center; }
+.essay-fig img {
+  width: 100%; max-height: 420px; object-fit: cover; border-radius: 6px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1); cursor: zoom-in;
+}
+.essay-fig figcaption {
+  margin-top: 0.55rem; font-family: var(--cn-light); font-size: 0.85rem;
+  color: var(--soft); letter-spacing: 0.04em;
+}
+.kv-stack-img {
+  width: 100%; max-height: 58vh; object-fit: contain; border-radius: 6px;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.12); cursor: zoom-in; background: #fff;
+}
+.kv-stack-cap {
+  margin-top: 0.8rem; font-family: var(--cn-light); font-size: 0.9rem;
+  color: var(--soft); text-align: center; font-weight: 600;
+}
 .b-meta { font-family: var(--english); font-style: italic; font-size: 0.95rem; color: var(--soft); margin-bottom: 1.4rem; }
 .ext-btn {
   display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.6rem;
@@ -842,10 +859,13 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
 }
 
 /* ===== 卡片悬停抽屉 (Hover slide-in) ===== */
+/* 默认完全不可见：卡片 overflow:visible 时，移出屏幕的色块仍会被绘制；
+   非悬停时隐藏，悬停时再出现并保留原有擦除位移动画 */
 .hover-panel {
   position: absolute; top: 0; bottom: 0; width: 70%;
   display: flex; align-items: center; justify-content: flex-end;
   padding: 2rem 3rem 2rem 4rem; pointer-events: none; z-index:15; overflow: hidden;
+  opacity: 0; visibility: hidden;
 }
 
 /* 渐变朦胧背景 - 提取主题色 */
@@ -861,27 +881,35 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
 .word-card.align-right .hover-panel { 
   left: 0; right: auto; justify-content: flex-start;
   transform: translateX(-101%); padding: 2rem 4rem 2rem 3rem;
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0s linear 0.6s, visibility 0s linear 0.6s;
 }
 /* 反向渐变：左边缘深，右边缘透明 */
 .word-card.align-right .hover-panel::before {
   mask-image: linear-gradient(to left, transparent 0%, black 40%);
   -webkit-mask-image: linear-gradient(to left, transparent 0%, black 40%);
 }
-.word-card.align-right:hover .hover-panel { transform: translateX(0); }
+.word-card.align-right:hover .hover-panel {
+  transform: translateX(0);
+  opacity: 1; visibility: visible;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0s, visibility 0s;
+}
 
 /* 左侧卡片的抽屉：从右侧推出 */
 .word-card.align-left .hover-panel.left-panel { 
   right: 0; left: auto; justify-content: flex-end;
   transform: translateX(101%); padding: 2rem 3rem 2rem 4rem;
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0s linear 0.6s, visibility 0s linear 0.6s;
 }
 /* 反向渐变：右边缘深，左边缘透明 */
 .word-card.align-left .hover-panel.left-panel::before {
   mask-image: linear-gradient(to right, transparent 0%, black 40%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%);
 }
-.word-card.align-left:hover .hover-panel.left-panel { transform: translateX(0); }
+.word-card.align-left:hover .hover-panel.left-panel {
+  transform: translateX(0);
+  opacity: 1; visibility: visible;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0s, visibility 0s;
+}
 
 .hover-content { position: relative; z-index: 2; max-width: 95%; opacity: 0; transition: opacity 0.4s ease 0.2s; }
 .word-card:hover .hover-content { opacity: 1; }
@@ -1301,6 +1329,14 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
     <h2 class="section-title">文以载心</h2>
     <p class="section-en">Words — the window through which I see</p>
 
+    <div class="words-zone words-zone--literature" id="zone-literature">
+      <header class="zone-head">
+        <h3 class="zone-title">文学与翻译</h3>
+        <p class="zone-en">Fiction, papers, and bilingual craft</p>
+      </header>
+      <div class="words-grid" id="cardListLit"></div>
+    </div>
+
     <div class="words-zone words-zone--brand" id="zone-brand">
       <header class="zone-head">
         <h3 class="zone-title">品牌与策划</h3>
@@ -1315,14 +1351,6 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
         <p class="zone-en">Field notes and editorial research</p>
       </header>
       <div class="words-grid" id="cardListCulture"></div>
-    </div>
-
-    <div class="words-zone words-zone--literature" id="zone-literature">
-      <header class="zone-head">
-        <h3 class="zone-title">文学与翻译</h3>
-        <p class="zone-en">Fiction, papers, and bilingual craft</p>
-      </header>
-      <div class="words-grid" id="cardListLit"></div>
     </div>
   </div>
 
@@ -1642,7 +1670,7 @@ Those quiet sentences on the page will, in time, pass through light and shadow�
 const TERMS={2025:[{m:1,d:5,name:'小寒',poem:'雁北乡兮，鹊始巢兮'},{m:1,d:20,name:'大寒',poem:'瑞雪兆丰，坚冰在户'},{m:2,d:3,name:'立春',poem:'东风解冻，蛰虫始振'},{m:2,d:18,name:'雨水',poem:'獭祭鱼兮，鸿雁来兮'},{m:3,d:5,name:'惊蛰',poem:'桃始华兮，仓庚鸣兮'},{m:3,d:20,name:'春分',poem:'玄鸟至兮，雷乃发声'},{m:4,d:4,name:'清明',poem:'桐始华兮，虹始见兮'},{m:4,d:20,name:'谷雨',poem:'萍始生兮，鸣鸠拂羽'},{m:5,d:5,name:'立夏',poem:'蝼蝈鸣兮，蚯蚓出兮'},{m:5,d:21,name:'小满',poem:'苦菜秀兮，靡草死兮'},{m:6,d:5,name:'芒种',poem:'螳螂生兮，鵙始鸣兮'},{m:6,d:21,name:'夏至',poem:'鹿角解兮，蝉始鸣兮'},{m:7,d:6,name:'小暑',poem:'温风至兮，蟋蟀居壁'},{m:7,d:22,name:'大暑',poem:'腐草为萤，土润溽暑'},{m:8,d:7,name:'立秋',poem:'凉风至兮，白露降兮'},{m:8,d:22,name:'处暑',poem:'鹰乃祭鸟，天地始肃'},{m:9,d:7,name:'白露',poem:'鸿雁来兮，玄鸟归兮'},{m:9,d:22,name:'秋分',poem:'雷始收声，蛰虫坯户'},{m:10,d:8,name:'寒露',poem:'鸿雁来宾，菊有黄华'},{m:10,d:23,name:'霜降',poem:'豺乃祭兽，草木黄落'},{m:11,d:7,name:'立冬',poem:'水始冰兮，地始冻兮'},{m:11,d:22,name:'小雪',poem:'虹藏不见，天气上升'},{m:12,d:7,name:'大雪',poem:'鹖鴠不鸣，虎始交兮'},{m:12,d:21,name:'冬至',poem:'蚯蚓结兮，麋角解兮'}],2026:[{m:1,d:5,name:'小寒',poem:'雁北乡兮，鹊始巢兮'},{m:1,d:20,name:'大寒',poem:'瑞雪兆丰，坚冰在户'},{m:2,d:4,name:'立春',poem:'东风解冻，蛰虫始振'},{m:2,d:18,name:'雨水',poem:'獭祭鱼兮，鸿雁来兮'},{m:3,d:5,name:'惊蛰',poem:'桃始华兮，仓庚鸣兮'},{m:3,d:20,name:'春分',poem:'玄鸟至兮，雷乃发声'},{m:4,d:5,name:'清明',poem:'桐始华兮，虹始见兮'},{m:4,d:20,name:'谷雨',poem:'萍始生兮，鸣鸠拂羽'},{m:5,d:5,name:'立夏',poem:'蝼蝈鸣兮，蚯蚓出兮'},{m:5,d:21,name:'小满',poem:'苦菜秀兮，靡草死兮'},{m:6,d:5,name:'芒种',poem:'螳螂生兮，鵙始鸣兮'},{m:6,d:21,name:'夏至',poem:'鹿角解兮，蝉始鸣兮'},{m:7,d:7,name:'小暑',poem:'温风至兮，蟋蟀居壁'},{m:7,d:22,name:'大暑',poem:'腐草为萤，土润溽暑'},{m:8,d:7,name:'立秋',poem:'凉风至兮，白露降兮'},{m:8,d:23,name:'处暑',poem:'鹰乃祭鸟，天地始肃'},{m:9,d:7,name:'白露',poem:'鸿雁来兮，玄鸟归兮'},{m:9,d:23,name:'秋分',poem:'雷始收声，蛰虫坯户'},{m:10,d:8,name:'寒露',poem:'鸿雁来宾，菊有黄华'},{m:10,d:23,name:'霜降',poem:'豺乃祭兽，草木黄落'},{m:11,d:7,name:'立冬',poem:'水始冰兮，地始冻兮'},{m:11,d:22,name:'小雪',poem:'虹藏不见，天气上升'},{m:12,d:7,name:'大雪',poem:'鹖鴠不鸣，虎始交兮'},{m:12,d:22,name:'冬至',poem:'蚯蚓结兮，麋角解兮'}],2027:[{m:1,d:5,name:'小寒',poem:'雁北乡兮，鹊始巢兮'},{m:1,d:20,name:'大寒',poem:'瑞雪兆丰，坚冰在户'},{m:2,d:4,name:'立春',poem:'东风解冻，蛰虫始振'},{m:2,d:19,name:'雨水',poem:'獭祭鱼兮，鸿雁来兮'},{m:3,d:5,name:'惊蛰',poem:'桃始华兮，仓庚鸣兮'},{m:3,d:20,name:'春分',poem:'玄鸟至兮，雷乃发声'},{m:4,d:5,name:'清明',poem:'桐始华兮，虹始见兮'},{m:4,d:20,name:'谷雨',poem:'萍始生兮，鸣鸠拂羽'},{m:5,d:5,name:'立夏',poem:'蝼蝈鸣兮，蚯蚓出兮'},{m:5,d:21,name:'小满',poem:'苦菜秀兮，靡草死兮'},{m:6,d:5,name:'芒种',poem:'螳螂生兮，鵙始鸣兮'},{m:6,d:21,name:'夏至',poem:'鹿角解兮，蝉始鸣兮'},{m:7,d:7,name:'小暑',poem:'温风至兮，蟋蟀居壁'},{m:7,d:22,name:'大暑',poem:'腐草为萤，土润溽暑'},{m:8,d:7,name:'立秋',poem:'凉风至兮，白露降兮'},{m:8,d:23,name:'处暑',poem:'鹰乃祭鸟，天地始肃'},{m:9,d:7,name:'白露',poem:'鸿雁来兮，玄鸟归兮'},{m:9,d:23,name:'秋分',poem:'雷始收声，蛰虫坯户'},{m:10,d:8,name:'寒露',poem:'鸿雁来宾，菊有黄华'},{m:10,d:23,name:'霜降',poem:'豺乃祭兽，草木黄落'},{m:11,d:7,name:'立冬',poem:'水始冰兮，地始冻兮'},{m:11,d:22,name:'小雪',poem:'虹藏不见，天气上升'},{m:12,d:7,name:'大雪',poem:'鹖鴠不鸣，虎始交兮'},{m:12,d:22,name:'冬至',poem:'蚯蚓结兮，麋角解兮'}]};
 
 const contentData = [
-  {
+    {
     zone: 'brand',
     id: 'heytea',
     align: 'left',
@@ -1651,64 +1679,125 @@ const contentData = [
     listQuote: '把一份想念，寄到 TA 手里。',
     tag: 'BRAND CAMPAIGN · 2026',
     hoverQuotes: [
-      '从「我喜欢喝什么」到「我想给谁喝」——把茶饮写成一份可寄出的想念。',
-      'Hero · 三行动 · 主 SKU 叙事：一杯茶 / 一盒茶 / 写下一句想念'
+      '从「我喜欢喝什么」到「我想给谁喝」——把茶饮写成一份可寄出的想念。'
     ],
     mode: 'proposal',
     bookTitle: '心中念你 · 喜茶 × 给阿嬷的情书',
-    intro: `<b>战役名</b>：《心中念你》<br><br>
-<b>Hero</b>：把一份想念，寄到 TA 手里。<br><br>
-这不是一场以「爆品」为中心的促销，而是把喜茶从「我喜欢喝什么」轻轻推到「我想给谁喝」——让茶饮重新成为人情里的一句问候、一份可被亲手递出或远距寄达的心意。<br><br>
-<b>三行动</b><br>
-· <b>一杯茶</b>：即时的面对面投递——点单时写下想念，随杯送达。<br>
-· <b>一盒茶</b>：远距茶礼——把风味与字句一起寄走。<br>
-· <b>写下一句想念</b>：邮局式留言——把「念你」从心情变成可被收藏的物件。<br><br>
-完整策划案展开品牌叙事如何落到产品、主视觉与行动路径，用以说明文化转译与商业落地的衔接能力。右侧可阅完整 PDF。`,
-    pdfName: 'assets/proposals/heytea-xinzhongnianni.pdf'
+    intro: `<p><b>《心中念你》</b></p>
+<p>把一份想念，寄到 TA 手里。</p>
+<p>心中念你，便不觉远。</p>
+<p><b>项目定位</b>：从电影「侨批文化」转化为年轻消费者日常表达思念、并把想念送出去的消费场景。</p>
+<p><b>商业灵魂</b>：从喝茶到送茶，从「我喜欢喝什么」到「我想给谁喝」。</p>
+<p>从「我喜欢喝什么」，到「我想给谁喝」——从个人消费到关系消费。</p>
+<p>即时表达：给想念的人，一杯茶<br>远距礼赠：给想念的人，一盒茶</p>
+<p>礼赠场景帮助喜茶突破青年圈层，进入家庭关系场景，形成新的品牌触点；也补齐有温度的东方表达——一杯茶，成为今天年轻人寄出的「一份想念」。</p>`,
+    pdfName: 'assets/proposals/heytea-xinzhongnianni.pdf',
+    kvs: [
+      { src: 'assets/words/heytea/kv-main.jpg', title: '主 KV · 把一份想念，寄到 TA 手里' },
+      { src: 'assets/words/heytea/kv-2.jpg', title: '产品延展 · 给想念的人，一杯茶 / 一盒茶' },
+      { src: 'assets/words/heytea/kv-3.jpg', title: '视觉延展' },
+      { src: 'assets/words/heytea/kv-4.jpg', title: '视觉延展' }
+    ]
   },
   {
     zone: 'brand',
     id: 'xinya',
     align: 'right',
-    cnTag: '品牌内容专栏',
-    listTitle: '新亚漫谈 · 在书院里，看见品牌如何立本开境',
+    cnTag: '品牌叙事',
+    listTitle: 'Counterpart · 新亚漫谈｜追根溯源，立本开境',
     listQuote: '当文化不再只是一种风格，而重新成为与土地、时间和人的关系。',
-    tag: 'FOR COUNTERPART · 4 ESSAYS',
+    tag: 'FOR COUNTERPART · 6 ESSAYS',
     hoverQuotes: [
-      '为 COUNTERPART 设计工作室撰写的四篇书院现场叙事。',
-      '钱穆图书馆 · 合一亭 · 桂林街到沙田 · 圆形广场'
+      '为 COUNTERPART 撰写的品牌叙事专栏',
+      '钱穆图书馆 · 合一亭 · 桂林街到沙田 · 圆形广场 · 二十四条学规 · 君子塔'
     ],
     mode: 'anthology',
-    bookTitle: '新亚漫谈 · 四篇',
-    intro: '受委托为 COUNTERPART 设计工作室撰写的品牌叙事专栏：以新亚书院的空间与历史为现场，写文化如何在具体场所里「立本开境」。',
+    bookTitle: 'Counterpart · 新亚漫谈｜追根溯源，立本开境',
+    intro: '为 COUNTERPART 撰写的品牌叙事专栏：以新亚书院的空间、学规与日常地标为现场，追根溯源，立本开境。',
     articles: [
       {
-        title: '在山顶，走进一片淡绿色',
-        body: `<p>从书院巴士站下车，沿路直行不远，便能看见钱穆图书馆。走进馆内，淡绿色随即蔓延开来——地毯、隔栏、竹影投在墙上的细碎光斑，都像被同一种安静的颜色收拢过。</p>
-<p>那不是装饰意义上的「中国风」，更像一种被慎重选择过的语气：让人放慢脚步，把声音压低，意识到自己进入的不只是一栋建筑，而是一套关于学习与自处的秩序。</p>
-<p>对一位来访者而言，一所书院如何理解自身，往往可以从这些具体细节中感知。书架之间的间距、窗与山色的对望、座椅的朝向——它们共同回答一个问题：这里希望人如何停留。</p>
-<p>品牌若要从文化中取法，未必先取符号；也可以先取这样一种「被空间教会的态度」——克制、清楚，并且对来访者保持温柔的距离感。</p>`
+        title: "在山顶，走进一片淡绿色",
+        body: `<p>从书院巴士站下车，沿路直行不远，便能看见钱穆图书馆。</p>
+<p>走进馆内，淡绿色随即蔓延开来：脚下的地毯、窗外的隔栏，都带着温润的灰调，像雨后尚未干透的草木。细长的绿色立柱层层相叠，近似竹影。从外面经过，能透过缝隙窥见几排书架；坐在里面，树色、天光与远山则从线条之间透进来。</p>
+<p>通向一层的空间内陈列着新亚的旧照片、刊物与历史资料，也会不定期展出学生作品。旧藏与新作共处一室，使图书馆既保留书院的来处，也容纳当下仍在发生的文化生活。</p>
+<p>到了二层，吐露港从窗外显露出来。晴日水面明亮，远山浮着一层浅蓝。读书读倦了，抬头望一会儿，目光便在书页与山海之间往返；行至另一面，便又是一片草木葱茏、树影婆娑的世界。</p>
+<p>二层还有一面弧形的玻璃砖墙。阳光穿过带有纹理的玻璃，被分成一格一格的明暗，又在淡绿色地毯上化作细碎的光斑。日光缓缓移动，满地光影也随之游移，仿佛一层浅水漫过脚边。</p>
+<p>钱穆图书馆的历史始于1954年的农圃道。1973年，它随新亚书院迁入沙田，两年后正式以钱穆先生命名。馆藏以中国语言文学、亚洲语言文学和艺术为主，也保存钱穆藏书、新亚书院资料与本地艺术档案。此后数次修缮，展览、阅读与学习空间陆续加入，早年的文化积累继续进入今天的使用之中。</p>
+<p>对一位来访者而言，一所书院如何理解自身，往往可以从这些具体细节中感知：淡绿色的地毯、竹影般的隔栏、展柜中的旧刊、墙上的新作，以及读到一半抬头可见的山海。它们共同构成了“新亚”可以被观看和体验的形态。</p>
+<p>这也为 COUNTERPART 理解品牌叙事提供了一处参照。一个品牌的根本，并不只存在于一段说明里，也会进入空间、视觉、内容与日常体验。回到真实的来处，辨认值得延续的价值，再使它进入新的语境——所谓“为品牌立其本，为商业开其境”，正是让来处与未来彼此相连。</p>
+<p>再想起新亚，最先浮现的仍是那片淡绿色。有人在窗边读书，远处的吐露港映着天光。书页翻过一张，山上的午后还很长。</p>`
       },
       {
-        title: '合一亭：山水相逢，天人合一',
-        body: `<p>从钱穆图书馆出来，沿着新亚书院的山路继续往前。临空的一侧，一弯池水映着远山与长天；亭翼半开，像把风景轻轻托在掌心。</p>
-<p>在这里，亭、池、榕树、竹木、步道与远景被组织成一个整体。人站在亭中，并不觉得自己是风景的中心，反而更像被风景接纳的一部分——山水相逢，天人合一，不再是匾额上的成语，而变成可被身体验证的片刻。</p>
-<p>许多品牌谈论「东方」，习惯先堆叠纹样与典故。合一亭提醒的是另一条路径：先把关系安放好——人与自然、内与外、静与动——再让名字自己长出来。</p>
-<p>文化若能成为品牌语言，靠的往往不是更多装饰，而是更准确的位置感：你把人安放在哪里，人就会以怎样的心情记住你。</p>`
+        title: "合一亭：山水相逢，天人合一",
+        body: `<p>从钱穆图书馆出来，沿着新亚书院的山路继续往前。穿过一段绿荫，走到学思楼与知行楼之间，吐露港便在眼前铺展开来。临空的一侧，一弯池水映着远山与长天。</p>
+<p>晴日里，远山沿港湾舒展开来，深浅不同的青色一重接着一重。海面像一匹平整的蓝色绸缎，偶有船只驶过，留下一道细长的白痕。池水映着同一片天空，白云、榕树与经过的人，也短暂进入倒影。</p>
+<p>阴天再来，山、水和云都呈出浅灰，彼此的界线渐渐淡去。临近雷雨时，风从港湾迎面而来，乌云沿山脊聚拢，雨点落入池中，将倒影一圈圈打散。风云激荡之间，眼前的山水也有了令人屏息的力量。没想到同一处空间，随天色竟能显出完全不同的性情。</p>
+<p>几次到访之后，记得最清楚的始终是这片明镜一般的水池。可是大家把这里叫作“合一亭”，至于“亭”究竟在哪里，却从未认真留意。</p>
+<p>其实合一亭位于新亚书院学思楼与知行楼之间，2003年揭幕，由香港中文大学建筑系陈惠基教授设计。它缘起于钱穆先生晚年所写的《天人合一论》；步道外墙也刻有全文与“天人合一”印章。</p>
+<p>在这里，亭、池、榕树、竹木、步道与远景被组织成一个整体。陈惠基教授曾以“天圆地方、上善若水”解释其布局，也有“一池清水，二树半抱”之说。目光从近处的倒影越过树梢，最后抵达吐露港，“天人合一”由此成为可以行走、观看和停留的空间经验。</p>
+<p>从一段思想到一处空间，合一亭完成了一次具体的转译：水、圆、树影与远山成为意象，亭、池和步道使意象彼此关联，阴晴风雨又为同一理念带来不断变化的感受。</p>
+<p>这正是 COUNTERPART 关注品牌叙事时所思考的关系：一个品牌真正相信的事情，如何从一句话出发，进入视觉、空间、内容、产品与体验，最终成为人能够亲身经历的世界。人们未必先读过完整的说明，却会在一次次相遇中，逐渐理解它为何存在。</p>
+<p>晴日将尽时，吐露港从明亮的蓝过渡到沉静的靛青，白石角科学园的灯次第亮起。池水一面留着余晖，一面接住渐深的夜色。此时再看，亭已融入山水，人也在其中。</p>
+<p>到这个时候，似乎已经不必再寻找那座亭。天、地、山水与人，都在这一刻相遇。</p>`
       },
       {
-        title: '从桂林街到沙田山顶，新亚带走了什么？',
-        body: `<p>来到沙田的新亚书院，很难从这里开阔的校园想到，它最初来自桂林街几间租来的唐楼。那时的条件逼仄，理想却并不随之缩小——迁址之后，改变的是地貌与建筑，不变的是对「为何而学」的执念。</p>
-<p>新亚延续的并不是某一种固定面貌，而是一套持续参与选择的内在方向：在时代迁移中，什么必须带走，什么可以放下；哪些形式可以更新，哪些精神不可稀释。</p>
-<p>这对品牌叙事同样有启示。真正可迁移的资产，很少是某一季的视觉系统，而是面对变化时仍然成立的判断标准。搬到山顶之后，新亚仍然像新亚——因为「本」没有在搬迁的行李单里丢失。</p>
-<p>立本，而后开境：先弄清自己从哪里来，再谈向何处去。</p>`
+        title: "从桂林街到沙田山顶，新亚带走了什么？",
+        body: `<p>来到沙田的新亚书院，很难从这里开阔的校园想到，它最初来自桂林街几间租来的唐楼。</p>
+<p>一封写于1956年的迁址信，把视线带回那段历史。钱穆致函教育司署，告知农圃道新校舍即将落成，桂林街原有的地方将另作新亚学校之用。</p>
+<p>1949年创校时，新亚借用桂林街61、63及65号唐楼的三、四层办学。许多学生无力负担学费，教师所得也十分有限。课程仍然开设，周末还有面向公众的文化讲座；学生半工半读，教师也共同承担书院的日常。</p>
+<p>新亚最初依靠的，始终是人：有人愿意教，有人愿意学，也有人相信，一所书院可以从几间楼房开始，重新建立人与学问、传统与时代之间的联系。</p>
+<p>这份教育理想后来凝聚为“诚明”二字：“诚”关乎德性与实践，“明”关乎知识与理解。为学与做人彼此贯通，人文教育也成为沟通中国传统与现代世界的起点。</p>
+<p>1956年迁入农圃道以后，新亚第一次拥有自己的校园，教室、图书馆与礼堂陆续建成，院系、课程和出版逐渐发展。1963年，新亚成为香港中文大学成员书院；十年后迁往沙田，早年的讲学与文化工作也继续进入通识教育、书院生活、出版及校史整理之中。</p>
+<p>从桂林街到农圃道，再到沙田，新亚延续的并不是某一种固定面貌，而是一套持续参与选择的内在方向：为学如何与做人相通？中国文化如何在现代继续生长？不同传统的知识又如何彼此会通？</p>
+<p>这也为 COUNTERPART 理解品牌的长期生长提供了参照。品牌同样会经历业务、受众与环境的变化。所谓“立其本”，是厘清它为何存在、真正相信什么；所谓“开其境”，则是让这份内核进入新的产品、空间、内容与市场。</p>
+<p>“本”并非固定的外在形式，而是变化发生时仍可依循的方向；“境”也不只是规模扩张，而是让品牌在新的现实中，继续形成与自身一致的表达。</p>
+<p>桂林街的租赁校舍、农圃道逐渐完备的校园与沙田山顶的书院，面貌各不相同，却共同构成了一段连续的历史。校址留在地图上，书院的精神则在一次次迁移与选择中继续展开。</p>`
       },
       {
-        title: '圆形广场，记得谁曾来过？',
-        body: `<p>一次到访新亚书院圆形广场，恰好遇见一群学生拍合照。也是在这时，才注意到他们身后的弧形石墙——墙上刻着名字，一层一层，像潮汐留下的年轮。</p>
-<p>广场不断迎来新的活动，墙上的姓名也逐年增加。空间因此不只是通行与集会的场地，而成为一座缓慢生长的记忆容器：它记得谁曾来过，也允许后来者把自己写进去。</p>
-<p>品牌若想被「慢慢看见」，也许需要类似的公共性——不是一次性的曝光峰值，而是可被回访、可被续写、可被不同世代共同使用的场所感。</p>
-<p>新亚漫谈写到这里，与其说是在介绍一座书院，不如说是在练习一种观看：看文化如何落到砖石、树影与人名里，再看品牌如何从这些落地之处学习说话。</p>`
+        title: "圆形广场，记得谁曾来过？",
+        body: `<p>一次到访新亚书院圆形广场，恰好遇见一群学生拍合照。也是在这时，才注意到他们身后的弧形石墙。</p>
+<p>浅色石面上，一行行细小的刻字沿墙排开。仔细看去，才发现那是历届新亚毕业生的姓名。镜头里，是此刻相聚的人；在他们身后，许多早已离开新亚的人，也进入了同一张画面。</p>
+<p>圆形广场自新亚迁入沙田时便已存在，设计承袭农圃道时期“圆亭”的概念，为师生保留一处相聚的空间。迎新、晚会、比赛与毕业合照，都曾在这里发生。</p>
+<p>1990年，毕业生名录在圆形广场揭幕，历届毕业生的姓名从此陆续刻入石墙。随着位置渐满，书院于2019年完成扩建，使墙面预计可以继续容纳毕业生芳名至2064年。</p>
+<p>广场不断迎来新的活动，墙上的姓名也逐年增加。一边是当下的相聚，一边是缓缓累积的时间。</p>
+<p>一方姓名记下的事情很少，却足以证明，曾有一个人在这里求学，与许多人共同度过一段时光。至于姓名以外的故事，则留在旧照片、同窗记忆与多年后的讲述里。</p>
+<p>校友重聚时，许多人会再次回到圆形广场，在墙上寻找自己的名字。石墙因而不只保存一份名录，也为离开的人留下可以重新返回的位置。许多彼此未曾相识的人，则借由同一处广场，成为一个跨越时间的共同体。</p>
+<p>这也让“长期关系”拥有了具体的形态：一次相遇如何进入更长的时间，曾经参与其中的人，如何在离开以后继续拥有自己的位置。</p>
+<p>这也是 COUNTERPART 关注品牌叙事时思考的一层关系。产品、服务与活动构成最初的相遇，共同的经验、仪式和记忆，则让这段关系继续生长。当一个品牌愿意记得参与其中的人，也为他们留下表达、重逢与再次进入的可能，品牌的故事便开始由更多人共同续写。</p>
+<p>今天的圆形广场仍在迎接新的面孔，姓名也继续沿着弧形石墙向前延伸。多年以后，再沿墙走上一圈，或许又会从其中一个名字，重新说起一段往事。</p>`
+      },
+      {
+        title: "二十四条学规，滋养出怎样的新亚？",
+        body: `<p>此前已从《新亚学规》的第一条出发，谈求学与做人之间的关系。参观新亚校史馆时，再将二十四条学规细细读过，更觉其特别之处。</p>
+<p>学规的前半部分写志趣、事业与人类文化。它希望学生从更广阔的知识中理解自己的责任，也从个人的禀赋中辨认兴趣与才能；先拥有博通的认识，再选择适合自己的方向深入学习。</p>
+<p>在这里，专业并不是一座与外界隔绝的小岛。一个人需要知道自己为何学习，所学之事又将与怎样的社会和生活发生联系。志趣为专业提供方向，广博的知识则让这份志趣拥有更深的根基。</p>
+<p>写到中段，学规开始讨论课程与师长。课程将知识分成不同门类，人的成长却需要在不同知识之间建立联系。师长所传授的也不只有课本内容，还有治学的方法、判断的尺度，以及如何对待学问的态度。</p>
+<p>到了最后几条，视线又从课堂回到日常。劳作、艺术修养、起居作息，甚至对喜怒哀乐的反省，都被视为求学的一部分。如何安排一天，如何与人相处，如何在情绪与得失中认识自己，同样影响着一个人最终成为怎样的人。</p>
+<p>从人类文化到一日生活，从事业志趣到起居作息，二十四条学规建立起一种由远及近的次序。远处是个人与社会、文化之间的关系；近处是每天如何读书、生活与作出选择。两者彼此相连，构成了新亚对于教育的整体理解。</p>
+<p>再回望校史馆里的旧照片、书信与刊物，这份学规也不再只是陈列中的文字。桂林街时期的课堂、农圃道逐渐完备的校园，以及后来迁入沙田的新亚，形态几经改变；学规所关心的问题，却不断进入课程、师生交往与书院生活，逐渐形成今日人们所认识的新亚。</p>
+<p>这也为 COUNTERPART 理解品牌叙事提供了一个具体的角度。</p>
+<p>品牌首先需要回答自己相信什么，但一份相信要成为叙事，还需要在不同层面拥有一致的回应。正如新亚的教育理想进入课程、师友与日常生活，品牌的核心也需要进入产品、服务、空间、内容与经营选择。</p>
+<p>当这些具体触点指向同一份价值，人们即使没有读过完整的品牌宣言，也能从一次使用、一处空间或一次交流中，逐渐理解品牌的性格与方向。品牌叙事由此不只是一篇写出来的故事，更是一份在长期行动中得到印证的相信。</p>
+<p>二十四条学规从大处起笔，最后回到每一天。它让人看见，一份理念的生命力，既在于它能为人指出远方，也在于它能够安顿眼前的生活。</p>
+<p>这一篇先读到这里，余下的，便留在往后的《新亚漫谈》里，慢慢展开。</p>`
+      },
+      {
+        title: "一座水塔，如何成为“君子塔”？",
+        body: `<p>新亚水塔，比书院的大多数建筑更早抵达沙田山顶。</p>
+<p>在一张摄于1972年的旧照片里，今天的新亚校址仍是一片空旷的山地。教学楼、宿舍与广场尚未建成，而水塔已经岿然屹立。翌年，新亚书院迁入沙田，校园也逐渐有了道路、教室与来往的学生。</p>
+<p>水塔高约120英尺，塔顶水箱分别储存咸水与淡水，供应书院各处饮用及冲厕所需。它首先解决的，是一座新校园最朴素的需求：让水抵达山顶，维持每天的生活。</p>
+<p>水箱位于高处，留在人们日常视线里的，更多是清楚而挺拔的“T”形轮廓。从大埔道或海旁公路望向山上，水塔常常先于其他建筑出现；走近新亚，经过圆形广场，抬头也能看见它立在一旁。久而久之，它也成为辨认书院方位的标记。</p>
+<p>后来，这座水塔有了另一个名字——“君子塔”。</p>
+<p>在港中文，联合书院线条较为柔和的水塔被称作“淑女塔”，新亚水塔则因笔直、简洁的形态，以“君子塔”之名为人熟知。至于这个称呼最初由谁提出，又从何时开始流传，并没有一个明确的答案。但这个名字却被一届届学生沿用下来。</p>
+<p>当一个称呼进入校园生活，原本沉默的设施也逐渐有了性格。“水塔”说明它的功能，“君子塔”则包含了人们观看和理解它的方式。</p>
+<p>校庆时，长幅旗帜从塔身垂下；校园照片里，它常常成为背景；新生第一次来到山顶，也会从师兄师姐口中听见“君子塔”这个名字。意义就在这些重复的观看、称呼与共同经历中，慢慢累积。</p>
+<p>今天的塔下已有中草药园、孔子像与唐君毅先生铜像。校园生活不断在周围展开，水塔仍然保持着最初简洁的结构。从供应日常用水，到成为新亚地标，它的功能没有消失，时间又为它增添了一层共同记忆。</p>
+<p>这样的过程，也为理解品牌提供了一个有趣的角度。</p>
+<p>品牌中一些真正有生命力的符号，未必来自预先设定的宏大概念。它可能是一件长期使用的物品、一句在人群中自然流传的话，或一种反复出现的工作习惯。真实的经验先在其中聚集，意义才逐渐浮现。</p>
+<p>COUNTERPART 所关注的品牌叙事，也包含对这些既有线索的辨认。回到品牌走过的历史，寻找那些已经被员工、顾客与合作伙伴记住的事物；理解它们为何能够留下，再将其中真实而持久的部分，带入新的表达。</p>
+<p>实用让水塔被建造，时间让它被看见，共同生活则赋予它一个名字。</p>
+<p>许多年后，人们或许已经很少想起塔顶储存的水，却依然会在远远望见那道“T”形轮廓时，知道新亚书院就在那里。</p>
+<p>一座地标的形成，有时便从这样朴素的事情开始：先服务于生活，再在生活之中获得意义。</p>`
       }
     ]
   },
@@ -1717,77 +1806,130 @@ const contentData = [
     id: 'bws',
     align: 'left',
     cnTag: '品牌文案与排版',
-    listTitle: 'BWS · 设计理念与品牌表达',
+    listTitle: 'BWS 设计工作室 · Well Dialogue｜文元坊89号',
     listQuote: '把理念写成可读的版面，让品牌被慢慢看见。',
     tag: 'XIAOHONGSHU · EDITORIAL',
     hoverQuotes: [
-      '为 BWS 撰写设计理念与品牌宣传文案，并完成小红书图文排版。',
-      '站内摘要 + 平台原文外链'
+      '为 BWS 设计工作室撰写品牌文案，并完成小红书图文排版。',
+      'Well Dialogue｜文元坊89号，楼梯上的图案'
     ],
     mode: 'link',
-    bookTitle: 'BWS · 设计理念与品牌表达',
-    intro: `为 BWS 撰写设计理念与品牌宣传文案，并将内容组织为适合小红书阅读的图文排版。<br><br>
-工作重点在于：把偏抽象的设计立场，转写成可被停留、可被转发的叙事节奏——标题、短句、段落留白与图文顺序共同完成一次「被慢慢看见」的品牌表达。<br><br>
-完整成稿与排版效果见小红书原帖。`,
+    bookTitle: 'BWS 设计工作室 · Well Dialogue｜文元坊89号',
+    intro: `为 BWS 设计工作室撰写品牌文案与理念阐述，并完成小红书图文排版。<br><br>
+本篇：<b>Well Dialogue｜文元坊89号，楼梯上的图案</b>——把空间里的细节写成可读的叙事节奏，让设计立场在版面中被慢慢看见。<br><br>
+完整图文请点击右侧在小红书查看原文。`,
     url: 'https://www.xiaohongshu.com/explore/6a84162900000000060066ac'
   },
   {
     zone: 'culture',
     id: 'changzhou',
     align: 'right',
-    cnTag: '纪行',
+    cnTag: '生活纪实',
     listTitle: '长洲半日闲',
     listQuote: '没想到长洲的沙子，会一直陪我到家。',
     tag: 'ESSAY · HONG KONG · 2026',
     hoverQuotes: [
-      '没有汽车的岛 · 慢时间 · 平安包的隐喻',
-      '散文直读 · 单栏'
+      '没有汽车的岛 · 慢时间'
     ],
     mode: 'essay',
     bookTitle: '长洲半日闲',
-    meta: '文 / Romola · 2026年7月，香港长洲',
-    sections: [
-      { text: '从中环五号码头出发，快船三十分钟——这是长洲和中环之间的距离，比大部分香港人的通勤时间还短。可惜那天没赶上快船，只能坐慢船晃晃悠悠地睡到长洲。醒来时，海风里已经有晒干的绳索气味，和一点若有若无的煎饺香。' },
-      { text: '刚下船，熙攘的人群和街市的喧闹就直接把我推进了这个满山彩色房子的小岛。除了警车、消防车、救护车，你在这里找不到一辆私家车。这句话需要被强调，因为它意味着的东西比字面多得多：没有红绿灯，没有马路牙子，没有导航播报的「前方五百米右转」。巷子窄到两个人迎面走过需要侧身，头顶是低矮的骑楼和晾衣绳，脚下是被雨水冲刷得发亮的石板。' },
-      { text: '我觉得，这里是香港，又不像真正的香港。长洲的平安包是一个绝佳的隐喻——每年太平清醮，全岛吃素，包山竖起，年轻人攀上去抢包；而在其余的三百六十四天里，包子只是饼店玻璃柜里一种普通点心，安静地等下一个路过的人把它带走。一个古老的仪式，一种日常的食物，在同一个容器里并存。' },
-      { text: '东湾沙滩是长洲最开阔的地方。我没带拖鞋，但还是想摸一下海水的温度。于是就有了一个站在岸边、缓缓靠近海浪的小动作：鞋脱在干沙上，脚尖探进潮线，凉意一下子从脚踝爬上来。雨后的天色发白，远处有人放风筝，风筝线细得像随时会断。' },
-      { text: '回中环的船来了。码头又开始拥挤，行李箱轮子在石板上发出短促的响。只是我的鞋子里还是湿漉漉的，走一步吱一声。没想到长洲的沙子，会一直陪我到家。' }
-    ]
+    meta: '文 & 图 / Romola · 2026年7月，香港长洲',
+    essayHtml: `<p>从中环五号码头出发，快船三十分钟——这是长洲和中环之间的距离，比大部分香港人的通勤时间还短。</p>
+<p>可惜没赶上快船，只能坐慢船晃晃悠悠地睡到长洲。</p>
+<p>我坐在船头，暖风把头发吹进嘴里。阳光时有时无地洒在海面上，遥望对岸的昂船洲大桥和彩色的集装箱，来来往往的船只货物。不知何时，在海浪声中睡着了。</p>
+<div class="scene-break">——</div>
+<p>快到长洲的时候，船速慢下来，甩了一个很大的弧线，靠向岛西面的码头。</p>
+<p>还没靠岸，就能看见码头边密密麻麻停着的渔船，大的小的，锈迹斑斑的铁壳挨着刷了蓝漆的木舢板，随海浪轻轻起伏，像呼吸一样。</p>
+<p>刚下船，熙攘的人群和街市的喧闹就直接把我推进了这个满山彩色房子的小岛。</p>
+<p>除了警车、消防车、救护车，你在这里找不到一辆车。自行车是最好的交通工具——去得了海滩，也逛得了大街小巷。</p>
+<p>我回头一看，一只灰羽鹭鸶趁没人注意，无声无息地落在隔壁渔船的船舷上，歪头看了一眼敞开的鱼篓，然后以一种“我只是路过”的姿态，极其从容地叼走了一条小银鱼。这时一条小狗站在船头叫了两声。</p>
+<p>但我估计没人注意到它们。</p>
+<figure class="essay-fig"><img src="assets/words/changzhou/image1.jpg" alt="图1：长洲码头" loading="lazy"/><figcaption>图1：长洲码头</figcaption></figure>
+<div class="scene-break">——</div>
+<p>正当我在街边小店挑“平安包”挂件的时候，外面的天突然一下黑了。云层聚集，先洒下几滴雨，随即将一片朦胧的雨幕快速展开。</p>
+<p>老板娘手脚麻利地把外面的东西收进来。行人无处可逃，只好钻进店里。</p>
+<p>可是只需要等五分钟，就能还你一个小晴天。</p>
+<p>雨后走在临海的街道上，一面是热闹的商铺，一面是码头和船只，自行车和电动三轮车驶过的声音不绝于耳。所有的东西——甚至空气，都变得干净了，船只的蓝色变得更加清晰。</p>
+<p>我觉得，这里是香港，又不像真正的香港。</p>
+<p>我和朋友各买了一个糯米糍。芒果和草莓都是新鲜果肉，凉凉的，甜甜的。</p>
+<p>我突然想到，中环的下午三点，写字楼里的人正在开第几个会。然而长洲的下午三点，我可以在雨后的街上吃一颗糯米糍，和朋友聊一路的新鲜见闻。</p>
+<div class="scene-break">——</div>
+<p>沿着巷弄往岛的东边走。</p>
+<p>这里似乎少有超过三层的房屋，虽然拥挤，却没有老香港高楼的那种压迫感——因为这里的天空和大海不是被建筑物的轮廓切割出来的，而是毫无保留地展现在面前。</p>
+<p>兜兜转转，走过玉虚宫门口。庙不大，黄色的瓦片十分显眼，屋脊上住着龙和好多神仙。香火气混着雨后的泥土味。两个阿伯坐在门口的石墩上聊天，小狗在旁边睡觉。</p>
+<p>可惜过了五点，只能从门缝里瞅一眼。据说每年长洲太平清醮时，北帝神像会被请出巡游。我对朋友说，真想一睹盛况啊。</p>
+<p>再往里走，巷弄越来越窄，墙上长了薜荔，绿得发黑。转角是一家饼店，平安包码成一座小山，圆鼓鼓的，每一个上面都盖着红色的印。</p>
+<p>长洲是香港唯一还保留大型太平清醮的地方。每年四月初八，包山会被立起来，全岛的人一起爬包山抢平安包。而在其他三百六十四天，包子只是包子，安静地堆在店门口，等下一个游客把它带走。</p>
+<figure class="essay-fig"><img src="assets/words/changzhou/image2.jpg" alt="图2：玉虚宫门前的小狗" loading="lazy"/><figcaption>图2：玉虚宫门前的小狗</figcaption></figure>
+<div class="scene-break">——</div>
+<p>我们走走停停。当我正准备掏出相机拍即将到达的海边时，又是一场毫无征兆的雨。</p>
+<p>赶忙撑开雨伞，去附近的居民楼门口避雨。跟我们一同避雨的，还有一位妈妈和两个可爱的孩子。</p>
+<p>我突然发现，只有停下来时，才能真正仔细地观察到他们的生活——一砖一瓦、潮湿的街道、雨水冲刷下发黑的墙面、楼下的垃圾桶、门前破旧的自行车、“不准泊车”的立牌，甚至对面民宿度假风的招牌。这时我才注意到，学校的墙上，竟然画的是“抢包山”。</p>
+<figure class="essay-fig"><img src="assets/words/changzhou/image3.jpg" alt="图3：中学外墙的“抢包山”壁画" loading="lazy"/><figcaption>图3：中学外墙的“抢包山”壁画</figcaption></figure>
+<p>天边的云突然破开了一角，随即缓缓撕开了一道口子，乌云向两边散开。</p>
+<p>我的思绪也被拉了回来。</p>
+<figure class="essay-fig"><img src="assets/words/changzhou/image4.jpg" alt="图4：雨后的居民区" loading="lazy"/><figcaption>图4：雨后的居民区</figcaption></figure>
+<div class="scene-break">——</div>
+<p>东湾沙滩是长洲最开阔的地方。</p>
+<p>第二场暴雨刚过，阳光从云层的缝隙里倾泻下来。海面被分成两种颜色——近处浑浊的黄绿，远处清澈的灰蓝。几个孩子已经迫不及待地冲进海里，大人在后面追，追不上，也不是真的想追上。</p>
+<p>我没带拖鞋，但还是想摸一下海水的温度。</p>
+<p>于是就有了一个站在岸边、缓缓靠近海浪的小女孩。一、二、三——退了。一、二、三——又退了。她在心里默念节奏，想精准判断能摸到海浪的距离，小心翼翼地往前迈了两步——</p>
+<p>随着一声惨叫，左脚的帆布鞋瞬间灌满了水，凉凉的，还夹着细沙。</p>
+<p>这真的是最糟的结局：手没摸到，脚却摸到了。</p>
+<p>算了，都来长洲了。索性把另一只鞋也踩进去。海浪拍到膝盖，退回去时，把沙从脚趾缝里带走。</p>
+<p>我站在那里看了很久，看天空和海水渐渐变蓝。</p>
+<div class="scene-break">——</div>
+<p>我们离开了海滩，继续沿着小巷走进他们的生活里。</p>
+<p>榕树下蝉鸣阵阵，小鸟停在电线杆上，背后是棉花糖般的云朵。上坡、下坡、左转、右转、上楼梯、下楼梯——循环往复间，我觉得这个小岛就像一张折纸，而我变成一个小人，去探索里面的每一条褶皱。</p>
+<p>天又阴了下来。我们路过一所废弃的小学，铁栅栏内草木横生，教室外的走廊清晰可见，却阴森得很。也许当年这里也有过孩子们欢快的笑声吧。</p>
+<figure class="essay-fig"><img src="assets/words/changzhou/image5.jpg" alt="图5：电线杆、小鸟与云朵" loading="lazy"/><figcaption>图5：电线杆、小鸟与云朵</figcaption></figure>
+<div class="scene-break">——</div>
+<p>晚饭后坐在码头等船，又不太甘心，折返去买了鱼蛋和肠粉，实在是无法形容的美味。</p>
+<p>回来时，太阳正往海平面下沉，把整个码头染成微微的橘红色。渔船的桅杆变成剪影，那条船头的小狗不叫了，静静地趴下来，鼻子搁在前爪上。海风咸咸的，带着船上鱼虾的味道。</p>
+<p>海边的木架子上搭了一个巨大的彩色招牌，上面写着——“热烈庆祝香港回归祖国29周年”。下面的红纸上写满了乡事委员会选举的消息，竟然全部是手写的，颇有旧时拼贴画的美感。</p>
+<p>直到要走了，我才终于看到“欢迎莅临长洲”的地标。</p>
+<p>它一定是在约我下次再来。</p>
+<figure class="essay-fig"><img src="assets/words/changzhou/image6.jpg" alt="图6：手写招牌" loading="lazy"/><figcaption>图6：手写招牌</figcaption></figure>
+<div class="scene-break">——</div>
+<p>回中环的船来了。</p>
+<p>坐在船尾往回看，长洲在暮色里越变越小，直到变成地图上的一个点，一个标记。</p>
+<p>但我想，只有来过，才能知道褶皱中的丰富与美丽。</p>
+<p>三十分钟的船程，就能从长洲回到中环。只需要半天的时间，我就能来到一座小岛，告别一座小岛，体验另一种悠闲自得的生活。</p>
+<p>现在是八点三十五分，维港绚丽的灯光一下子把我拉回城市的光影，拉回我熟悉的生活里。</p>
+<p>只是我的鞋子里还是湿漉漉的，走一步吱一声。</p>
+<p>没想到长洲的沙子，会一直陪我到家。</p>`
   },
   {
     zone: 'culture',
     id: 'pitch',
     align: 'left',
     cnTag: '选题研究',
-    listTitle: '选题研究案例 · 三个当代文化切口',
-    listQuote: '不是来的人变多了，而是来的人变了。',
+    listTitle: '选题研究案例（社会文化类）',
+    listQuote: '新中式的2.0，也许不再是「看起来很中国」，而是「用起来很日常」。',
     tag: 'EDITORIAL RESEARCH · CASE',
     hoverQuotes: [
       '从现象到问题意识 · 数据与现场互证',
       '展示选题判断、研究框架与内容结构能力'
     ],
     mode: 'pitch',
-    bookTitle: '选题研究案例 · 三个当代文化切口',
-    intro: '这是一份选题研究练习：从公共数据与现场观察出发，提炼可执行的专题方向，并完成洞察、框架与传播设想。用于呈现选题判断与研究能力（非已刊发稿）。点击左侧选题可切换详述；亦可下载完整文稿。',
+    bookTitle: '选题研究案例（社会文化类）',
+    intro: '从公共数据与现场观察出发，提炼可执行的专题方向，并完成洞察、框架与传播设想（非已刊发稿）。',
     pdfName: 'assets/proposals/杨雪琪_选题提案.docx',
     topics: [
       {
         title: '《周末去香港：一亿人次背后的「48小时离岸实验」》',
-        summary: `2026年上半年，经深圳各口岸出入境人员突破1.4亿人次；访港内地旅客占比约77%。但真正值得注意的不是「来的人变多了」，而是「来的人变了」——Mastercard 数据显示，内地旅客购物开支占比已由2018年的70.5%降至2026年一季度的44%。年轻人绕过海港城与 DFS，走向深水埗、独立书店与离岛渡轮。<br><br>
-核心洞察：把「周末赴港」从旅游攻略改写为「离岸生活」——一种周期性、低成本、可逆的「临时下线」。内容结构建议：主稿（群体画像与心理动机）+ 街区反攻略 + 离岛慢时间 + 「松弛感」文化评论。`
+        summary: "2026年上半年，经深圳各口岸出入境人员突破1.4亿人次，单日客流峰值14次破百万；同期访港旅客约2671万人次，其中内地旅客占比77%。但这一轮赴港潮和十年前完全不同——Mastercard数据显示，内地旅客的购物开支占比已从2018年的70.5%骤降至2026年一季度的44%。年轻人不去海港城，去深水埗；不逛DFS，逛独立书店；不买金饰，买一杯手冲和一张渡轮船票。「周末去香港」正在从消费行为变成一种生活方式：只是每周给自己48小时「不属于日常」的时间。这背后是一代人对「确定性生活」的疲倦，和对「附近」的重新发现。"
       },
       {
         title: '《新中式走到了岔路口》',
-        summary: `国风服饰与非遗相关市场持续扩张的同时，审美疲劳已经到来：当书法 logo 与枯山水变成标配，「拼接传统元素的粗放式设计」开始被市场淘汰。<br><br>
-问题意识：新中式如何从「看起来很中国」走到「用起来很日常」？证据链指向更安静的实践——茶室里的宋代点茶日常化、活字印刷的婚礼纸品、景德镇自用器皿等。提案以此判断搭建 2.0 叙事，而非再堆一轮纹样盘点。`
+        summary: "2026年，国风服饰市场规模已突破3000亿元，新中式服饰规模突破2500亿元，全国非遗相关市场规模在2025年已破1.1万亿。观夏把东方香气做成了排队经济，霸王茶姬用国风纹样铺满了购物中心，北京时装周上非遗刺绣与工装版型正在碰撞出新的火花。但审美疲劳已经到来——当每一家奶茶店都有书法logo，每一个商场都有枯山水，「拼接传统元素的粗放式设计已被市场淘汰」（汉服品牌织造司创始人语），新中式正在从美学变成套路。下一步是什么？一些更安静的尝试正在发生：把宋代点茶变成日常饮品的茶室、用活字印刷做婚礼请柬的工作室、在景德镇烧自用碗碟的年轻陶艺师。从央视非遗晚会上的云锦高定，到中国国际时装周南京站四大名锦首次同台——新中式的2.0，也许不再是「看起来很中国」，而是「用起来很日常」。"
       },
       {
         title: '《年轻人开始「求签」了》',
-        summary: `寺庙经济规模上扬，18–35岁游客占比显著；义工与短期禅修搜索暴涨。但调研同时显示，相当比例年轻人到访核心目的是「缓解焦虑、平复心情」，而非信仰回潮。<br><br>
-解释框架：在确定性稀缺的时代，把「求个心安」理解为一种低成本的心理对冲——「精神急诊室」式的时代症候。选题由此区分表象（寺庙消费）与结构（焦虑治理），避免写成猎奇流行志。`
+        summary: "据研究机构测算，至2026年，我国寺庙经济市场规模有望突破千亿元大关，年增长率约10%。雍和宫的香灰手串在闲鱼溢价十倍，灵隐寺的十八籽手串曾被炒至三倍价，寺庙咖啡馆在社交平台获得的关注度超过任何第三波精品咖啡店。近三年寺庙18-35岁游客占比达63%，门票订单量同比涨超310%；2026年寺庙义工与短期禅修的搜索量同比暴涨327%，85%的报名者是20-30岁的年轻人。有意思的是，这批涌入寺庙的年轻人并不信佛——据调研，72%的年轻人去寺庙的核心目的是「缓解焦虑、平复心情」。当考公、考研、求职的确定性路径越来越拥挤，「求个心安」本身变成了一种理性消费。这不是迷信的回潮，是「精神急诊室」式的时代症候——确定性稀缺时代里，一种低成本的心理对冲。"
       }
     ]
-  },
+   },
   {
     zone: 'literature',
     id: 'novel',
@@ -1983,9 +2125,9 @@ const stackData = [
 
 // 动态渲染主页列表
 const WORDS_ZONE_GRID = {
+  literature: 'cardListLit',
   brand: 'cardListBrand',
-  culture: 'cardListCulture',
-  literature: 'cardListLit'
+  culture: 'cardListCulture'
 };
 
 function setBookLayout(single) {
@@ -2038,7 +2180,7 @@ function renderWordCard(data, container) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  ['brand','culture','literature'].forEach(zone => {
+  ['literature','brand','culture'].forEach(zone => {
     const container = document.getElementById(WORDS_ZONE_GRID[zone]);
     contentData.filter(d => d.zone === zone).forEach(data => renderWordCard(data, container));
   });
@@ -2123,7 +2265,60 @@ function showPitchTopic(data, idx, li) {
   const body = document.getElementById('pitchBody');
   if (!body) return;
   const topic = data.topics[idx];
-  body.innerHTML = `<p style="font-family:var(--serif);font-weight:600;font-size:1.15rem;margin-bottom:1rem;line-height:1.6">${topic.title}</p><div class="b-text">${topic.summary}</div>`;
+  body.innerHTML =
+    `<p style="font-family:var(--serif);font-weight:600;font-size:1.15rem;margin-bottom:1rem;line-height:1.6">${topic.title}</p>` +
+    `<div class="b-text">${topic.summary}</div>`;
+}
+
+let kvIndex = 0;
+let kvStackData = [];
+
+function renderKvStack() {
+  const container = document.getElementById('kvStack');
+  if (!container || !kvStackData.length) return;
+  container.innerHTML = '';
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const stackDepth = isMobile ? 1 : Math.min(3, kvStackData.length);
+  const hintText = isMobile ? '向左滑动翻阅下一张' : '[点击卡片翻阅下一页]';
+  for (let i = 0; i < stackDepth; i++) {
+    const dataIdx = (kvIndex + i) % kvStackData.length;
+    const card = kvStackData[dataIdx];
+    const el = document.createElement('div');
+    el.className = `stack-card pos-${i}`;
+    el.onclick = () => nextKvCard();
+    el.innerHTML = `
+      <img class="kv-stack-img" src="${card.src}" alt="${card.title || ''}" onclick="event.stopPropagation(); openLightbox(this.src)">
+      <div class="kv-stack-cap">${card.title || ''}</div>
+      <div class="st-hint">${hintText}</div>`;
+    container.appendChild(el);
+  }
+  bindKvSwipe(container);
+}
+
+function bindKvSwipe(container) {
+  if (!container || !window.matchMedia('(max-width: 768px)').matches) return;
+  if (container.dataset.kvSwipeBound) return;
+  container.dataset.kvSwipeBound = '1';
+  let startX = 0, startY = 0;
+  container.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  container.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (dx < -48 && Math.abs(dx) > Math.abs(dy) * 1.2) nextKvCard();
+  }, { passive: true });
+}
+
+function nextKvCard() {
+  const topCard = document.querySelector('#kvStack .stack-card.pos-0');
+  if (!topCard || !kvStackData.length) return;
+  topCard.classList.add('swipe-out');
+  setTimeout(() => {
+    kvIndex = (kvIndex + 1) % kvStackData.length;
+    renderKvStack();
+  }, 400);
 }
 
 function showPaper(data, idx, btn) {
@@ -2156,20 +2351,23 @@ function openBook(id) {
     left.innerHTML = `
       <h3 class="b-full-title">${data.bookTitle || data.listTitle}</h3>
       <p class="b-meta">${data.meta || ''}</p>
-      <div class="b-text essay-body">${(data.sections || []).map((s,i) =>
+      <div class="b-text essay-body">${data.essayHtml || (data.sections || []).map((s,i) =>
         `${i ? '<div class="scene-break">——</div>' : ''}<p>${s.text}</p>`
       ).join('')}</div>`;
   } else if (mode === 'proposal') {
     setBookLayout(false);
     left.innerHTML = `
       <h3 class="b-full-title">${data.bookTitle}</h3>
-      <div class="b-intro-title">方案摘要 / Summary</div>
+      <div class="b-intro-title">方案要点</div>
       <div class="b-text">${data.intro}</div>`;
     right.innerHTML = `
-      <div class="b-right-content">
-        <div class="b-quote-right">完整策划案 PDF</div>
-        ${data.pdfName ? `<a href="${encodeURI(data.pdfName)}" target="_blank" class="pdf-btn">查看完整 PDF</a>` : ''}
+      <div class="b-right-content" style="height:100%;display:flex;flex-direction:column;width:100%;padding:0.5rem 0.5rem 0;">
+        <div class="stack-container" id="kvStack" style="flex:1;width:100%;"></div>
+        ${data.pdfName ? `<a href="${encodeURI(data.pdfName)}" target="_blank" class="pdf-btn-tiny">查看完整 PDF 原件</a>` : ''}
       </div>`;
+    kvStackData = data.kvs || [];
+    kvIndex = 0;
+    setTimeout(renderKvStack, 50);
   } else if (mode === 'anthology') {
     setBookLayout(false);
     left.innerHTML = `
@@ -2177,7 +2375,7 @@ function openBook(id) {
       <div class="b-text" style="margin-bottom:1rem">${data.intro || ''}</div>
       <div class="b-intro-title">目录 · ${data.articles.length} 篇</div>
       <div class="anthology-nav" id="anthNav"></div>`;
-    right.innerHTML = `<div class="b-text" id="anthBody"></div>`;
+    right.innerHTML = `<div class="b-text essay-body" id="anthBody"></div>`;
     const nav = document.getElementById('anthNav');
     data.articles.forEach((a, i) => {
       const btn = document.createElement('button');
@@ -2193,9 +2391,12 @@ function openBook(id) {
       <h3 class="b-full-title">${data.bookTitle}</h3>
       <div class="b-text" style="margin-bottom:1rem">${data.intro}</div>
       <div class="b-intro-title">三则切口 · 点击切换</div>
-      <ul class="pitch-list" id="pitchList"></ul>
-      ${data.pdfName ? `<a href="${encodeURI(data.pdfName)}" download class="pdf-btn-tiny">下载完整研究文稿</a>` : ''}`;
-    right.innerHTML = `<div id="pitchBody"></div>`;
+      <ul class="pitch-list" id="pitchList"></ul>`;
+    right.innerHTML = `
+      <div class="b-right-content" style="height:100%;display:flex;flex-direction:column;width:100%;">
+        <div id="pitchBody" style="flex:1;width:100%;overflow:auto;"></div>
+        ${data.pdfName ? `<a href="${encodeURI(data.pdfName)}" download class="pdf-btn-tiny">下载完整研究文稿</a>` : ''}
+      </div>`;
     const list = document.getElementById('pitchList');
     data.topics.forEach((t, i) => {
       const li = document.createElement('li');
@@ -2210,9 +2411,12 @@ function openBook(id) {
       <h3 class="b-full-title">${data.bookTitle}</h3>
       <div class="b-intro-title">项目说明</div>
       <div class="b-text">${data.intro}</div>`;
+    const shots = (data.shots || []).map(s =>
+      `<img src="${s}" class="b-cover" style="max-height:32vh;margin-bottom:0.8rem;" alt="小红书截图" onclick="openLightbox(this.src)">`
+    ).join('');
     right.innerHTML = `
       <div class="b-right-content">
-        <div class="b-quote-right">小红书图文原帖</div>
+        ${shots || '<div class="b-quote-right">小红书图文原帖</div>'}
         <a class="ext-btn" href="${data.url}" target="_blank" rel="noopener">在小红书查看原文</a>
       </div>`;
   } else if (mode === 'papers') {
