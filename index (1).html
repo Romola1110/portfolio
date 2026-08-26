@@ -852,19 +852,20 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
   color: var(--text); margin: 0 0 1.2rem 0; letter-spacing: 0.02em; position:relative; z-index:2; line-height: 1.4;
 }
 .card-quote-box {
-  position: relative; padding: 0 0.35rem; margin-bottom: 1.6rem; z-index:2;
+  position: relative; display: inline-block; max-width: 100%;
+  padding: 0 0.35rem 0 0.55rem; margin-bottom: 1.6rem; z-index:2;
+  text-align: left; /* 上引号始终贴引用文字左上角；右对齐卡片靠 inline-block 贴右 */
+  vertical-align: top;
 }
 .quote-mark {
-  position: absolute; top: -0.35em;
+  position: absolute; top: -0.35em; left: -0.15em; right: auto;
   font-family: var(--english); font-size: 2.4rem; font-weight: 700;
   color: var(--accent); line-height: 1; opacity:0.7;
 }
-.word-card.align-left .quote-mark { left: -0.15em; }
-.word-card.align-right .quote-mark { left: auto; right: -0.15em; }
 
 .card-quote {
   font-family: var(--english); font-size: 1.1rem; color: var(--soft); margin: 0; line-height: 1.6;
-  padding-top: 0.15rem;
+  padding-top: 0.15rem; text-align: left;
 }
 .card-tag {
   font-family: var(--english); font-size: 0.78rem; font-weight: 600;
@@ -1836,10 +1837,9 @@ const contentData = [
     bookTitle: 'BWS 设计工作室 · Well Dialogue｜文元坊89号',
     intro: `为 BWS 设计工作室撰写品牌文案与理念阐述，并完成小红书图文排版。<br><br>
 本篇：<b>Well Dialogue｜文元坊89号，楼梯上的图案</b>——把空间里的细节写成可读的叙事节奏，让设计立场在版面中被慢慢看见。`,
-    url: 'https://www.xiaohongshu.com/explore/6a84162900000000060066ac',
+    url: 'https://www.xiaohongshu.com/discovery/item/6a84162900000000060066ac?app_platform=android&ignoreEngage=true&app_version=9.43.1&share_from_user_hidden=true&xsec_source=app_share&type=normal&xsec_token=CBQQZIH5QEr65_7UqQEU1UZWhhhUB6GUl5ZDaIRDo8C7s%3D&author_share=1&shareRedId=ODZFNDtIPUs2NzUyOTgwNjY0OTc3R0dP&apptime=1787647442&share_id=30d11ac9e30b4e0eaab7779ea46e50a6&share_channel=copy_link&appuid=60c48c9b0000000001003baf&xhsshare=CopyLink',
     shots: [
-      'assets/words/bws/shot-1.jpg',
-      'assets/words/bws/shot-2.jpg'
+      'assets/words/bws/xhs-screenshot.jpg'
     ]
   },
   {
@@ -1961,8 +1961,7 @@ const contentData = [
     listQuote: 'There was always a tomorrow for small duties, until suddenly there wasn\'t.',
     tag: 'NOVEL',
     hoverQuotes: [
-      '对于那些微不足道的日常琐事，总有一个“明天”可供推诿，直到“明天”猝然消逝。',
-      '林毅第一次死去时，没有人注意到，连他自己也没有。'
+      '林忆第一次死去时，没有人注意到，连他自己也没有。'
     ],
     bookTitle: 'The Unanswered Call·未接来电',
     intro: `假如你醒来时，掌心握着一枚冰冷的银币，河面上传来古老的桨声，船夫向你伸出手；<br><br>
@@ -1981,15 +1980,14 @@ const contentData = [
     id: 'academic',
     align: 'left',
     cnTag: '论文',
-    listTitle: '论文三篇 · 尤利西斯 / 比较 / 女性',
-    listQuote: '意识流叙事 · 境界说 · 女扮男装形象',
+    listTitle: '学术论文三篇 · 尤利西斯 | 比较文学 | 女性主义',
+    listQuote: 'To exist is to change, to change is to mature, to mature is to go on creating oneself endlessly.',
     tag: 'ACADEMIC',
     hoverQuotes: [
-      '时间绵延视域下的意识流 · 境界说读《西风颂》 · 女扮男装与女性主体',
-      '现代主义、比较美学与古典女性书写——三条并行的研究路径。'
+      '存在即变化，变化即成长，成长即是在无尽中不断创造自我。'
     ],
     mode: 'papers',
-    bookTitle: '学术写作选辑 · 三篇',
+    bookTitle: '学术论文三篇 · 尤利西斯 | 比较文学 | 女性主义',
     intro: '文学研究的三条路径：现代主义意识流、中西比较美学，与古典文学中的女性主体。',
     papers: [
         {
@@ -2438,7 +2436,7 @@ function openBook(id) {
       <div class="b-intro-title">项目说明</div>
       <div class="b-text">${data.intro}</div>`;
     const shots = (data.shots || []).map(s =>
-      `<img src="${s}" class="b-cover" style="max-height:32vh;margin-bottom:0.8rem;" alt="小红书截图" onclick="openLightbox(this.src)">`
+      `<img src="${s}" class="b-cover" style="max-height:58vh;width:100%;object-fit:contain;margin-bottom:0.8rem;" alt="小红书截图" onclick="openLightbox(this.src)">`
     ).join('');
     right.innerHTML = `
       <div class="b-right-content">
