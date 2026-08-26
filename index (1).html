@@ -995,6 +995,47 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
 .b-right-content { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100%; text-align: center; }
 .b-cover { width: 100%; height: auto; max-height: 75vh; object-fit: contain; border-radius: 6px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); margin-bottom: auto; cursor: zoom-in; transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1); }
 .b-cover:hover { transform: scale(1.02); }
+
+/* 文元坊等 link 模式：截图滑动展示 */
+.b-shot-slider {
+  position: relative; width: 100%; margin-bottom: 0.9rem; user-select: none;
+}
+.b-shot-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  border-radius: 6px; box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+.b-shot-track::-webkit-scrollbar { display: none; }
+.b-shot-slide {
+  flex: 0 0 100%; scroll-snap-align: center; scroll-snap-stop: always;
+}
+.b-shot-slide img {
+  display: block; width: 100%; height: auto; max-height: 58vh;
+  object-fit: contain; background: #f4f1ec; cursor: zoom-in;
+}
+.b-shot-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.08); background: rgba(255,255,255,0.92);
+  color: var(--text); cursor: pointer; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--english); font-size: 1.15rem; line-height: 1;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1); transition: background 0.2s, color 0.2s;
+}
+.b-shot-btn:hover { background: var(--text); color: #fff; }
+.b-shot-btn.prev { left: 0.45rem; }
+.b-shot-btn.next { right: 0.45rem; }
+.b-shot-dots {
+  display: flex; justify-content: center; gap: 0.4rem; margin-top: 0.65rem;
+}
+.b-shot-dots button {
+  width: 7px; height: 7px; border-radius: 50%; padding: 0;
+  border: none; background: rgba(90,78,101,0.28); cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.b-shot-dots button.is-active {
+  background: var(--accent); transform: scale(1.2);
+}
 .b-quote-right { font-family: var(--cn-light); font-size: 1.1rem; color: var(--soft); line-height: 1.8; margin-top: 1rem; margin-bottom: 2rem; padding: 0 1rem; font-weight: 600; }
 .pdf-btn {
   display: inline-flex; align-items: center; gap: 0.6rem; padding: 1rem 2rem;
@@ -1839,7 +1880,9 @@ const contentData = [
 本篇：<b>Well Dialogue｜文元坊89号，楼梯上的图案</b>——把空间里的细节写成可读的叙事节奏，让设计立场在版面中被慢慢看见。`,
     url: 'https://www.xiaohongshu.com/discovery/item/6a84162900000000060066ac?app_platform=android&ignoreEngage=true&app_version=9.43.1&share_from_user_hidden=true&xsec_source=app_share&type=normal&xsec_token=CBQQZIH5QEr65_7UqQEU1UZWhhhUB6GUl5ZDaIRDo8C7s%3D&author_share=1&shareRedId=ODZFNDtIPUs2NzUyOTgwNjY0OTc3R0dP&apptime=1787647442&share_id=30d11ac9e30b4e0eaab7779ea46e50a6&share_channel=copy_link&appuid=60c48c9b0000000001003baf&xhsshare=CopyLink',
     shots: [
-      'assets/words/bws/xhs-screenshot.jpg'
+      'assets/words/bws/xhs-1.jpg',
+      'assets/words/bws/xhs-2.jpg',
+      'assets/words/bws/xhs-3.jpg'
     ]
   },
   {
@@ -2435,14 +2478,31 @@ function openBook(id) {
       <h3 class="b-full-title">${data.bookTitle}</h3>
       <div class="b-intro-title">项目说明</div>
       <div class="b-text">${data.intro}</div>`;
-    const shots = (data.shots || []).map(s =>
-      `<img src="${s}" class="b-cover" style="max-height:58vh;width:100%;object-fit:contain;margin-bottom:0.8rem;" alt="小红书截图" onclick="openLightbox(this.src)">`
-    ).join('');
+    const shotList = data.shots || [];
+    let shotsHtml = '<div class="b-quote-right">小红书图文原帖</div>';
+    if (shotList.length === 1) {
+      shotsHtml = `<img src="${shotList[0]}" class="b-cover" style="max-height:58vh;width:100%;object-fit:contain;margin-bottom:0.8rem;" alt="小红书截图" onclick="openLightbox(this.src)">`;
+    } else if (shotList.length > 1) {
+      const slides = shotList.map((s, i) =>
+        `<div class="b-shot-slide"><img src="${s}" alt="小红书截图 ${i + 1}" draggable="false" onclick="openLightbox(this.src)"></div>`
+      ).join('');
+      const dots = shotList.map((_, i) =>
+        `<button type="button" aria-label="第${i + 1}张"${i === 0 ? ' class="is-active"' : ''}></button>`
+      ).join('');
+      shotsHtml = `
+        <div class="b-shot-slider" id="bwsShotSlider">
+          <button type="button" class="b-shot-btn prev" aria-label="上一张">‹</button>
+          <div class="b-shot-track">${slides}</div>
+          <button type="button" class="b-shot-btn next" aria-label="下一张">›</button>
+          <div class="b-shot-dots">${dots}</div>
+        </div>`;
+    }
     right.innerHTML = `
       <div class="b-right-content">
-        ${shots || '<div class="b-quote-right">小红书图文原帖</div>'}
+        ${shotsHtml}
         <a class="ext-btn" href="${data.url}" target="_blank" rel="noopener">在小红书查看原文</a>
       </div>`;
+    if (shotList.length > 1) initShotSlider(document.getElementById('bwsShotSlider'));
   } else if (mode === 'papers') {
     setBookLayout(false);
     left.innerHTML = `
@@ -3271,6 +3331,68 @@ document.addEventListener('keydown', (e) => {
 });
 
 initTime();
+
+function initShotSlider(root) {
+  if (!root) return;
+  const track = root.querySelector('.b-shot-track');
+  const slides = [...root.querySelectorAll('.b-shot-slide')];
+  const dots = [...root.querySelectorAll('.b-shot-dots button')];
+  const prev = root.querySelector('.b-shot-btn.prev');
+  const next = root.querySelector('.b-shot-btn.next');
+  if (!track || !slides.length) return;
+  let index = 0;
+  let startX = 0;
+  let startScroll = 0;
+  let dragging = false;
+
+  const goTo = (i, smooth = true) => {
+    index = (i + slides.length) % slides.length;
+    track.scrollTo({ left: slides[index].offsetLeft, behavior: smooth ? 'smooth' : 'auto' });
+    dots.forEach((d, di) => d.classList.toggle('is-active', di === index));
+  };
+
+  const syncFromScroll = () => {
+    const mid = track.scrollLeft + track.clientWidth / 2;
+    let best = 0;
+    let bestDist = Infinity;
+    slides.forEach((s, i) => {
+      const c = s.offsetLeft + s.offsetWidth / 2;
+      const dist = Math.abs(c - mid);
+      if (dist < bestDist) { bestDist = dist; best = i; }
+    });
+    if (best !== index) {
+      index = best;
+      dots.forEach((d, di) => d.classList.toggle('is-active', di === index));
+    }
+  };
+
+  prev?.addEventListener('click', (e) => { e.stopPropagation(); goTo(index - 1); });
+  next?.addEventListener('click', (e) => { e.stopPropagation(); goTo(index + 1); });
+  dots.forEach((d, i) => d.addEventListener('click', (e) => { e.stopPropagation(); goTo(i); }));
+  track.addEventListener('scroll', () => { window.requestAnimationFrame(syncFromScroll); }, { passive: true });
+
+  track.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    dragging = true;
+    startX = e.clientX;
+    startScroll = track.scrollLeft;
+    track.setPointerCapture?.(e.pointerId);
+  });
+  track.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    track.scrollLeft = startScroll - (e.clientX - startX);
+  });
+  const endDrag = () => {
+    if (!dragging) return;
+    dragging = false;
+    syncFromScroll();
+    goTo(index);
+  };
+  track.addEventListener('pointerup', endDrag);
+  track.addEventListener('pointercancel', endDrag);
+
+  goTo(0, false);
+}
 
 function openLightbox(src) {
   document.getElementById('lightboxImg').src = src;
