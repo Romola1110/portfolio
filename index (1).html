@@ -852,11 +852,11 @@ footer{text-align:center;padding:2rem;color:var(--soft);font-family:'Cormorant G
   color: var(--text); margin: 0 0 1.2rem 0; letter-spacing: 0.02em; position:relative; z-index:2; line-height: 1.4;
 }
 .card-quote-box {
-  position: relative; display: inline-block; max-width: 100%;
+  position: relative; display: block; width: fit-content; max-width: 100%;
   padding: 0 0.35rem 0 0.55rem; margin-bottom: 1.6rem; z-index:2;
-  text-align: left; /* 上引号始终贴引用文字左上角；右对齐卡片靠 inline-block 贴右 */
-  vertical-align: top;
+  text-align: left; /* 上引号始终贴引用文字左上角 */
 }
+.word-card.align-right .card-quote-box { margin-left: auto; }
 .quote-mark {
   position: absolute; top: -0.35em; left: -0.15em; right: auto;
   font-family: var(--english); font-size: 2.4rem; font-weight: 700;
